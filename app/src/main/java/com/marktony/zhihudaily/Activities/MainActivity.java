@@ -1,5 +1,6 @@
 package com.marktony.zhihudaily.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -87,7 +88,10 @@ public class MainActivity extends AppCompatActivity
                     adapter.setItemClickListener(new IOnRecyclerViewOnClickListener() {
                         @Override
                         public void OnItemClick(View v, int position) {
-                           Snackbar.make(v,String.valueOf(position),Snackbar.LENGTH_SHORT).show();
+                            Intent intent = new Intent(MainActivity.this,ReadActivity.class);
+                            intent.putExtra("id",list.get(position).getId());
+                            intent.putExtra("firstImg",list.get(position).getFirstImg());
+                            startActivity(intent);
                         }
                     });
 
