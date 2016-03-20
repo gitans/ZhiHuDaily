@@ -43,7 +43,11 @@ public class LatestItemAdapter extends RecyclerView.Adapter<LatestItemAdapter.La
     @Override
     public void onBindViewHolder(LatestItemViewHolder holder, int position) {
         LatestItem item = list.get(position);
-        Glide.with(context).load(item.getFirstImg()).centerCrop().into(holder.ivItemImg);
+        if (item.getFirstImg() == null){
+            holder.ivItemImg.setImageResource(R.drawable.no_img);
+        } else {
+            Glide.with(context).load(item.getFirstImg()).centerCrop().into(holder.ivItemImg);
+        }
         holder.tvLatestNewsTitle.setText(item.getTitle());
 
     }

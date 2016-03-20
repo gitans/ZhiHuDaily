@@ -90,7 +90,6 @@ public class MainActivity extends AppCompatActivity
                         public void OnItemClick(View v, int position) {
                             Intent intent = new Intent(MainActivity.this,ReadActivity.class);
                             intent.putExtra("id",list.get(position).getId());
-                            intent.putExtra("firstImg",list.get(position).getFirstImg());
                             startActivity(intent);
                         }
                     });
