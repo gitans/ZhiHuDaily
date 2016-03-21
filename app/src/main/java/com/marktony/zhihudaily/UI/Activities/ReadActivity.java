@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.Activities;
+package com.marktony.zhihudaily.UI.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;

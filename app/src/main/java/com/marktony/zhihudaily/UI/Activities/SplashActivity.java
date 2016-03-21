@@ -1,11 +1,8 @@
-package com.marktony.zhihudaily.Activities;
+package com.marktony.zhihudaily.UI.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 

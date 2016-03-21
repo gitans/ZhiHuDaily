@@ -7,7 +7,7 @@
     tools:showIn="@layout/activity_read"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.marktony.zhihudaily.Activities.ReadActivity">
+    tools:context=".UI.Activities.ReadActivity">
 
    <WebView
        android:layout_width="match_parent"
