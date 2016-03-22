@@ -6,6 +6,8 @@
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_read">阅读</string>
+    <string name="likes">赞</string>
+    <string name="comments">评论</string>
 
 
 </resources>

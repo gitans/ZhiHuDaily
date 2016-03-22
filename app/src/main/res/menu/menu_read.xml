@@ -2,8 +2,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".UI.Activities.ReadActivity" >
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        android:orderInCategory="100"
+    <item android:id="@+id/action_likes"
+        android:title="@string/likes"
+        android:orderInCategory="99"
         app:showAsAction="never" />
+    <item android:id="@+id/action_comments"
+        android:title="@string/comments"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
 </menu>

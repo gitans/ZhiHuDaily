@@ -86,6 +86,7 @@ public class LatestFragment extends Fragment {
                         public void OnItemClick(View v, int position) {
                             Intent intent = new Intent(getActivity(),ReadActivity.class);
                             intent.putExtra("id",list.get(position).getId());
+                            intent.putExtra("title",list.get(position).getTitle());
                             startActivity(intent);
                         }
                     });
