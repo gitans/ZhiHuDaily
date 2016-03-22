@@ -16,7 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.marktony.zhihudaily.Adapters.ThemePageAdapter;
+import com.marktony.zhihudaily.Adapters.ThemePagerAdapter;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.Utils.Api;
 
@@ -60,7 +60,7 @@ public class ThemeFragment extends Fragment {
                             titles[i] = array.getJSONObject(i).getString("name");
                             Log.d("name",titles[i]);
                         }
-                        ThemePageAdapter adapter = new ThemePageAdapter(getActivity().getSupportFragmentManager(),getActivity(),titles,titleCount);
+                        ThemePagerAdapter adapter = new ThemePagerAdapter(getActivity().getSupportFragmentManager(),getActivity(),titles,titleCount);
                         pager.setAdapter(adapter);
 
                         tabLayout.setupWithViewPager(pager);

@@ -10,13 +10,13 @@ import com.marktony.zhihudaily.UI.Fragments.PageFragment;
 /**
  * Created by lizhaotailang on 2016/3/21.
  */
-public class ThemePageAdapter extends FragmentPagerAdapter {
+public class ThemePagerAdapter extends FragmentPagerAdapter {
 
     private String[] titles;
     private int titleCount;
     private Context context;
 
-    public ThemePageAdapter(FragmentManager fm, Context context, String[] titles, int titleCount) {
+    public ThemePagerAdapter(FragmentManager fm, Context context, String[] titles, int titleCount) {
         super(fm);
         this.titleCount = titleCount;
         this.titles = titles;

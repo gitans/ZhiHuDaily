@@ -164,7 +164,7 @@ public class ReadActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_comments){
-            Intent i = new Intent(ReadActivity.this,CommentsActivity.class);
+            Intent i = new Intent(ReadActivity.this,CommentActivity.class);
             i.putExtra("id",id);
             startActivity(i);
         }
@@ -177,7 +177,6 @@ public class ReadActivity extends AppCompatActivity {
         fab = (FloatingActionButton) findViewById(R.id.fab);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ivFirstImg = (ImageView) findViewById(R.id.head_img);
 
     }

@@ -4,10 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!--<android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rv_comments">
+
+    </android.support.v7.widget.RecyclerView>-->
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="评论列表"
+        android:text="这里是评论"
         android:gravity="center"/>
 
 </LinearLayout>
