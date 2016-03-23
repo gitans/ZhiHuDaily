@@ -46,6 +46,7 @@ public class Api {
     // 使用在 主题日报列表查看 中获得需要查看的主题日报的 id
     // 拼接在 http://news-at.zhihu.com/api/4/theme/ 后
     // 得到对应主题日报 JSON 格式的内容
+    public static final String THEME = "http://news-at.zhihu.com/api/4/theme/";
 
     // 热门消息
     // 请注意！ 此 API 仍可访问，但是其内容未出现在最新的『知乎日报』 App 中。

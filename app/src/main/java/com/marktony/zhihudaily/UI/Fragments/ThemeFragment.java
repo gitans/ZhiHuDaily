@@ -87,9 +87,6 @@ public class ThemeFragment extends Fragment {
 
         queue.add(request);
 
-
-
         return view;
     }
-
 }
