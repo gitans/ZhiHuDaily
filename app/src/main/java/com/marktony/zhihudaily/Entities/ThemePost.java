@@ -6,6 +6,6 @@ package com.marktony.zhihudaily.Entities;
  */
 public class ThemePost {
 
-
+    //private String
 
 }

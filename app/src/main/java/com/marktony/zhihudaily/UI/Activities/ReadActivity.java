@@ -20,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.marktony.zhihudaily.Adapters.ThemePagerAdapter;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.Utils.Api;
 
@@ -34,6 +35,8 @@ public class ReadActivity extends AppCompatActivity {
     private ImageView ivFirstImg;
 
     private RequestQueue queue;
+
+    private ThemePagerAdapter adapter;
 
     private int likes = 0;
     private int comments = 0;
@@ -164,9 +167,7 @@ public class ReadActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_comments){
-            Intent i = new Intent(ReadActivity.this,CommentActivity.class);
-            i.putExtra("id",id);
-            startActivity(i);
+
         }
         return super.onOptionsItemSelected(item);
     }

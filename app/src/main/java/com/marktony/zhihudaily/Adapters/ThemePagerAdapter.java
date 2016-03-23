@@ -5,21 +5,22 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.marktony.zhihudaily.Entities.Themes;
 import com.marktony.zhihudaily.UI.Fragments.PageFragment;
+
+import java.util.List;
 
 /**
  * Created by lizhaotailang on 2016/3/21.
  */
 public class ThemePagerAdapter extends FragmentPagerAdapter {
 
-    private String[] titles;
-    private int titleCount;
+    private List<Themes> list;
     private Context context;
 
-    public ThemePagerAdapter(FragmentManager fm, Context context, String[] titles, int titleCount) {
+    public ThemePagerAdapter(FragmentManager fm, Context context, List<Themes> list) {
         super(fm);
-        this.titleCount = titleCount;
-        this.titles = titles;
+        this.list = list;
         this.context = context;
     }
 
@@ -30,11 +31,11 @@ public class ThemePagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return titleCount;
+        return list.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return titles[position];
+        return list.get(position).getName();
     }
 }

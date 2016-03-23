@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.marktony.zhihudaily.Adapters.ThemePagerAdapter;
+import com.marktony.zhihudaily.Entities.Themes;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.Utils.Api;
 
@@ -24,25 +25,27 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by lizhaotailang on 2016/3/21.
  */
 public class ThemeFragment extends Fragment {
 
     private RequestQueue queue;
-    private String[] titles;
-    private int titleCount;
+    private List<Themes> themes = new ArrayList<Themes>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         queue = Volley.newRequestQueue(getActivity().getApplicationContext());
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_theme,container,false);
 
         final ViewPager pager = (ViewPager) view.findViewById(R.id.viewPager);
@@ -54,13 +57,19 @@ public class ThemeFragment extends Fragment {
                 try {
                     if (!jsonObject.getString("limit").isEmpty()){
                         JSONArray array = jsonObject.getJSONArray("others");
-                        titleCount = array.length();
-                        titles = new String[titleCount];
+
                         for (int i = 0;i < array.length();i++){
-                            titles[i] = array.getJSONObject(i).getString("name");
-                            Log.d("name",titles[i]);
+                            String id = array.getJSONObject(i).getString("id");
+                            String thumbnail = array.getJSONObject(i).getString("thumbnail");
+                            String description = array.getJSONObject(i).getString("description");
+                            String name = array.getJSONObject(i).getString("name");
+
+                            Themes theme = new Themes(id,thumbnail,description,name);
+                            themes.add(theme);
+
                         }
-                        ThemePagerAdapter adapter = new ThemePagerAdapter(getActivity().getSupportFragmentManager(),getActivity(),titles,titleCount);
+
+                        ThemePagerAdapter adapter = new ThemePagerAdapter(getActivity().getSupportFragmentManager(),getActivity(),themes);
                         pager.setAdapter(adapter);
 
                         tabLayout.setupWithViewPager(pager);

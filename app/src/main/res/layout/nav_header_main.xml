@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
-        android:text="蒙伊"
+        android:text="黎赵太郎"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
