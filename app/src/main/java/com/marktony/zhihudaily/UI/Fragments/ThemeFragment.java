@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.marktony.zhihudaily.Adapters.ThemePagerAdapter;
-import com.marktony.zhihudaily.Entities.Themes;
+import com.marktony.zhihudaily.Entities.ThemeList;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.Utils.Api;
 
@@ -34,7 +33,7 @@ import java.util.List;
 public class ThemeFragment extends Fragment {
 
     private RequestQueue queue;
-    private List<Themes> themes = new ArrayList<Themes>();
+    private List<ThemeList> themes = new ArrayList<ThemeList>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,7 +63,7 @@ public class ThemeFragment extends Fragment {
                             String description = array.getJSONObject(i).getString("description");
                             String name = array.getJSONObject(i).getString("name");
 
-                            Themes theme = new Themes(id,thumbnail,description,name);
+                            ThemeList theme = new ThemeList(id,thumbnail,description,name);
                             themes.add(theme);
 
                         }

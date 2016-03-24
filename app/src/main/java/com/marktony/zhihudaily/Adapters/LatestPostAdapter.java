@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.marktony.zhihudaily.Entities.LatestItem;
+import com.marktony.zhihudaily.Entities.LatestPost;
 import com.marktony.zhihudaily.Interfaces.IOnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
 
@@ -20,14 +20,14 @@ import java.util.List;
  * Created by lizhaotailang on 2016/3/18.
  * 最新消息适配器
  */
-public class LatestItemAdapter extends RecyclerView.Adapter<LatestItemAdapter.LatestItemViewHolder> {
+public class LatestPostAdapter extends RecyclerView.Adapter<LatestPostAdapter.LatestItemViewHolder> {
 
     private final Context context;
     private final LayoutInflater inflater;
-    private List<LatestItem> list = new ArrayList<LatestItem>();
+    private List<LatestPost> list = new ArrayList<LatestPost>();
     private IOnRecyclerViewOnClickListener mListener;
 
-    public LatestItemAdapter(Context context,List<LatestItem> list){
+    public LatestPostAdapter(Context context, List<LatestPost> list){
         this.context = context;
         this.list = list;
         this.inflater = LayoutInflater.from(context);
@@ -42,7 +42,7 @@ public class LatestItemAdapter extends RecyclerView.Adapter<LatestItemAdapter.La
 
     @Override
     public void onBindViewHolder(LatestItemViewHolder holder, int position) {
-        LatestItem item = list.get(position);
+        LatestPost item = list.get(position);
         if (item.getFirstImg() == null){
             holder.ivItemImg.setImageResource(R.drawable.no_img);
         } else {

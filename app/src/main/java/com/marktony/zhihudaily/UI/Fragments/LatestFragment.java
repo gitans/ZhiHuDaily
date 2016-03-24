@@ -11,14 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.marktony.zhihudaily.Adapters.LatestItemAdapter;
-import com.marktony.zhihudaily.Entities.LatestItem;
+import com.marktony.zhihudaily.Adapters.LatestPostAdapter;
+import com.marktony.zhihudaily.Entities.LatestPost;
 import com.marktony.zhihudaily.Interfaces.IOnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.UI.Activities.ReadActivity;
@@ -38,11 +39,12 @@ public class LatestFragment extends Fragment {
 
     private RecyclerView rvLatestNews;
     private RequestQueue queue;
-    private List<LatestItem> list = new ArrayList<LatestItem>();
+    private List<LatestPost> list = new ArrayList<LatestPost>();
 
-    private LatestItemAdapter adapter;
+    private LatestPostAdapter adapter;
 
-    @Override
+    private MaterialDialog dialog;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -53,6 +55,14 @@ public class LatestFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_latest,container,false);
 
         initViews(view);
+
+        dialog = new MaterialDialog.Builder(getActivity())
+                .title("加载中")
+                .content("正在加载")
+                .progress(true,0)
+                .build();
+
+        dialog.show();
 
         queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
@@ -70,7 +80,7 @@ public class LatestFragment extends Fragment {
                                 stringList.add(imgUrl);
                             }
 
-                            LatestItem item = new LatestItem(
+                            LatestPost item = new LatestPost(
                                     array.getJSONObject(i).getString("title"),
                                     stringList,
                                     array.getJSONObject(i).getString("type"),
@@ -79,7 +89,7 @@ public class LatestFragment extends Fragment {
                             list.add(item);
                         }
                     }
-                    adapter = new LatestItemAdapter(getActivity(),list);
+                    adapter = new LatestPostAdapter(getActivity(),list);
                     rvLatestNews.setAdapter(adapter);
                     adapter.setItemClickListener(new IOnRecyclerViewOnClickListener() {
                         @Override
@@ -91,6 +101,8 @@ public class LatestFragment extends Fragment {
                         }
                     });
 
+                    dialog.dismiss();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -98,7 +110,7 @@ public class LatestFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                dialog.dismiss();
             }
         });
 

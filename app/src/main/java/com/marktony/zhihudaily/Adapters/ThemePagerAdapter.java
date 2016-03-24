@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.marktony.zhihudaily.Entities.Themes;
+import com.marktony.zhihudaily.Entities.ThemeList;
 import com.marktony.zhihudaily.UI.Fragments.PageFragment;
 
 import java.util.List;
@@ -15,10 +15,10 @@ import java.util.List;
  */
 public class ThemePagerAdapter extends FragmentPagerAdapter {
 
-    private List<Themes> list;
+    private List<ThemeList> list;
     private Context context;
 
-    public ThemePagerAdapter(FragmentManager fm, Context context, List<Themes> list) {
+    public ThemePagerAdapter(FragmentManager fm, Context context, List<ThemeList> list) {
         super(fm);
         this.list = list;
         this.context = context;
