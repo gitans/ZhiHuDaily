@@ -15,6 +15,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -22,7 +23,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.marktony.zhihudaily.Adapters.ThemePagerAdapter;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.Utils.Api;
 
@@ -41,6 +41,8 @@ public class ReadActivity extends AppCompatActivity {
     private int likes = 0;
     private int comments = 0;
 
+    private MaterialDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,9 +50,17 @@ public class ReadActivity extends AppCompatActivity {
 
         initViews();
 
+        dialog = new MaterialDialog.Builder(ReadActivity.this)
+                .content("加载中")
+                .progress(true,0)
+                .build();
+
+        dialog.show();
+
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
         String title = intent.getStringExtra("title");
+        final String image = intent.getStringExtra("image");
         getSupportActionBar().setTitle(title);
 
         queue = Volley.newRequestQueue(getApplicationContext());
@@ -78,23 +88,33 @@ public class ReadActivity extends AppCompatActivity {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.NEWS + id, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+
+                dialog.dismiss();
+
                 try {
 
                     //需要注意的是这里有可能没有body。。。 好多坑。。。
-
+                    // 如果没有body，则加载share_url中内容
                     if (jsonObject.isNull("body")){
 
                         webViewRead.loadUrl(jsonObject.getString("share_url"));
                         ivFirstImg.setImageResource(R.drawable.no_img);
                         ivFirstImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-                    } else if ( !jsonObject.getString("body").isEmpty()){
-
+                        // body不为null
+                    } else {
                         if ( !jsonObject.isNull("image")){
+
                             Glide.with(ReadActivity.this).load(jsonObject.getString("image")).centerCrop().into(ivFirstImg);
-                        } else {
+
+                        } else if (image == null){
+
                             ivFirstImg.setImageResource(R.drawable.no_img);
                             ivFirstImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+                        } else {
+
+                            Glide.with(ReadActivity.this).load(image).centerCrop().into(ivFirstImg);
                         }
 
                         //在api中，css的地址是以一个数组的形式给出，这里需要设置
@@ -120,13 +140,9 @@ public class ReadActivity extends AppCompatActivity {
                                 "<body>\n"  + css +
                                 jsonObject.getString("body").replace("<div class=\"img-place-holder\">", "") + "\n<body>";
                         webViewRead.loadDataWithBaseURL("x-data://base",html,"text/html","utf-8",null);
-                    } else if (jsonObject.isNull("body")){
 
-                        webViewRead.loadUrl(jsonObject.getString("share_url"));
-
-                    } else {
-                        ivFirstImg.setImageResource(R.drawable.no_img);
                     }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -134,7 +150,8 @@ public class ReadActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Snackbar.make(fab,"发生了一些错误!",Snackbar.LENGTH_SHORT).show();
+                dialog.dismiss();
+                Snackbar.make(fab, R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
             }
         });
 
@@ -152,7 +169,7 @@ public class ReadActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 } else {
-                    Snackbar.make(fab,"发生了一些错误",Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(fab,R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {

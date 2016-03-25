@@ -57,8 +57,7 @@ public class LatestFragment extends Fragment {
         initViews(view);
 
         dialog = new MaterialDialog.Builder(getActivity())
-                .title("加载中")
-                .content("正在加载")
+                .content(R.string.loading)
                 .progress(true,0)
                 .build();
 

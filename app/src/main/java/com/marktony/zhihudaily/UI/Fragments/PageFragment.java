@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -66,11 +67,13 @@ public class PageFragment extends android.support.v4.app.Fragment {
         super.onCreate(savedInstanceState);
         pages = getArguments().getInt(ARGS_PAGE);
         queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.theme_page,container,false);
 
         ivTheme = (ImageView) view.findViewById(R.id.iv_theme);
@@ -81,6 +84,7 @@ public class PageFragment extends android.support.v4.app.Fragment {
         JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, Api.THEMES, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+
                 try {
                         if (!jsonObject.getString("limit").isEmpty()) {
                             final JSONArray array = jsonObject.getJSONArray("others");
@@ -143,6 +147,7 @@ public class PageFragment extends android.support.v4.app.Fragment {
                                                     Intent intent = new Intent(getActivity(), ReadActivity.class);
                                                     intent.putExtra("id",list.get(position).getId());
                                                     intent.putExtra("title",list.get(position).getTitle());
+                                                    intent.putExtra("image",list.get(position).getFirstImg());
                                                     startActivity(intent);
                                                 }
                                             });
@@ -151,11 +156,12 @@ public class PageFragment extends android.support.v4.app.Fragment {
                                     }catch (JSONException e) {
                                         e.printStackTrace();
                                     }
+
                                 }
                             }, new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError volleyError) {
-                                    Snackbar.make(ivTheme,"发生了一些错误",Snackbar.LENGTH_SHORT).show();
+                                    Snackbar.make(ivTheme,R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -170,7 +176,7 @@ public class PageFragment extends android.support.v4.app.Fragment {
             }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Snackbar.make(ivTheme,"发生了一些错误",Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(ivTheme,R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
             }
         });
 
