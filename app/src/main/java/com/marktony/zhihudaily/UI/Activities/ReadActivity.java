@@ -6,11 +6,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
 import com.android.volley.Request;
@@ -35,8 +37,6 @@ public class ReadActivity extends AppCompatActivity {
     private ImageView ivFirstImg;
 
     private RequestQueue queue;
-
-    private ThemePagerAdapter adapter;
 
     private int likes = 0;
     private int comments = 0;
@@ -65,13 +65,37 @@ public class ReadActivity extends AppCompatActivity {
         webViewRead.getSettings().setDomStorageEnabled(true);
         //开启application Cache功能
         webViewRead.getSettings().setAppCacheEnabled(true);
+        //不调用第三方浏览器即可进行页面反应
+        webViewRead.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                webViewRead.loadUrl(url);
+                return true;
+            }
+        });
 
+        Log.d("url",Api.NEWS + id);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.NEWS + id, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try {
-                    if (!jsonObject.getString("body").isEmpty()){
-                        Glide.with(ReadActivity.this).load(jsonObject.getString("image")).centerCrop().into(ivFirstImg);
+
+                    //需要注意的是这里有可能没有body。。。 好多坑。。。
+
+                    if (jsonObject.isNull("body")){
+
+                        webViewRead.loadUrl(jsonObject.getString("share_url"));
+                        ivFirstImg.setImageResource(R.drawable.no_img);
+                        ivFirstImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+                    } else if ( !jsonObject.getString("body").isEmpty()){
+
+                        if ( !jsonObject.isNull("image")){
+                            Glide.with(ReadActivity.this).load(jsonObject.getString("image")).centerCrop().into(ivFirstImg);
+                        } else {
+                            ivFirstImg.setImageResource(R.drawable.no_img);
+                            ivFirstImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        }
 
                         //在api中，css的地址是以一个数组的形式给出，这里需要设置
                         //api中还有js的部分，这里不再解析js
@@ -96,6 +120,10 @@ public class ReadActivity extends AppCompatActivity {
                                 "<body>\n"  + css +
                                 jsonObject.getString("body").replace("<div class=\"img-place-holder\">", "") + "\n<body>";
                         webViewRead.loadDataWithBaseURL("x-data://base",html,"text/html","utf-8",null);
+                    } else if (jsonObject.isNull("body")){
+
+                        webViewRead.loadUrl(jsonObject.getString("share_url"));
+
                     } else {
                         ivFirstImg.setImageResource(R.drawable.no_img);
                     }

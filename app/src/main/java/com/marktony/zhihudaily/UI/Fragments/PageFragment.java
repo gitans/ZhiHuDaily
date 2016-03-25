@@ -1,11 +1,11 @@
 package com.marktony.zhihudaily.UI.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +23,7 @@ import com.marktony.zhihudaily.Adapters.ThemePostAdapter;
 import com.marktony.zhihudaily.Entities.ThemePost;
 import com.marktony.zhihudaily.Interfaces.IOnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
+import com.marktony.zhihudaily.UI.Activities.ReadActivity;
 import com.marktony.zhihudaily.Utils.Api;
 
 import org.json.JSONArray;
@@ -85,6 +86,9 @@ public class PageFragment extends android.support.v4.app.Fragment {
                             final JSONArray array = jsonObject.getJSONArray("others");
 
                             for (int i = 0; i < array.length(); i++) {
+
+                                // 获取的分别是tab，也就是主题日报的列表
+                                // thumbnail是其对应的图片地址
                                 String id = array.getJSONObject(i).getString("id");
                                 String thumbnail = array.getJSONObject(i).getString("thumbnail");
 
@@ -98,6 +102,14 @@ public class PageFragment extends android.support.v4.app.Fragment {
                                 public void onResponse(JSONObject jsonObject) {
                                     try {
                                         if (jsonObject.has("stories")){
+                                            /**
+                                             * 这里的代码有点乱，具体的功能：
+                                             * 首先解析网络请求中的stories部分，这部分的内容是post中的主要内容
+                                             * 外层循环就是遍历storeis中的内容
+                                             * 局部变量strings是图片的地址
+                                             * 内层以j作为下标的循环迭代的是返回数据中images数组
+                                             * 由于返回的是一个array，只好采取了这种方法
+                                             */
                                             Glide.with(getActivity()).load(jsonObject.getString("image")).centerCrop().into(ivTheme);
                                             tvThemeDescription.setText(jsonObject.getString("description"));
                                             JSONArray array1 = jsonObject.getJSONArray("stories");
@@ -107,7 +119,12 @@ public class PageFragment extends android.support.v4.app.Fragment {
                                                 if (array1.getJSONObject(i).isNull("images")){
                                                     strings = null;
                                                 } else {
+
                                                     strings= new String[array1.getJSONObject(i).getJSONArray("images").length()];
+                                                    JSONArray imgUrls = array1.getJSONObject(i).getJSONArray("images");
+                                                    for (int j = 0;j < imgUrls.length();j++){
+                                                        strings[j] = imgUrls.getString(j);
+                                                    }
                                                 }
                                                 ThemePost themePost = new ThemePost(
                                                         array1.getJSONObject(i).getString("id"),
@@ -123,7 +140,10 @@ public class PageFragment extends android.support.v4.app.Fragment {
                                             adapter.setItemClickListener(new IOnRecyclerViewOnClickListener() {
                                                 @Override
                                                 public void OnItemClick(View v, int position) {
-                                                    Snackbar.make(v,String.valueOf(position),Snackbar.LENGTH_SHORT).show();
+                                                    Intent intent = new Intent(getActivity(), ReadActivity.class);
+                                                    intent.putExtra("id",list.get(position).getId());
+                                                    intent.putExtra("title",list.get(position).getTitle());
+                                                    startActivity(intent);
                                                 }
                                             });
                                         }
@@ -135,7 +155,7 @@ public class PageFragment extends android.support.v4.app.Fragment {
                             }, new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError volleyError) {
-
+                                    Snackbar.make(ivTheme,"发生了一些错误",Snackbar.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -150,7 +170,7 @@ public class PageFragment extends android.support.v4.app.Fragment {
             }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                Snackbar.make(ivTheme,"发生了一些错误",Snackbar.LENGTH_SHORT).show();
             }
         });
 
