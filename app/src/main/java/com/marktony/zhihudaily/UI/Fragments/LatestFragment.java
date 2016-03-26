@@ -2,9 +2,11 @@ package com.marktony.zhihudaily.UI.Fragments;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -38,6 +40,7 @@ import java.util.List;
 public class LatestFragment extends Fragment {
 
     private RecyclerView rvLatestNews;
+    private SwipeRefreshLayout refresh;
     private RequestQueue queue;
     private List<LatestPost> list = new ArrayList<LatestPost>();
 
@@ -62,6 +65,23 @@ public class LatestFragment extends Fragment {
                 .build();
 
         dialog.show();
+
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+            }
+
+        });
+
+        //设置下拉刷新的按钮的颜色
+        refresh.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        //设置手指在屏幕上下拉多少距离开始刷新
+        refresh.setDistanceToTriggerSync(300);
+        //设置下拉刷新按钮的背景颜色
+        refresh.setProgressBackgroundColorSchemeColor(Color.WHITE);
+        //设置下拉刷新按钮的大小
+        refresh.setSize(SwipeRefreshLayout.DEFAULT);
 
         queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
@@ -121,6 +141,7 @@ public class LatestFragment extends Fragment {
 
         rvLatestNews = (RecyclerView) view.findViewById(R.id.rv_main);
         rvLatestNews.setLayoutManager(new LinearLayoutManager(getActivity()));
+        refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
 
     }
 

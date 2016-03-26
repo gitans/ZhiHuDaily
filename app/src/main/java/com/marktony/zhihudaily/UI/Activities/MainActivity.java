@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity
 
         initViews();
 
-        navigationView.setCheckedItem(R.id.nav_camera);
+        navigationView.setCheckedItem(R.id.nav_home);
         LatestFragment fragment = new LatestFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container,fragment).commit();
 
@@ -71,31 +71,41 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
 
+        //toolbar的标题应该根据不同的id来判断
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_home) {
 
             changeFragment(new LatestFragment());
+            toolbar.setTitle(getString(R.string.app_name));
 
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_theme_post) {
 
             changeFragment(new ThemeFragment());
+            toolbar.setTitle(item.getTitle());
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_hot_post) {
 
             changeFragment(new HotPostFragment());
+            toolbar.setTitle(item.getTitle());
 
         } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+
+        } else if (id == R.id.nav_night_mode) {
+
+
+
+        } else if (id == R.id.nav_about) {
+
+
 
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        toolbar.setTitle(item.getTitle());
+
         return true;
     }
 
