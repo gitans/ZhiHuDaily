@@ -109,7 +109,12 @@ public class LatestFragment extends Fragment {
                     }
                 },year,month,day);
 
+                // 给datepickerdialog设置选择范围
                 DatePicker picker = dialog.getDatePicker();
+                picker.setMaxDate(Calendar.getInstance().getTimeInMillis());
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(2013,5,20);
+                picker.setMinDate(calendar.getTimeInMillis());
 
                 dialog.setTitle("选择要查看的历史消息的日期");
 
