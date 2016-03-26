@@ -1,6 +1,9 @@
 package com.marktony.zhihudaily.UI.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -11,10 +14,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.UI.Fragments.HotPostFragment;
+import com.marktony.zhihudaily.UI.Fragments.PageFragment;
 import com.marktony.zhihudaily.UI.Fragments.ThemeFragment;
 import com.marktony.zhihudaily.UI.Fragments.LatestFragment;
+import com.marktony.zhihudaily.Utils.NetworkState;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity
@@ -25,12 +35,43 @@ public class MainActivity extends AppCompatActivity
     private ActionBarDrawerToggle toggle;
     private NavigationView navigationView;
 
+    // 提示用户是否联网
+    private MaterialDialog dialog;
+
+    public Map<String,PageFragment> map = new HashMap<String,PageFragment>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         initViews();
+
+        dialog = new MaterialDialog.Builder(MainActivity.this)
+                .title("提示")
+                .content("当前没有网络连接...")
+                .positiveText("去设置")
+                .negativeText("知道了")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        startActivity(new Intent(Settings.ACTION_SETTINGS));
+                        dialog.dismiss();
+                    }
+                })
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                    }
+                })
+                .build();
+
+
+        if ( !NetworkState.networkConneted(MainActivity.this)){
+            dialog.show();
+        }
 
         navigationView.setCheckedItem(R.id.nav_home);
         LatestFragment fragment = new LatestFragment();

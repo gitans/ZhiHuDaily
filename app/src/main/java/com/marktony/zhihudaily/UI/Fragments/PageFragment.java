@@ -54,6 +54,8 @@ public class PageFragment extends android.support.v4.app.Fragment {
 
     private ThemePostAdapter adapter;
 
+    private MaterialDialog dialog;
+
     public static PageFragment newInstance(int page){
         Bundle args = new Bundle();
         args.putInt(ARGS_PAGE,page);
@@ -65,6 +67,14 @@ public class PageFragment extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        dialog = new MaterialDialog.Builder(getActivity())
+                .content(getString(R.string.loading))
+                .progress(true,0)
+                .build();
+
+        dialog.show();
+
         pages = getArguments().getInt(ARGS_PAGE);
         queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
@@ -84,7 +94,8 @@ public class PageFragment extends android.support.v4.app.Fragment {
         JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, Api.THEMES, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-
+                if (dialog.isShowing())
+                    dialog.dismiss();
                 try {
                         if (!jsonObject.getString("limit").isEmpty()) {
                             final JSONArray array = jsonObject.getJSONArray("others");
@@ -177,6 +188,8 @@ public class PageFragment extends android.support.v4.app.Fragment {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Snackbar.make(ivTheme,R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
+                if (dialog.isShowing())
+                    dialog.dismiss();
             }
         });
 

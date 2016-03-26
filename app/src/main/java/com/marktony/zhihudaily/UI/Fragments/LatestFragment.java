@@ -1,10 +1,13 @@
 package com.marktony.zhihudaily.UI.Fragments;
 
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Request;
@@ -32,6 +36,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -41,6 +46,7 @@ public class LatestFragment extends Fragment {
 
     private RecyclerView rvLatestNews;
     private SwipeRefreshLayout refresh;
+    private FloatingActionButton fab;
     private RequestQueue queue;
     private List<LatestPost> list = new ArrayList<LatestPost>();
 
@@ -48,8 +54,17 @@ public class LatestFragment extends Fragment {
 
     private MaterialDialog dialog;
 
+    private String date = null;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+
+        dialog = new MaterialDialog.Builder(getActivity())
+                .content(R.string.loading)
+                .progress(true,0)
+                .build();
     }
 
     @Nullable
@@ -59,19 +74,48 @@ public class LatestFragment extends Fragment {
 
         initViews(view);
 
-        dialog = new MaterialDialog.Builder(getActivity())
-                .content(R.string.loading)
-                .progress(true,0)
-                .build();
-
         dialog.show();
 
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                load(null);
             }
 
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar c = Calendar.getInstance();
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog dialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        if (monthOfYear <= 8 && dayOfMonth < 10){
+                            date = String.valueOf(year) + "0" + (monthOfYear + 1) + "0" + dayOfMonth;
+                        } else if (monthOfYear <= 8 && dayOfMonth >= 10){
+                            date = String.valueOf(year) + "0" + (monthOfYear + 1) + dayOfMonth;
+                        } else if (monthOfYear > 8 && dayOfMonth < 10){
+                            date = String.valueOf(year) + (monthOfYear + 1) + "0" + dayOfMonth;
+                        } else {
+                            date = String.valueOf(year) + (monthOfYear + 1) + dayOfMonth;
+                        }
+
+                        load(date);
+
+                    }
+                },year,month,day);
+
+                DatePicker picker = dialog.getDatePicker();
+
+                dialog.setTitle("选择要查看的历史消息的日期");
+
+                dialog.show();
+
+            }
         });
 
         //设置下拉刷新的按钮的颜色
@@ -83,13 +127,56 @@ public class LatestFragment extends Fragment {
         //设置下拉刷新按钮的大小
         refresh.setSize(SwipeRefreshLayout.DEFAULT);
 
-        queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        rvLatestNews.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.LATEST, new Response.Listener<JSONObject>() {
+                if (newState != RecyclerView.SCROLL_STATE_IDLE){
+                    fab.setVisibility(View.INVISIBLE);
+                } else {
+                    fab.setVisibility(View.VISIBLE);
+                }
+
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+
+
+        load(null);
+
+        return view;
+    }
+
+    private void initViews(View view) {
+
+        rvLatestNews = (RecyclerView) view.findViewById(R.id.rv_main);
+        rvLatestNews.setLayoutManager(new LinearLayoutManager(getActivity()));
+        refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        fab = (FloatingActionButton) view.findViewById(R.id.fab);
+
+    }
+
+    private void load(String date){
+
+        String url = null;
+
+        if (date == null){
+            url =  Api.LATEST;
+        } else {
+            url = Api.HISTORY + date;
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,url, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+
+                if ( !list.isEmpty()){
+                    list.clear();
+                }
+
                 try {
                     if ( !jsonObject.getString("date").isEmpty()){
+
                         JSONArray array = jsonObject.getJSONArray("stories");
                         for (int i = 0; i < array.length(); i++){
                             JSONArray images = array.getJSONObject(i).getJSONArray("images");
@@ -108,6 +195,12 @@ public class LatestFragment extends Fragment {
                             list.add(item);
                         }
                     }
+
+                    if (refresh.isRefreshing()){
+                        Snackbar.make(refresh,"刷新成功",Snackbar.LENGTH_SHORT).show();
+                        refresh.setRefreshing(false);
+                    }
+
                     adapter = new LatestPostAdapter(getActivity(),list);
                     rvLatestNews.setAdapter(adapter);
                     adapter.setItemClickListener(new IOnRecyclerViewOnClickListener() {
@@ -134,15 +227,6 @@ public class LatestFragment extends Fragment {
         });
 
         queue.add(request);
-        return view;
-    }
-
-    private void initViews(View view) {
-
-        rvLatestNews = (RecyclerView) view.findViewById(R.id.rv_main);
-        rvLatestNews.setLayoutManager(new LinearLayoutManager(getActivity()));
-        refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
-
     }
 
 
