@@ -2,6 +2,7 @@ package com.marktony.zhihudaily.UI.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -11,20 +12,19 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.UI.Fragments.HotPostFragment;
-import com.marktony.zhihudaily.UI.Fragments.PageFragment;
 import com.marktony.zhihudaily.UI.Fragments.ThemeFragment;
 import com.marktony.zhihudaily.UI.Fragments.LatestFragment;
 import com.marktony.zhihudaily.Utils.NetworkState;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity
@@ -38,8 +38,6 @@ public class MainActivity extends AppCompatActivity
     // 提示用户是否联网
     private MaterialDialog dialog;
 
-    public Map<String,PageFragment> map = new HashMap<String,PageFragment>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -49,10 +47,10 @@ public class MainActivity extends AppCompatActivity
         initViews();
 
         dialog = new MaterialDialog.Builder(MainActivity.this)
-                .title("提示")
-                .content("当前没有网络连接...")
-                .positiveText("去设置")
-                .negativeText("知道了")
+                .title(R.string.point)
+                .content(R.string.no_network_connected)
+                .positiveText(R.string.go_to_set)
+                .negativeText(R.string.got_it)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
@@ -76,6 +74,33 @@ public class MainActivity extends AppCompatActivity
         navigationView.setCheckedItem(R.id.nav_home);
         LatestFragment fragment = new LatestFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container,fragment).commit();
+
+        // 3次连击navigation view显示彩蛋部分
+        navigationView.getHeaderView(0).setOnClickListener(new View.OnClickListener() {
+
+            long[] hits = new long[3];
+
+            @Override
+            public void onClick(View v) {
+                System.arraycopy(hits,1,hits,0,hits.length-1);
+                hits[hits.length - 1] = SystemClock.uptimeMillis();
+                if (hits[0] >= (SystemClock.uptimeMillis() - 500)){
+                    MaterialDialog dialog = new MaterialDialog.Builder(MainActivity.this)
+                            .title("彩蛋！")
+                            .content("我知道这个头像不帅，但是也不要这样点我呀")
+                            .neutralText("好的")
+                            .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    dialog.dismiss();
+                                }
+                            }).build();
+
+                    dialog.show();
+
+                }
+            }
+        });
 
     }
 
@@ -130,11 +155,7 @@ public class MainActivity extends AppCompatActivity
             changeFragment(new HotPostFragment());
             toolbar.setTitle(item.getTitle());
 
-        } else if (id == R.id.nav_manage) {
-
-
-
-        } else if (id == R.id.nav_night_mode) {
+        } else if (id == R.id.nav_settings) {
 
 
 

@@ -116,7 +116,7 @@ public class LatestFragment extends Fragment {
                 calendar.set(2013,5,20);
                 picker.setMinDate(calendar.getTimeInMillis());
 
-                dialog.setTitle("选择要查看的历史消息的日期");
+                dialog.setTitle(getString(R.string.choose_history_post));
 
                 dialog.show();
 
@@ -202,7 +202,7 @@ public class LatestFragment extends Fragment {
                     }
 
                     if (refresh.isRefreshing()){
-                        Snackbar.make(refresh,"刷新成功",Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(refresh, R.string.refresh_done,Snackbar.LENGTH_SHORT).show();
                         refresh.setRefreshing(false);
                     }
 

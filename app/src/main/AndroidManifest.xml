@@ -29,11 +29,12 @@
             android:name=".UI.Activities.ReadActivity"
             android:label="@string/title_activity_read"
             android:theme="@style/AppTheme.NoActionBar">
-
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.Activities.MainActivity" />
-
         </activity>
+        <activity android:name=".UI.Activities.SettingsActivity" />
+        <activity android:name=".UI.Activities.AboutActivity"></activity>
     </application>
 
 </manifest>

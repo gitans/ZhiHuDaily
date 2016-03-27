@@ -2,6 +2,7 @@ package com.marktony.zhihudaily.UI.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -80,7 +81,7 @@ public class ThemeFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                Snackbar.make(tabLayout,getString(R.string.wrong_process),Snackbar.LENGTH_SHORT).show();
             }
         });
 

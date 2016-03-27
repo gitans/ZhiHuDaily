@@ -11,6 +11,20 @@
     <string name="title_activity_comment">评论</string>
     <string name="loading">加载中</string>
     <string name="wrong_process">发生了一些错误!</string>
+    <string name="point">提示</string>
+    <string name="no_network_connected">当前没有网络连接…</string>
+    <string name="go_to_set">去设置</string>
+    <string name="got_it">知道了</string>
+    <string name="author">黎赵太郎</string>
+    <string name="author_description">Java / Android 学习中</string>
+    <string name="refresh_done">刷新成功</string>
+    <string name="choose_history_post">历史消息查看</string>
+    <string name="settings">设置</string>
+    <string name="about">关于</string>
+    <string name="hot_post">热门消息</string>
+    <string name="theme_post">主题日报</string>
+    <string name="latest_post">首页</string>
+    <string name="other">其他</string>
 
 
 </resources>
