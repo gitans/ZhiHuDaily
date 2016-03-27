@@ -175,7 +175,7 @@ public class ReadActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                Snackbar.make(fab,R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
             }
         });
 
@@ -184,6 +184,8 @@ public class ReadActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // TODO,获取share url
+                Intent shareIntent = new Intent().setAction(Intent.ACTION_SEND).setType("text/plain");
 
             }
         });
