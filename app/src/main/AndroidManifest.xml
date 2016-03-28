@@ -33,8 +33,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.Activities.MainActivity" />
         </activity>
-        <activity android:name=".UI.Activities.SettingsActivity" />
-        <activity android:name=".UI.Activities.AboutActivity"></activity>
+        <activity android:name=".UI.Activities.SettingsActivity"
+            android:label="@string/settings"/>
+        <activity android:name=".UI.Activities.AboutActivity"
+            android:label="@string/about"></activity>
     </application>
 
 </manifest>

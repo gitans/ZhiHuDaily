@@ -43,6 +43,8 @@ public class ReadActivity extends AppCompatActivity {
 
     private MaterialDialog dialog;
 
+    private String shareUrl = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +53,7 @@ public class ReadActivity extends AppCompatActivity {
         initViews();
 
         dialog = new MaterialDialog.Builder(ReadActivity.this)
-                .content("加载中")
+                .content(getString(R.string.loading))
                 .progress(true,0)
                 .build();
 
@@ -59,7 +61,7 @@ public class ReadActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
-        String title = intent.getStringExtra("title");
+        final String title = intent.getStringExtra("title");
         final String image = intent.getStringExtra("image");
         getSupportActionBar().setTitle(title);
 
@@ -67,8 +69,8 @@ public class ReadActivity extends AppCompatActivity {
 
         //能够和js交互
         webViewRead.getSettings().setJavaScriptEnabled(true);
-        //缩放
-        webViewRead.getSettings().setBuiltInZoomControls(true);
+        //缩放,设置为不能缩放可以防止页面上出现放大和缩小的图标
+        webViewRead.getSettings().setBuiltInZoomControls(false);
         //缓存
         webViewRead.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         //开启DOM storage API功能
@@ -106,6 +108,7 @@ public class ReadActivity extends AppCompatActivity {
                         if ( !jsonObject.isNull("image")){
 
                             Glide.with(ReadActivity.this).load(jsonObject.getString("image")).centerCrop().into(ivFirstImg);
+                            shareUrl = jsonObject.getString("share_url");
 
                         } else if (image == null){
 
@@ -184,8 +187,11 @@ public class ReadActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO,获取share url
+
                 Intent shareIntent = new Intent().setAction(Intent.ACTION_SEND).setType("text/plain");
+                String shareText = title + shareUrl + getString(R.string.share_extra);
+                shareIntent.putExtra(Intent.EXTRA_TEXT,shareText);
+                startActivity(Intent.createChooser(shareIntent,getString(R.string.share_to)));
 
             }
         });

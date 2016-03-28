@@ -4,27 +4,61 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">版权信息</string>
+    <!--常用-->
+    <string name="positive">确定</string>
+    <string name="negative">取消</string>
+    <string name="got_it">知道了</string>
+    <string name="loading">加载中</string>
+    <string name="point">提示</string>
+
+    <string name="welcome_to_zhihudaily">欢迎来到知乎小报</string>
+    <string name="action_copy_right">版权信息</string>
     <string name="title_activity_read">阅读</string>
     <string name="likes">赞</string>
     <string name="comments">评论</string>
     <string name="title_activity_comment">评论</string>
-    <string name="loading">加载中</string>
     <string name="wrong_process">发生了一些错误!</string>
-    <string name="point">提示</string>
     <string name="no_network_connected">当前没有网络连接…</string>
     <string name="go_to_set">去设置</string>
-    <string name="got_it">知道了</string>
-    <string name="author">黎赵太郎</string>
-    <string name="author_description">Java / Android 学习中</string>
     <string name="refresh_done">刷新成功</string>
     <string name="choose_history_post">历史消息查看</string>
-    <string name="settings">设置</string>
-    <string name="about">关于</string>
+
+    <!--navigation view menu-->
+    <string name="author">黎赵太郎</string>
+    <string name="author_description">Java / Android 学习中</string>
+    <string name="latest_post">首页</string>
     <string name="hot_post">热门消息</string>
     <string name="theme_post">主题日报</string>
-    <string name="latest_post">首页</string>
-    <string name="other">其他</string>
+    <string name="settings">设置</string>
+    <string name="about">关于</string>
+    <!--navigation view menu end-->
 
+    <string name="other">其他</string>
+    <string name="share_extra">" 分享自 知乎小报"</string>
+    <string name="share_to">分享至</string>
+
+    <!--activity关于-->
+    <string name="version">version:1.0.0</string>
+    <string name="thanksto">致谢</string>
+    <string name="score">为此应用评分</string>
+    <string name="feedback">反馈和建议</string>
+    <string name="donate">捐赠开发者</string>
+    <string name="donate_content">支付宝账号将会复制到粘贴板，进入支付宝可直接粘贴完成捐赠，感谢您的支持！</string>
+    <string name="donate_account">18627441225</string>
+    <string name="sendto">mailto:marktonymengyi@gmail.com</string>
+    <string name="mail_topic">知乎小报使用反馈与建议</string>
+    <string name="device_model">设备型号:</string>
+    <string name="sdk_version">SDK版本:</string>
+    <string name="no_mail_app">没有找到邮件类App</string>
+    <!--activity关于 end-->
+
+    <string name="copy_right">
+        本App所使用的所有API均由 知乎（Zhihu.Inc） 提供，
+        Github用户izzyleung采取非正常手段获取。
+        获取与共享之行为或有侵犯知乎权益的嫌疑。
+        若被告知需停止共享与使用，izzyleung会及时删除页面与整个项目。
+        请您暸解相关情况，并遵守知乎协议。\n
+    </string>
+    <string name="thanksto_content">API的提供者izzyleung,开源项目MaterialDialog,Glide</string>
 
 </resources>

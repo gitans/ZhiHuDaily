@@ -48,12 +48,12 @@ public class SplashActivity extends AppCompatActivity {
                 public void onResponse(JSONObject jsonObject) {
 
                     try {
-                        if (!jsonObject.getString("img").isEmpty()){
-                            Glide.with(SplashActivity.this).load(jsonObject.getString("img")).into(ivWelcome);
-                            tvWelcomeName.setText(jsonObject.getString("text"));
-                        } else {
+                        if (jsonObject.getString("img").isEmpty() || jsonObject.isNull("img")){
                             ivWelcome.setImageResource(R.drawable.welcome);
                             tvWelcomeName.setText("欢迎来到知乎小报");
+                        } else {
+                            Glide.with(SplashActivity.this).load(jsonObject.getString("img")).into(ivWelcome);
+                            tvWelcomeName.setText(jsonObject.getString("text"));
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -69,7 +69,7 @@ public class SplashActivity extends AppCompatActivity {
             queue.add(request);
         } else {
             ivWelcome.setImageResource(R.drawable.welcome);
-            tvWelcomeName.setText("欢迎来到知乎小报");
+            tvWelcomeName.setText(R.string.welcome_to_zhihudaily);
         }
 
 

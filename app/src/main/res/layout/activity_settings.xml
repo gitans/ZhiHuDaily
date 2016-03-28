@@ -9,6 +9,38 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.marktony.zhihudaily.UI.Activities.SettingsActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="使用本APP内置组件打开页面"
+                android:gravity="center_vertical"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:id="@+id/setting_use_webview"
+                android:gravity="center_vertical"
+                android:text="影响到您阅读时的体验"/>
+
+        </LinearLayout>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/checkbox_use_webview"
+            android:background="@null"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

@@ -126,7 +126,20 @@ public class MainActivity extends AppCompatActivity
 
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_copy_right) {
+            MaterialDialog dialog = new MaterialDialog.Builder(MainActivity.this)
+                    .title(R.string.action_copy_right)
+                    .neutralText(R.string.got_it)
+                    .content(R.string.copy_right)
+                    .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            dialog.dismiss();
+                        }
+                    }).build();
+
+            dialog.show();
+
             return true;
         }
 
@@ -157,11 +170,11 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_settings) {
 
-
+            startActivity(new Intent(MainActivity.this,SettingsActivity.class));
 
         } else if (id == R.id.nav_about) {
 
-
+            startActivity(new Intent(MainActivity.this,AboutActivity.class));
 
         }
 
