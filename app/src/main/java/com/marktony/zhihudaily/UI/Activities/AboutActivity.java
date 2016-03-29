@@ -36,7 +36,7 @@ public class AboutActivity extends AppCompatActivity {
                 MaterialDialog dialog = new MaterialDialog.Builder(AboutActivity.this)
                         .title(R.string.thanksto)
                         .content(R.string.thanksto_content)
-                        .negativeText(R.string.got_it)
+                        .neutralText(R.string.got_it)
                         .onNeutral(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {

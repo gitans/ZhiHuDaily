@@ -38,7 +38,7 @@
     <string name="share_to">分享至</string>
 
     <!--activity关于-->
-    <string name="version">version:1.0.0</string>
+    <string name="version">version:1.0.0(160329)</string>
     <string name="thanksto">致谢</string>
     <string name="score">为此应用评分</string>
     <string name="feedback">反馈和建议</string>
@@ -59,6 +59,6 @@
         若被告知需停止共享与使用，izzyleung会及时删除页面与整个项目。
         请您暸解相关情况，并遵守知乎协议。\n
     </string>
-    <string name="thanksto_content">API的提供者izzyleung,开源项目MaterialDialog,Glide</string>
+    <string name="thanksto_content">API的提供者izzyleung,开源项目 MaterialDialog , Glide 等等.</string>
 
 </resources>

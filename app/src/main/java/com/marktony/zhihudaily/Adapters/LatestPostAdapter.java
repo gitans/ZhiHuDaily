@@ -1,10 +1,13 @@
 package com.marktony.zhihudaily.Adapters;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -50,6 +53,7 @@ public class LatestPostAdapter extends RecyclerView.Adapter<LatestPostAdapter.La
         }
         holder.tvLatestNewsTitle.setText(item.getTitle());
 
+        setAnimation(holder.item,position);
     }
 
     @Override
@@ -66,12 +70,14 @@ public class LatestPostAdapter extends RecyclerView.Adapter<LatestPostAdapter.La
         private ImageView ivItemImg;
         private TextView tvLatestNewsTitle;
         private IOnRecyclerViewOnClickListener listener;
+        private CardView item;
 
         public LatestItemViewHolder(View itemView,IOnRecyclerViewOnClickListener listener) {
             super(itemView);
 
             ivItemImg = (ImageView) itemView.findViewById(R.id.latest_item_iv);
             tvLatestNewsTitle = (TextView) itemView.findViewById(R.id.latest_item_tv_title);
+            item = (CardView) itemView.findViewById(R.id.card_view_item);
             this.listener = listener;
             itemView.setOnClickListener(this);
         }
@@ -81,6 +87,13 @@ public class LatestPostAdapter extends RecyclerView.Adapter<LatestPostAdapter.La
             if (listener != null){
                 listener.OnItemClick(v,getLayoutPosition());
             }
+        }
+    }
+
+    private void setAnimation(View viewToAnimation,int position){
+        if (position > -1){
+            Animation animation = AnimationUtils.loadAnimation(context,android.R.anim.slide_in_left);
+            viewToAnimation.startAnimation(animation);
         }
     }
 

@@ -1,10 +1,13 @@
 package com.marktony.zhihudaily.Adapters;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -50,6 +53,8 @@ public class HotPostAdapter extends RecyclerView.Adapter<HotPostAdapter.HotPostV
             Glide.with(context).load(hotPost.getThumbnail()).centerCrop().into(holder.ivThumbnail);
         }
         holder.tvTitle.setText(hotPost.getTitle());
+
+        setAnimation(holder.item,position);
     }
 
     @Override
@@ -66,6 +71,7 @@ public class HotPostAdapter extends RecyclerView.Adapter<HotPostAdapter.HotPostV
         private ImageView ivThumbnail;
         private TextView tvTitle;
         private IOnRecyclerViewOnClickListener listener;
+        private CardView item;
 
         public HotPostViewHolder(View itemView,IOnRecyclerViewOnClickListener listener) {
             super(itemView);
@@ -74,6 +80,8 @@ public class HotPostAdapter extends RecyclerView.Adapter<HotPostAdapter.HotPostV
             tvTitle = (TextView) itemView.findViewById(R.id.latest_item_tv_title);
             this.listener = listener;
             itemView.setOnClickListener(this);
+
+            item = (CardView) itemView.findViewById(R.id.card_view_item);
         }
 
         @Override
@@ -81,6 +89,13 @@ public class HotPostAdapter extends RecyclerView.Adapter<HotPostAdapter.HotPostV
             if (listener != null){
                 listener.OnItemClick(v,getLayoutPosition());
             }
+        }
+    }
+
+    private void setAnimation(View viewToAnimation,int position){
+        if (position > -1){
+            Animation animation = AnimationUtils.loadAnimation(context,android.R.anim.slide_in_left);
+            viewToAnimation.startAnimation(animation);
         }
     }
 }

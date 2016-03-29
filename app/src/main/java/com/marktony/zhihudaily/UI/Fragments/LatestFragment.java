@@ -132,20 +132,6 @@ public class LatestFragment extends Fragment {
         //设置下拉刷新按钮的大小
         refresh.setSize(SwipeRefreshLayout.DEFAULT);
 
-        rvLatestNews.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-
-                if (newState != RecyclerView.SCROLL_STATE_IDLE){
-                    fab.setVisibility(View.INVISIBLE);
-                } else {
-                    fab.setVisibility(View.VISIBLE);
-                }
-
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-        });
-
 
         load(null);
 
