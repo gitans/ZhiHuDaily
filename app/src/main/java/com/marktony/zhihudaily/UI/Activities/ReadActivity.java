@@ -91,8 +91,6 @@ public class ReadActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject jsonObject) {
 
-                dialog.dismiss();
-
                 try {
 
                     //需要注意的是这里有可能没有body。。。 好多坑。。。
@@ -144,6 +142,7 @@ public class ReadActivity extends AppCompatActivity {
                                 jsonObject.getString("body").replace("<div class=\"img-place-holder\">", "") + "\n<body>";
                         webViewRead.loadDataWithBaseURL("x-data://base",html,"text/html","utf-8",null);
 
+                        dialog.dismiss();
                     }
 
                 } catch (JSONException e) {

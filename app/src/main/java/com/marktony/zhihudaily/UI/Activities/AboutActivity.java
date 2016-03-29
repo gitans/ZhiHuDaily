@@ -51,6 +51,8 @@ public class AboutActivity extends AppCompatActivity {
         tvScore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                
+                //// TODO: 2016/3/29 需要考虑没有应用市场app时的情况 
                 Uri uri = Uri.parse("market://details?id="+getPackageName());
                 Intent intent = new Intent(Intent.ACTION_VIEW,uri);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
