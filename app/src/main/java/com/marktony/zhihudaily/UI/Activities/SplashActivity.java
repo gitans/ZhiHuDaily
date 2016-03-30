@@ -43,7 +43,7 @@ public class SplashActivity extends AppCompatActivity {
 
         sp = getSharedPreferences("user_settings",MODE_PRIVATE);
 
-        if (sp.getBoolean("load_splash",true)){
+        if (sp.getBoolean("load_splash",false)){
             finish();
             Intent intent = new Intent(SplashActivity.this,MainActivity.class);
             startActivity(intent);

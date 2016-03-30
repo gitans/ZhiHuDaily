@@ -3,15 +3,13 @@ package com.marktony.zhihudaily.UI.Activities;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
+import android.widget.CompoundButton;
 
 import com.marktony.zhihudaily.R;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private LinearLayout layout;
     private CheckBox checkBox;
 
     private SharedPreferences sp;
@@ -26,16 +24,12 @@ public class SettingsActivity extends AppCompatActivity {
 
         initViews();
 
-        layout.setOnClickListener(new View.OnClickListener() {
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                checkBox.setChecked(isChecked);
 
-                if (checkBox.isChecked())
-                    checkBox.setChecked(false);
-                else
-                    checkBox.setChecked(true);
-
-                editor.putBoolean("load_splash",checkBox.isChecked());
+                editor.putBoolean("load_splash",isChecked);
                 editor.apply();
             }
         });
@@ -44,9 +38,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void initViews() {
 
-        layout = (LinearLayout) findViewById(R.id.LL_setting_load_splash);
         checkBox = (CheckBox) findViewById(R.id.checkbox_load_splash);
-
-        checkBox.setChecked(sp.getBoolean("load_splash",true));
+        checkBox.setChecked(sp.getBoolean("load_splash",false));
     }
+
 }

@@ -60,5 +60,6 @@
         请您暸解相关情况，并遵守知乎协议。\n
     </string>
     <string name="thanksto_content">API的提供者izzyleung,开源项目 MaterialDialog , Glide 等等.</string>
+    <string name="no_app_store_found">没有找到市场类App</string>
 
 </resources>
