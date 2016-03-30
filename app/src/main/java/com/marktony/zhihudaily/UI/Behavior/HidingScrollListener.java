@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
  */
 public abstract class HidingScrollListener extends RecyclerView.OnScrollListener {
 
-    private static final int HIDE_THRESHOLD = 30;
+    private static final int HIDE_THRESHOLD = 20;
     private int scrolledDistance = 0;
     private boolean controlsVisible = true;
 
@@ -29,7 +29,7 @@ public abstract class HidingScrollListener extends RecyclerView.OnScrollListener
         // 是否有findFirstVisibleItemPosition方法取决layoutmanager
         int firstItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
         //show views if first item is first visible position and views are hidden
-        if (firstItem == 1){
+        if (firstItem == 0){
             if (!controlsVisible){
                 onShow();
                 controlsVisible = true;

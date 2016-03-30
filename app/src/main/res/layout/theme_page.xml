@@ -30,7 +30,6 @@
         android:layout_height="match_parent"
         android:paddingTop="200dp"
         android:id="@+id/rv_theme_post"
-        android:layout_marginTop="8dp"
         android:clipToPadding="false">
 
         <!--clipToPadding一定要设置为false
