@@ -7,9 +7,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -25,6 +28,7 @@ import com.marktony.zhihudaily.Entities.ThemePost;
 import com.marktony.zhihudaily.Interfaces.IOnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.UI.Activities.ReadActivity;
+import com.marktony.zhihudaily.UI.Behavior.HidingScrollListener;
 import com.marktony.zhihudaily.Utils.Api;
 
 import org.json.JSONArray;
@@ -51,6 +55,7 @@ public class PageFragment extends android.support.v4.app.Fragment {
     private ImageView ivTheme;
     private RecyclerView rvThemePosts;
     private TextView tvThemeDescription;
+    private RelativeLayout header;
 
     private ThemePostAdapter adapter;
 
@@ -90,6 +95,7 @@ public class PageFragment extends android.support.v4.app.Fragment {
         rvThemePosts = (RecyclerView) view.findViewById(R.id.rv_theme_post);
         rvThemePosts.setLayoutManager(new LinearLayoutManager(getActivity()));
         tvThemeDescription = (TextView) view.findViewById(R.id.tv_theme_description);
+        header = (RelativeLayout) view.findViewById(R.id.header);
 
         JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, Api.THEMES, new Response.Listener<JSONObject>() {
             @Override
@@ -162,6 +168,17 @@ public class PageFragment extends android.support.v4.app.Fragment {
                                                     startActivity(intent);
                                                 }
                                             });
+                                            rvThemePosts.setOnScrollListener(new HidingScrollListener() {
+                                                @Override
+                                                public void onHide() {
+                                                    hideViews();
+                                                }
+
+                                                @Override
+                                                public void onShow() {
+                                                    showViews();
+                                                }
+                                            });
                                         }
 
                                     }catch (JSONException e) {
@@ -195,7 +212,21 @@ public class PageFragment extends android.support.v4.app.Fragment {
 
         queue.add(request1);
 
+        rvThemePosts.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+            }
+        });
+
         return view;
+    }
+
+    private void hideViews(){
+        header.animate().translationY(-header.getHeight()).setInterpolator(new AccelerateInterpolator(2));
+    }
+    private void showViews(){
+        header.animate().translationY(0).setInterpolator(new AccelerateInterpolator(2));
     }
 
 }
