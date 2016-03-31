@@ -86,9 +86,9 @@ public class MainActivity extends AppCompatActivity
                 hits[hits.length - 1] = SystemClock.uptimeMillis();
                 if (hits[0] >= (SystemClock.uptimeMillis() - 500)){
                     MaterialDialog dialog = new MaterialDialog.Builder(MainActivity.this)
-                            .title("彩蛋！")
-                            .content("我知道这个头像不帅，但是也不要这样点我呀")
-                            .neutralText("好的")
+                            .title(R.string.color_egg)
+                            .customView(R.layout.color_egg,false)
+                            .neutralText(R.string.color_egg_callback)
                             .onNeutral(new MaterialDialog.SingleButtonCallback() {
                                 @Override
                                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {

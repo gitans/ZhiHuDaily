@@ -38,7 +38,7 @@
     <string name="share_to">分享至</string>
 
     <!--activity关于-->
-    <string name="version">version:1.0.0(160329)</string>
+    <string name="version">version:1.0.0(160401)</string>
     <string name="thanksto">致谢</string>
     <string name="score">为此应用评分</string>
     <string name="feedback">反馈和建议</string>
@@ -61,5 +61,8 @@
     </string>
     <string name="thanksto_content">API的提供者izzyleung,开源项目 MaterialDialog , Glide 等等.</string>
     <string name="no_app_store_found">没有找到市场类App</string>
+    <string name="color_egg_content">哈哈，好聪明的用户！愚人节快乐！</string>
+    <string name="color_egg">彩蛋！</string>
+    <string name="color_egg_callback">聪明如我</string>
 
 </resources>
