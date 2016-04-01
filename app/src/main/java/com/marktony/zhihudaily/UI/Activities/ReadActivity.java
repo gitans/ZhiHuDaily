@@ -230,6 +230,7 @@ public class ReadActivity extends AppCompatActivity {
         fab = (FloatingActionButton) findViewById(R.id.fab);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ivFirstImg = (ImageView) findViewById(R.id.head_img);
 
     }

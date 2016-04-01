@@ -33,10 +33,21 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.Activities.MainActivity" />
         </activity>
+
         <activity android:name=".UI.Activities.SettingsActivity"
-            android:label="@string/settings"/>
+            android:label="@string/settings"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UI.Activities.MainActivity" />
+        </activity>
         <activity android:name=".UI.Activities.AboutActivity"
-            android:label="@string/about"></activity>
+            android:label="@string/about"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UI.Activities.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

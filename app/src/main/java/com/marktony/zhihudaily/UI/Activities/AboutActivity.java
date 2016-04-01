@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ public class AboutActivity extends AppCompatActivity {
     private TextView tvScore;
     private TextView tvFeedback;
     private TextView tvDonate;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +122,9 @@ public class AboutActivity extends AppCompatActivity {
         tvScore = (TextView) findViewById(R.id.tv_score);
         tvFeedback = (TextView) findViewById(R.id.tv_feedback);
         tvDonate = (TextView) findViewById(R.id.tv_donate);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 }

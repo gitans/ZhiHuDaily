@@ -24,7 +24,7 @@
     <string name="choose_history_post">历史消息查看</string>
 
     <!--navigation view menu-->
-    <string name="author">黎赵太郎</string>
+    <string name="author">蒙大牛和伊小利</string>
     <string name="author_description">Java / Android 学习中</string>
     <string name="latest_post">首页</string>
     <string name="hot_post">热门消息</string>
@@ -64,5 +64,7 @@
     <string name="color_egg_content">哈哈，好聪明的用户！愚人节快乐！</string>
     <string name="color_egg">彩蛋！</string>
     <string name="color_egg_callback">聪明如我</string>
+    <string name="no_splash">禁止启动动画</string>
+    <string name="no_splash_description">直接进入主界面</string>
 
 </resources>

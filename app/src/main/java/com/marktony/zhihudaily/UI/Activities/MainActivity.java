@@ -2,7 +2,6 @@ package com.marktony.zhihudaily.UI.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -12,11 +11,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.LinearLayout;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -74,33 +70,6 @@ public class MainActivity extends AppCompatActivity
         navigationView.setCheckedItem(R.id.nav_home);
         LatestFragment fragment = new LatestFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container,fragment).commit();
-
-        // 3次连击navigation view显示彩蛋部分
-        navigationView.getHeaderView(0).setOnClickListener(new View.OnClickListener() {
-
-            long[] hits = new long[3];
-
-            @Override
-            public void onClick(View v) {
-                System.arraycopy(hits,1,hits,0,hits.length-1);
-                hits[hits.length - 1] = SystemClock.uptimeMillis();
-                if (hits[0] >= (SystemClock.uptimeMillis() - 500)){
-                    MaterialDialog dialog = new MaterialDialog.Builder(MainActivity.this)
-                            .title(R.string.color_egg)
-                            .customView(R.layout.color_egg,false)
-                            .neutralText(R.string.color_egg_callback)
-                            .onNeutral(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    dialog.dismiss();
-                                }
-                            }).build();
-
-                    dialog.show();
-
-                }
-            }
-        });
 
     }
 

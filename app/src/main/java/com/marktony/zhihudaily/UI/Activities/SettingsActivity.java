@@ -3,6 +3,7 @@ package com.marktony.zhihudaily.UI.Activities;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
@@ -11,6 +12,7 @@ import com.marktony.zhihudaily.R;
 public class SettingsActivity extends AppCompatActivity {
 
     private CheckBox checkBox;
+    private Toolbar toolbar;
 
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
@@ -40,6 +42,9 @@ public class SettingsActivity extends AppCompatActivity {
 
         checkBox = (CheckBox) findViewById(R.id.checkbox_load_splash);
         checkBox.setChecked(sp.getBoolean("load_splash",false));
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 }
