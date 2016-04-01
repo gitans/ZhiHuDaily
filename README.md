@@ -32,4 +32,4 @@ App内容主要分为4部分:最新日报、主题日报、热门日报、历史
 * [Glide](https://github.com/bumptech/glide)
 
 ## 联系我
-* Email:[marktonymengyi@gmail.com](marktonymengyi@gmail.com)
+* Email:[marktonymengyi@gmail.com](mailto:marktonymengyi@gmail.com)
