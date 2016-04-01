@@ -11,7 +11,9 @@
 App内容主要分为4部分:最新日报、主题日报、热门日报、历史日报。
 
 ## App运行效果:
-![1](https://github.com/marktony/ZhiHuDaily/blob/master/enframe_2016-03-31-12-40-16.png)
+![1](https://github.com/marktony/ZhiHuDaily/blob/master/1.png)
+![2](https://github.com/marktony/ZhiHuDaily/blob/master/2.png)
+![3](https://github.com/marktony/ZhiHuDaily/blob/master/3.png)
 
 
 ## Apk下载地址：
@@ -23,6 +25,11 @@ App内容主要分为4部分:最新日报、主题日报、热门日报、历史
 
 或者扫描二维码下载
 
+![code](https://github.com/marktony/ZhiHuDaily/blob/master/httpsplaygooglecomst.png)
+
 ## 项目相关
 * [Material-Dialogs](https://github.com/afollestad/material-dialogs)
 * [Glide](https://github.com/bumptech/glide)
+
+## 联系我
+* Email:[marktonymengyi@gmail.com](marktonymengyi@gmail.com)
