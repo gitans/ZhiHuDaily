@@ -4,14 +4,13 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
 import com.marktony.zhihudaily.R;
+import com.rey.material.widget.Switch;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private CheckBox checkBox;
+    private Switch switchLoadSplash;
     private Toolbar toolbar;
 
     private SharedPreferences sp;
@@ -26,12 +25,12 @@ public class SettingsActivity extends AppCompatActivity {
 
         initViews();
 
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        switchLoadSplash.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                checkBox.setChecked(isChecked);
+            public void onCheckedChanged(Switch view, boolean checked) {
+                switchLoadSplash.setChecked(checked);
 
-                editor.putBoolean("load_splash",isChecked);
+                editor.putBoolean("load_splash",checked);
                 editor.apply();
             }
         });
@@ -40,8 +39,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void initViews() {
 
-        checkBox = (CheckBox) findViewById(R.id.checkbox_load_splash);
-        checkBox.setChecked(sp.getBoolean("load_splash",false));
+        switchLoadSplash = (Switch) findViewById(R.id.switch_load_splash);
+        switchLoadSplash.setChecked(sp.getBoolean("load_splash",false));
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -86,6 +86,9 @@ public class ReadActivity extends AppCompatActivity {
             }
         });
 
+        // 设置是否加载图片，true不加载，false加载图片
+        webViewRead.getSettings().setBlockNetworkImage(true);
+
         Log.d("url",Api.NEWS + id);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.NEWS + id, new Response.Listener<JSONObject>() {
             @Override

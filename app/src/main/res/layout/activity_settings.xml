@@ -57,11 +57,12 @@
 
             </LinearLayout>
 
-            <CheckBox
+            <com.rey.material.widget.Switch
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:id="@+id/checkbox_load_splash"
-                android:background="@null"/>
+                android:id="@+id/switch_load_splash"
+                style="@style/Material.Widget.Switch"
+                android:gravity="center" />
 
         </LinearLayout>
 

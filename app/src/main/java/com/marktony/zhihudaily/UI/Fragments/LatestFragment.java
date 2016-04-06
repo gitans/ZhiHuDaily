@@ -1,7 +1,6 @@
 package com.marktony.zhihudaily.UI.Fragments;
 
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,7 +14,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Request;
@@ -30,6 +28,7 @@ import com.marktony.zhihudaily.Interfaces.IOnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.UI.Activities.ReadActivity;
 import com.marktony.zhihudaily.Utils.Api;
+import com.rey.material.app.DatePickerDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,8 +52,6 @@ public class LatestFragment extends Fragment {
     private LatestPostAdapter adapter;
 
     private MaterialDialog dialog;
-
-    private String date = null;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,38 +84,46 @@ public class LatestFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // 获取当前日期的前一天
                 Calendar c = Calendar.getInstance();
-                int year = c.get(Calendar.YEAR);
-                int month = c.get(Calendar.MONTH);
-                int day = c.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog dialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        if (monthOfYear <= 8 && dayOfMonth < 10){
-                            date = String.valueOf(year) + "0" + (monthOfYear + 1) + "0" + dayOfMonth;
-                        } else if (monthOfYear <= 8 && dayOfMonth >= 10){
-                            date = String.valueOf(year) + "0" + (monthOfYear + 1) + dayOfMonth;
-                        } else if (monthOfYear > 8 && dayOfMonth < 10){
-                            date = String.valueOf(year) + (monthOfYear + 1) + "0" + dayOfMonth;
-                        } else {
-                            date = String.valueOf(year) + (monthOfYear + 1) + dayOfMonth;
-                        }
+                c.add(Calendar.DAY_OF_MONTH,-1);
+                final int year = c.get(Calendar.YEAR);
+                final int month = c.get(Calendar.MONTH);
+                final int day = c.get(Calendar.DAY_OF_MONTH);
 
-                        load(date);
+                final DatePickerDialog dialog = new DatePickerDialog(getActivity());
 
-                    }
-                },year,month,day);
+                // 给dialog设置初始日期
+                dialog.date(day,month,year);
 
-                // 给datepickerdialog设置选择范围
-                DatePicker picker = dialog.getDatePicker();
-                picker.setMaxDate(Calendar.getInstance().getTimeInMillis());
                 Calendar calendar = Calendar.getInstance();
+                // 最小日期设置为2013年5月20日，知乎日报的诞生日期为2013年5月19日，如果传入的日期小于19，那么将会出现错误
                 calendar.set(2013,5,20);
-                picker.setMinDate(calendar.getTimeInMillis());
-
-                dialog.setTitle(getString(R.string.choose_history_post));
-
+                // 通过calendar给dialog设置最大和最小日期
+                // 其中最大日期为当前日期的前一天
+                dialog.dateRange(calendar.getTimeInMillis(),Calendar.getInstance().getTimeInMillis() - 24*60*60*1000);
                 dialog.show();
+
+                dialog.positiveAction(getString(R.string.positive));
+                dialog.negativeAction(getString(R.string.negative));
+
+                dialog.positiveActionClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        load(parseDate(dialog.getDay(),dialog.getMonth(),dialog.getYear()));
+
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.negativeActionClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
 
             }
         });
@@ -147,6 +152,10 @@ public class LatestFragment extends Fragment {
 
     }
 
+    /**
+     * 用于加载最新日报或者历史日报
+     * @param date 日期
+     */
     private void load(String date){
 
         String url = null;
@@ -220,5 +229,28 @@ public class LatestFragment extends Fragment {
         queue.add(request);
     }
 
+    /**
+     * 对传入的int型的日期转换为string类型
+     * @param day 天数
+     * @param month 月份
+     * @param year 年份
+     * @return 转换后的string类型的日期
+     */
+    private String parseDate(int day,int month,int year){
+        String date = null;
+
+        // month+1的原因为通过date picker dialog获取到的月份是从0开始的
+        if (month <= 8 && day < 10){
+            date = String.valueOf(year) + "0" + (month + 1) + "0" + day;
+        } else if (month <= 8 && day >= 10){
+            date = String.valueOf(year) + "0" + (month + 1) + day;
+        } else if (month > 8 && day < 10){
+            date = String.valueOf(year) + (month + 1) + "0" + day;
+        } else {
+            date = String.valueOf(year) + (month + 1) + day;
+        }
+
+        return date;
+    }
 
 }
