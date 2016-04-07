@@ -11,6 +11,7 @@ import com.rey.material.widget.Switch;
 public class SettingsActivity extends AppCompatActivity {
 
     private Switch switchLoadSplash;
+    private Switch switchNoPictureMode;
     private Toolbar toolbar;
 
     private SharedPreferences sp;
@@ -35,12 +36,27 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        switchNoPictureMode.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(Switch view, boolean checked) {
+                switchNoPictureMode.setChecked(checked);
+
+                editor.putBoolean("no_picture_mode",checked);
+                editor.apply();
+            }
+        });
+
     }
 
     private void initViews() {
 
+        // 初始化switch，通过读取sp中的值
         switchLoadSplash = (Switch) findViewById(R.id.switch_load_splash);
         switchLoadSplash.setChecked(sp.getBoolean("load_splash",false));
+
+        switchNoPictureMode = (Switch) findViewById(R.id.switch_no_picture_mode);
+        switchNoPictureMode.setChecked( sp.getBoolean("no_picture_mode",false));
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

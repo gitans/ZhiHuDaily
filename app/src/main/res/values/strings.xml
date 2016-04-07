@@ -59,12 +59,11 @@
         若被告知需停止共享与使用，izzyleung会及时删除页面与整个项目。
         请您暸解相关情况，并遵守知乎协议。\n
     </string>
-    <string name="thanksto_content">API的提供者izzyleung,开源项目 MaterialDialog , Glide 等等.</string>
+    <string name="thanksto_content">API的提供者izzyleung,开源项目 MaterialDialog ,Material, Glide 等等.</string>
     <string name="no_app_store_found">没有找到市场类App</string>
-    <string name="color_egg_content">哈哈，好聪明的用户！愚人节快乐！</string>
-    <string name="color_egg">彩蛋！</string>
-    <string name="color_egg_callback">聪明如我</string>
     <string name="no_splash">禁止启动动画</string>
     <string name="no_splash_description">直接进入主界面</string>
+    <string name="no_picture_mode">无图模式</string>
+    <string name="no_picture_mode_description">将影响你的阅读体验</string>
 
 </resources>

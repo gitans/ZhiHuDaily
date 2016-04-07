@@ -1,12 +1,12 @@
 package com.marktony.zhihudaily.UI.Activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,12 +45,18 @@ public class ReadActivity extends AppCompatActivity {
 
     private String shareUrl = null;
 
+    private SharedPreferences sp;
+
+    private static final String APP_CACAHE_DIRNAME = "/webcache";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read);
 
         initViews();
+
+        sp = getSharedPreferences("user_settings",MODE_PRIVATE);
 
         dialog = new MaterialDialog.Builder(ReadActivity.this)
                 .content(getString(R.string.loading))
@@ -72,11 +78,11 @@ public class ReadActivity extends AppCompatActivity {
         //缩放,设置为不能缩放可以防止页面上出现放大和缩小的图标
         webViewRead.getSettings().setBuiltInZoomControls(false);
         //缓存
-        webViewRead.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        webViewRead.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         //开启DOM storage API功能
         webViewRead.getSettings().setDomStorageEnabled(true);
         //开启application Cache功能
-        webViewRead.getSettings().setAppCacheEnabled(true);
+        webViewRead.getSettings().setAppCacheEnabled(false);
         //不调用第三方浏览器即可进行页面反应
         webViewRead.setWebViewClient(new WebViewClient() {
             @Override
@@ -87,9 +93,8 @@ public class ReadActivity extends AppCompatActivity {
         });
 
         // 设置是否加载图片，true不加载，false加载图片
-        webViewRead.getSettings().setBlockNetworkImage(true);
+        webViewRead.getSettings().setBlockNetworkImage(sp.getBoolean("no_picture_mode",false));
 
-        Log.d("url",Api.NEWS + id);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.NEWS + id, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -237,4 +242,6 @@ public class ReadActivity extends AppCompatActivity {
         ivFirstImg = (ImageView) findViewById(R.id.head_img);
 
     }
+
+
 }

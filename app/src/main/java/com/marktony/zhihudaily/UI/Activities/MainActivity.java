@@ -22,6 +22,8 @@ import com.marktony.zhihudaily.UI.Fragments.ThemeFragment;
 import com.marktony.zhihudaily.UI.Fragments.LatestFragment;
 import com.marktony.zhihudaily.Utils.NetworkState;
 
+import java.io.File;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -172,6 +174,31 @@ public class MainActivity extends AppCompatActivity
     //改变fragment
     private void changeFragment(Fragment fragment){
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container,fragment).commit();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        deleteDir(getCacheDir());
+    }
+
+    /**
+     * 递归删除应用下的缓存
+     * @param dir 需要删除的文件或者文件目录
+     * @return 文件是否删除
+     */
+    private static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+        }
+        return dir.delete();
     }
 
 }
