@@ -92,7 +92,7 @@ public class ThemePostAdapter  extends RecyclerView.Adapter<ThemePostAdapter.The
 
     private void setAnimation(View viewToAnimation,int position){
         if (position > -1){
-            Animation animation = AnimationUtils.loadAnimation(context,android.R.anim.slide_in_left);
+            Animation animation = AnimationUtils.loadAnimation(context,android.R.anim.fade_in);
             viewToAnimation.startAnimation(animation);
         }
     }

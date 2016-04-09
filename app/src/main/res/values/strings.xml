@@ -38,7 +38,7 @@
     <string name="share_to">分享至</string>
 
     <!--activity关于-->
-    <string name="version">version:1.0.0(160401)</string>
+    <string name="version">version:1.0.1(160409)</string>
     <string name="thanksto">致谢</string>
     <string name="score">为此应用评分</string>
     <string name="feedback">反馈和建议</string>

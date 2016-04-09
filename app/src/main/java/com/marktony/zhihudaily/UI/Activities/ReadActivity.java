@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +28,7 @@ import com.marktony.zhihudaily.Utils.Api;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ReadActivity extends AppCompatActivity {
+public class ReadActivity extends BaseSwipeBackActivity {
 
     private WebView webViewRead;
     private FloatingActionButton fab;
@@ -47,10 +46,8 @@ public class ReadActivity extends AppCompatActivity {
 
     private SharedPreferences sp;
 
-    private static final String APP_CACAHE_DIRNAME = "/webcache";
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read);
 
@@ -137,11 +134,13 @@ public class ReadActivity extends AppCompatActivity {
                                         "rel=\"stylesheet\" />\n";
                             }
                         }
+
                         /**
                          * body中替换掉img-place-holder div
                          * 可以取出网页中div所占的区域
                          * 如果没有去除这个div，那么整个网页的头部将会出现一部分的空白区域
                          */
+
                         String html = "<!DOCTYPE html>\n" +
                                 "<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
                                 "<head>\n" +
@@ -167,6 +166,7 @@ public class ReadActivity extends AppCompatActivity {
 
         queue.add(request);
 
+        // 请求评论和赞的数量
         JsonObjectRequest re = new JsonObjectRequest(Request.Method.GET, Api.STORY_EXTRA + id, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -211,6 +211,9 @@ public class ReadActivity extends AppCompatActivity {
         return true;
     }
 
+    // 在onPrepareOptionsMenu方法中更新数据
+    // 如果是在create方法中更新，那么只会创建一次，可能获取不到最新的数据
+    // 而在这个方法中去更新，可以保证每次都是最新的
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
@@ -246,6 +249,12 @@ public class ReadActivity extends AppCompatActivity {
     private void initViews() {
 
         webViewRead = (WebView) findViewById(R.id.wb_read);
+
+        // 设置webview的scrollbar 不过貌似在白色背景下不起作用
+        // 只显示一下然后就消失。。。
+        webViewRead.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+        webViewRead.setScrollbarFadingEnabled(false);
+
         fab = (FloatingActionButton) findViewById(R.id.fab);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
