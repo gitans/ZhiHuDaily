@@ -226,11 +226,22 @@ public class ReadActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
+        // 通过监听toolbar中MenuItem的id值来确定是否为返回箭头被点击
+        // 如果是，则直接调用onBackPressed方法
+        // 废除 返回在Manifest文件中声明的ParentActivity
+        // 这样写的好处是不用在返回MainActivity之后重新new MainActivity
+        // 重新做网络请求之类的
+        if (id == android.R.id.home){
+            onBackPressed();
+        }
+
         if (id == R.id.action_comments){
 
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 
     private void initViews() {
 
@@ -242,6 +253,5 @@ public class ReadActivity extends AppCompatActivity {
         ivFirstImg = (ImageView) findViewById(R.id.head_img);
 
     }
-
 
 }
