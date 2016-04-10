@@ -13,6 +13,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Request;
@@ -34,6 +35,7 @@ public class ReadActivity extends BaseSwipeBackActivity {
     private FloatingActionButton fab;
     private Toolbar toolbar;
     private ImageView ivFirstImg;
+    private TextView tvCopyRight;
 
     private RequestQueue queue;
 
@@ -112,6 +114,7 @@ public class ReadActivity extends BaseSwipeBackActivity {
 
                             Glide.with(ReadActivity.this).load(jsonObject.getString("image")).centerCrop().into(ivFirstImg);
                             shareUrl = jsonObject.getString("share_url");
+                            tvCopyRight.setText(jsonObject.getString("image_source"));
 
                         } else if (image == null){
 
@@ -260,6 +263,7 @@ public class ReadActivity extends BaseSwipeBackActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ivFirstImg = (ImageView) findViewById(R.id.head_img);
+        tvCopyRight = (TextView) findViewById(R.id.tv_copyright);
 
     }
 
