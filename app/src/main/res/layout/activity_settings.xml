@@ -33,7 +33,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="68dp"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -63,15 +63,18 @@
                 android:id="@+id/switch_load_splash"
                 style="@style/Material.Widget.Switch"
                 android:gravity="center"
-                android:checked="false"/>
+                android:checked="false" />
 
         </LinearLayout>
 
+        <View  android:layout_height="1dp"
+            android:layout_width="match_parent"
+            android:background="#dddddd" />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/activity_vertical_margin">
+            android:layout_height="68dp"
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
