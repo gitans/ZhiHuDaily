@@ -11,9 +11,10 @@
 App内容主要分为4部分:最新日报、主题日报、热门日报、历史日报。
 
 ## App运行效果:
-![1](https://github.com/marktony/ZhiHuDaily/blob/master/1.png)
-![2](https://github.com/marktony/ZhiHuDaily/blob/master/2.png)
-![3](https://github.com/marktony/ZhiHuDaily/blob/master/3.png)
+![0](https://github.com/marktony/ZhiHuDaily/blob/master/screenshoots/0.png)
+![1](https://github.com/marktony/ZhiHuDaily/blob/master/screenshoots/1.png)
+![2](https://github.com/marktony/ZhiHuDaily/blob/master/screenshoots/2.png)
+![3](https://github.com/marktony/ZhiHuDaily/blob/master/screenshoots/3.png)
 
 
 ## Apk下载地址：
@@ -24,6 +25,7 @@ App内容主要分为4部分:最新日报、主题日报、热门日报、历史
 * [酷市场](http://www.coolapk.com/apk/com.marktony.zhihudaily)
 
 或者扫描二维码下载
+![code](https://github.com/marktony/ZhiHuDaily/blob/master/screenshoots/code.png)
 
 ## 项目相关
 * [Material-Dialogs](https://github.com/afollestad/material-dialogs)
