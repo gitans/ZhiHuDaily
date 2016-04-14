@@ -32,6 +32,9 @@ App内容主要分为4部分:最新日报、主题日报、热门日报、历史
 * [Glide](https://github.com/bumptech/glide)
 * [Material](https://github.com/rey5137/material)
 
+## 联系我
+[marktonymengyi@gmail.com](mailto:marktonymengyi@gmail.com)
+
 ## 许可证
 
     Copyright 2016 [lizhaotailang]
