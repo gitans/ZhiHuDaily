@@ -1,6 +1,7 @@
 package com.marktony.zhihudaily.UI.Activities;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -181,6 +182,13 @@ public class MainActivity extends AppCompatActivity
         super.onDestroy();
 
         deleteDir(getCacheDir());
+    }
+
+    // 屏幕方向改变时调用的方法，拦截屏幕切换
+    // manifest文件中给activity设置了相应的参数
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 
     /**
