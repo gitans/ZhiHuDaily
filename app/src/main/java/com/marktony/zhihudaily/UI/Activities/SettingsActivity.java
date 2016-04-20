@@ -1,6 +1,7 @@
 package com.marktony.zhihudaily.UI.Activities;
 
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -55,6 +56,11 @@ public class SettingsActivity extends AppCompatActivity {
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 
     private void initViews() {

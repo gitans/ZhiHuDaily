@@ -24,7 +24,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.marktony.zhihudaily.Adapters.LatestPostAdapter;
 import com.marktony.zhihudaily.Entities.LatestPost;
-import com.marktony.zhihudaily.Interfaces.IOnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.Interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.UI.Activities.ReadActivity;
 import com.marktony.zhihudaily.Utils.Api;
@@ -203,7 +203,7 @@ public class LatestFragment extends Fragment {
 
                     adapter = new LatestPostAdapter(getActivity(),list);
                     rvLatestNews.setAdapter(adapter);
-                    adapter.setItemClickListener(new IOnRecyclerViewOnClickListener() {
+                    adapter.setItemClickListener(new OnRecyclerViewOnClickListener() {
                         @Override
                         public void OnItemClick(View v, int position) {
                             Intent intent = new Intent(getActivity(),ReadActivity.class);

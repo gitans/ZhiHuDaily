@@ -2,7 +2,9 @@ package com.marktony.zhihudaily.UI.Activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,9 +46,10 @@ public class SplashActivity extends AppCompatActivity {
         sp = getSharedPreferences("user_settings",MODE_PRIVATE);
 
         if (sp.getBoolean("load_splash",false)){
-            finish();
+
             Intent intent = new Intent(SplashActivity.this,MainActivity.class);
             startActivity(intent);
+            finish();
             } else {
                 queue = Volley.newRequestQueue(getApplicationContext());
 
@@ -95,6 +98,11 @@ public class SplashActivity extends AppCompatActivity {
                 timer.schedule(timerTask, 1000 * 3);
             }
         }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
 
     private void initViews() {
 

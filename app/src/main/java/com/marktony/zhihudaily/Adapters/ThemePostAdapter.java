@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.Entities.ThemePost;
-import com.marktony.zhihudaily.Interfaces.IOnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.Interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
 
 import java.util.List;
@@ -26,7 +26,7 @@ public class ThemePostAdapter  extends RecyclerView.Adapter<ThemePostAdapter.The
     private final List<ThemePost> list;
     private final LayoutInflater inflater;
     private Context context;
-    private IOnRecyclerViewOnClickListener mListener;
+    private OnRecyclerViewOnClickListener mListener;
 
     public ThemePostAdapter(Context context, List<ThemePost> list){
         this.list = list;
@@ -61,7 +61,7 @@ public class ThemePostAdapter  extends RecyclerView.Adapter<ThemePostAdapter.The
         return list.size();
     }
 
-    public void setItemClickListener(IOnRecyclerViewOnClickListener listener){
+    public void setItemClickListener(OnRecyclerViewOnClickListener listener){
         this.mListener = listener;
     }
 
@@ -69,10 +69,10 @@ public class ThemePostAdapter  extends RecyclerView.Adapter<ThemePostAdapter.The
 
         private ImageView ivItemImg;
         private TextView tvLatestNewsTitle;
-        private IOnRecyclerViewOnClickListener listener;
+        private OnRecyclerViewOnClickListener listener;
         private CardView item;
 
-        public ThemePostViewHolder(View itemView,IOnRecyclerViewOnClickListener listener) {
+        public ThemePostViewHolder(View itemView,OnRecyclerViewOnClickListener listener) {
             super(itemView);
 
             ivItemImg = (ImageView) itemView.findViewById(R.id.latest_item_iv);

@@ -247,8 +247,6 @@ public class ReadActivity extends BaseSwipeBackActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-
     private void initViews() {
 
         webViewRead = (WebView) findViewById(R.id.wb_read);

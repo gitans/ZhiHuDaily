@@ -20,7 +20,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.marktony.zhihudaily.Adapters.HotPostAdapter;
 import com.marktony.zhihudaily.Entities.HotPost;
-import com.marktony.zhihudaily.Interfaces.IOnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.Interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.UI.Activities.ReadActivity;
 import com.marktony.zhihudaily.Utils.Api;
@@ -83,7 +83,7 @@ public class HotPostFragment extends Fragment {
 
                         adapter = new HotPostAdapter(getActivity(),list);
                         recyclerView.setAdapter(adapter);
-                        adapter.setItemClickListener(new IOnRecyclerViewOnClickListener() {
+                        adapter.setItemClickListener(new OnRecyclerViewOnClickListener() {
                             @Override
                             public void OnItemClick(View v, int position) {
                                 Intent intent = new Intent(getActivity(),ReadActivity.class);

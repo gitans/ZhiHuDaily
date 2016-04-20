@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.Entities.HotPost;
-import com.marktony.zhihudaily.Interfaces.IOnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.Interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class HotPostAdapter extends RecyclerView.Adapter<HotPostAdapter.HotPostV
     private final Context context;
     private final LayoutInflater inflater;
 
-    private IOnRecyclerViewOnClickListener mListener;
+    private OnRecyclerViewOnClickListener mListener;
 
     public HotPostAdapter(Context context,List<HotPost> list){
         this.context = context;
@@ -62,7 +62,7 @@ public class HotPostAdapter extends RecyclerView.Adapter<HotPostAdapter.HotPostV
         return list.size();
     }
 
-    public void setItemClickListener(IOnRecyclerViewOnClickListener listener){
+    public void setItemClickListener(OnRecyclerViewOnClickListener listener){
         this.mListener = listener;
     }
 
@@ -70,10 +70,10 @@ public class HotPostAdapter extends RecyclerView.Adapter<HotPostAdapter.HotPostV
 
         private ImageView ivThumbnail;
         private TextView tvTitle;
-        private IOnRecyclerViewOnClickListener listener;
+        private OnRecyclerViewOnClickListener listener;
         private CardView item;
 
-        public HotPostViewHolder(View itemView,IOnRecyclerViewOnClickListener listener) {
+        public HotPostViewHolder(View itemView,OnRecyclerViewOnClickListener listener) {
             super(itemView);
 
             ivThumbnail = (ImageView) itemView.findViewById(R.id.latest_item_iv);

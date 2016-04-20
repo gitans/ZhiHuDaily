@@ -8,14 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.Interpolator;
-import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.Entities.LatestPost;
-import com.marktony.zhihudaily.Interfaces.IOnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.Interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
 
 import java.util.ArrayList;
@@ -30,7 +28,7 @@ public class LatestPostAdapter extends RecyclerView.Adapter<LatestPostAdapter.La
     private final Context context;
     private final LayoutInflater inflater;
     private List<LatestPost> list = new ArrayList<LatestPost>();
-    private IOnRecyclerViewOnClickListener mListener;
+    private OnRecyclerViewOnClickListener mListener;
 
     public LatestPostAdapter(Context context, List<LatestPost> list){
         this.context = context;
@@ -63,7 +61,7 @@ public class LatestPostAdapter extends RecyclerView.Adapter<LatestPostAdapter.La
         return list.size();
     }
 
-    public void setItemClickListener(IOnRecyclerViewOnClickListener listener){
+    public void setItemClickListener(OnRecyclerViewOnClickListener listener){
         this.mListener = listener;
     }
 
@@ -71,10 +69,10 @@ public class LatestPostAdapter extends RecyclerView.Adapter<LatestPostAdapter.La
 
         private ImageView ivItemImg;
         private TextView tvLatestNewsTitle;
-        private IOnRecyclerViewOnClickListener listener;
+        private OnRecyclerViewOnClickListener listener;
         private CardView item;
 
-        public LatestItemViewHolder(View itemView,IOnRecyclerViewOnClickListener listener) {
+        public LatestItemViewHolder(View itemView,OnRecyclerViewOnClickListener listener) {
             super(itemView);
 
             ivItemImg = (ImageView) itemView.findViewById(R.id.latest_item_iv);

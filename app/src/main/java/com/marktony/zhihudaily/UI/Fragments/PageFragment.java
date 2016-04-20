@@ -25,7 +25,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.Adapters.ThemePostAdapter;
 import com.marktony.zhihudaily.Entities.ThemePost;
-import com.marktony.zhihudaily.Interfaces.IOnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.Interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.UI.Activities.ReadActivity;
 import com.marktony.zhihudaily.UI.Behavior.HidingScrollListener;
@@ -158,7 +158,7 @@ public class PageFragment extends android.support.v4.app.Fragment {
 
                                             adapter = new ThemePostAdapter(getActivity(),list);
                                             rvThemePosts.setAdapter(adapter);
-                                            adapter.setItemClickListener(new IOnRecyclerViewOnClickListener() {
+                                            adapter.setItemClickListener(new OnRecyclerViewOnClickListener() {
                                                 @Override
                                                 public void OnItemClick(View v, int position) {
                                                     Intent intent = new Intent(getActivity(), ReadActivity.class);
