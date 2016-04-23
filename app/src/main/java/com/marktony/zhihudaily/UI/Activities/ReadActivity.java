@@ -50,6 +50,8 @@ public class ReadActivity extends BaseSwipeBackActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+        setTheme(R.style.NightTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read);
 
@@ -143,13 +145,21 @@ public class ReadActivity extends BaseSwipeBackActivity {
                          * 可以取出网页中div所占的区域
                          * 如果没有去除这个div，那么整个网页的头部将会出现一部分的空白区域
                          */
+                        String content = jsonObject.getString("body").replace("<div class=\"img-place-holder\">", "");
+                        // div headline占据了一段高度，需要手动去除
+                        content = content.replace("<div class=\"headline\">", "");
 
-                        String html = "<!DOCTYPE html>\n" +
-                                "<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
-                                "<head>\n" +
-                                "\t<meta charset=\"utf-8\" />\n</head>\n" +
-                                "<body>\n"  + css +
-                                jsonObject.getString("body").replace("<div class=\"img-place-holder\">", "") + "\n<body>";
+                        // 根据主题的不同确定不同的加载内容
+                        String parseByTheme = "<body style=\"background-color:#212b30\">\n";
+
+                        String html = "<!DOCTYPE html>\n"
+                                + "<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">\n"
+                                + "<head>\n"
+                                + "\t<meta charset=\"utf-8\" />\n</head>\n"
+                                + parseByTheme
+                                + css
+                                + content
+                                + "\n<body>";
                         webViewRead.loadDataWithBaseURL("x-data://base",html,"text/html","utf-8",null);
 
                         dialog.dismiss();

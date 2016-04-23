@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="?attr/layoutBackgroundCustomized"
     tools:context="com.marktony.zhihudaily.UI.Activities.AboutActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -17,7 +18,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="?attr/toolbarBackgroundCustomized"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
@@ -50,6 +51,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_version"
                     android:layout_below="@id/iv_logo"
+                    android:textColor="?attr/textColorCustomized"
                     android:text="@string/version"
                     android:layout_centerHorizontal="true"/>
 
@@ -59,6 +61,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:text="@string/thanksto"
+                    android:textColor="?attr/textColorCustomized"
                     android:gravity="center_vertical"
                     android:layout_marginTop="60dp"
                     android:paddingLeft="16dp"
@@ -67,7 +70,7 @@
                 <View  android:layout_height="1dp"
                     android:layout_width="match_parent"
                     android:layout_below="@id/tv_thanks"
-                    android:background="#dddddd" />
+                    android:background="?attr/dividerColorCustomized" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -75,6 +78,7 @@
                     android:id="@+id/tv_score"
                     android:layout_below="@id/tv_thanks"
                     android:text="@string/score"
+                    android:textColor="?attr/textColorCustomized"
                     android:gravity="center_vertical"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"/>
@@ -82,7 +86,7 @@
                 <View  android:layout_height="1dp"
                     android:layout_width="match_parent"
                     android:layout_below="@id/tv_score"
-                    android:background="#dddddd" />
+                    android:background="?attr/dividerColorCustomized" />
 
                 <TextView
                     android:id="@+id/tv_feedback"
@@ -90,6 +94,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:text="@string/feedback"
+                    android:textColor="?attr/textColorCustomized"
                     android:gravity="center_vertical"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"/>
@@ -97,7 +102,7 @@
                 <View  android:layout_height="1dp"
                     android:layout_width="match_parent"
                     android:layout_below="@id/tv_feedback"
-                    android:background="#dddddd" />
+                    android:background="?attr/dividerColorCustomized" />
 
                 <TextView
                     android:id="@+id/tv_donate"
@@ -105,6 +110,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:text="@string/donate"
+                    android:textColor="?attr/textColorCustomized"
                     android:gravity="center_vertical"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"/>

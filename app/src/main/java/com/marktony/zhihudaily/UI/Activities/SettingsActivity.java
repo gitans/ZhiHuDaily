@@ -20,6 +20,8 @@ public class SettingsActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor;
 
     protected void onCreate(Bundle savedInstanceState) {
+
+        setTheme(R.style.NightTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 

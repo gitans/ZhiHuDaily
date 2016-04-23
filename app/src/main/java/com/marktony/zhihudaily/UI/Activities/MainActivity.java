@@ -14,6 +14,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -22,6 +24,7 @@ import com.marktony.zhihudaily.UI.Fragments.HotPostFragment;
 import com.marktony.zhihudaily.UI.Fragments.ThemeFragment;
 import com.marktony.zhihudaily.UI.Fragments.LatestFragment;
 import com.marktony.zhihudaily.Utils.NetworkState;
+import com.marktony.zhihudaily.Utils.UtilFunctions;
 
 import java.io.File;
 
@@ -40,6 +43,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        if (UtilFunctions.getThemeState(MainActivity.this) == 0){
+            setTheme(R.style.DayTheme);
+        } else {
+            setTheme(R.style.NightTheme);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -139,6 +147,16 @@ public class MainActivity extends AppCompatActivity
 
             changeFragment(new HotPostFragment());
             toolbar.setTitle(item.getTitle());
+
+        } else if (id == R.id.nav_change_theme){
+
+            if (UtilFunctions.getThemeState(MainActivity.this) == 0){
+                UtilFunctions.setThemeState(MainActivity.this,1);
+                Toast.makeText(MainActivity.this,String.valueOf(UtilFunctions.getThemeState(MainActivity.this)),Toast.LENGTH_SHORT).show();
+            } else {
+                UtilFunctions.setThemeState(MainActivity.this,0);
+                Toast.makeText(MainActivity.this,String.valueOf(UtilFunctions.getThemeState(MainActivity.this)),Toast.LENGTH_SHORT).show();
+            }
 
         } else if (id == R.id.nav_settings) {
 

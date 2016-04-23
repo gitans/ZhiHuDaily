@@ -30,6 +30,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/latest_item_tv_title"
+            android:background="?attr/viewBackgroundCustomized"
+            android:textColor="?attr/textColorCustomized"
             android:layout_marginLeft="96dp"
             android:layout_marginStart="96dp"
             android:gravity="center_vertical"

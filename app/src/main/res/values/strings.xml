@@ -65,5 +65,6 @@
     <string name="no_splash_description">直接进入主界面</string>
     <string name="no_picture_mode">无图模式</string>
     <string name="no_picture_mode_description">将影响你的阅读体验</string>
+    <string name="change_theme">切换主题</string>
 
 </resources>
