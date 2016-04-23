@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.marktony.zhihudaily.R;
+import com.marktony.zhihudaily.Utils.UtilFunctions;
 import com.rey.material.widget.Switch;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -21,7 +22,11 @@ public class SettingsActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
 
-        setTheme(R.style.NightTheme);
+        if (UtilFunctions.getThemeState(SettingsActivity.this) == 0){
+            setTheme(R.style.DayTheme);
+        } else {
+            setTheme(R.style.NightTheme);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 

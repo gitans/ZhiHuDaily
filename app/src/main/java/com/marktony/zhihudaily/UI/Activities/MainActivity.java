@@ -152,11 +152,13 @@ public class MainActivity extends AppCompatActivity
 
             if (UtilFunctions.getThemeState(MainActivity.this) == 0){
                 UtilFunctions.setThemeState(MainActivity.this,1);
-                Toast.makeText(MainActivity.this,String.valueOf(UtilFunctions.getThemeState(MainActivity.this)),Toast.LENGTH_SHORT).show();
             } else {
                 UtilFunctions.setThemeState(MainActivity.this,0);
-                Toast.makeText(MainActivity.this,String.valueOf(UtilFunctions.getThemeState(MainActivity.this)),Toast.LENGTH_SHORT).show();
             }
+
+            this.finish();
+            this.startActivity(this.getIntent());
+
 
         } else if (id == R.id.nav_settings) {
 

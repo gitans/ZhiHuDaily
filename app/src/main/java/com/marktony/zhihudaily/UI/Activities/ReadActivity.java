@@ -25,6 +25,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.Utils.Api;
+import com.marktony.zhihudaily.Utils.UtilFunctions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,7 +52,11 @@ public class ReadActivity extends BaseSwipeBackActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-        setTheme(R.style.NightTheme);
+        if (UtilFunctions.getThemeState(ReadActivity.this) == 0){
+            setTheme(R.style.DayTheme);
+        } else {
+            setTheme(R.style.NightTheme);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read);
 
@@ -150,7 +155,12 @@ public class ReadActivity extends BaseSwipeBackActivity {
                         content = content.replace("<div class=\"headline\">", "");
 
                         // 根据主题的不同确定不同的加载内容
-                        String parseByTheme = "<body style=\"background-color:#212b30\">\n";
+                        String parseByTheme = null;
+                        if (UtilFunctions.getThemeState(ReadActivity.this) == 0){
+                            parseByTheme = "<body>\n";
+                        } else {
+                            parseByTheme = "<body style=\"background-color:#212b30\">\n";
+                        }
 
                         String html = "<!DOCTYPE html>\n"
                                 + "<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">\n"

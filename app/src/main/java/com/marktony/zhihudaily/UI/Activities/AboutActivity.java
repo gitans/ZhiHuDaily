@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.marktony.zhihudaily.R;
+import com.marktony.zhihudaily.Utils.UtilFunctions;
 
 public class AboutActivity extends AppCompatActivity {
 
@@ -30,7 +31,11 @@ public class AboutActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        setTheme(R.style.NightTheme);
+        if (UtilFunctions.getThemeState(AboutActivity.this) == 0){
+            setTheme(R.style.DayTheme);
+        } else {
+            setTheme(R.style.NightTheme);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
