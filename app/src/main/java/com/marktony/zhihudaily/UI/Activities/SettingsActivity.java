@@ -22,11 +22,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
 
-        if (UtilFunctions.getThemeState(SettingsActivity.this) == 0){
-            setTheme(R.style.DayTheme);
-        } else {
-            setTheme(R.style.NightTheme);
-        }
+        UtilFunctions.setTheme(SettingsActivity.this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 

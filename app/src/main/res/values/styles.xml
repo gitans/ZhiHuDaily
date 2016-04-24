@@ -50,6 +50,7 @@
         <item name="toolbarBackgroundCustomized">@color/colorAccent</item>
         <item name="dividerColorCustomized">#dddddd</item>
         <item name="fabColorCustomized">@color/colorAccent</item>
+        <item name="textColorWhiteCustomized">#f7f7f7</item>
     </style>
 
     <style name="NightTheme" parent="AppTheme.NoActionBar">
@@ -59,6 +60,7 @@
         <item name="toolbarBackgroundCustomized">#263238</item>
         <item name="dividerColorCustomized">#3f484d</item>
         <item name="fabColorCustomized">#546e7a</item>
+        <item name="textColorWhiteCustomized">#979d9f</item>
     </style>
 
 </resources>

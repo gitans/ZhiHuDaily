@@ -7,5 +7,6 @@
     <attr name="toolbarBackgroundCustomized" format="color" />
     <attr name="dividerColorCustomized" format="color" />
     <attr name="fabColorCustomized" format="color" />
+    <attr name="textColorWhiteCustomized" format="color" />
 
 </resources>

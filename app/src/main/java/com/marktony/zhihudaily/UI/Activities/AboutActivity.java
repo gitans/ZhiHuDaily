@@ -31,11 +31,8 @@ public class AboutActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        if (UtilFunctions.getThemeState(AboutActivity.this) == 0){
-            setTheme(R.style.DayTheme);
-        } else {
-            setTheme(R.style.NightTheme);
-        }
+        UtilFunctions.setTheme(AboutActivity.this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
