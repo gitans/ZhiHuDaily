@@ -1,6 +1,6 @@
 # 知乎小报
 
-知乎小报是一款基于Android平台开发的知乎日报第三方客户端。内容来源于知乎日报官方，API来自 [izzyleung](https://github.com/izzyleung)。如果本App存在侵犯知乎权益的嫌疑，那么本人将删除整个项目。请您暸解相关情况，并遵守知乎协议。
+知乎小报是一款基于Android平台开发的知乎日报第三方客户端。内容来源于知乎日报官方，API来自 [izzyleung](https://github.com/izzyleung)。如果本App存在侵犯知乎权益的嫌疑，那么本人将删除整个项目。请您暸解相关情况，并遵守知乎协议。**欢迎star，但是由于一些我个人的原因，暂时不接受合并请求。**
 
 ### API的使用申明
 >izzyleung
@@ -9,6 +9,14 @@
 请您暸解相关情况，并遵守知乎协议。
 
 App内容主要分为4部分:最新日报、主题日报、热门日报、历史日报。
+
+目前已经完成的功能有：
+
+* 欢迎页，浏览功能
+* 浏览时无图模式
+* 赞、评论数量查看（暂时不能查看评论）
+* 夜间模式
+* 分享（调用Android内置分享功能实现）
 
 ## App运行效果:
 ![0](https://github.com/marktony/ZhiHuDaily/blob/master/screenshoots/0.png)
@@ -37,7 +45,7 @@ App内容主要分为4部分:最新日报、主题日报、热门日报、历史
 
 ## 许可证
 
-    Copyright 2016 [lizhaotailang]
+    Copyright 2016 lizhaotailang
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -50,3 +58,5 @@ App内容主要分为4部分:最新日报、主题日报、热门日报、历史
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+
+我的博客：[博客](http://blog.csdn.net/marktonylztl/article/details/51243078)
