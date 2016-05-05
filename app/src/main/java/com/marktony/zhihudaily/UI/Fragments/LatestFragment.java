@@ -50,11 +50,14 @@ public class LatestFragment extends Fragment {
     private List<LatestPost> list = new ArrayList<LatestPost>();
 
     private LatestPostAdapter adapter;
+    private LinearLayoutManager linearLayoutManager;
 
     private MaterialDialog dialog;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        linearLayoutManager = new LinearLayoutManager(getActivity());
 
         queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
@@ -140,13 +143,23 @@ public class LatestFragment extends Fragment {
 
         load(null);
 
+        rvLatestNews.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                // 确保只有当recycler view的item滑动到最上面的一个时refresh layout才能下拉
+                refresh.setEnabled(linearLayoutManager.findFirstVisibleItemPosition() == 0);
+            }
+        });
+
         return view;
     }
 
     private void initViews(View view) {
 
         rvLatestNews = (RecyclerView) view.findViewById(R.id.rv_main);
-        rvLatestNews.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvLatestNews.setLayoutManager(linearLayoutManager);
         refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
 
