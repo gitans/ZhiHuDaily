@@ -3,6 +3,7 @@ package com.marktony.zhihudaily.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 /**
  * Created by lizhaotailang on 2016/5/8.
@@ -10,10 +11,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private Context context;
-
-    public static final String CREATE_TABLE_HISTORY = "create table History(\" "
-            +  " id integer primary key,"
-            +  "  \")";
 
     public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -23,7 +20,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        db.execSQL("create table if not exists History(id integer primary key,title text not null,content text not null)");
+        Toast.makeText(context,"db创建成功",Toast.LENGTH_SHORT).show();
     }
 
     @Override

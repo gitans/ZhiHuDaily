@@ -2,6 +2,7 @@ package com.marktony.zhihudaily.UI.Activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -23,6 +24,7 @@ import com.marktony.zhihudaily.UI.Fragments.ThemeFragment;
 import com.marktony.zhihudaily.UI.Fragments.LatestFragment;
 import com.marktony.zhihudaily.Utils.NetworkState;
 import com.marktony.zhihudaily.Utils.UtilFunctions;
+import com.marktony.zhihudaily.db.DatabaseHelper;
 
 import java.io.File;
 
@@ -34,6 +36,9 @@ public class MainActivity extends AppCompatActivity
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
     private NavigationView navigationView;
+
+    private DatabaseHelper dbhelper;
+    private SQLiteDatabase db;
 
     // 提示用户是否联网
     private MaterialDialog dialog;
@@ -47,6 +52,9 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         initViews();
+
+        dbhelper = new DatabaseHelper(MainActivity.this,"History.db",null,1);
+        db = dbhelper.getWritableDatabase();
 
         dialog = new MaterialDialog.Builder(MainActivity.this)
                 .title(R.string.point)
