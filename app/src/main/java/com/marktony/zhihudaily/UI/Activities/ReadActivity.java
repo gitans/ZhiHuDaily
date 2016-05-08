@@ -2,10 +2,12 @@ package com.marktony.zhihudaily.UI.Activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +31,11 @@ import com.marktony.zhihudaily.Utils.UtilFunctions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class ReadActivity extends BaseSwipeBackActivity {
 
@@ -135,15 +142,8 @@ public class ReadActivity extends BaseSwipeBackActivity {
 
                         //在api中，css的地址是以一个数组的形式给出，这里需要设置
                         //api中还有js的部分，这里不再解析js
-                        String css = null;
-                        if (jsonObject.getJSONArray("css").length() != 0){
-                            for (int i = 0;i < jsonObject.getJSONArray("css").length();i++){
-                                css = "<link type=\"text/css\" href=\"" +
-                                        jsonObject.getJSONArray("css").getString(i) +
-                                        "\" " +
-                                        "rel=\"stylesheet\" />\n";
-                            }
-                        }
+                        // 不再选择加载网络css，而是加载本地assets文件夹中的css
+                        String css = "<link rel=\"stylesheet\" href=\"file:///android_asset/master.css\" type=\"text/css\">";
 
                         /**
                          * body中替换掉img-place-holder div
@@ -284,5 +284,6 @@ public class ReadActivity extends BaseSwipeBackActivity {
         tvCopyRight = (TextView) findViewById(R.id.tv_copyright);
 
     }
+
 
 }

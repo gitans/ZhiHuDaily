@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity
         navigationView.setCheckedItem(R.id.nav_home);
         LatestFragment fragment = new LatestFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container,fragment).commit();
-
     }
 
     @Override
