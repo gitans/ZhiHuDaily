@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +61,7 @@ public class LatestFragment extends Fragment {
     private DatabaseHelper dbhelper;
     private SQLiteDatabase db;
 
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -69,6 +71,7 @@ public class LatestFragment extends Fragment {
 
         dbhelper = new DatabaseHelper(getActivity(),"History.db",null,1);
         db = dbhelper.getWritableDatabase();
+
     }
 
     @Nullable
@@ -97,6 +100,7 @@ public class LatestFragment extends Fragment {
             }
 
         });
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -220,23 +224,23 @@ public class LatestFragment extends Fragment {
 
                             list.add(item);
 
-                            if ( !queryIDExists(id)){
+                            if ( !queryIDExists("LatestPosts",id)){
+
                                 ContentValues values = new ContentValues();
                                 values.put("id",Integer.valueOf(id));
                                 values.put("title",title);
                                 values.put("type",Integer.valueOf(type));
                                 values.put("img_url",stringList.get(0));
+                                values.put("date","20160509");
 
                                 db.insert("LatestPosts",null,values);
+
                                 values.clear();
                             }
 
-                        }
-                    }
+                            storeContent(id);
 
-                    if (refresh.isRefreshing()){
-                        Snackbar.make(fab, R.string.refresh_done,Snackbar.LENGTH_SHORT).show();
-                        refresh.setRefreshing(false);
+                        }
                     }
 
                     adapter = new LatestPostAdapter(getActivity(),list);
@@ -251,6 +255,11 @@ public class LatestFragment extends Fragment {
                         }
                     });
 
+                    if (refresh.isRefreshing()){
+                        Snackbar.make(fab, R.string.refresh_done,Snackbar.LENGTH_SHORT).show();
+                        refresh.setRefreshing(false);
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -258,7 +267,10 @@ public class LatestFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                if (refresh.isRefreshing()){
+                    Snackbar.make(fab, R.string.refresh_done,Snackbar.LENGTH_SHORT).show();
+                    refresh.setRefreshing(false);
+                }
             }
         });
 
@@ -338,11 +350,12 @@ public class LatestFragment extends Fragment {
 
     /**
      * 查询数据库中是否已经存在此id
+     * @param tableName 要查询的表的名称
      * @param id 要查询的string id
      * @return 返回是否存在boolean
      */
-    private boolean queryIDExists(String id){
-        Cursor cursor = db.query("LatestPosts",null,null,null,null,null,null);
+    private boolean queryIDExists(String tableName,String id){
+        Cursor cursor = db.query(tableName,null,null,null,null,null,null);
         if (cursor.moveToFirst()){
             do {
 
@@ -354,6 +367,45 @@ public class LatestFragment extends Fragment {
         cursor.close();
 
         return false;
+    }
+
+    /**
+     * 将指定id的内容储存值数据库中
+     * @param id 所要保存内容的id
+     */
+    private void storeContent(final String id){
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.NEWS + id, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+
+                // @// TODO: 2016/5/10 这里仍然报错 
+                if (queryIDExists("Contents",id)){
+                    ContentValues values = new ContentValues();
+
+                    try {
+                        values.put("id",Integer.valueOf(id));
+                        values.put("content",jsonObject.getString("body"));
+
+                        db.insert("Contents",null,values);
+                        values.clear();
+
+                        Log.d("content",jsonObject.getString("body"));
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        });
+
+        queue.add(request);
+
     }
 
 }
