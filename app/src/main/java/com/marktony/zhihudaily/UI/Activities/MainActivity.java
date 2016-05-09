@@ -2,9 +2,7 @@ package com.marktony.zhihudaily.UI.Activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -22,9 +20,7 @@ import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.UI.Fragments.HotPostFragment;
 import com.marktony.zhihudaily.UI.Fragments.ThemeFragment;
 import com.marktony.zhihudaily.UI.Fragments.LatestFragment;
-import com.marktony.zhihudaily.Utils.NetworkState;
 import com.marktony.zhihudaily.Utils.UtilFunctions;
-import com.marktony.zhihudaily.db.DatabaseHelper;
 
 import java.io.File;
 
@@ -37,11 +33,6 @@ public class MainActivity extends AppCompatActivity
     private ActionBarDrawerToggle toggle;
     private NavigationView navigationView;
 
-    private DatabaseHelper dbhelper;
-    private SQLiteDatabase db;
-
-    // 提示用户是否联网
-    private MaterialDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,33 +43,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         initViews();
-
-        dbhelper = new DatabaseHelper(MainActivity.this,"History.db",null,1);
-        db = dbhelper.getWritableDatabase();
-
-        dialog = new MaterialDialog.Builder(MainActivity.this)
-                .title(R.string.point)
-                .content(R.string.no_network_connected)
-                .positiveText(R.string.go_to_set)
-                .negativeText(R.string.got_it)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        startActivity(new Intent(Settings.ACTION_SETTINGS));
-                        dialog.dismiss();
-                    }
-                })
-                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        dialog.dismiss();
-                    }
-                })
-                .build();
-
-        if ( !NetworkState.networkConneted(MainActivity.this)){
-            dialog.show();
-        }
 
         navigationView.setCheckedItem(R.id.nav_home);
         LatestFragment fragment = new LatestFragment();

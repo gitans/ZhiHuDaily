@@ -1,9 +1,13 @@
 package com.marktony.zhihudaily.UI.Fragments;
 
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,7 +19,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -28,6 +31,8 @@ import com.marktony.zhihudaily.Interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.UI.Activities.ReadActivity;
 import com.marktony.zhihudaily.Utils.Api;
+import com.marktony.zhihudaily.Utils.NetworkState;
+import com.marktony.zhihudaily.db.DatabaseHelper;
 import com.rey.material.app.DatePickerDialog;
 
 import org.json.JSONArray;
@@ -52,7 +57,8 @@ public class LatestFragment extends Fragment {
     private LatestPostAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
 
-    private MaterialDialog dialog;
+    private DatabaseHelper dbhelper;
+    private SQLiteDatabase db;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,10 +67,8 @@ public class LatestFragment extends Fragment {
 
         queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
-        dialog = new MaterialDialog.Builder(getActivity())
-                .content(R.string.loading)
-                .progress(true,0)
-                .build();
+        dbhelper = new DatabaseHelper(getActivity(),"History.db",null,1);
+        db = dbhelper.getWritableDatabase();
     }
 
     @Nullable
@@ -74,12 +78,22 @@ public class LatestFragment extends Fragment {
 
         initViews(view);
 
-        dialog.show();
+        if ( !NetworkState.networkConneted(getActivity())){
+            showNoNetwork();
+            loadFromDB();
+        } else {
+            load(null);
+        }
 
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                load(null);
+                if ( !NetworkState.networkConneted(getActivity())){
+                    showNoNetwork();
+                    refresh.setRefreshing(false);
+                } else {
+                    load(null);
+                }
             }
 
         });
@@ -140,7 +154,6 @@ public class LatestFragment extends Fragment {
         //设置下拉刷新按钮的大小
         refresh.setSize(SwipeRefreshLayout.DEFAULT);
 
-
         load(null);
 
         rvLatestNews.setOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -192,25 +205,37 @@ public class LatestFragment extends Fragment {
 
                         JSONArray array = jsonObject.getJSONArray("stories");
                         for (int i = 0; i < array.length(); i++){
+
                             JSONArray images = array.getJSONObject(i).getJSONArray("images");
+                            String id = array.getJSONObject(i).getString("id");
+                            String type = array.getJSONObject(i).getString("type");
+                            String title = array.getJSONObject(i).getString("title");
                             List<String> stringList = new ArrayList<String>();
                             for (int j = 0; j < images.length(); j++){
                                 String imgUrl = images.getString(j);
                                 stringList.add(imgUrl);
                             }
 
-                            LatestPost item = new LatestPost(
-                                    array.getJSONObject(i).getString("title"),
-                                    stringList,
-                                    array.getJSONObject(i).getString("type"),
-                                    array.getJSONObject(i).getString("id"));
+                            LatestPost item = new LatestPost(title, stringList, type, id);
 
                             list.add(item);
+
+                            if ( !queryIDExists(id)){
+                                ContentValues values = new ContentValues();
+                                values.put("id",Integer.valueOf(id));
+                                values.put("title",title);
+                                values.put("type",Integer.valueOf(type));
+                                values.put("img_url",stringList.get(0));
+
+                                db.insert("LatestPosts",null,values);
+                                values.clear();
+                            }
+
                         }
                     }
 
                     if (refresh.isRefreshing()){
-                        Snackbar.make(refresh, R.string.refresh_done,Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(fab, R.string.refresh_done,Snackbar.LENGTH_SHORT).show();
                         refresh.setRefreshing(false);
                     }
 
@@ -226,8 +251,6 @@ public class LatestFragment extends Fragment {
                         }
                     });
 
-                    dialog.dismiss();
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -235,7 +258,7 @@ public class LatestFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                dialog.dismiss();
+
             }
         });
 
@@ -250,6 +273,7 @@ public class LatestFragment extends Fragment {
      * @return 转换后的string类型的日期
      */
     private String parseDate(int day,int month,int year){
+
         String date = null;
 
         // month+1的原因为通过date picker dialog获取到的月份是从0开始的
@@ -264,6 +288,72 @@ public class LatestFragment extends Fragment {
         }
 
         return date;
+    }
+
+    // 通过snackbar提示没有网络连接
+    public void showNoNetwork(){
+        Snackbar.make(fab,R.string.no_network_connected,Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.go_to_set, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(Settings.ACTION_SETTINGS));
+                    }
+                }).show();
+    }
+
+    /**
+     * 从数据库中加载已经保存的数据
+     */
+    private void loadFromDB(){
+        Cursor cursor = db.query("LatestPosts",null,null,null,null,null,null);
+        if (cursor.moveToFirst()){
+            do {
+                String title = cursor.getString(cursor.getColumnIndex("title"));
+                List<String> list = new ArrayList<String>();
+                list.add(cursor.getString(cursor.getColumnIndex("img_url")));
+                String id = String.valueOf(cursor.getInt(cursor.getColumnIndex("id")));
+                String type = String.valueOf(cursor.getInt(cursor.getColumnIndex("type")));
+
+                if ((title != null) && (list.get(0) != null) && (!id.equals("")) && (!type.equals(""))){
+                    LatestPost item = new LatestPost(title,list,type,id);
+                    this.list.add(item);
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        adapter = new LatestPostAdapter(getActivity(),list);
+        rvLatestNews.setAdapter(adapter);
+        adapter.setItemClickListener(new OnRecyclerViewOnClickListener() {
+            @Override
+            public void OnItemClick(View v, int position) {
+                Intent intent = new Intent(getActivity(),ReadActivity.class);
+                intent.putExtra("id",list.get(position).getId());
+                intent.putExtra("title",list.get(position).getTitle());
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    /**
+     * 查询数据库中是否已经存在此id
+     * @param id 要查询的string id
+     * @return 返回是否存在boolean
+     */
+    private boolean queryIDExists(String id){
+        Cursor cursor = db.query("LatestPosts",null,null,null,null,null,null);
+        if (cursor.moveToFirst()){
+            do {
+
+                if (id.equals(String.valueOf(cursor.getInt(cursor.getColumnIndex("id"))))){
+                    return true;
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return false;
     }
 
 }

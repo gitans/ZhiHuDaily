@@ -3,25 +3,23 @@ package com.marktony.zhihudaily.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
 /**
  * Created by lizhaotailang on 2016/5/8.
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private Context context;
 
     public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
-
-        this.context = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table if not exists History(id integer primary key,title text not null,content text not null)");
-        Toast.makeText(context,"db创建成功",Toast.LENGTH_SHORT).show();
+        db.execSQL("create table if not exists LatestPosts(id integer primary key,title text not null,type integer not null,img_url text not null,date text not null)");
+        db.execSQL("create table if not exists Contents(id integer primary key,content text not null)");
+        // db.execSQL("create table if not exists HotPosts(id integer primary key,title text not null,type integer not null,img_url text not null)");
+        // db.execSQL("create table if not exists ThemePosts(id integer primary key,categories text not null,title text not null,img_url text not null)");
     }
 
     @Override
