@@ -18,8 +18,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table if not exists LatestPosts(id integer primary key,title text not null,type integer not null,img_url text not null,date text not null)");
         db.execSQL("create table if not exists Contents(id integer primary key,content text not null)");
-        // db.execSQL("create table if not exists HotPosts(id integer primary key,title text not null,type integer not null,img_url text not null)");
-        // db.execSQL("create table if not exists ThemePosts(id integer primary key,categories text not null,title text not null,img_url text not null)");
     }
 
     @Override

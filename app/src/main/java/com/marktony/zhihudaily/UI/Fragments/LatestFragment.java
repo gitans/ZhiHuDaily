@@ -1,8 +1,12 @@
 package com.marktony.zhihudaily.UI.Fragments;
 
 
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -12,6 +16,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -61,6 +66,7 @@ public class LatestFragment extends Fragment {
     private DatabaseHelper dbhelper;
     private SQLiteDatabase db;
 
+    private SharedPreferences sp;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +78,10 @@ public class LatestFragment extends Fragment {
         dbhelper = new DatabaseHelper(getActivity(),"History.db",null,1);
         db = dbhelper.getWritableDatabase();
 
+        sp = getActivity().getSharedPreferences("user_settings", Context.MODE_PRIVATE);
+
+        // deleteTimeoutPosts();
+
     }
 
     @Nullable
@@ -80,6 +90,17 @@ public class LatestFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_latest,container,false);
 
         initViews(view);
+
+        //设置下拉刷新的按钮的颜色
+        refresh.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        //设置手指在屏幕上下拉多少距离开始刷新
+        refresh.setDistanceToTriggerSync(300);
+        //设置下拉刷新按钮的背景颜色
+        refresh.setProgressBackgroundColorSchemeColor(Color.WHITE);
+        //设置下拉刷新按钮的大小
+        refresh.setSize(SwipeRefreshLayout.DEFAULT);
+
+        refresh.setRefreshing(true);
 
         if ( !NetworkState.networkConneted(getActivity())){
             showNoNetwork();
@@ -149,17 +170,6 @@ public class LatestFragment extends Fragment {
             }
         });
 
-        //设置下拉刷新的按钮的颜色
-        refresh.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
-        //设置手指在屏幕上下拉多少距离开始刷新
-        refresh.setDistanceToTriggerSync(300);
-        //设置下拉刷新按钮的背景颜色
-        refresh.setProgressBackgroundColorSchemeColor(Color.WHITE);
-        //设置下拉刷新按钮的大小
-        refresh.setSize(SwipeRefreshLayout.DEFAULT);
-
-        load(null);
-
         rvLatestNews.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -169,6 +179,10 @@ public class LatestFragment extends Fragment {
                 refresh.setEnabled(linearLayoutManager.findFirstVisibleItemPosition() == 0);
             }
         });
+
+        if (refresh.isRefreshing()){
+            refresh.setRefreshing(false);
+        }
 
         return view;
     }
@@ -231,14 +245,18 @@ public class LatestFragment extends Fragment {
                                 values.put("title",title);
                                 values.put("type",Integer.valueOf(type));
                                 values.put("img_url",stringList.get(0));
-                                values.put("date","20160509");
+                                Calendar c = Calendar.getInstance();
+                                values.put("date",parseDate(c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH),c.get(Calendar.YEAR)));
 
                                 db.insert("LatestPosts",null,values);
 
                                 values.clear();
                             }
 
-                            storeContent(id);
+                            // 在wifi下或者是 在数据下但是设置为可以在移动数据下加载时，进行缓存
+                            if (NetworkState.wifiConnected(getActivity()) || (NetworkState.mobileDataConnected(getActivity()) && sp.getBoolean("caching_wifi",false))){
+                                storeContent(id);
+                            }
 
                         }
                     }
@@ -268,7 +286,7 @@ public class LatestFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 if (refresh.isRefreshing()){
-                    Snackbar.make(fab, R.string.refresh_done,Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(fab, R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
                     refresh.setRefreshing(false);
                 }
             }
@@ -312,6 +330,7 @@ public class LatestFragment extends Fragment {
                     }
                 }).show();
     }
+
 
     /**
      * 从数据库中加载已经保存的数据
@@ -379,18 +398,16 @@ public class LatestFragment extends Fragment {
             @Override
             public void onResponse(JSONObject jsonObject) {
 
-                // @// TODO: 2016/5/10 这里仍然报错 
-                if (queryIDExists("Contents",id)){
+                if ( !queryIDExists("Contents",id)){
                     ContentValues values = new ContentValues();
 
                     try {
-                        values.put("id",Integer.valueOf(id));
-                        values.put("content",jsonObject.getString("body"));
-
-                        db.insert("Contents",null,values);
-                        values.clear();
-
-                        Log.d("content",jsonObject.getString("body"));
+                        if ( !jsonObject.isNull("body")) {
+                            values.put("id",Integer.valueOf(id));
+                            values.put("content", jsonObject.getString("body"));
+                            db.insert("Contents",null,values);
+                            values.clear();
+                        }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -405,6 +422,17 @@ public class LatestFragment extends Fragment {
         });
 
         queue.add(request);
+
+    }
+
+    private void deleteTimeoutPosts(){
+
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DAY_OF_MONTH,-2);
+
+        String whereClause = "date=?";
+        String[] whereArgs = {parseDate(c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH),c.get(Calendar.YEAR))};
+        db.delete("LatestPosts",whereClause,whereArgs);
 
     }
 

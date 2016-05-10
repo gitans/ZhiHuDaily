@@ -24,8 +24,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-         >
+        android:layout_height="match_parent" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,16 +49,17 @@
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="38dp"
                         android:text="@string/no_splash"
-                        android:textStyle="bold"
+                        android:textSize="16sp"
                         android:textColor="?attr/textColorCustomized"
                         android:gravity="center_vertical"/>
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:gravity="center_vertical"
+                        android:layout_height="26dp"
+                        android:gravity="top"
+                        android:textSize="12sp"
                         android:text="@string/no_splash_description"
                         android:textColor="?attr/textColorCustomized" />
 
@@ -92,16 +92,17 @@
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="38dp"
                         android:text="@string/no_picture_mode"
-                        android:textStyle="bold"
+                        android:textSize="16sp"
                         android:textColor="?attr/textColorCustomized"
                         android:gravity="center_vertical"/>
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:gravity="center_vertical"
+                        android:layout_height="26dp"
+                        android:gravity="top"
+                        android:textSize="12sp"
                         android:text="@string/no_picture_mode_description"
                         android:textColor="?attr/textColorCustomized" />
 
@@ -114,6 +115,48 @@
                     style="@style/Material.Widget.Switch"
                     android:gravity="center"
                     android:checked="false"/>
+
+            </LinearLayout>
+
+            <View  android:layout_height="1dp"
+                android:layout_width="match_parent"
+                android:background="?attr/dividerColorCustomized" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp"
+                        android:text="@string/caching_in_wifi"
+                        android:textSize="16sp"
+                        android:textColor="?attr/textColorCustomized"
+                        android:gravity="center_vertical"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="26dp"
+                        android:gravity="top"
+                        android:textSize="12sp"
+                        android:text="@string/caching_in_wifi_description"
+                        android:textColor="?attr/textColorCustomized" />
+
+                </LinearLayout>
+
+                <com.rey.material.widget.Switch
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/switch_caching_wifi"
+                    style="@style/Material.Widget.Switch"
+                    android:gravity="center" />
 
             </LinearLayout>
 

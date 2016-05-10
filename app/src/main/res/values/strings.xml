@@ -64,7 +64,11 @@
     <string name="no_splash">禁止启动动画</string>
     <string name="no_splash_description">直接进入主界面</string>
     <string name="no_picture_mode">无图模式</string>
-    <string name="no_picture_mode_description">将影响你的阅读体验</string>
+    <string name="no_picture_mode_description">阅读时不再加载图片</string>
     <string name="change_theme">切换主题</string>
+    <string name="caching_in_wifi">仅在WiFi下缓存</string>
+    <string name="caching_in_wifi_description">使用移动数据时不缓存文章</string>
+    <string name="clear_cache">清空缓存</string>
+    <string name="clear_cache_description">已经缓存的文章将被清空</string>
 
 </resources>

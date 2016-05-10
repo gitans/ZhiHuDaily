@@ -49,7 +49,7 @@ public class LatestPostAdapter extends RecyclerView.Adapter<LatestPostAdapter.La
         if (item.getFirstImg() == null){
             holder.ivItemImg.setImageResource(R.drawable.no_img);
         } else {
-            Glide.with(context).load(item.getFirstImg()).centerCrop().into(holder.ivItemImg);
+            Glide.with(context).load(item.getFirstImg()).error(R.drawable.no_img).centerCrop().into(holder.ivItemImg);
         }
         holder.tvLatestNewsTitle.setText(item.getTitle());
 
