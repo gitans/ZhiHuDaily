@@ -15,7 +15,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     private Switch switchLoadSplash;
     private Switch switchNoPictureMode;
-    private Switch switchCachingWifi;
     private Toolbar toolbar;
 
     private SharedPreferences sp;
@@ -53,17 +52,6 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        switchCachingWifi.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(Switch view, boolean checked) {
-                switchCachingWifi.setChecked(checked);
-
-                editor.putBoolean("caching_wifi",checked);
-                editor.apply();
-            }
-        });
-
-
     }
 
     @Override
@@ -87,9 +75,6 @@ public class SettingsActivity extends AppCompatActivity {
 
         switchNoPictureMode = (Switch) findViewById(R.id.switch_no_picture_mode);
         switchNoPictureMode.setChecked( sp.getBoolean("no_picture_mode",false));
-
-        switchCachingWifi = (Switch) findViewById(R.id.switch_caching_wifi);
-        switchCachingWifi.setChecked( sp.getBoolean("caching_wifi",true));
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

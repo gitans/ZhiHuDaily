@@ -122,44 +122,6 @@
                 android:layout_width="match_parent"
                 android:background="?attr/dividerColorCustomized" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="68dp"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="38dp"
-                        android:text="@string/caching_in_wifi"
-                        android:textSize="16sp"
-                        android:textColor="?attr/textColorCustomized"
-                        android:gravity="center_vertical"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="26dp"
-                        android:gravity="top"
-                        android:textSize="12sp"
-                        android:text="@string/caching_in_wifi_description"
-                        android:textColor="?attr/textColorCustomized" />
-
-                </LinearLayout>
-
-                <com.rey.material.widget.Switch
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/switch_caching_wifi"
-                    style="@style/Material.Widget.Switch"
-                    android:gravity="center" />
-
-            </LinearLayout>
-
         </LinearLayout>
 
     </ScrollView>

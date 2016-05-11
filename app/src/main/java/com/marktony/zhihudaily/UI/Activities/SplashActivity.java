@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -67,7 +66,7 @@ public class SplashActivity extends AppCompatActivity {
                                     ivWelcome.setImageResource(R.drawable.welcome);
                                     tvWelcomeName.setText(R.string.welcome_to_zhihudaily);
                                 } else {
-                                    Glide.with(SplashActivity.this).load(jsonObject.getString("img")).into(ivWelcome);
+                                    Glide.with(SplashActivity.this).load(jsonObject.getString("img")).error(R.drawable.no_img).into(ivWelcome);
                                     tvWelcomeName.setText(jsonObject.getString("text"));
                                 }
                             } catch (JSONException e) {

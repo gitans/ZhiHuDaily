@@ -7,8 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,7 +37,7 @@ import org.json.JSONObject;
 
 
 
-public class ReadActivity extends BaseSwipeBackActivity {
+public class ReadActivity extends AppCompatActivity {
 
     private WebView webViewRead;
     private FloatingActionButton fab;
@@ -107,16 +107,24 @@ public class ReadActivity extends BaseSwipeBackActivity {
         // 设置是否加载图片，true不加载，false加载图片
         webViewRead.getSettings().setBlockNetworkImage(sp.getBoolean("no_picture_mode",false));
 
+        // 如果当前没有网络连接，则加载缓存中的内容
         if ( !NetworkState.networkConneted(ReadActivity.this)){
 
             ivFirstImg.setImageResource(R.drawable.no_img);
             ivFirstImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
+            String parseByTheme = null;
+            if (UtilFunctions.getThemeState(ReadActivity.this) == 0){
+                parseByTheme = "<body>\n";
+            } else {
+                parseByTheme = "<body style=\"background-color:#212b30\">\n";
+            }
             String css = "<link rel=\"stylesheet\" href=\"file:///android_asset/master.css\" type=\"text/css\">";
             String html = "<!DOCTYPE html>\n"
                     + "<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">\n"
                     + "<head>\n"
                     + "\t<meta charset=\"utf-8\" />\n</head>\n"
+                    + parseByTheme
                     + css
                     + loadContentFromDB(id).replace("<div class=\"img-place-holder\">", "")
                     + "\n<body>";
@@ -163,7 +171,6 @@ public class ReadActivity extends BaseSwipeBackActivity {
                             //api中还有js的部分，这里不再解析js
                             // 不再选择加载网络css，而是加载本地assets文件夹中的css
                             String css = "<link rel=\"stylesheet\" href=\"file:///android_asset/master.css\" type=\"text/css\">";
-
 
                             // body中替换掉img-place-holder div
                             // 可以去除网页中div所占的区域

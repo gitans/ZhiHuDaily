@@ -34,8 +34,7 @@
         </activity>
         <activity
             android:name=".UI.Activities.ReadActivity"
-            android:label="@string/title_activity_read"
-            android:theme="@style/Swipe.Transparent.Theme">
+            android:label="@string/title_activity_read">
 
         </activity>
 

@@ -1,11 +1,9 @@
 package com.marktony.zhihudaily.UI.Fragments;
 
 
-import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,11 +14,9 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,7 +76,7 @@ public class LatestFragment extends Fragment {
 
         sp = getActivity().getSharedPreferences("user_settings", Context.MODE_PRIVATE);
 
-        // deleteTimeoutPosts();
+        deleteTimeoutPosts();
 
     }
 
@@ -107,6 +103,9 @@ public class LatestFragment extends Fragment {
             loadFromDB();
         } else {
             load(null);
+            if (NetworkState.mobileDataConnected(getActivity())){
+                Snackbar.make(fab,"正在使用移动数据",Snackbar.LENGTH_SHORT).show();
+            }
         }
 
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -121,7 +120,6 @@ public class LatestFragment extends Fragment {
             }
 
         });
-
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,7 +198,7 @@ public class LatestFragment extends Fragment {
      * 用于加载最新日报或者历史日报
      * @param date 日期
      */
-    private void load(String date){
+    private void load(final String date){
 
         String url = null;
 
@@ -245,17 +243,21 @@ public class LatestFragment extends Fragment {
                                 values.put("title",title);
                                 values.put("type",Integer.valueOf(type));
                                 values.put("img_url",stringList.get(0));
-                                Calendar c = Calendar.getInstance();
-                                values.put("date",parseDate(c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH),c.get(Calendar.YEAR)));
+
+                                if (date == null){
+                                    Calendar c = Calendar.getInstance();
+                                    String date = parseDate(c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH),c.get(Calendar.YEAR));
+
+                                    values.put("date",Integer.valueOf(date));
+                                    storeContent(id,date);
+                                } else {
+                                    values.put("date",Integer.valueOf(date));
+                                    storeContent(id,date);
+                                }
 
                                 db.insert("LatestPosts",null,values);
 
                                 values.clear();
-                            }
-
-                            // 在wifi下或者是 在数据下但是设置为可以在移动数据下加载时，进行缓存
-                            if (NetworkState.wifiConnected(getActivity()) || (NetworkState.mobileDataConnected(getActivity()) && sp.getBoolean("caching_wifi",false))){
-                                storeContent(id);
                             }
 
                         }
@@ -391,8 +393,9 @@ public class LatestFragment extends Fragment {
     /**
      * 将指定id的内容储存值数据库中
      * @param id 所要保存内容的id
+     * @param date 日期
      */
-    private void storeContent(final String id){
+    private void storeContent(final String id, final String date){
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.NEWS + id, new Response.Listener<JSONObject>() {
             @Override
@@ -405,6 +408,7 @@ public class LatestFragment extends Fragment {
                         if ( !jsonObject.isNull("body")) {
                             values.put("id",Integer.valueOf(id));
                             values.put("content", jsonObject.getString("body"));
+                            values.put("date",Integer.valueOf(date));
                             db.insert("Contents",null,values);
                             values.clear();
                         }
@@ -430,10 +434,11 @@ public class LatestFragment extends Fragment {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DAY_OF_MONTH,-2);
 
-        String whereClause = "date=?";
         String[] whereArgs = {parseDate(c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH),c.get(Calendar.YEAR))};
-        db.delete("LatestPosts",whereClause,whereArgs);
 
+        db.delete("LatestPosts","date<?",whereArgs);
+
+        db.delete("Contents","date<?",whereArgs);
     }
 
 }

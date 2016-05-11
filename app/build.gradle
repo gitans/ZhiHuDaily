@@ -8,8 +8,8 @@ android {
         applicationId "com.marktony.zhihudaily"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 3
-        versionName "1.1.0 BETA"
+        versionCode 4
+        versionName "1.1.1(160511)"
     }
     buildTypes {
         release {

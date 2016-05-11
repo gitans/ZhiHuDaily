@@ -38,7 +38,7 @@
     <string name="share_to">分享至</string>
 
     <!--activity关于-->
-    <string name="version">version:1.1.0 BETA</string>
+    <string name="version">version:1.1.1(160511)</string>
     <string name="thanksto">致谢</string>
     <string name="score">为此应用评分</string>
     <string name="feedback">反馈和建议</string>
@@ -60,15 +60,11 @@
         请您暸解相关情况，并遵守知乎协议。\n
     </string>
     <string name="thanksto_content">API的提供者izzyleung,开源项目 MaterialDialog ,Material, Glide 等等.</string>
-    <string name="no_app_store_found">没有找到市场类App</string>
-    <string name="no_splash">禁止启动动画</string>
+    <string name="no_app_store_found">没有市场类App</string>
+    <string name="no_splash">禁止加载启动页</string>
     <string name="no_splash_description">直接进入主界面</string>
     <string name="no_picture_mode">无图模式</string>
     <string name="no_picture_mode_description">阅读时不再加载图片</string>
     <string name="change_theme">切换主题</string>
-    <string name="caching_in_wifi">仅在WiFi下缓存</string>
-    <string name="caching_in_wifi_description">使用移动数据时不缓存文章</string>
-    <string name="clear_cache">清空缓存</string>
-    <string name="clear_cache_description">已经缓存的文章将被清空</string>
 
 </resources>
