@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -44,6 +45,7 @@ public class ReadActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ImageView ivFirstImg;
     private TextView tvCopyRight;
+    private CollapsingToolbarLayout toolbarLayout;
 
     private RequestQueue queue;
 
@@ -82,7 +84,8 @@ public class ReadActivity extends AppCompatActivity {
         String id = intent.getStringExtra("id");
         final String title = intent.getStringExtra("title");
         final String image = intent.getStringExtra("image");
-        getSupportActionBar().setTitle(title);
+
+        setCollapsingToolbarLayoutTitle(title);
 
         queue = Volley.newRequestQueue(getApplicationContext());
 
@@ -310,6 +313,7 @@ public class ReadActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ivFirstImg = (ImageView) findViewById(R.id.head_img);
         tvCopyRight = (TextView) findViewById(R.id.tv_copyright);
+        toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
 
     }
 
@@ -335,6 +339,15 @@ public class ReadActivity extends AppCompatActivity {
         cursor.close();
 
         return content;
+    }
+
+    // to change the title's font size of toolbar layout
+    private void setCollapsingToolbarLayoutTitle(String title) {
+        toolbarLayout.setTitle(title);
+        toolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
+        toolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
+        toolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBarPlus1);
+        toolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBarPlus1);
     }
 
 }

@@ -19,10 +19,10 @@ App内容主要分为4部分:最新日报、主题日报、热门日报、历史
 * 分享（调用Android内置分享功能实现）
 
 ## App运行效果:
-![0](https://github.com/marktony/ZhiHuDaily/blob/master/screenshoots/0.png)
-![1](https://github.com/marktony/ZhiHuDaily/blob/master/screenshoots/1.png)
-![2](https://github.com/marktony/ZhiHuDaily/blob/master/screenshoots/2.png)
-![3](https://github.com/marktony/ZhiHuDaily/blob/master/screenshoots/3.png)
+![0](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/0.png)
+![1](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/1.png)
+![2](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/2.png)
+![3](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/3.png)
 
 
 ## Apk下载地址：

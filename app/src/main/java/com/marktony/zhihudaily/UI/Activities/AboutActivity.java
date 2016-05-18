@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -22,10 +23,12 @@ import com.marktony.zhihudaily.Utils.UtilFunctions;
 
 public class AboutActivity extends AppCompatActivity {
 
-    private TextView tvThanks;
-    private TextView tvScore;
-    private TextView tvFeedback;
-    private TextView tvDonate;
+
+    private LinearLayout layoutRate;
+    private LinearLayout layoutFeedback;
+    private LinearLayout layoutCoffee;
+    private TextView tvGitHub;
+    private TextView tvZhihu;
     private Toolbar toolbar;
 
     @Override
@@ -38,25 +41,7 @@ public class AboutActivity extends AppCompatActivity {
 
         initViews();
 
-        tvThanks.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MaterialDialog dialog = new MaterialDialog.Builder(AboutActivity.this)
-                        .title(R.string.thanksto)
-                        .content(R.string.thanksto_content)
-                        .neutralText(R.string.got_it)
-                        .onNeutral(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                              dialog.dismiss();
-                            }
-                        }).build();
-
-                dialog.show();
-            }
-        });
-
-        tvScore.setOnClickListener(new View.OnClickListener() {
+        layoutRate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 
@@ -66,13 +51,13 @@ public class AboutActivity extends AppCompatActivity {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 } catch (android.content.ActivityNotFoundException ex){
-                    Snackbar.make(tvScore, R.string.no_app_store_found,Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(layoutRate, R.string.no_app_store_found,Snackbar.LENGTH_SHORT).show();
                 }
 
             }
         });
 
-        tvFeedback.setOnClickListener(new View.OnClickListener() {
+        layoutFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try{
@@ -84,12 +69,12 @@ public class AboutActivity extends AppCompatActivity {
                                     + "\n" + getString(R.string.sdk_version) + Build.VERSION.RELEASE + "\n");
                     startActivity(intent);
                 }catch (android.content.ActivityNotFoundException ex){
-                    Snackbar.make(tvFeedback, R.string.no_mail_app,Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(layoutFeedback, R.string.no_mail_app,Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
 
-        tvDonate.setOnClickListener(new View.OnClickListener() {
+        layoutCoffee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MaterialDialog dialog = new MaterialDialog.Builder(AboutActivity.this)
@@ -120,6 +105,20 @@ public class AboutActivity extends AppCompatActivity {
             }
         });
 
+        tvGitHub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(getString(R.string.github_url))));
+            }
+        });
+
+        tvZhihu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(getString(R.string.zhihu_url))));
+            }
+        });
+
     }
 
     @Override
@@ -137,11 +136,12 @@ public class AboutActivity extends AppCompatActivity {
 
     private void initViews() {
 
-        tvThanks = (TextView) findViewById(R.id.tv_thanks);
-        tvScore = (TextView) findViewById(R.id.tv_score);
-        tvFeedback = (TextView) findViewById(R.id.tv_feedback);
-        tvDonate = (TextView) findViewById(R.id.tv_donate);
+        layoutRate = (LinearLayout) findViewById(R.id.LL_rate);
+        layoutFeedback = (LinearLayout) findViewById(R.id.LL_feedback);
+        layoutCoffee = (LinearLayout) findViewById(R.id.LL_coffee);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        tvGitHub = (TextView) findViewById(R.id.tv_GitHub);
+        tvZhihu = (TextView) findViewById(R.id.tv_zhihu);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

@@ -27,97 +27,191 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none"
-        android:background="?attr/layoutBackgroundCustomized">
+        android:background="?attr/layoutBackgroundCustomized"
+        android:layout_marginTop="?attr/actionBarSize">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="?attr/actionBarSize"
-                android:paddingTop="@dimen/activity_vertical_margin">
+                android:layout_height="wrap_content">
 
-                <ImageView
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:id="@+id/iv_logo"
-                    android:layout_centerHorizontal="true"
-                    android:src="@drawable/logo"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tv_version"
-                    android:layout_below="@id/iv_logo"
-                    android:textColor="?attr/textColorCustomized"
-                    android:text="@string/version"
-                    android:layout_centerHorizontal="true"/>
+                    android:orientation="vertical"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginBottom="16dp">
 
-                <TextView
-                    android:id="@+id/tv_thanks"
-                    android:layout_below="@+id/tv_version"
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:text="@string/app_name"
+                        android:textColor="@color/colorPrimary"
+                        android:gravity="center_vertical"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
+                        android:textColor="?attr/textColorCustomized"
+                        android:text="@string/version"
+                        android:gravity="center_vertical"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
+                        android:orientation="vertical"
+                        android:id="@+id/LL_rate">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="32dp"
+                            android:text="@string/rate"
+                            android:textColor="?attr/textColorCustomized"
+                            android:gravity="center_vertical" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="32dp"
+                            android:gravity="top"
+                            android:textSize="@dimen/little_text_size"
+                            android:text="@string/rate_discription"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:text="@string/thanksto"
-                    android:textColor="?attr/textColorCustomized"
-                    android:gravity="center_vertical"
-                    android:layout_marginTop="60dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginBottom="16dp">
 
-                <View  android:layout_height="1dp"
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:text="@string/author"
+                        android:textColor="@color/colorPrimary"
+                        android:gravity="center_vertical"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="32dp"
+                            android:text="@string/author_name"
+                            android:gravity="center_vertical"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="32dp"
+                            android:text="@string/author_description"
+                            android:textSize="@dimen/little_text_size"/>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
+                        android:id="@+id/tv_GitHub"
+                        android:text="@string/follow_me_on_github"
+                        android:gravity="center_vertical"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
+                        android:id="@+id/tv_zhihu"
+                        android:text="@string/follow_me_on_zhihu"
+                        android:gravity="center_vertical"/>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_below="@id/tv_thanks"
-                    android:background="?attr/dividerColorCustomized" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginBottom="16dp">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:id="@+id/tv_score"
-                    android:layout_below="@id/tv_thanks"
-                    android:text="@string/score"
-                    android:textColor="?attr/textColorCustomized"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:text="@string/support"
+                        android:textColor="@color/colorPrimary"
+                        android:gravity="center_vertical"/>
 
-                <View  android:layout_height="1dp"
-                    android:layout_width="match_parent"
-                    android:layout_below="@id/tv_score"
-                    android:background="?attr/dividerColorCustomized" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/LL_feedback"
+                        android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_feedback"
-                    android:layout_below="@id/tv_score"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:text="@string/feedback"
-                    android:textColor="?attr/textColorCustomized"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="32dp"
+                            android:text="@string/feedback"
+                            android:gravity="center_vertical"/>
 
-                <View  android:layout_height="1dp"
-                    android:layout_width="match_parent"
-                    android:layout_below="@id/tv_feedback"
-                    android:background="?attr/dividerColorCustomized" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="32dp"
+                            android:gravity="top"
+                            android:text="@string/feedback_description"
+                            android:textSize="@dimen/little_text_size"/>
 
-                <TextView
-                    android:id="@+id/tv_donate"
-                    android:layout_below="@id/tv_feedback"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:text="@string/donate"
-                    android:textColor="?attr/textColorCustomized"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"/>
+                    </LinearLayout>
 
-            </RelativeLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/LL_coffee">
 
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="32dp"
+                            android:text="@string/coffee"
+                            android:gravity="center_vertical"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="32dp"
+                            android:gravity="top"
+                            android:text="@string/coffee_description"
+                            android:textSize="@dimen/little_text_size"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
 
         </LinearLayout>
 
