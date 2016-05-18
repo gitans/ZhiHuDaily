@@ -80,7 +80,7 @@
                             android:layout_height="32dp"
                             android:gravity="top"
                             android:textSize="@dimen/little_text_size"
-                            android:text="@string/rate_discription"/>
+                            android:text="@string/rate_description"/>
 
                     </LinearLayout>
 

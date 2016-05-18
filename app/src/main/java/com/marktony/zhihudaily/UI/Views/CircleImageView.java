@@ -1,116 +1,390 @@
 package com.marktony.zhihudaily.UI.Views;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.util.AttributeSet;
-import android.widget.ImageView;
-
 /**
  * Created by lizhaotailang on 2016/3/21.
  */
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
+import android.util.AttributeSet;
+import android.widget.ImageView;
+
+import com.marktony.zhihudaily.R;
+
+/**
+ * Created by lizhaotailang on 2016/5/13.
+ */
 public class CircleImageView extends ImageView {
 
-    //基本的三个构造函数
+
+    private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;
+
+    private static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;
+    private static final int COLORDRAWABLE_DIMENSION = 2;
+
+    private static final int DEFAULT_BORDER_WIDTH = 0;
+    private static final int DEFAULT_BORDER_COLOR = Color.BLACK;
+    private static final int DEFAULT_FILL_COLOR = Color.TRANSPARENT;
+    private static final boolean DEFAULT_BORDER_OVERLAY = false;
+
+    private final RectF mDrawableRect = new RectF();
+    private final RectF mBorderRect = new RectF();
+
+    private final Matrix mShaderMatrix = new Matrix();
+    private final Paint mBitmapPaint = new Paint();
+    private final Paint mBorderPaint = new Paint();
+    private final Paint mFillPaint = new Paint();
+
+    private int mBorderColor = DEFAULT_BORDER_COLOR;
+    private int mBorderWidth = DEFAULT_BORDER_WIDTH;
+    private int mFillColor = DEFAULT_FILL_COLOR;
+
+    private Bitmap mBitmap;
+    private BitmapShader mBitmapShader;
+    private int mBitmapWidth;
+    private int mBitmapHeight;
+
+    private float mDrawableRadius;
+    private float mBorderRadius;
+
+    private ColorFilter mColorFilter;
+
+    private boolean mReady;
+    private boolean mSetupPending;
+    private boolean mBorderOverlay;
+    private boolean mDisableCircularTransformation;
+
     public CircleImageView(Context context) {
         super(context);
+
+        init();
     }
 
-    public CircleImageView(Context context, AttributeSet attrs){
-        super(context,attrs);
+    public CircleImageView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
     }
 
-    public CircleImageView(Context context,AttributeSet attrs,int defStyle){
-        super(context,attrs,defStyle);
+    public CircleImageView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView, defStyle, 0);
+
+        mBorderWidth = a.getDimensionPixelSize(R.styleable.CircleImageView_civ_border_width, DEFAULT_BORDER_WIDTH);
+        mBorderColor = a.getColor(R.styleable.CircleImageView_civ_border_color, DEFAULT_BORDER_COLOR);
+        mBorderOverlay = a.getBoolean(R.styleable.CircleImageView_civ_border_overlay, DEFAULT_BORDER_OVERLAY);
+        mFillColor = a.getColor(R.styleable.CircleImageView_civ_fill_color, DEFAULT_FILL_COLOR);
+
+        a.recycle();
+
+        init();
     }
 
-    //自定义view实现过程中很重要的onDraw绘制图形的方法
+    private void init() {
+        super.setScaleType(SCALE_TYPE);
+        mReady = true;
+
+        if (mSetupPending) {
+            setup();
+            mSetupPending = false;
+        }
+    }
+
+    @Override
+    public ScaleType getScaleType() {
+        return SCALE_TYPE;
+    }
+
+    @Override
+    public void setScaleType(ScaleType scaleType) {
+        if (scaleType != SCALE_TYPE) {
+            throw new IllegalArgumentException(String.format("ScaleType %s not supported.", scaleType));
+        }
+    }
+
+    @Override
+    public void setAdjustViewBounds(boolean adjustViewBounds) {
+        if (adjustViewBounds) {
+            throw new IllegalArgumentException("adjustViewBounds not supported.");
+        }
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
-
-        Drawable drawable = getDrawable();
-
-        //空值判断，必要的步骤，避免由于没有设置src导致的异常错误
-        if (drawable == null){
+        if (mDisableCircularTransformation) {
+            super.onDraw(canvas);
             return;
         }
 
-        //必要步骤，避免由于初始化之前导致的异常错误
-        if (getWidth() == 0 || getHeight() == 0){
+        if (mBitmap == null) {
             return;
         }
 
-        if (!(drawable instanceof BitmapDrawable)){
-            return;
+        if (mFillColor != Color.TRANSPARENT) {
+            canvas.drawCircle(mDrawableRect.centerX(), mDrawableRect.centerY(), mDrawableRadius, mFillPaint);
         }
-
-        Bitmap b = ((BitmapDrawable) drawable).getBitmap();
-
-        if (null == b){
-            return;
+        canvas.drawCircle(mDrawableRect.centerX(), mDrawableRect.centerY(), mDrawableRadius, mBitmapPaint);
+        if (mBorderWidth != 0) {
+            canvas.drawCircle(mBorderRect.centerX(), mBorderRect.centerY(), mBorderRadius, mBorderPaint);
         }
-
-        Bitmap bitmap = b.copy(Bitmap.Config.ARGB_8888,true);
-
-        int w = getWidth();
-
-        Bitmap roundBitmap = getCroppedBitmap(bitmap, w);
-        canvas.drawBitmap(roundBitmap,0,0,null);
-
     }
 
-    /**
-     * 初始化Bitmap对象的缩放裁剪过程
-     * @param bitmap 初始bitmap对象
-     * @param radius 圆形图片的直径大小
-     * @return 返回一个圆形的缩放裁剪过后的bitmap对象
-     */
-    public static Bitmap getCroppedBitmap(Bitmap bitmap, int radius) {
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        setup();
+    }
 
-        Bitmap sbmp;
+    public int getBorderColor() {
+        return mBorderColor;
+    }
 
-        //比较初始的bitmap宽高和给定的圆形的直径，判断是否需要进行裁剪
-        if (bitmap.getWidth() != radius || bitmap.getHeight() != radius){
-            sbmp = Bitmap.createScaledBitmap(bitmap,radius,radius,false);
+    public void setBorderColor(@ColorInt int borderColor) {
+        if (borderColor == mBorderColor) {
+            return;
+        }
+
+        mBorderColor = borderColor;
+        mBorderPaint.setColor(mBorderColor);
+        invalidate();
+    }
+
+    public void setBorderColorResource(@ColorRes int borderColorRes) {
+        setBorderColor(getContext().getResources().getColor(borderColorRes));
+    }
+
+    public int getFillColor() {
+        return mFillColor;
+    }
+
+    public void setFillColor(@ColorInt int fillColor) {
+        if (fillColor == mFillColor) {
+            return;
+        }
+
+        mFillColor = fillColor;
+        mFillPaint.setColor(fillColor);
+        invalidate();
+    }
+
+    public void setFillColorResource(@ColorRes int fillColorRes) {
+        setFillColor(getContext().getResources().getColor(fillColorRes));
+    }
+
+    public int getBorderWidth() {
+        return mBorderWidth;
+    }
+
+    public void setBorderWidth(int borderWidth) {
+        if (borderWidth == mBorderWidth) {
+            return;
+        }
+
+        mBorderWidth = borderWidth;
+        setup();
+    }
+
+    public boolean isBorderOverlay() {
+        return mBorderOverlay;
+    }
+
+    public void setBorderOverlay(boolean borderOverlay) {
+        if (borderOverlay == mBorderOverlay) {
+            return;
+        }
+
+        mBorderOverlay = borderOverlay;
+        setup();
+    }
+
+    public boolean isDisableCircularTransformation() {
+        return mDisableCircularTransformation;
+    }
+
+    public void setDisableCircularTransformation(boolean disableCircularTransformation) {
+        if (mDisableCircularTransformation == disableCircularTransformation) {
+            return;
+        }
+
+        mDisableCircularTransformation = disableCircularTransformation;
+        initializeBitmap();
+    }
+
+    @Override
+    public void setImageBitmap(Bitmap bm) {
+        super.setImageBitmap(bm);
+        initializeBitmap();
+    }
+
+    @Override
+    public void setImageDrawable(Drawable drawable) {
+        super.setImageDrawable(drawable);
+        initializeBitmap();
+    }
+
+    @Override
+    public void setImageResource(@DrawableRes int resId) {
+        super.setImageResource(resId);
+        initializeBitmap();
+    }
+
+    @Override
+    public void setImageURI(Uri uri) {
+        super.setImageURI(uri);
+        initializeBitmap();
+    }
+
+    @Override
+    public void setColorFilter(ColorFilter cf) {
+        if (cf == mColorFilter) {
+            return;
+        }
+
+        mColorFilter = cf;
+        applyColorFilter();
+        invalidate();
+    }
+
+    @Override
+    public ColorFilter getColorFilter() {
+        return mColorFilter;
+    }
+
+    private void applyColorFilter() {
+        if (mBitmapPaint != null) {
+            mBitmapPaint.setColorFilter(mColorFilter);
+        }
+    }
+
+    private Bitmap getBitmapFromDrawable(Drawable drawable) {
+        if (drawable == null) {
+            return null;
+        }
+
+        if (drawable instanceof BitmapDrawable) {
+            return ((BitmapDrawable) drawable).getBitmap();
+        }
+
+        try {
+            Bitmap bitmap;
+
+            if (drawable instanceof ColorDrawable) {
+                bitmap = Bitmap.createBitmap(COLORDRAWABLE_DIMENSION, COLORDRAWABLE_DIMENSION, BITMAP_CONFIG);
+            } else {
+                bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), BITMAP_CONFIG);
+            }
+
+            Canvas canvas = new Canvas(bitmap);
+            drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            drawable.draw(canvas);
+            return bitmap;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private void initializeBitmap() {
+        if (mDisableCircularTransformation) {
+            mBitmap = null;
         } else {
-            sbmp = bitmap;
+            mBitmap = getBitmapFromDrawable(getDrawable());
+        }
+        setup();
+    }
+
+    private void setup() {
+        if (!mReady) {
+            mSetupPending = true;
+            return;
         }
 
-        Bitmap output = Bitmap.createBitmap(sbmp.getWidth(),bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(output);
+        if (getWidth() == 0 && getHeight() == 0) {
+            return;
+        }
 
-        final Paint paint = new Paint();
-        final Rect rect = new Rect(0,0,sbmp.getWidth(),sbmp.getHeight());
+        if (mBitmap == null) {
+            invalidate();
+            return;
+        }
 
-        paint.setAntiAlias(true);
-        paint.setFilterBitmap(true);
-        paint.setDither(true);
-        canvas.drawARGB(0,0,0,0);
-        paint.setColor(Color.parseColor("#BAB399"));
-        canvas.drawCircle(sbmp.getWidth() / 2 + 0.7f,sbmp.getHeight() / 2 + 0.7f,sbmp.getWidth() / 2 + 0.1f,paint);
+        mBitmapShader = new BitmapShader(mBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
 
-        //核心部分，设置两张图片的交互模式，在这里就是上面绘制的Circle和下面绘制的bitmap
-        /**
-         *系统提供的Xfermode子类有三个：
-         * AvoidXfermode
-         * 指定了一个颜色和容差，强制Paint避免在它上面绘图(或者只在它上面绘图)。
-         * PixelXorXfermode
-         * 当覆盖已有的颜色时，应用一个简单的像素XOR操作。
-         * PorterDuffXfermode
-         * 这是一个非常强大的转换模式，使用它，可以使用图像合成的16条Porter-Duff规则的任意一条来控制Paint如何与已有的Canvas图像进行交互。
-         * 可以简单理解为，canvas原有的图片就是背景，即dst， 新画上去的图片就是前景，即src
-         */
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(sbmp,rect,rect,paint);
+        mBitmapPaint.setAntiAlias(true);
+        mBitmapPaint.setShader(mBitmapShader);
 
-        return output;
+        mBorderPaint.setStyle(Paint.Style.STROKE);
+        mBorderPaint.setAntiAlias(true);
+        mBorderPaint.setColor(mBorderColor);
+        mBorderPaint.setStrokeWidth(mBorderWidth);
 
+        mFillPaint.setStyle(Paint.Style.FILL);
+        mFillPaint.setAntiAlias(true);
+        mFillPaint.setColor(mFillColor);
+
+        mBitmapHeight = mBitmap.getHeight();
+        mBitmapWidth = mBitmap.getWidth();
+
+        mBorderRect.set(calculateBounds());
+        mBorderRadius = Math.min((mBorderRect.height() - mBorderWidth) / 2.0f, (mBorderRect.width() - mBorderWidth) / 2.0f);
+
+        mDrawableRect.set(mBorderRect);
+        if (!mBorderOverlay) {
+            mDrawableRect.inset(mBorderWidth, mBorderWidth);
+        }
+        mDrawableRadius = Math.min(mDrawableRect.height() / 2.0f, mDrawableRect.width() / 2.0f);
+
+        applyColorFilter();
+        updateShaderMatrix();
+        invalidate();
     }
+
+    private RectF calculateBounds() {
+        int availableWidth  = getWidth() - getPaddingLeft() - getPaddingRight();
+        int availableHeight = getHeight() - getPaddingTop() - getPaddingBottom();
+
+        int sideLength = Math.min(availableWidth, availableHeight);
+
+        float left = getPaddingLeft() + (availableWidth - sideLength) / 2f;
+        float top = getPaddingTop() + (availableHeight - sideLength) / 2f;
+
+        return new RectF(left, top, left + sideLength, top + sideLength);
+    }
+
+    private void updateShaderMatrix() {
+        float scale;
+        float dx = 0;
+        float dy = 0;
+
+        mShaderMatrix.set(null);
+
+        if (mBitmapWidth * mDrawableRect.height() > mDrawableRect.width() * mBitmapHeight) {
+            scale = mDrawableRect.height() / (float) mBitmapHeight;
+            dx = (mDrawableRect.width() - mBitmapWidth * scale) * 0.5f;
+        } else {
+            scale = mDrawableRect.width() / (float) mBitmapWidth;
+            dy = (mDrawableRect.height() - mBitmapHeight * scale) * 0.5f;
+        }
+
+        mShaderMatrix.setScale(scale, scale);
+        mShaderMatrix.postTranslate((int) (dx + 0.5f) + mDrawableRect.left, (int) (dy + 0.5f) + mDrawableRect.top);
+
+        mBitmapShader.setLocalMatrix(mShaderMatrix);
+    }
+
+
 }

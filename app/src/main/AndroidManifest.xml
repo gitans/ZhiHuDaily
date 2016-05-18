@@ -35,22 +35,23 @@
         </activity>
         <activity
             android:name=".UI.Activities.ReadActivity"
-            android:label="@string/title_activity_read"></activity>
+            android:label="@string/title_activity_read" />
+
         <activity
             android:name=".UI.Activities.SettingsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/settings"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".UI.Activities.AboutActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/about"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".UI.Activities.CommentsActivity"
             android:label="@string/title_activity_comments"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

@@ -33,7 +33,7 @@ App内容主要分为4部分:最新日报、主题日报、热门日报、历史
 * [酷市场](http://www.coolapk.com/apk/com.marktony.zhihudaily)
 
 或者扫描二维码下载
-![code](https://github.com/marktony/ZhiHuDaily/blob/master/screenshoots/code.png)
+![code](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/code.png)
 
 ## 项目相关
 * [Material-Dialogs](https://github.com/afollestad/material-dialogs)
@@ -59,4 +59,4 @@ App内容主要分为4部分:最新日报、主题日报、热门日报、历史
     See the License for the specific language governing permissions and
     limitations under the License.
 
-我的博客：[博客](http://blog.csdn.net/marktonylztl/article/details/51243078)
+我的博客：[博客](http://marktony.github.io/)

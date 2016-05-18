@@ -55,6 +55,7 @@ public class ReadActivity extends AppCompatActivity {
     private MaterialDialog dialog;
 
     private String shareUrl = null;
+    private String id;
 
     private SharedPreferences sp;
 
@@ -81,7 +82,7 @@ public class ReadActivity extends AppCompatActivity {
         dialog.show();
 
         Intent intent = getIntent();
-        String id = intent.getStringExtra("id");
+        id = intent.getStringExtra("id");
         final String title = intent.getStringExtra("title");
         final String image = intent.getStringExtra("image");
 
@@ -292,7 +293,7 @@ public class ReadActivity extends AppCompatActivity {
         }
 
         if (id == R.id.action_comments){
-
+            startActivity(new Intent(ReadActivity.this,CommentsActivity.class).putExtra("id",this.id));
         }
         return super.onOptionsItemSelected(item);
     }
