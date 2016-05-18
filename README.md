@@ -14,9 +14,11 @@ App内容主要分为4部分:最新日报、主题日报、热门日报、历史
 
 * 欢迎页，浏览功能
 * 浏览时无图模式
-* 赞、评论数量查看（暂时不能查看评论）
+* 赞、评论数量查看
 * 夜间模式
 * 分享（调用Android内置分享功能实现）
+* 自动离线
+* 查看评论
 
 ## App运行效果:
 ![0](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/0.png)
