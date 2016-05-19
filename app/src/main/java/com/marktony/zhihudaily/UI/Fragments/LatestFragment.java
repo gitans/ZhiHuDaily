@@ -64,6 +64,8 @@ public class LatestFragment extends Fragment {
 
     private SharedPreferences sp;
 
+    private final String TAG = "LatestFragment";
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -294,6 +296,7 @@ public class LatestFragment extends Fragment {
             }
         });
 
+        request.setTag(TAG);
         queue.add(request);
     }
 
@@ -425,6 +428,7 @@ public class LatestFragment extends Fragment {
             }
         });
 
+        request.setTag(TAG);
         queue.add(request);
 
     }
@@ -441,4 +445,12 @@ public class LatestFragment extends Fragment {
         db.delete("Contents","date<?",whereArgs);
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        if (queue != null){
+            queue.cancelAll(TAG);
+        }
+    }
 }

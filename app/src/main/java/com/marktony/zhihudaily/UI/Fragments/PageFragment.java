@@ -58,6 +58,8 @@ public class PageFragment extends android.support.v4.app.Fragment {
 
     private ThemePostAdapter adapter;
 
+    private final String TAG = "PageFragment";
+
     public static PageFragment newInstance(int page){
         Bundle args = new Bundle();
         args.putInt(ARGS_PAGE,page);
@@ -196,6 +198,7 @@ public class PageFragment extends android.support.v4.app.Fragment {
             }
         });
 
+        request1.setTag(TAG);
         queue.add(request1);
 
         rvThemePosts.setOnTouchListener(new View.OnTouchListener() {
@@ -215,4 +218,11 @@ public class PageFragment extends android.support.v4.app.Fragment {
         header.animate().translationY(0).setInterpolator(new AccelerateInterpolator(2));
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (queue != null){
+            queue.cancelAll(TAG);
+        }
+    }
 }

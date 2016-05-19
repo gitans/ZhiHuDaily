@@ -38,6 +38,8 @@ public class SplashActivity extends AppCompatActivity {
 
     private SharedPreferences sp;
 
+    private final String TAG = "SplashActivity";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +82,7 @@ public class SplashActivity extends AppCompatActivity {
                         }
                     });
 
+                    request.setTag(TAG);
                     queue.add(request);
                 } else {
                     ivWelcome.setImageResource(R.drawable.welcome);
@@ -108,5 +111,14 @@ public class SplashActivity extends AppCompatActivity {
         ivWelcome = (ImageView) findViewById(R.id.iv_welcome);
         tvWelcomeName = (TextView) findViewById(R.id.tv_welcome_name);
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (queue != null){
+            queue.cancelAll(TAG);
+        }
     }
 }

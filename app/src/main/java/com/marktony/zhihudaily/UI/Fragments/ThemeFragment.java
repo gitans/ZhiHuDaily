@@ -36,6 +36,8 @@ public class ThemeFragment extends Fragment {
     private RequestQueue queue;
     private List<ThemeList> themes = new ArrayList<ThemeList>();
 
+    private final String TAG = "ThemeFragment";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,8 +87,18 @@ public class ThemeFragment extends Fragment {
             }
         });
 
+        request.setTag(TAG);
         queue.add(request);
 
         return view;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        if (queue != null){
+            queue.cancelAll(TAG);
+        }
     }
 }
