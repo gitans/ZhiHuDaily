@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.UI.Activities;
+package com.marktony.zhihudaily.ui.Activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,10 +13,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.marktony.zhihudaily.Adapters.CommentsAdapter;
-import com.marktony.zhihudaily.Entities.Comment;
+import com.marktony.zhihudaily.bean.Comment;
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.Utils.Api;
-import com.marktony.zhihudaily.Utils.UtilFunctions;
+import com.marktony.zhihudaily.utils.Api;
+import com.marktony.zhihudaily.utils.UtilFunctions;
 
 import org.json.JSONArray;
 import org.json.JSONException;

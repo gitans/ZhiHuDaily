@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.UI.Behavior;
+package com.marktony.zhihudaily.ui.Behavior;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;

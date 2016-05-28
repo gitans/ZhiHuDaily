@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.marktony.zhihudaily.Entities.ThemeList;
-import com.marktony.zhihudaily.UI.Fragments.PageFragment;
+import com.marktony.zhihudaily.bean.ThemeList;
+import com.marktony.zhihudaily.ui.Fragments.PageFragment;
 
 import java.util.List;
 

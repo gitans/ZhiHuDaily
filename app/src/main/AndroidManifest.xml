@@ -18,12 +18,12 @@
         3.2之后的sdk必须配置三个值keyboardHidden|orientation|screensize
         -->
         <activity
-            android:name=".UI.Activities.MainActivity"
+            android:name=".ui.Activities.MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".UI.Activities.SplashActivity"
+            android:name=".ui.Activities.SplashActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:noHistory="true"
             android:theme="@style/AppTheme.FullScreen">
@@ -34,21 +34,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".UI.Activities.ReadActivity"
+            android:name=".ui.Activities.ReadActivity"
             android:label="@string/title_activity_read" />
 
         <activity
-            android:name=".UI.Activities.SettingsActivity"
+            android:name=".ui.Activities.SettingsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/settings"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".UI.Activities.AboutActivity"
+            android:name=".ui.Activities.AboutActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/about"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".UI.Activities.CommentsActivity"
+            android:name=".ui.Activities.CommentsActivity"
             android:label="@string/title_activity_comments"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme.NoActionBar" />

@@ -12,8 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.marktony.zhihudaily.Entities.LatestPost;
-import com.marktony.zhihudaily.Interfaces.OnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.bean.LatestPost;
+import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
 
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ public class LatestPostAdapter extends RecyclerView.Adapter<LatestPostAdapter.La
 
     @Override
     public LatestItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.latest_item_layout,parent,false);
+        View view = inflater.inflate(R.layout.universal_item_layout,parent,false);
         LatestItemViewHolder holder = new LatestItemViewHolder(view,mListener);
         return holder;
     }

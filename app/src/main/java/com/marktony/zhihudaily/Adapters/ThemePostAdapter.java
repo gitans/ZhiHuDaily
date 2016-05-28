@@ -12,8 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.marktony.zhihudaily.Entities.ThemePost;
-import com.marktony.zhihudaily.Interfaces.OnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.bean.ThemePost;
+import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
 
 import java.util.List;
@@ -37,7 +37,7 @@ public class ThemePostAdapter  extends RecyclerView.Adapter<ThemePostAdapter.The
     @Override
     public ThemePostViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = inflater.inflate(R.layout.latest_item_layout,parent,false);
+        View view = inflater.inflate(R.layout.universal_item_layout,parent,false);
         ThemePostViewHolder holder = new ThemePostViewHolder(view,mListener);
         return holder;
     }

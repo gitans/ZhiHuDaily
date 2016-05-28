@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.UI.Fragments;
+package com.marktony.zhihudaily.ui.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,11 +19,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.marktony.zhihudaily.Adapters.HotPostAdapter;
-import com.marktony.zhihudaily.Entities.HotPost;
-import com.marktony.zhihudaily.Interfaces.OnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.bean.HotPost;
+import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.UI.Activities.ReadActivity;
-import com.marktony.zhihudaily.Utils.Api;
+import com.marktony.zhihudaily.ui.Activities.ReadActivity;
+import com.marktony.zhihudaily.utils.Api;
 
 import org.json.JSONArray;
 import org.json.JSONException;

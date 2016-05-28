@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.UI.Fragments;
+package com.marktony.zhihudaily.ui.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,9 +17,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.marktony.zhihudaily.Adapters.ThemePagerAdapter;
-import com.marktony.zhihudaily.Entities.ThemeList;
+import com.marktony.zhihudaily.bean.ThemeList;
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.Utils.Api;
+import com.marktony.zhihudaily.utils.Api;
 
 import org.json.JSONArray;
 import org.json.JSONException;

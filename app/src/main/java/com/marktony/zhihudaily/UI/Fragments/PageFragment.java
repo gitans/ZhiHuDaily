@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.UI.Fragments;
+package com.marktony.zhihudaily.ui.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,12 +23,12 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.Adapters.ThemePostAdapter;
-import com.marktony.zhihudaily.Entities.ThemePost;
-import com.marktony.zhihudaily.Interfaces.OnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.bean.ThemePost;
+import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.UI.Activities.ReadActivity;
-import com.marktony.zhihudaily.UI.Behavior.HidingScrollListener;
-import com.marktony.zhihudaily.Utils.Api;
+import com.marktony.zhihudaily.ui.Activities.ReadActivity;
+import com.marktony.zhihudaily.ui.Behavior.HidingScrollListener;
+import com.marktony.zhihudaily.utils.Api;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.UI.Activities;
+package com.marktony.zhihudaily.ui.Activities;
 
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -8,7 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.Utils.UtilFunctions;
+import com.marktony.zhihudaily.utils.UtilFunctions;
 import com.rey.material.widget.Switch;
 
 public class SettingsActivity extends AppCompatActivity {

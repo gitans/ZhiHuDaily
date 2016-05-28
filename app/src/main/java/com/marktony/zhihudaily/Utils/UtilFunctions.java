@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.Utils;
+package com.marktony.zhihudaily.utils;
 
 import android.app.Activity;
 import android.content.Context;

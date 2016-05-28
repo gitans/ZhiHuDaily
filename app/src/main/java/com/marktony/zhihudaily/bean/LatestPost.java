@@ -1,6 +1,4 @@
-package com.marktony.zhihudaily.Entities;
-
-import org.json.JSONArray;
+package com.marktony.zhihudaily.bean;
 
 import java.util.ArrayList;
 import java.util.List;

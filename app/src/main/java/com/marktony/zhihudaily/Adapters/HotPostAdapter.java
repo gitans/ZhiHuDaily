@@ -12,8 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.marktony.zhihudaily.Entities.HotPost;
-import com.marktony.zhihudaily.Interfaces.OnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.bean.HotPost;
+import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
 
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class HotPostAdapter extends RecyclerView.Adapter<HotPostAdapter.HotPostV
 
     @Override
     public HotPostViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.latest_item_layout,parent,false);
+        View view = inflater.inflate(R.layout.universal_item_layout,parent,false);
         HotPostViewHolder holder = new HotPostViewHolder(view,mListener);
         return holder;
     }

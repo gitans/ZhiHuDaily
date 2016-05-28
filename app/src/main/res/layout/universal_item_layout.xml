@@ -1,30 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="96dp"
-    android:layout_marginBottom="16dp">
-
+    android:id="@+id/card_view_item"
+    android:layout_marginTop="8dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardPreventCornerOverlap="true"
+    card_view:cardUseCompatPadding="true">
     <!--cardCornerRadius 边角弧度数-->
     <!--cardUseCompatPadding 设置内边距，v21+的版本和之前的版本仍旧具有一样的计算方式 -->
     <!--cardPreventCornerOverlap 在v20和之前的版本中添加内边距，这个属性是为了防止卡片内容和边角的重叠 -->
-    <android.support.v7.widget.CardView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/card_view_item"
-        android:foreground="?android:attr/selectableItemBackground"
-        card_view:cardCornerRadius="10dp"
-        card_view:cardPreventCornerOverlap="true"
-        card_view:cardUseCompatPadding="true"
-        card_view:cardElevation="2dp">
+        android:paddingLeft="8dp"
+        android:paddingStart="8dp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp"
+        android:background="?attr/viewBackgroundCustomized">
 
-        <ImageView
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+        <com.marktony.zhihudaily.ui.Views.CircleImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:id="@+id/latest_item_iv"
-            android:layout_gravity="start"/>
-
+            android:layout_gravity="center_vertical" />
 
         <TextView
             android:layout_width="match_parent"
@@ -32,13 +34,16 @@
             android:id="@+id/latest_item_tv_title"
             android:background="?attr/viewBackgroundCustomized"
             android:textColor="?attr/textColorCustomized"
-            android:layout_marginLeft="96dp"
-            android:layout_marginStart="96dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:gravity="center_vertical"
             android:maxLines="2"
             android:ellipsize="end"
-            android:padding="8dp"/>
+            android:padding="8dp"
+            android:textSize="18sp"/>
 
-    </android.support.v7.widget.CardView>
+    </LinearLayout>
 
-</LinearLayout>
+</android.support.v7.widget.CardView>

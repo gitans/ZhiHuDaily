@@ -20,7 +20,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginEnd="16dp">
 
-            <com.marktony.zhihudaily.UI.Views.CircleImageView
+            <com.marktony.zhihudaily.ui.Views.CircleImageView
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:id="@+id/avatar"/>

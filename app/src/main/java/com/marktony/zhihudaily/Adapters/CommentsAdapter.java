@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.marktony.zhihudaily.Entities.Comment;
+import com.marktony.zhihudaily.bean.Comment;
 import com.marktony.zhihudaily.R;
 
 import java.text.SimpleDateFormat;

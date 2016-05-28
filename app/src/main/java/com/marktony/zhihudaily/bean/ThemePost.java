@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.Entities;
+package com.marktony.zhihudaily.bean;
 
 /**
  * Created by lizhaotailang on 2016/3/24.
