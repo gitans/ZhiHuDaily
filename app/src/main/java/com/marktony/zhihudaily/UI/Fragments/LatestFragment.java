@@ -105,9 +105,7 @@ public class LatestFragment extends Fragment {
             loadFromDB();
         } else {
             load(null);
-            if (NetworkState.mobileDataConnected(getActivity())){
-                Snackbar.make(fab,"正在使用移动数据",Snackbar.LENGTH_SHORT).show();
-            }
+
         }
 
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -210,13 +208,13 @@ public class LatestFragment extends Fragment {
             url = Api.HISTORY + date;
         }
 
+        if ( !list.isEmpty()){
+            list.clear();
+        }
+
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,url, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-
-                if ( !list.isEmpty()){
-                    list.clear();
-                }
 
                 try {
                     if ( !jsonObject.getString("date").isEmpty()){

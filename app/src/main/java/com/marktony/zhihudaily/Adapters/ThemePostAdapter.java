@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.bean.ThemePost;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
+import com.marktony.zhihudaily.ui.Views.CircleImageView;
 
 import java.util.List;
 
@@ -67,7 +68,7 @@ public class ThemePostAdapter  extends RecyclerView.Adapter<ThemePostAdapter.The
 
     public class ThemePostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        private ImageView ivItemImg;
+        private CircleImageView ivItemImg;
         private TextView tvLatestNewsTitle;
         private OnRecyclerViewOnClickListener listener;
         private CardView item;
@@ -75,7 +76,7 @@ public class ThemePostAdapter  extends RecyclerView.Adapter<ThemePostAdapter.The
         public ThemePostViewHolder(View itemView,OnRecyclerViewOnClickListener listener) {
             super(itemView);
 
-            ivItemImg = (ImageView) itemView.findViewById(R.id.latest_item_iv);
+            ivItemImg = (CircleImageView) itemView.findViewById(R.id.latest_item_iv);
             tvLatestNewsTitle = (TextView) itemView.findViewById(R.id.latest_item_tv_title);
             item = (CardView) itemView.findViewById(R.id.card_view_item);
             this.listener = listener;

@@ -8,13 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.bean.LatestPost;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
+import com.marktony.zhihudaily.ui.Views.CircleImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,10 +46,11 @@ public class LatestPostAdapter extends RecyclerView.Adapter<LatestPostAdapter.La
     @Override
     public void onBindViewHolder(LatestItemViewHolder holder, int position) {
         LatestPost item = list.get(position);
+
         if (item.getFirstImg() == null){
-            holder.ivItemImg.setImageResource(R.drawable.no_img);
+            holder.ciItemImg.setImageResource(R.drawable.no_img);
         } else {
-            Glide.with(context).load(item.getFirstImg()).error(R.drawable.no_img).centerCrop().into(holder.ivItemImg);
+            Glide.with(context).load(item.getFirstImg()).error(R.drawable.no_img).centerCrop().into(holder.ciItemImg);
         }
         holder.tvLatestNewsTitle.setText(item.getTitle());
 
@@ -67,7 +68,7 @@ public class LatestPostAdapter extends RecyclerView.Adapter<LatestPostAdapter.La
 
     public class LatestItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private ImageView ivItemImg;
+        private CircleImageView ciItemImg;
         private TextView tvLatestNewsTitle;
         private OnRecyclerViewOnClickListener listener;
         private CardView item;
@@ -75,7 +76,7 @@ public class LatestPostAdapter extends RecyclerView.Adapter<LatestPostAdapter.La
         public LatestItemViewHolder(View itemView,OnRecyclerViewOnClickListener listener) {
             super(itemView);
 
-            ivItemImg = (ImageView) itemView.findViewById(R.id.latest_item_iv);
+            ciItemImg = (CircleImageView) itemView.findViewById(R.id.latest_item_iv);
             tvLatestNewsTitle = (TextView) itemView.findViewById(R.id.latest_item_tv_title);
             item = (CardView) itemView.findViewById(R.id.card_view_item);
             this.listener = listener;

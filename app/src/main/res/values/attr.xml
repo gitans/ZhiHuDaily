@@ -8,6 +8,7 @@
     <attr name="dividerColorCustomized" format="color" />
     <attr name="fabColorCustomized" format="color" />
     <attr name="textColorWhiteCustomized" format="color" />
+    <attr name="navigationBarColorCustomized" format="color" />
 
     <declare-styleable name="CircleImageView">
         <attr name="civ_border_width" format="dimension" />

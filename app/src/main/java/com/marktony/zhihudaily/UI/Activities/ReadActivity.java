@@ -302,11 +302,7 @@ public class ReadActivity extends AppCompatActivity {
     private void initViews() {
 
         webViewRead = (WebView) findViewById(R.id.wb_read);
-
-        // 设置webview的scrollbar 不过貌似在白色背景下不起作用
-        // 只显示一下然后就消失。。。
-        webViewRead.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-        webViewRead.setScrollbarFadingEnabled(false);
+        webViewRead.setScrollbarFadingEnabled(true);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         toolbar = (Toolbar) findViewById(R.id.toolbar);

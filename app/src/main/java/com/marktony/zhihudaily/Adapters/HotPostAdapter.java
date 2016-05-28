@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.bean.HotPost;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
+import com.marktony.zhihudaily.ui.Views.CircleImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +69,7 @@ public class HotPostAdapter extends RecyclerView.Adapter<HotPostAdapter.HotPostV
 
     public class HotPostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private ImageView ivThumbnail;
+        private CircleImageView ivThumbnail;
         private TextView tvTitle;
         private OnRecyclerViewOnClickListener listener;
         private CardView item;
@@ -76,7 +77,7 @@ public class HotPostAdapter extends RecyclerView.Adapter<HotPostAdapter.HotPostV
         public HotPostViewHolder(View itemView,OnRecyclerViewOnClickListener listener) {
             super(itemView);
 
-            ivThumbnail = (ImageView) itemView.findViewById(R.id.latest_item_iv);
+            ivThumbnail = (CircleImageView) itemView.findViewById(R.id.latest_item_iv);
             tvTitle = (TextView) itemView.findViewById(R.id.latest_item_tv_title);
             this.listener = listener;
             itemView.setOnClickListener(this);
