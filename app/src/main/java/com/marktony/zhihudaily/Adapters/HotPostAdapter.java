@@ -6,8 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,7 +13,6 @@ import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.bean.HotPost;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.ui.Views.CircleImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +52,6 @@ public class HotPostAdapter extends RecyclerView.Adapter<HotPostAdapter.HotPostV
         }
         holder.tvTitle.setText(hotPost.getTitle());
 
-        setAnimation(holder.item,position);
     }
 
     @Override
@@ -69,7 +65,7 @@ public class HotPostAdapter extends RecyclerView.Adapter<HotPostAdapter.HotPostV
 
     public class HotPostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private CircleImageView ivThumbnail;
+        private ImageView ivThumbnail;
         private TextView tvTitle;
         private OnRecyclerViewOnClickListener listener;
         private CardView item;
@@ -77,7 +73,7 @@ public class HotPostAdapter extends RecyclerView.Adapter<HotPostAdapter.HotPostV
         public HotPostViewHolder(View itemView,OnRecyclerViewOnClickListener listener) {
             super(itemView);
 
-            ivThumbnail = (CircleImageView) itemView.findViewById(R.id.latest_item_iv);
+            ivThumbnail = (ImageView) itemView.findViewById(R.id.latest_item_iv);
             tvTitle = (TextView) itemView.findViewById(R.id.latest_item_tv_title);
             this.listener = listener;
             itemView.setOnClickListener(this);
@@ -93,10 +89,4 @@ public class HotPostAdapter extends RecyclerView.Adapter<HotPostAdapter.HotPostV
         }
     }
 
-    private void setAnimation(View viewToAnimation,int position){
-        if (position > -1){
-            Animation animation = AnimationUtils.loadAnimation(context,android.R.anim.fade_in);
-            viewToAnimation.startAnimation(animation);
-        }
-    }
 }

@@ -65,4 +65,6 @@ public class Api {
     // 查看editor的主页
     // http://news-at.zhihu.com/api/4/editor/#{id}/profile-page/android
 
+    public static final String FANFOU_DAILY = "http://blog.fanfou.com/digest";
+
 }

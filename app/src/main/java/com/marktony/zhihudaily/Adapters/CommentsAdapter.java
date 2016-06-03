@@ -43,6 +43,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
     @Override
     public void onBindViewHolder(CommentsViewHolder holder, int position) {
         Comment comment = list.get(position);
+
         Glide.with(context).load(comment.getAvatarUrl()).into(holder.ivAvatar);
 
         holder.tvComment.setText(comment.getComment());
