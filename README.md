@@ -31,7 +31,7 @@ App内容主要分为4部分:最新日报、主题日报、热门日报、历史
 * [Google Play](https://play.google.com/store/apps/details?id=com.marktony.zhihudaily)
 * [魅族应用商店](http://app.flyme.cn/apps/public/detail?package_name=com.marktony.zhihudaily)
 * [百度手机助手](http://shouji.baidu.com/software/item?docid=9158461&from=as)
-* [豌豆荚](http://www.wandoujia.com/apps/com.marktony.zhihudaily)
+* [豌豆荚](http://www.wandoujia.com/apps/com.marktony.zhihudaily)   豌豆荚由于版权问题，已经被强制下线了。。。
 * [酷市场](http://www.coolapk.com/apk/com.marktony.zhihudaily)
 
 或者扫描二维码下载
