@@ -54,12 +54,7 @@
         <activity
             android:name=".ui.Activities.FanfouPostDetailActivity"
             android:label="@string/title_activity_fanfou_post_detail"
-            android:parentActivityName=".ui.Activities.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.marktony.zhihudaily.ui.Activities.MainActivity" />
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

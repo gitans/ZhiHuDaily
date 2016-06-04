@@ -65,6 +65,10 @@ public class Api {
     // 查看editor的主页
     // http://news-at.zhihu.com/api/4/editor/#{id}/profile-page/android
 
+    // 取全部的 API 地址列表。该地址返回值为 JSON 格式。
+    public static final String FANFOU_API = "http://blog.fanfou.com/digest/json/index.json";
+
+    // Base url。Base url + 上面列表中的 Api 地址部分，即得到完整的 API 地址。
     public static final String FANFOU_DAILY = "http://blog.fanfou.com/digest";
 
 }
