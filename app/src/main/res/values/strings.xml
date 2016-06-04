@@ -79,5 +79,6 @@
     <!--setting-->
 
     <string name="title_activity_comments">评论</string>
+    <string name="title_activity_fanfou_post_detail">FanfouPostDetailActivity</string>
 
 </resources>

@@ -1,7 +1,9 @@
 package com.marktony.zhihudaily.ui.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +22,8 @@ import com.android.volley.toolbox.Volley;
 import com.marktony.zhihudaily.Adapters.FanfouDailyPostAdapter;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.bean.FanfouDailyPost;
+import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.ui.Activities.FanfouPostDetailActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +39,7 @@ import java.util.List;
 public class FanfouFragment extends Fragment{
 
     private RecyclerView rvFanfouDaily;
+    private FloatingActionButton fab;
     private RequestQueue queue;
     private List<FanfouDailyPost> list = new ArrayList<FanfouDailyPost>();
 
@@ -43,6 +48,10 @@ public class FanfouFragment extends Fragment{
     private MaterialDialog dialog;
 
     public static final String TAG = "FANFOU_DAILY";
+
+    public FanfouFragment(){
+
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,6 +63,7 @@ public class FanfouFragment extends Fragment{
                 .build();
 
         queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+
     }
 
     @Nullable
@@ -65,22 +75,36 @@ public class FanfouFragment extends Fragment{
 
         initViews(view);
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, "http://blog.fanfou.com/digest/json/2015-11-13.daily.json", new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, "http://blog.fanfou.com/digest/json/2016-06-04.daily.json", new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try {
                     JSONArray array = jsonObject.getJSONArray("msgs");
                     for (int i = 0; i < array.length(); i++){
                         JSONObject o = array.getJSONObject(i);
+
+                        // 需要对o.getString("msg")进行格式处理
+                        String content = o.getString("msg");
+                        content = android.text.Html.fromHtml(content).toString();
+
                         FanfouDailyPost item = new FanfouDailyPost(o.getString("avatar"),
                                 o.getString("realname"),
-                                o.getString("msg"),
-                                o.getString("time"));
+                                content,
+                                o.getString("time"),
+                                o.getJSONObject("img").getString("preview"));
 
                         list.add(item);
                     }
 
                     adapter = new FanfouDailyPostAdapter(getActivity(),list);
+                    adapter.setItemClickListener(new OnRecyclerViewOnClickListener() {
+                        @Override
+                        public void OnItemClick(View v, int position) {
+                            Intent intent = new Intent(getContext(), FanfouPostDetailActivity.class);
+                            intent.putExtra("imgUrl","");
+                            startActivity(intent);
+                        }
+                    });
                     rvFanfouDaily.setAdapter(adapter);
 
                     dialog.dismiss();
@@ -100,6 +124,13 @@ public class FanfouFragment extends Fragment{
         request.setTag(TAG);
         queue.add(request);
 
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar.make(fab,"fab",Snackbar.LENGTH_SHORT).show();
+            }
+        });
+
         return view;
     }
 
@@ -107,6 +138,7 @@ public class FanfouFragment extends Fragment{
 
         rvFanfouDaily = (RecyclerView) view.findViewById(R.id.rv_fanfou);
         rvFanfouDaily.setLayoutManager(new LinearLayoutManager(getActivity()));
+        fab = (FloatingActionButton) view.findViewById(R.id.fab);
 
     }
 

@@ -9,12 +9,14 @@ public class FanfouDailyPost {
     private String author;
     private String content;
     private String time;
+    private String imgUrl;
 
-    public FanfouDailyPost(String avatarUrl,String author,String content,String time){
+    public FanfouDailyPost(String avatarUrl,String author,String content,String time,String imgUrl){
         this.author = author;
         this.avatarUrl = avatarUrl;
         this.content = content;
         this.time = time;
+        this.imgUrl = imgUrl;
     }
 
     public String getAuthor() {
@@ -31,5 +33,9 @@ public class FanfouDailyPost {
 
     public String getTime() {
         return time;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
     }
 }
