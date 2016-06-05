@@ -36,7 +36,6 @@
         <activity
             android:name=".ui.Activities.ReadActivity"
             android:label="@string/title_activity_read" />
-
         <activity
             android:name=".ui.Activities.SettingsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -49,8 +48,12 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.Activities.CommentsActivity"
-            android:label="@string/title_activity_comments"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_comments"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.Activities.FanfouPostDetailActivity"
+            android:label="@string/title_activity_fanfou_post_detail"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

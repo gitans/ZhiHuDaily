@@ -24,7 +24,7 @@
     <string name="choose_history_post">历史消息查看</string>
 
     <!--navigation view menu-->
-    <string name="latest_post">首页</string>
+    <string name="latest_post">知乎日报</string>
     <string name="hot_post">热门消息</string>
     <string name="theme_post">主题日报</string>
     <string name="change_theme">切换主题</string>
@@ -37,7 +37,7 @@
     <string name="share_to">分享至</string>
 
     <!--activity关于-->
-    <string name="version">版本:1.2.1</string>
+    <string name="version">版本:V2.1.0</string>
     <string name="rate">为知乎小报应用评分</string>
     <string name="feedback">反馈Bug / 建议</string>
     <string name="donate">捐赠开发者</string>
@@ -79,5 +79,6 @@
     <!--setting-->
 
     <string name="title_activity_comments">评论</string>
+    <string name="title_activity_fanfou_post_detail">饭否精选</string>
 
 </resources>

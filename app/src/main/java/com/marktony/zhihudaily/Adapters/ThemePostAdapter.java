@@ -6,8 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,7 +13,6 @@ import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.bean.ThemePost;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.ui.Views.CircleImageView;
 
 import java.util.List;
 
@@ -47,14 +44,13 @@ public class ThemePostAdapter  extends RecyclerView.Adapter<ThemePostAdapter.The
     public void onBindViewHolder(ThemePostViewHolder holder, int position) {
         ThemePost themePost = list.get(position);
         if (themePost.getFirstImg() == null){
-            holder.ivItemImg.setImageResource(R.drawable.no_img);
+            holder.ivItemImg.setVisibility(View.GONE);
         } else {
             Glide.with(context).load(themePost.getFirstImg()).centerCrop().into(holder.ivItemImg);
         }
 
         holder.tvLatestNewsTitle.setText(themePost.getTitle());
 
-        setAnimation(holder.item,position);
     }
 
     @Override
@@ -68,7 +64,7 @@ public class ThemePostAdapter  extends RecyclerView.Adapter<ThemePostAdapter.The
 
     public class ThemePostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        private CircleImageView ivItemImg;
+        private ImageView ivItemImg;
         private TextView tvLatestNewsTitle;
         private OnRecyclerViewOnClickListener listener;
         private CardView item;
@@ -76,7 +72,7 @@ public class ThemePostAdapter  extends RecyclerView.Adapter<ThemePostAdapter.The
         public ThemePostViewHolder(View itemView,OnRecyclerViewOnClickListener listener) {
             super(itemView);
 
-            ivItemImg = (CircleImageView) itemView.findViewById(R.id.latest_item_iv);
+            ivItemImg = (ImageView) itemView.findViewById(R.id.latest_item_iv);
             tvLatestNewsTitle = (TextView) itemView.findViewById(R.id.latest_item_tv_title);
             item = (CardView) itemView.findViewById(R.id.card_view_item);
             this.listener = listener;
@@ -88,13 +84,6 @@ public class ThemePostAdapter  extends RecyclerView.Adapter<ThemePostAdapter.The
             if (listener != null){
                 listener.OnItemClick(v,getLayoutPosition());
             }
-        }
-    }
-
-    private void setAnimation(View viewToAnimation,int position){
-        if (position > -1){
-            Animation animation = AnimationUtils.loadAnimation(context,android.R.anim.fade_in);
-            viewToAnimation.startAnimation(animation);
         }
     }
 
