@@ -16,8 +16,8 @@
             android:title="@string/hot_post" />
         <item
             android:id="@+id/nav_fanfou_daily"
-            android:icon="@drawable/ic_menu_hot"
-            android:title="饭否精选" />
+            android:icon="@drawable/ic_fanfou"
+            android:title="@string/title_activity_fanfou_post_detail" />
     </group>
 
     <item android:title="@string/other">

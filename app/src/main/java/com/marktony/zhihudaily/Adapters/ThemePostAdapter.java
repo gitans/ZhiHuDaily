@@ -44,7 +44,7 @@ public class ThemePostAdapter  extends RecyclerView.Adapter<ThemePostAdapter.The
     public void onBindViewHolder(ThemePostViewHolder holder, int position) {
         ThemePost themePost = list.get(position);
         if (themePost.getFirstImg() == null){
-            holder.ivItemImg.setImageResource(R.drawable.no_img);
+            holder.ivItemImg.setVisibility(View.GONE);
         } else {
             Glide.with(context).load(themePost.getFirstImg()).centerCrop().into(holder.ivItemImg);
         }
