@@ -64,6 +64,11 @@ public class LatestFragment extends Fragment {
 
     private SharedPreferences sp;
 
+    // 2013.5.20是知乎日报api首次上线
+    private int year = 2013;
+    private int month = 5;
+    private int day = 20;
+
     private final String TAG = "LatestFragment";
 
     public void onCreate(Bundle savedInstanceState) {
@@ -79,6 +84,14 @@ public class LatestFragment extends Fragment {
         sp = getActivity().getSharedPreferences("user_settings", Context.MODE_PRIVATE);
 
         deleteTimeoutPosts();
+
+        // 获取当前日期的前一天
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DAY_OF_MONTH,-1);
+
+        year = c.get(Calendar.YEAR);
+        month = c.get(Calendar.MONTH);
+        day = c.get(Calendar.DAY_OF_MONTH);
 
     }
 
@@ -125,13 +138,6 @@ public class LatestFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                // 获取当前日期的前一天
-                Calendar c = Calendar.getInstance();
-                c.add(Calendar.DAY_OF_MONTH,-1);
-                final int year = c.get(Calendar.YEAR);
-                final int month = c.get(Calendar.MONTH);
-                final int day = c.get(Calendar.DAY_OF_MONTH);
-
                 final DatePickerDialog dialog = new DatePickerDialog(getActivity());
 
                 // 给dialog设置初始日期
@@ -152,7 +158,11 @@ public class LatestFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
 
-                        load(parseDate(dialog.getDay(),dialog.getMonth(),dialog.getYear()));
+                        year = dialog.getYear();
+                        month = dialog.getMonth();
+                        day = dialog.getDay();
+
+                        load(parseDate(day,month,year));
 
                         dialog.dismiss();
                     }

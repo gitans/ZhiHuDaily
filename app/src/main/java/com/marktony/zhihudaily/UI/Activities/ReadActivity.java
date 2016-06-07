@@ -152,12 +152,17 @@ public class ReadActivity extends AppCompatActivity {
                             ivFirstImg.setImageResource(R.drawable.no_img);
                             ivFirstImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-                            // body不为null
-                        } else {
+                            // 在body为null的情况下，share_url的值是依然存在的
+                            shareUrl = jsonObject.getString("share_url");
+
+                        } else {  // body不为null
+
+                            shareUrl = jsonObject.getString("share_url");
+
                             if ( !jsonObject.isNull("image")){
 
                                 Glide.with(ReadActivity.this).load(jsonObject.getString("image")).centerCrop().into(ivFirstImg);
-                                shareUrl = jsonObject.getString("share_url");
+
                                 tvCopyRight.setText(jsonObject.getString("image_source"));
 
                             } else if (image == null){
@@ -250,7 +255,7 @@ public class ReadActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent shareIntent = new Intent().setAction(Intent.ACTION_SEND).setType("text/plain");
-                String shareText = title + shareUrl + getString(R.string.share_extra);
+                String shareText = title + " " +  shareUrl + getString(R.string.share_extra);
                 shareIntent.putExtra(Intent.EXTRA_TEXT,shareText);
                 startActivity(Intent.createChooser(shareIntent,getString(R.string.share_to)));
 
