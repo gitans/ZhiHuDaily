@@ -12,6 +12,7 @@ import android.view.animation.LinearInterpolator;
  * Created by lizhaotailang on 2016/3/29.
  * 自定义floating action button的layout_behavior
  * 原博文地址http://www.sitepoint.com/animating-android-floating-action-button/
+ * 在页面滑动时自动隐藏fab
  */
 public class FabHideOnScroll extends FloatingActionButton.Behavior {
 
@@ -23,7 +24,7 @@ public class FabHideOnScroll extends FloatingActionButton.Behavior {
     public void onNestedScroll(CoordinatorLayout coordinatorLayout, FloatingActionButton child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
         super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
 
-        //child -> Floating Action Button
+        // child -> Floating Action Button
         if (dyConsumed > 0){
             CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) child.getLayoutParams();
             int fabBottomMargin = layoutParams.bottomMargin;
