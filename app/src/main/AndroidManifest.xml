@@ -34,7 +34,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.Activities.ReadActivity"
+            android:name=".ui.Activities.ZhihuReadActivity"
             android:label="@string/title_activity_read" />
         <activity
             android:name=".ui.Activities.SettingsActivity"
@@ -54,6 +54,10 @@
         <activity
             android:name=".ui.Activities.FanfouPostDetailActivity"
             android:label="@string/title_activity_fanfou_post_detail"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.Activities.GuokrReadActivity"
+            android:label="@string/title_activity_guokr_read"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

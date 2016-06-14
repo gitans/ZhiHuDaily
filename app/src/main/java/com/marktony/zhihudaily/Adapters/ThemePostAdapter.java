@@ -36,8 +36,7 @@ public class ThemePostAdapter  extends RecyclerView.Adapter<ThemePostAdapter.The
     public ThemePostViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = inflater.inflate(R.layout.universal_item_layout,parent,false);
-        ThemePostViewHolder holder = new ThemePostViewHolder(view,mListener);
-        return holder;
+        return new ThemePostViewHolder(view,mListener);
     }
 
     @Override
@@ -46,7 +45,12 @@ public class ThemePostAdapter  extends RecyclerView.Adapter<ThemePostAdapter.The
         if (themePost.getFirstImg() == null){
             holder.ivItemImg.setVisibility(View.GONE);
         } else {
-            Glide.with(context).load(themePost.getFirstImg()).centerCrop().into(holder.ivItemImg);
+
+            Glide.with(context)
+                    .load(themePost.getFirstImg())
+                    .asBitmap()
+                    .centerCrop()
+                    .into(holder.ivItemImg);
         }
 
         holder.tvLatestNewsTitle.setText(themePost.getTitle());
@@ -72,8 +76,8 @@ public class ThemePostAdapter  extends RecyclerView.Adapter<ThemePostAdapter.The
         public ThemePostViewHolder(View itemView,OnRecyclerViewOnClickListener listener) {
             super(itemView);
 
-            ivItemImg = (ImageView) itemView.findViewById(R.id.latest_item_iv);
-            tvLatestNewsTitle = (TextView) itemView.findViewById(R.id.latest_item_tv_title);
+            ivItemImg = (ImageView) itemView.findViewById(R.id.universal_item_iv);
+            tvLatestNewsTitle = (TextView) itemView.findViewById(R.id.universal_item_tv_title);
             item = (CardView) itemView.findViewById(R.id.card_view_item);
             this.listener = listener;
             itemView.setOnClickListener(this);

@@ -22,7 +22,7 @@ import com.marktony.zhihudaily.Adapters.HotPostAdapter;
 import com.marktony.zhihudaily.bean.HotPost;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.ui.Activities.ReadActivity;
+import com.marktony.zhihudaily.ui.Activities.ZhihuReadActivity;
 import com.marktony.zhihudaily.utils.Api;
 
 import org.json.JSONArray;
@@ -86,7 +86,7 @@ public class HotPostFragment extends Fragment {
                         adapter.setItemClickListener(new OnRecyclerViewOnClickListener() {
                             @Override
                             public void OnItemClick(View v, int position) {
-                                Intent intent = new Intent(getActivity(),ReadActivity.class);
+                                Intent intent = new Intent(getActivity(),ZhihuReadActivity.class);
                                 intent.putExtra("id",list.get(position).getNews_id());
                                 intent.putExtra("title",list.get(position).getTitle());
                                 intent.putExtra("image",list.get(position).getThumbnail());

@@ -73,8 +73,8 @@ public class HotPostAdapter extends RecyclerView.Adapter<HotPostAdapter.HotPostV
         public HotPostViewHolder(View itemView,OnRecyclerViewOnClickListener listener) {
             super(itemView);
 
-            ivThumbnail = (ImageView) itemView.findViewById(R.id.latest_item_iv);
-            tvTitle = (TextView) itemView.findViewById(R.id.latest_item_tv_title);
+            ivThumbnail = (ImageView) itemView.findViewById(R.id.universal_item_iv);
+            tvTitle = (TextView) itemView.findViewById(R.id.universal_item_tv_title);
             this.listener = listener;
             itemView.setOnClickListener(this);
 

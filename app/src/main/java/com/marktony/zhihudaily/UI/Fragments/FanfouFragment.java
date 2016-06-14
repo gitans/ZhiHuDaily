@@ -176,10 +176,12 @@ public class FanfouFragment extends Fragment{
 
     }
 
-    private void getFanfouItems(String url){
+    @Override
+    public void onStop() {
+        super.onStop();
 
-
-
+        if (queue != null){
+            queue.cancelAll(TAG);
+        }
     }
-
 }

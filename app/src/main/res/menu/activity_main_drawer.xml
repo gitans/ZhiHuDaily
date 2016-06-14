@@ -20,7 +20,7 @@
             android:title="@string/title_activity_fanfou_post_detail" />
         <item android:id="@+id/nav_guokr"
             android:icon="@drawable/ic_fanfou"
-            android:title="果壳精选" />
+            android:title="@string/guokr_handpick" />
     </group>
 
     <item android:title="@string/other">

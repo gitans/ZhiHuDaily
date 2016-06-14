@@ -38,7 +38,7 @@ import org.json.JSONObject;
 
 
 
-public class ReadActivity extends AppCompatActivity {
+public class ZhihuReadActivity extends AppCompatActivity {
 
     private WebView webViewRead;
     private FloatingActionButton fab;
@@ -62,19 +62,19 @@ public class ReadActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-        if (UtilFunctions.getThemeState(ReadActivity.this) == 0){
+        if (UtilFunctions.getThemeState(ZhihuReadActivity.this) == 0){
             setTheme(R.style.DayTheme);
         } else {
             setTheme(R.style.NightTheme);
         }
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_read);
+        setContentView(R.layout.activity_zhihu_read);
 
         initViews();
 
         sp = getSharedPreferences("user_settings",MODE_PRIVATE);
 
-        dialog = new MaterialDialog.Builder(ReadActivity.this)
+        dialog = new MaterialDialog.Builder(ZhihuReadActivity.this)
                 .content(getString(R.string.loading))
                 .progress(true,0)
                 .build();
@@ -112,13 +112,13 @@ public class ReadActivity extends AppCompatActivity {
         webViewRead.getSettings().setBlockNetworkImage(sp.getBoolean("no_picture_mode",false));
 
         // 如果当前没有网络连接，则加载缓存中的内容
-        if ( !NetworkState.networkConneted(ReadActivity.this)){
+        if ( !NetworkState.networkConneted(ZhihuReadActivity.this)){
 
             ivFirstImg.setImageResource(R.drawable.no_img);
             ivFirstImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
             String parseByTheme = null;
-            if (UtilFunctions.getThemeState(ReadActivity.this) == 0){
+            if (UtilFunctions.getThemeState(ZhihuReadActivity.this) == 0){
                 parseByTheme = "<body>\n";
             } else {
                 parseByTheme = "<body style=\"background-color:#212b30\">\n";
@@ -161,7 +161,7 @@ public class ReadActivity extends AppCompatActivity {
 
                             if ( !jsonObject.isNull("image")){
 
-                                Glide.with(ReadActivity.this).load(jsonObject.getString("image")).centerCrop().into(ivFirstImg);
+                                Glide.with(ZhihuReadActivity.this).load(jsonObject.getString("image")).centerCrop().into(ivFirstImg);
 
                                 tvCopyRight.setText(jsonObject.getString("image_source"));
 
@@ -172,7 +172,7 @@ public class ReadActivity extends AppCompatActivity {
 
                             } else {
 
-                                Glide.with(ReadActivity.this).load(image).centerCrop().into(ivFirstImg);
+                                Glide.with(ZhihuReadActivity.this).load(image).centerCrop().into(ivFirstImg);
 
                             }
 
@@ -191,7 +191,7 @@ public class ReadActivity extends AppCompatActivity {
 
                             // 根据主题的不同确定不同的加载内容
                             String parseByTheme = null;
-                            if (UtilFunctions.getThemeState(ReadActivity.this) == 0){
+                            if (UtilFunctions.getThemeState(ZhihuReadActivity.this) == 0){
                                 parseByTheme = "<body>\n";
                             } else {
                                 parseByTheme = "<body style=\"background-color:#212b30\">\n";
@@ -266,7 +266,7 @@ public class ReadActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_read,menu);
+        getMenuInflater().inflate(R.menu.menu_zhihu_read,menu);
         return true;
     }
 
@@ -298,7 +298,7 @@ public class ReadActivity extends AppCompatActivity {
         }
 
         if (id == R.id.action_comments){
-            startActivity(new Intent(ReadActivity.this,CommentsActivity.class).putExtra("id",this.id));
+            startActivity(new Intent(ZhihuReadActivity.this,CommentsActivity.class).putExtra("id",this.id));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -327,7 +327,7 @@ public class ReadActivity extends AppCompatActivity {
     private String loadContentFromDB(String id){
 
         String content = null;
-        DatabaseHelper dbHelper = new DatabaseHelper(ReadActivity.this,"History.db",null,1);
+        DatabaseHelper dbHelper = new DatabaseHelper(ZhihuReadActivity.this,"History.db",null,1);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.query("Contents",null,null,null,null,null,null);
         if (cursor.moveToFirst()){

@@ -44,7 +44,10 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
     public void onBindViewHolder(CommentsViewHolder holder, int position) {
         Comment comment = list.get(position);
 
-        Glide.with(context).load(comment.getAvatarUrl()).into(holder.ivAvatar);
+        Glide.with(context)
+                .load(comment.getAvatarUrl())
+                .asBitmap()
+                .into(holder.ivAvatar);
 
         holder.tvComment.setText(comment.getComment());
         String s = comment.getLikes() + "赞";

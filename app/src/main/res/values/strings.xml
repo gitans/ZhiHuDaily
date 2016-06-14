@@ -16,6 +16,7 @@
     <string name="title_activity_read">阅读</string>
     <string name="likes">赞</string>
     <string name="comments">评论</string>
+    <string name="title_activity_comments">评论</string>
     <string name="title_activity_comment">评论</string>
     <string name="wrong_process">发生了一些错误!</string>
     <string name="no_network_connected">当前没有网络连接…</string>
@@ -78,7 +79,9 @@
     <string name="no_picture_mode_description">阅读时不再加载图片</string>
     <!--setting-->
 
-    <string name="title_activity_comments">评论</string>
     <string name="title_activity_fanfou_post_detail">饭否精选</string>
+    <string name="guokr_handpick">果壳精选</string>
+    <string name="title_activity_guokr_read">果壳精选</string>
+    <string name="action_open_in_browser">在浏览器中打开</string>
 
 </resources>

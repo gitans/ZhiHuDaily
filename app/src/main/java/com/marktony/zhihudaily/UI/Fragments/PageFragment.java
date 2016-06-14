@@ -26,7 +26,7 @@ import com.marktony.zhihudaily.Adapters.ThemePostAdapter;
 import com.marktony.zhihudaily.bean.ThemePost;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.ui.Activities.ReadActivity;
+import com.marktony.zhihudaily.ui.Activities.ZhihuReadActivity;
 import com.marktony.zhihudaily.ui.Behavior.HidingScrollListener;
 import com.marktony.zhihudaily.utils.Api;
 
@@ -151,7 +151,7 @@ public class PageFragment extends android.support.v4.app.Fragment {
                                             adapter.setItemClickListener(new OnRecyclerViewOnClickListener() {
                                                 @Override
                                                 public void OnItemClick(View v, int position) {
-                                                    Intent intent = new Intent(getActivity(), ReadActivity.class);
+                                                    Intent intent = new Intent(getActivity(), ZhihuReadActivity.class);
                                                     intent.putExtra("id",list.get(position).getId());
                                                     intent.putExtra("title",list.get(position).getTitle());
                                                     intent.putExtra("image",list.get(position).getFirstImg());

@@ -3,31 +3,43 @@ package com.marktony.zhihudaily.utils;
 /**
  * Created by lizhaotailang on 2016/3/18.
  * 包含了主要的api接口
+ * this class contain the main APIs
  */
 public class Api {
 
     // 获取界面启动图像
+    // get the open screen page image url
     // start_image后面为图像分辨率
+    // The end of start_image is the open screen image's resolution
     public static final String START_IMAGE = "http://news-at.zhihu.com/api/4/start-image/1080*1776";
 
     // 最新消息
+    // latest posts
     public static final String LATEST = "http://news-at.zhihu.com/api/4/news/latest";
 
     // 消息内容获取与离线下载
+    // content of post and download offline
     // 在最新消息中获取到的id，拼接到这个NEWS之后，可以获得对应的JSON格式的内容
+    // add the id that you got from latest post to NEWS and you will get the content as json format
     public static final String NEWS = "http://news-at.zhihu.com/api/4/news/";
 
     // 过往消息
+    // past posts
     // 若要查询的11月18日的消息，before后面的数字应该为20161118
+    // if you want to select the posts of November 11th, the number after 'before' should be 20161118
     // 知乎日报的生日为2013 年 5 月 19 日，如果before后面的数字小于20130520，那么只能获取到空消息
+    // the birthday of ZhiHuDaily is May 19th, 2013. So if the number is lower than 20130520, you will get a null value of post
     public static final String HISTORY = "http://news.at.zhihu.com/api/4/news/before/";
 
     // 新闻额外消息
+    // extra content of post
     // 输入新闻的ID，获取对应新闻的额外信息，如评论数量，所获的『赞』的数量。
+    //
     // http://news-at.zhihu.com/api/4/story-extra/#{id}
     public static final String STORY_EXTRA = "http://news-at.zhihu.com/api/4/story-extra/";
 
     // 新闻对应长评论查看
+    // long comments of post
     // 使用在 最新消息 中获得的 id
     // 在 http://news-at.zhihu.com/api/4/story/#{id}/long-comments 中将 id 替换为对应的 id
     // 得到长评论 JSON 格式的内容
@@ -68,7 +80,17 @@ public class Api {
     // 取全部的 API 地址列表。该地址返回值为 JSON 格式。
     public static final String FANFOU_API = "http://blog.fanfou.com/digest/json/index.json";
 
-    // Base url。Base url + 上面列表中的 Api 地址部分，即得到完整的 API 地址。
+    // Base url. Base url + 上面列表中的 Api 地址部分，即得到完整的 API 地址。
     public static final String FANFOU_DAILY = "http://blog.fanfou.com/digest";
+
+    // 获取果壳精选的文章列表,通过组合相应的参数成为完整的url
+    // example:http://apis.guokr.com/handpick/article.json?retrieve_type=by_since&category=all&limit=20&ad=1
+    public static final String GUOKR_ARTICLE_BASE_URL = "http://apis.guokr.com/handpick/article.json";
+
+    // 获取果壳文章的具体信息
+    public static final String GUOKR_ARTICLE_LINK_V2 = "http://jingxuan.guokr.com/pick/v2/";
+
+    // 获取果壳精选的轮播文章列表
+    public static final String GUOKR_HANDPICK_CAROUSEL = "http://apis.guokr.com/flowingboard/item/handpick_carousel.json";
 
 }

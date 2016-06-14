@@ -6,8 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -50,7 +48,12 @@ public class LatestPostAdapter extends RecyclerView.Adapter<LatestPostAdapter.La
         if (item.getFirstImg() == null){
             holder.itemImg.setImageResource(R.drawable.no_img);
         } else {
-            Glide.with(context).load(item.getFirstImg()).error(R.drawable.no_img).centerCrop().into(holder.itemImg);
+            Glide.with(context)
+                    .load(item.getFirstImg())
+                    .asBitmap()
+                    .error(R.drawable.no_img)
+                    .centerCrop()
+                    .into(holder.itemImg);
         }
         holder.tvLatestNewsTitle.setText(item.getTitle());
     }
@@ -74,8 +77,8 @@ public class LatestPostAdapter extends RecyclerView.Adapter<LatestPostAdapter.La
         public LatestItemViewHolder(View itemView,OnRecyclerViewOnClickListener listener) {
             super(itemView);
 
-            itemImg = (ImageView) itemView.findViewById(R.id.latest_item_iv);
-            tvLatestNewsTitle = (TextView) itemView.findViewById(R.id.latest_item_tv_title);
+            itemImg = (ImageView) itemView.findViewById(R.id.universal_item_iv);
+            tvLatestNewsTitle = (TextView) itemView.findViewById(R.id.universal_item_tv_title);
             item = (CardView) itemView.findViewById(R.id.card_view_item);
             this.listener = listener;
             itemView.setOnClickListener(this);

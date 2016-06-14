@@ -68,7 +68,12 @@ public class SplashActivity extends AppCompatActivity {
                                     ivWelcome.setImageResource(R.drawable.welcome);
                                     tvWelcomeName.setText(R.string.welcome_to_zhihudaily);
                                 } else {
-                                    Glide.with(SplashActivity.this).load(jsonObject.getString("img")).error(R.drawable.no_img).into(ivWelcome);
+
+                                    Glide.with(SplashActivity.this)
+                                            .load(jsonObject.getString("img"))
+                                            .asBitmap()
+                                            .error(R.drawable.no_img)
+                                            .into(ivWelcome);
                                     tvWelcomeName.setText(jsonObject.getString("text"));
                                 }
                             } catch (JSONException e) {

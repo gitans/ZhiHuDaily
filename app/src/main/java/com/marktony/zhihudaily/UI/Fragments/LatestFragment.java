@@ -31,7 +31,7 @@ import com.marktony.zhihudaily.Adapters.LatestPostAdapter;
 import com.marktony.zhihudaily.bean.LatestPost;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.ui.Activities.ReadActivity;
+import com.marktony.zhihudaily.ui.Activities.ZhihuReadActivity;
 import com.marktony.zhihudaily.utils.Api;
 import com.marktony.zhihudaily.utils.NetworkState;
 import com.marktony.zhihudaily.db.DatabaseHelper;
@@ -278,7 +278,7 @@ public class LatestFragment extends Fragment {
                     adapter.setItemClickListener(new OnRecyclerViewOnClickListener() {
                         @Override
                         public void OnItemClick(View v, int position) {
-                            Intent intent = new Intent(getActivity(),ReadActivity.class);
+                            Intent intent = new Intent(getActivity(),ZhihuReadActivity.class);
                             intent.putExtra("id",list.get(position).getId());
                             intent.putExtra("title",list.get(position).getTitle());
                             startActivity(intent);
@@ -371,7 +371,7 @@ public class LatestFragment extends Fragment {
         adapter.setItemClickListener(new OnRecyclerViewOnClickListener() {
             @Override
             public void OnItemClick(View v, int position) {
-                Intent intent = new Intent(getActivity(),ReadActivity.class);
+                Intent intent = new Intent(getActivity(),ZhihuReadActivity.class);
                 intent.putExtra("id",list.get(position).getId());
                 intent.putExtra("title",list.get(position).getTitle());
                 startActivity(intent);
