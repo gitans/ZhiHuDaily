@@ -47,6 +47,8 @@ import java.util.List;
 
 /**
  * Created by lizhaotailang on 2016/3/21.
+ * 最新消息
+ * latest posts
  */
 public class LatestFragment extends Fragment {
 
@@ -102,8 +104,6 @@ public class LatestFragment extends Fragment {
 
         initViews(view);
 
-        refresh.setRefreshing(true);
-
         if ( !NetworkState.networkConneted(getActivity())){
             showNoNetwork();
             loadFromDB();
@@ -113,13 +113,25 @@ public class LatestFragment extends Fragment {
         }
 
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
             @Override
             public void onRefresh() {
+
+                if (!list.isEmpty()){
+                    list.clear();
+                }
+
+                adapter.notifyDataSetChanged();
+
                 if ( !NetworkState.networkConneted(getActivity())){
+
                     showNoNetwork();
-                    refresh.setRefreshing(false);
+
+                    loadFromDB();
                 } else {
+
                     load(null);
+
                 }
             }
 
@@ -210,6 +222,13 @@ public class LatestFragment extends Fragment {
      */
     private void load(final String date){
 
+        refresh.post(new Runnable() {
+            @Override
+            public void run() {
+                refresh.setRefreshing(true);
+            }
+        });
+
         String url = null;
 
         if (date == null){
@@ -286,8 +305,13 @@ public class LatestFragment extends Fragment {
                     });
 
                     if (refresh.isRefreshing()){
-                        Snackbar.make(fab, R.string.refresh_done,Snackbar.LENGTH_SHORT).show();
-                        refresh.setRefreshing(false);
+
+                        refresh.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                refresh.setRefreshing(false);
+                            }
+                        });
                     }
 
                 } catch (JSONException e) {
@@ -299,7 +323,12 @@ public class LatestFragment extends Fragment {
             public void onErrorResponse(VolleyError volleyError) {
                 if (refresh.isRefreshing()){
                     Snackbar.make(fab, R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
-                    refresh.setRefreshing(false);
+                    refresh.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            refresh.setRefreshing(false);
+                        }
+                    });
                 }
             }
         });
@@ -349,6 +378,14 @@ public class LatestFragment extends Fragment {
      * 从数据库中加载已经保存的数据
      */
     private void loadFromDB(){
+
+        refresh.post(new Runnable() {
+            @Override
+            public void run() {
+                refresh.setRefreshing(true);
+            }
+        });
+
         Cursor cursor = db.query("LatestPosts",null,null,null,null,null,null);
         if (cursor.moveToFirst()){
             do {
@@ -375,6 +412,13 @@ public class LatestFragment extends Fragment {
                 intent.putExtra("id",list.get(position).getId());
                 intent.putExtra("title",list.get(position).getTitle());
                 startActivity(intent);
+            }
+        });
+
+        refresh.post(new Runnable() {
+            @Override
+            public void run() {
+                refresh.setRefreshing(false);
             }
         });
 
@@ -459,6 +503,10 @@ public class LatestFragment extends Fragment {
 
         if (queue != null){
             queue.cancelAll(TAG);
+        }
+
+        if (refresh.isRefreshing()){
+            refresh.setRefreshing(false);
         }
     }
 }

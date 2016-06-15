@@ -1,17 +1,18 @@
 package com.marktony.zhihudaily.ui.Fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -43,16 +44,13 @@ public class HotPostFragment extends Fragment {
 
     private HotPostAdapter adapter;
 
-    private MaterialDialog dialog;
+    private SwipeRefreshLayout refreshLayout;
+
+    private static final String TAG = "HOT_POSTS";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        dialog = new MaterialDialog.Builder(getActivity())
-                .content(getString(R.string.loading))
-                .progress(true,0)
-                .build();
 
         queue = Volley.newRequestQueue(getActivity().getApplicationContext());
     }
@@ -62,9 +60,53 @@ public class HotPostFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_hot_post,container,false);
 
-        dialog.show();
-
         initViews(view);
+
+        loadData();
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                if (!list.isEmpty()){
+                    list.clear();
+                }
+
+                adapter.notifyDataSetChanged();
+
+                loadData();
+            }
+        });
+
+        return view;
+    }
+
+    private void initViews(View view) {
+
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_hot_post);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+
+        //设置下拉刷新的按钮的颜色
+        refreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        //设置手指在屏幕上下拉多少距离开始刷新
+        refreshLayout.setDistanceToTriggerSync(300);
+        //设置下拉刷新按钮的背景颜色
+        refreshLayout.setProgressBackgroundColorSchemeColor(Color.WHITE);
+        //设置下拉刷新按钮的大小
+        refreshLayout.setSize(SwipeRefreshLayout.DEFAULT);
+
+    }
+
+    private void loadData(){
+
+        refreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                refreshLayout.setRefreshing(true);
+            }
+        });
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.HOT, new Response.Listener<JSONObject>() {
             @Override
@@ -99,26 +141,40 @@ public class HotPostFragment extends Fragment {
                     }
                 }
 
-                dialog.dismiss();
+                refreshLayout.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshLayout.setRefreshing(false);
+                    }
+                });
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Snackbar.make(recyclerView,getString(R.string.wrong_process),Snackbar.LENGTH_SHORT).show();
-                dialog.dismiss();
+                refreshLayout.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshLayout.setRefreshing(false);
+                    }
+                });
             }
         });
 
+        request.setTag(TAG);
         queue.add(request);
-
-        return view;
     }
 
-    private void initViews(View view) {
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (queue != null){
+            queue.cancelAll(TAG);
+        }
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_hot_post);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        if (refreshLayout.isRefreshing()){
+            refreshLayout.setRefreshing(false);
+        }
     }
 }

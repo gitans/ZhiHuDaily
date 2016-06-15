@@ -7,6 +7,13 @@ package com.marktony.zhihudaily.utils;
  */
 public class Api {
 
+    // 所有的知乎日报API的HTTP METHOD 均为GET
+    // the method of all zhihu daily's api is GET
+
+    // 知乎日报base url,将文章id拼接值base url之后即可
+    // ZhihuDaily base url, used in browser, add the post id to it
+    public static final String ZHIHU_DAILY_BASE_URL = "http://news-at.zhihu.com/story/";
+
     // 获取界面启动图像
     // get the open screen page image url
     // start_image后面为图像分辨率
@@ -34,23 +41,31 @@ public class Api {
     // 新闻额外消息
     // extra content of post
     // 输入新闻的ID，获取对应新闻的额外信息，如评论数量，所获的『赞』的数量。
-    //
-    // http://news-at.zhihu.com/api/4/story-extra/#{id}
+    // add the post id then you can get the extra info, like the comment account and the like account
+    // example:http://news-at.zhihu.com/api/4/story-extra/#{id}
     public static final String STORY_EXTRA = "http://news-at.zhihu.com/api/4/story-extra/";
 
     // 新闻对应长评论查看
     // long comments of post
     // 使用在 最新消息 中获得的 id
+    // use the post id that you got in latest posts
     // 在 http://news-at.zhihu.com/api/4/story/#{id}/long-comments 中将 id 替换为对应的 id
+    // replace id
     // 得到长评论 JSON 格式的内容
+    // get the long comment as json format
     // 新闻对应短评论查看
+    // short comment of post
     // http://news-at.zhihu.com/api/4/story/4232852/short-comments
     // 使用在 最新消息 中获得的 id
+    // use the post id that you got in latest posts
     // 在 http://news-at.zhihu.com/api/4/story/#{id}/short-comments 中将 id 替换为对应的 id
+    // replace id
     // 得到短评论 JSON 格式的内容
+    // get the short comment as json format
     public static final String COMMENTS = "http://news-at.zhihu.com/api/4/story/";
 
     // 主题日报列表查看
+    // Theme posts
     public static final String THEMES = "http://news-at.zhihu.com/api/4/themes";
 
     // 主题日报内容查看
@@ -58,15 +73,20 @@ public class Api {
     // 使用在 主题日报列表查看 中获得需要查看的主题日报的 id
     // 拼接在 http://news-at.zhihu.com/api/4/theme/ 后
     // 得到对应主题日报 JSON 格式的内容
+    // just like the latest post, add the id you got in theme post, and u will get the content as json format
     public static final String THEME = "http://news-at.zhihu.com/api/4/theme/";
 
     // 热门消息
+    // hot posts
     // 请注意！ 此 API 仍可访问，但是其内容未出现在最新的『知乎日报』 App 中。
+    // Please pay attention to this api. It is accessible yet, but it doesn't appear in the ZhihuDaily APP.
     public static final String HOT = "http://news-at.zhihu.com/api/3/news/hot";
 
     // 查看新闻的推荐者
+    // checkout the recommender
     // "http://news-at.zhihu.com/api/4/story/#{id}/recommenders"
     // 将新闻id填入到#{id}的位置
+    // replace the #{id} with the id you got.
 
     // 获取某个专栏之前的新闻
     // http://news-at.zhihu.com/api/4/theme/#{theme id}/before/#{id}
@@ -83,10 +103,11 @@ public class Api {
     // Base url. Base url + 上面列表中的 Api 地址部分，即得到完整的 API 地址。
     public static final String FANFOU_DAILY = "http://blog.fanfou.com/digest";
 
+    // Guokr base url
+    public static final String GUOKR_ARTICLE_BASE_URL = "http://apis.guokr.com/handpick/article.json";
+
     // 获取果壳精选的文章列表,通过组合相应的参数成为完整的url
-    // example:http://apis.guokr.com/handpick/article.json?retrieve_type=by_since&category=all&limit=20&ad=1
-    // public static final String GUOKR_ARTICLE_BASE_URL = "http://apis.guokr.com/handpick/article.json";
-    public static final String GUOKR_ARTICLE_BASE_URL = "http://apis.guokr.com/handpick/article.json?retrieve_type=by_since&category=all&limit=20&ad=1";
+    public static final String GUOKR_ARTICLES = "http://apis.guokr.com/handpick/article.json?retrieve_type=by_since&category=all&limit=20&ad=1";
 
     // 获取果壳文章的具体信息 V1
     public static final String GUOKR_ARTICLE_LINK_V1 = "http://jingxuan.guokr.com/pick/";

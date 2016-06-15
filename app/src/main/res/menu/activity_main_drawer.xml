@@ -18,8 +18,9 @@
             android:id="@+id/nav_fanfou_daily"
             android:icon="@drawable/ic_fanfou"
             android:title="@string/title_activity_fanfou_post_detail" />
-        <item android:id="@+id/nav_guokr"
-            android:icon="@drawable/ic_fanfou"
+        <item
+            android:id="@+id/nav_guokr"
+            android:icon="@drawable/ic_guokr"
             android:title="@string/guokr_handpick" />
     </group>
 

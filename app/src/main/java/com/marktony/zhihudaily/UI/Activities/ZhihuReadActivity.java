@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -103,10 +104,19 @@ public class ZhihuReadActivity extends AppCompatActivity {
         webViewRead.getSettings().setAppCacheEnabled(false);
         //不调用第三方浏览器即可进行页面反应
         webViewRead.setWebViewClient(new WebViewClient() {
+
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 webViewRead.loadUrl(url);
                 return true;
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                if (dialog.isShowing()){
+                    dialog.dismiss();
+                }
+                super.onPageFinished(view, url);
             }
         });
 
@@ -151,7 +161,6 @@ public class ZhihuReadActivity extends AppCompatActivity {
 
             webViewRead.loadDataWithBaseURL("x-data://base",html,"text/html","utf-8",null);
 
-            dialog.dismiss();
         } else {
 
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.NEWS + id, new Response.Listener<JSONObject>() {
@@ -223,7 +232,6 @@ public class ZhihuReadActivity extends AppCompatActivity {
                                     + "\n<body>";
                             webViewRead.loadDataWithBaseURL("x-data://base",html,"text/html","utf-8",null);
 
-                            dialog.dismiss();
                         }
 
                     } catch (JSONException e) {
@@ -233,7 +241,6 @@ public class ZhihuReadActivity extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
-                    dialog.dismiss();
                     Snackbar.make(fab, R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
                 }
             });
@@ -316,6 +323,11 @@ public class ZhihuReadActivity extends AppCompatActivity {
         if (id == R.id.action_comments){
             startActivity(new Intent(ZhihuReadActivity.this,CommentsActivity.class).putExtra("id",this.id));
         }
+
+        if (id == R.id.action_open_in_browser){
+            startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(Api.ZHIHU_DAILY_BASE_URL + this.id)));
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

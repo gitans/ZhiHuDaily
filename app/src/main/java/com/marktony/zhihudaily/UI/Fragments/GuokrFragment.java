@@ -71,20 +71,15 @@ public class GuokrFragment extends Fragment {
 
         initViews(view);
 
-        refreshGuokr.post(new Runnable() {
-            @Override
-            public void run() {
-                refreshGuokr.setRefreshing(true);
-            }
-        });
-
         requestData();
 
         refreshGuokr.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
 
-                guokrList.clear();
+                if (!guokrList.isEmpty()){
+                    guokrList.clear();
+                }
 
                 adapter.notifyDataSetChanged();
 
@@ -114,7 +109,15 @@ public class GuokrFragment extends Fragment {
     }
 
     private void requestData(){
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.GUOKR_ARTICLE_BASE_URL, new Response.Listener<JSONObject>() {
+
+        refreshGuokr.post(new Runnable() {
+            @Override
+            public void run() {
+                refreshGuokr.setRefreshing(true);
+            }
+        });
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.GUOKR_ARTICLES, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
 
@@ -188,6 +191,10 @@ public class GuokrFragment extends Fragment {
 
         if (queue != null){
             queue.cancelAll(TAG);
+        }
+
+        if (refreshGuokr.isRefreshing()){
+            refreshGuokr.setRefreshing(false);
         }
     }
 }

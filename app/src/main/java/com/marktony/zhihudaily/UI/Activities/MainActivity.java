@@ -16,6 +16,7 @@ import android.view.MenuItem;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.ui.Fragments.FanfouFragment;
 import com.marktony.zhihudaily.ui.Fragments.GuokrFragment;
