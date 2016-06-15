@@ -6,13 +6,13 @@ package com.marktony.zhihudaily.bean;
 public class GuokrHandpickPost {
 
     private String title;
-    private String headline_img;
+    private String headlineImg;
     private String id;
 
     public GuokrHandpickPost(String id,String title,String headline_img) {
 
         this.title = title;
-        this.headline_img = headline_img;
+        this.headlineImg = headline_img;
         this.id = id;
 
     }
@@ -21,8 +21,8 @@ public class GuokrHandpickPost {
         return id;
     }
 
-    public String getHeadline_img() {
-        return headline_img;
+    public String getHeadlineImg() {
+        return headlineImg;
     }
 
     public String getTitle() {

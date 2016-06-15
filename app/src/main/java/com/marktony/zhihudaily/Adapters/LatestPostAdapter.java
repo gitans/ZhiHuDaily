@@ -50,7 +50,6 @@ public class LatestPostAdapter extends RecyclerView.Adapter<LatestPostAdapter.La
         } else {
             Glide.with(context)
                     .load(item.getFirstImg())
-                    .asBitmap()
                     .error(R.drawable.no_img)
                     .centerCrop()
                     .into(holder.itemImg);

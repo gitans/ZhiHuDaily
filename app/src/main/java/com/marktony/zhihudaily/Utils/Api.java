@@ -85,12 +85,16 @@ public class Api {
 
     // 获取果壳精选的文章列表,通过组合相应的参数成为完整的url
     // example:http://apis.guokr.com/handpick/article.json?retrieve_type=by_since&category=all&limit=20&ad=1
-    public static final String GUOKR_ARTICLE_BASE_URL = "http://apis.guokr.com/handpick/article.json";
+    // public static final String GUOKR_ARTICLE_BASE_URL = "http://apis.guokr.com/handpick/article.json";
+    public static final String GUOKR_ARTICLE_BASE_URL = "http://apis.guokr.com/handpick/article.json?retrieve_type=by_since&category=all&limit=20&ad=1";
 
-    // 获取果壳文章的具体信息
+    // 获取果壳文章的具体信息 V1
+    public static final String GUOKR_ARTICLE_LINK_V1 = "http://jingxuan.guokr.com/pick/";
+
+    // 获取果壳文章的具体信息 V2
     public static final String GUOKR_ARTICLE_LINK_V2 = "http://jingxuan.guokr.com/pick/v2/";
 
     // 获取果壳精选的轮播文章列表
-    public static final String GUOKR_HANDPICK_CAROUSEL = "http://apis.guokr.com/flowingboard/item/handpick_carousel.json";
+    // public static final String GUOKR_HANDPICK_CAROUSEL = "http://apis.guokr.com/flowingboard/item/handpick_carousel.json";
 
 }

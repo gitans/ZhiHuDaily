@@ -9,5 +9,5 @@
     <item android:id="@+id/action_comments"
         android:title="@string/comments"
         android:orderInCategory="100"
-        android:showAsAction="never" />
+        app:showAsAction="never" />
 </menu>

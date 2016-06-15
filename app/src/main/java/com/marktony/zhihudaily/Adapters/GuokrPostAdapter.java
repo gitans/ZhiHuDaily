@@ -47,7 +47,7 @@ public class GuokrPostAdapter extends RecyclerView.Adapter<GuokrPostAdapter.Guok
         GuokrHandpickPost item = list.get(position);
 
         Glide.with(context)
-                .load(item.getHeadline_img())
+                .load(item.getHeadlineImg())
                 .asBitmap()
                 .centerCrop()
                 .into(holder.ivHeadlineImg);
