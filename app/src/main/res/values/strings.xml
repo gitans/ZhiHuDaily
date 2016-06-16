@@ -21,8 +21,6 @@
     <string name="wrong_process">发生了一些错误!</string>
     <string name="no_network_connected">当前没有网络连接…</string>
     <string name="go_to_set">去设置</string>
-    <string name="refresh_done">刷新成功</string>
-    <string name="choose_history_post">历史消息查看</string>
 
     <!--navigation view menu-->
     <string name="latest_post">知乎日报</string>
@@ -38,7 +36,7 @@
     <string name="share_to">分享至</string>
 
     <!--activity关于-->
-    <string name="version">版本:V2.1.0</string>
+    <string name="version">版本:V2.2</string>
     <string name="rate">为知乎小报应用评分</string>
     <string name="feedback">反馈Bug / 建议</string>
     <string name="donate">捐赠开发者</string>

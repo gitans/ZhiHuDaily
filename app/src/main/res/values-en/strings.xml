@@ -1,0 +1,89 @@
+<resources>
+    <string name="app_name">ZhiHuDaily</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!--常用-->
+    <string name="positive">@android:string/ok</string>
+    <string name="negative">@android:string/cancel</string>
+    <string name="got_it">GOT IT</string>
+    <string name="loading">Loading</string>
+    <string name="point">Tips</string>
+
+    <string name="welcome_to_zhihudaily">Welcome to ZhiHuDaily</string>
+    <string name="action_copy_right">Copyright</string>
+    <string name="title_activity_read">Read</string>
+    <string name="likes">Like</string>
+    <string name="comments">Comment</string>
+    <string name="title_activity_comments">Comments</string>
+    <string name="title_activity_comment">Comments</string>
+    <string name="wrong_process">Something wrong!</string>
+    <string name="no_network_connected">No network connected…</string>
+    <string name="go_to_set">SETTINGS</string>
+
+    <!--navigation view menu-->
+    <string name="latest_post">Latest Posts</string>
+    <string name="hot_post">Hot Posts</string>
+    <string name="theme_post">Theme Posts</string>
+    <string name="title_activity_fanfou_post_detail">Fanfou Handpick</string>
+    <string name="guokr_handpick">Guokr Handpick</string>
+    <string name="change_theme">Change Theme</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
+    <!--navigation view menu end-->
+
+    <string name="other">Others</string>
+    <string name="share_extra">" Shared From ZhiHuDaily"</string>
+    <string name="share_to">Share to</string>
+
+    <!--activity关于-->
+    <string name="version">Version:V2.2</string>
+    <string name="rate">Rate</string>
+    <string name="feedback">Report Bugs / Advices</string>
+    <string name="donate">Donate Developer</string>
+    <string name="donate_content">Alipay account will be copied to clipboard.Launch Alipay and paste it to finish donating.Thanks for support!</string>
+    <string name="donate_account">18627441225</string>
+    <string name="sendto">mailto:marktonymengyi@gmail.com</string>
+    <string name="mail_topic">ZhihuDaily Feedback / Advice</string>
+    <string name="rate_description">If you like the Translator app,please do rate it</string>
+    <string name="device_model">Device Version:</string>
+    <string name="sdk_version">SDK Version:</string>
+    <string name="no_mail_app">No mail app founded</string>
+    <string name="no_app_store_found">No App store founded</string>
+    <string name="author">Author</string>
+    <string name="author_name">Li Zhaotailang</string>
+    <string name="author_description">Changsha, Hunan, China</string>
+    <string name="follow_me_on_github">Follow me on GitHub</string>
+    <string name="follow_me_on_zhihu">Follow me on ZhiHu</string>
+    <string name="support">Support</string>
+    <string name="feedback_description">Help me to improve the ZhiHuDaily app</string>
+    <string name="coffee">Give me a cup of coffee</string>
+    <string name="coffee_description">If you think I deserve to get paid for my work, you can give me a cup of coffee</string>
+    <string name="github_url">https://github.com/marktony</string>
+    <string name="zhihu_url">https://www.zhihu.com/people/kirin-momo</string>
+    <!--activity关于 end-->
+
+    <!--<string name="copy_right">
+        All the APIs are from ZhiHu.inc,
+        GitHub user izzyleung got them by abnormal means.
+        Please respect ZhiHu's agreement.
+    </string>-->
+
+     <string name="copy_right">
+         All the APIs that ZhiHuDaily used are come from Zhihu.Inc.
+         GitHub user izzyleung got it by abnormal means.
+         Please respect the Zhihu agreement.
+    </string>
+
+    <!--settings-->
+    <string name="no_splash">Do not load the start image</string>
+    <string name="no_splash_description">Go to homepage directly</string>
+    <string name="no_picture_mode">No images mode</string>
+    <string name="no_picture_mode_description">None image will be loaded when you read articles</string>
+    <!--setting-->
+
+    <string name="title_activity_guokr_read">Guokr Handpick</string>
+    <string name="action_open_in_browser">Open in browser</string>
+
+</resources>
