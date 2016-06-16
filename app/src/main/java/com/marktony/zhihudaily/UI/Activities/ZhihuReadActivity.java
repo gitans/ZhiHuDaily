@@ -111,13 +111,6 @@ public class ZhihuReadActivity extends AppCompatActivity {
                 return true;
             }
 
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                if (dialog.isShowing()){
-                    dialog.dismiss();
-                }
-                super.onPageFinished(view, url);
-            }
         });
 
         // 设置在本WebView内可以通过按下返回上一个html页面
@@ -149,17 +142,22 @@ public class ZhihuReadActivity extends AppCompatActivity {
             } else {
                 parseByTheme = "<body style=\"background-color:#212b30\">\n";
             }
-            String css = "<link rel=\"stylesheet\" href=\"file:///android_asset/master.css\" type=\"text/css\">";
+            String css = "<link rel=\"stylesheet\" href=\"file:///android_asset/zhihu_master.css\" type=\"text/css\">";
             String html = "<!DOCTYPE html>\n"
                     + "<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">\n"
                     + "<head>\n"
-                    + "\t<meta charset=\"utf-8\" />\n</head>\n"
-                    + parseByTheme
+                    + "\t<meta charset=\"utf-8\" />"
                     + css
+                    + "\n</head>\n"
+                    + parseByTheme
                     + loadContentFromDB(id).replace("<div class=\"img-place-holder\">", "")
-                    + "\n<body>";
+                    + "</body></html>";
 
             webViewRead.loadDataWithBaseURL("x-data://base",html,"text/html","utf-8",null);
+
+            if (dialog.isShowing()){
+                dialog.dismiss();
+            }
 
         } else {
 
@@ -204,7 +202,7 @@ public class ZhihuReadActivity extends AppCompatActivity {
                             //在api中，css的地址是以一个数组的形式给出，这里需要设置
                             //api中还有js的部分，这里不再解析js
                             // 不再选择加载网络css，而是加载本地assets文件夹中的css
-                            String css = "<link rel=\"stylesheet\" href=\"file:///android_asset/master.css\" type=\"text/css\">";
+                            String css = "<link rel=\"stylesheet\" href=\"file:///android_asset/zhihu_master.css\" type=\"text/css\">";
 
                             // body中替换掉img-place-holder div
                             // 可以去除网页中div所占的区域
@@ -225,11 +223,13 @@ public class ZhihuReadActivity extends AppCompatActivity {
                             String html = "<!DOCTYPE html>\n"
                                     + "<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">\n"
                                     + "<head>\n"
-                                    + "\t<meta charset=\"utf-8\" />\n</head>\n"
-                                    + parseByTheme
+                                    + "\t<meta charset=\"utf-8\" />"
                                     + css
+                                    + "\n</head>\n"
+                                    + parseByTheme
                                     + content
-                                    + "\n<body>";
+                                    + "</body></html>";
+
                             webViewRead.loadDataWithBaseURL("x-data://base",html,"text/html","utf-8",null);
 
                         }
@@ -237,11 +237,20 @@ public class ZhihuReadActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
+                    if (dialog.isShowing()){
+                        dialog.dismiss();
+                    }
+
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     Snackbar.make(fab, R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
+
+                    if (dialog.isShowing()){
+                        dialog.dismiss();
+                    }
                 }
             });
 

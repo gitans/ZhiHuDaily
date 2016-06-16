@@ -83,7 +83,8 @@ public class SplashActivity extends AppCompatActivity {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError volleyError) {
-
+                            ivWelcome.setImageResource(R.drawable.welcome);
+                            tvWelcomeName.setText(R.string.welcome_to_zhihudaily);
                         }
                     });
 

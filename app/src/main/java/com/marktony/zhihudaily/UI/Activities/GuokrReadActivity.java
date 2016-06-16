@@ -6,9 +6,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +28,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.utils.Api;
+import com.marktony.zhihudaily.utils.UtilFunctions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,12 +51,21 @@ public class GuokrReadActivity extends AppCompatActivity {
     private String headlineUrl;
     private String title;
 
+    private String content;
+
     private SharedPreferences sp;
 
     private RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        if (UtilFunctions.getThemeState(GuokrReadActivity.this) == 0){
+            setTheme(R.style.DayTheme);
+        } else {
+            setTheme(R.style.NightTheme);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guokr_read);
 
@@ -99,7 +109,7 @@ public class GuokrReadActivity extends AppCompatActivity {
         }
 
         // 设置是否加载图片，true不加载，false加载图片sp.getBoolean("no_picture_mode",false)
-        wbMain.getSettings().setBlockNetworkImage(true);
+        wbMain.getSettings().setBlockNetworkImage(sp.getBoolean("no_picture_mode",false));
 
         //能够和js交互
         wbMain.getSettings().setJavaScriptEnabled(true);
@@ -120,13 +130,6 @@ public class GuokrReadActivity extends AppCompatActivity {
                 return true;
             }
 
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                if (loadingDialog.isShowing()){
-                    loadingDialog.dismiss();
-                }
-                super.onPageFinished(view, url);
-            }
         });
 
         // 设置在本WebView内可以通过按下返回上一个html页面
@@ -143,14 +146,52 @@ public class GuokrReadActivity extends AppCompatActivity {
             }
         });
 
-        Log.d("url",Api.GUOKR_ARTICLE_BASE_URL + "?pick_id" + id);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.GUOKR_ARTICLE_BASE_URL + "?pick_id" + id, new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.GUOKR_ARTICLE_BASE_URL + "?pick_id=" + id, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try {
                     if (jsonObject.getString("ok").equals("true")){
-                        Log.d("jjjjjj",jsonObject.toString());
+
+                        {
+
+                            content = jsonObject.getJSONArray("result").getJSONObject(0).getString("content");
+
+                            String parseByTheme = null;
+                            if (UtilFunctions.getThemeState(GuokrReadActivity.this) == 0){
+                                parseByTheme = "<div class=\"article\" id=\"contentMain\">";
+                            } else {
+                                parseByTheme = "<div class=\"article\" id=\"contentMain\" style=\"background-color:#212b30\">";
+                            }
+
+                            String css = "\n<link rel=\"stylesheet\" href=\"file:///android_asset/guokr_master.css\" />\n";
+
+                            String html = "<!DOCTYPE html>\n"
+                                    + "<html>\n"
+                                    + "<head>\n"
+                                    + "\t<meta charset=\"utf-8\" />"
+                                    + css
+                                    + "\n</head>"
+                                    + "<body>"
+                                    + parseByTheme
+                                    + "<div class=\"content\" id=\"articleContent\">"
+                                    + content
+                                    + "</div></div>"
+                                    +"<script>\n"
+                                    + "var ukey = null;\n"
+                                    + "</script>\n"
+                                    + "<script src=\"file:///android_asset/guokr.base.js\"></script>\n"
+                                    + "<script src=\"file:///android_asset/guokr.articleInline.js\"></script>"
+                                    + "</body></html>";
+
+                            wbMain.loadDataWithBaseURL("x-data://base",html,"text/html","utf-8",null);
+
+                        }
                     }
+
+                    if (loadingDialog.isShowing()){
+                        loadingDialog.dismiss();
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -158,7 +199,12 @@ public class GuokrReadActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.d("err",volleyError.toString());
+
+                Snackbar.make(fab,R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
+
+                if (loadingDialog.isShowing()){
+                    loadingDialog.dismiss();
+                }
             }
         });
 
