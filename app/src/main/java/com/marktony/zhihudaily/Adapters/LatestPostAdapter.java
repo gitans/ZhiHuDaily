@@ -20,6 +20,7 @@ import java.util.List;
 /**
  * Created by lizhaotailang on 2016/3/18.
  * 最新消息适配器
+ * latest posts adapter
  */
 public class LatestPostAdapter extends RecyclerView.Adapter<LatestPostAdapter.LatestItemViewHolder> {
 

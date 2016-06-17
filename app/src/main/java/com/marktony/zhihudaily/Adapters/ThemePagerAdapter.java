@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * Created by lizhaotailang on 2016/3/21.
+ * theme pager adapter
  */
 public class ThemePagerAdapter extends FragmentPagerAdapter {
 

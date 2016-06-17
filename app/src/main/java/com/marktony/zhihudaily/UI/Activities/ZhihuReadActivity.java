@@ -167,8 +167,10 @@ public class ZhihuReadActivity extends AppCompatActivity {
 
                     try {
 
-                        //需要注意的是这里有可能没有body。。。 好多坑。。。
+                        // 需要注意的是这里有可能没有body。。。 好多坑。。。
+                        // attention here, it may not contain 'body'
                         // 如果没有body，则加载share_url中内容
+                        // if 'body' is null, load the content of share_url
                         if (jsonObject.isNull("body")){
 
                             webViewRead.loadUrl(jsonObject.getString("share_url"));
@@ -176,9 +178,10 @@ public class ZhihuReadActivity extends AppCompatActivity {
                             ivFirstImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
                             // 在body为null的情况下，share_url的值是依然存在的
+                            // though 'body' is null, share_url exists.
                             shareUrl = jsonObject.getString("share_url");
 
-                        } else {  // body不为null
+                        } else {  // body不为null  body is not null
 
                             shareUrl = jsonObject.getString("share_url");
 
@@ -199,20 +202,28 @@ public class ZhihuReadActivity extends AppCompatActivity {
 
                             }
 
-                            //在api中，css的地址是以一个数组的形式给出，这里需要设置
-                            //api中还有js的部分，这里不再解析js
+                            // 在api中，css的地址是以一个数组的形式给出，这里需要设置
+                            // in fact,in api,css addresses are given as an array
+                            // api中还有js的部分，这里不再解析js
+                            // javascript is included,but here I don't use it
                             // 不再选择加载网络css，而是加载本地assets文件夹中的css
+                            // use the css file from local assets folder,not from network
                             String css = "<link rel=\"stylesheet\" href=\"file:///android_asset/zhihu_master.css\" type=\"text/css\">";
 
                             // body中替换掉img-place-holder div
+                            // replace the img-place-holder with an empty value in body
                             // 可以去除网页中div所占的区域
+                            // to avoid the div occupy the area
                             // 如果没有去除这个div，那么整个网页的头部将会出现一部分的空白区域
+                            // if we don't delete the div, the web page will have a blank area
 
                             String content = jsonObject.getString("body").replace("<div class=\"img-place-holder\">", "");
                             // div headline占据了一段高度，需要手动去除
+                            // delete the headline div
                             content = content.replace("<div class=\"headline\">", "");
 
                             // 根据主题的不同确定不同的加载内容
+                            // load content judging by different theme
                             String parseByTheme = null;
                             if (UtilFunctions.getThemeState(ZhihuReadActivity.this) == 0){
                                 parseByTheme = "<body>\n";
@@ -257,6 +268,7 @@ public class ZhihuReadActivity extends AppCompatActivity {
             queue.add(request);
 
             // 请求评论和赞的数量
+            // request the account of comments and likes
             JsonObjectRequest re = new JsonObjectRequest(Request.Method.GET, Api.STORY_EXTRA + id, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject jsonObject) {
@@ -303,8 +315,11 @@ public class ZhihuReadActivity extends AppCompatActivity {
     }
 
     // 在onPrepareOptionsMenu方法中更新数据
+    // update data in onPrepareOptionsMenu function
     // 如果是在create方法中更新，那么只会创建一次，可能获取不到最新的数据
+    // if update in create function, it will be created only once, we may not gain the latest data
     // 而在这个方法中去更新，可以保证每次都是最新的
+    // update in this function, it can make sure the data we gained is latest
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 

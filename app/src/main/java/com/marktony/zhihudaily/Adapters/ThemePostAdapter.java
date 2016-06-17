@@ -18,6 +18,7 @@ import java.util.List;
 
 /**
  * Created by lizhaotailang on 2016/3/24.
+ * theme posts adapter
  */
 public class ThemePostAdapter  extends RecyclerView.Adapter<ThemePostAdapter.ThemePostViewHolder>{
 
