@@ -69,9 +69,12 @@ public class Api {
     public static final String THEMES = "http://news-at.zhihu.com/api/4/themes";
 
     // 主题日报内容查看
+    // check out the content of theme post
     // http://news-at.zhihu.com/api/4/theme/11
     // 使用在 主题日报列表查看 中获得需要查看的主题日报的 id
+    // similarly, use the id you got in theme post list
     // 拼接在 http://news-at.zhihu.com/api/4/theme/ 后
+    // add it to http://news-at.zhihu.com/api/4/theme/
     // 得到对应主题日报 JSON 格式的内容
     // just like the latest post, add the id you got in theme post, and u will get the content as json format
     public static final String THEME = "http://news-at.zhihu.com/api/4/theme/";
@@ -83,39 +86,51 @@ public class Api {
     public static final String HOT = "http://news-at.zhihu.com/api/3/news/hot";
 
     // 查看新闻的推荐者
-    // checkout the recommender
+    // checkout the recommenders
     // "http://news-at.zhihu.com/api/4/story/#{id}/recommenders"
     // 将新闻id填入到#{id}的位置
     // replace the #{id} with the id you got.
 
     // 获取某个专栏之前的新闻
+    // acquire the past posts of one column
     // http://news-at.zhihu.com/api/4/theme/#{theme id}/before/#{id}
     // 将专栏id填入到 #{theme id}, 将新闻id填入到#{id}
+    // put column id into #{theme id}, put post id into #{id}
     // 如 http://news-at.zhihu.com/api/4/theme/11/before/7119483
+    // just like http://news-at.zhihu.com/api/4/theme/11/before/7119483
     // 注：新闻id要是属于该专栏，否则，返回结果为空
+    // attention: the post id must belong to that column, or you will got a null value
 
     // 查看editor的主页
+    // check out the home page of editor
     // http://news-at.zhihu.com/api/4/editor/#{id}/profile-page/android
 
+    // Fanfou handpick API
     // 取全部的 API 地址列表。该地址返回值为 JSON 格式。
+    // get all the apis.(json format)
     public static final String FANFOU_API = "http://blog.fanfou.com/digest/json/index.json";
 
     // Base url. Base url + 上面列表中的 Api 地址部分，即得到完整的 API 地址。
+    // base url. Base url + api url in FANFOU_API, it's full api url.
     public static final String FANFOU_DAILY = "http://blog.fanfou.com/digest";
 
     // Guokr base url
     public static final String GUOKR_ARTICLE_BASE_URL = "http://apis.guokr.com/handpick/article.json";
 
     // 获取果壳精选的文章列表,通过组合相应的参数成为完整的url
+    // Guokr handpick articles. make complete url by combining params
     public static final String GUOKR_ARTICLES = "http://apis.guokr.com/handpick/article.json?retrieve_type=by_since&category=all&limit=20&ad=1";
 
     // 获取果壳文章的具体信息 V1
+    // specific information of guokr post V1
     public static final String GUOKR_ARTICLE_LINK_V1 = "http://jingxuan.guokr.com/pick/";
 
     // 获取果壳文章的具体信息 V2
+    // V2
     public static final String GUOKR_ARTICLE_LINK_V2 = "http://jingxuan.guokr.com/pick/v2/";
 
     // 获取果壳精选的轮播文章列表
+    // carousel posts
     // public static final String GUOKR_HANDPICK_CAROUSEL = "http://apis.guokr.com/flowingboard/item/handpick_carousel.json";
 
 }

@@ -50,11 +50,12 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
                 .into(holder.ivAvatar);
 
         holder.tvComment.setText(comment.getComment());
-        String s = comment.getLikes() + "赞";
+        String s = comment.getLikes() + R.string.likes;
         holder.tvLikes.setText(s);
         holder.tvAuthor.setText(comment.getAuthor());
 
         // 注意这里的时间戳一定要乘以1000，在这里被坑了好久
+        // attention,timestamp must * 1000
         Date date = new Date(Long.valueOf(comment.getTime())*1000 );
         holder.tvTime.setText(format.format(date));
 

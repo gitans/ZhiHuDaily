@@ -58,7 +58,7 @@ public class SplashActivity extends AppCompatActivity {
 
                 initViews();
 
-                if (NetworkState.networkConneted(SplashActivity.this)){
+                if (NetworkState.networkConnected(SplashActivity.this)){
                     JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.START_IMAGE, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject jsonObject) {

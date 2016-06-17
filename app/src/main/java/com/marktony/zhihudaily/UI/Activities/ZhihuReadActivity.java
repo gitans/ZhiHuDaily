@@ -131,7 +131,7 @@ public class ZhihuReadActivity extends AppCompatActivity {
         webViewRead.getSettings().setBlockNetworkImage(sp.getBoolean("no_picture_mode",false));
 
         // 如果当前没有网络连接，则加载缓存中的内容
-        if ( !NetworkState.networkConneted(ZhihuReadActivity.this)){
+        if ( !NetworkState.networkConnected(ZhihuReadActivity.this)){
 
             ivFirstImg.setImageResource(R.drawable.no_img);
             ivFirstImg.setScaleType(ImageView.ScaleType.CENTER_CROP);

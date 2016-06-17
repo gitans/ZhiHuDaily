@@ -6,13 +6,16 @@ import android.net.NetworkInfo;
 
 /**
  * Created by lizhaotailang on 2016/3/18.
+ * judge the network state, whether the network is connected
  * 判断当前的网络状态，是否有网络连接
  * WiFi或者是移动数据
+ * or is wifi or mobile data
  */
 public class NetworkState {
 
     // 检查是否连接到网络
-    public static boolean networkConneted(Context context){
+    // whether connect to internet
+    public static boolean networkConnected(Context context){
 
         if (context != null){
             ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -25,6 +28,7 @@ public class NetworkState {
     }
 
     // 检查WiFi是否连接
+    // if wifi connect
     public static boolean wifiConnected(Context context){
         if (context != null){
             ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -38,6 +42,7 @@ public class NetworkState {
     }
 
     // 检查移动网络是否连接
+    // if mobile data connect
     public static boolean mobileDataConnected(Context context){
         if (context != null){
             ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

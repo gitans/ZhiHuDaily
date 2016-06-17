@@ -104,7 +104,7 @@ public class LatestFragment extends Fragment {
 
         initViews(view);
 
-        if ( !NetworkState.networkConneted(getActivity())){
+        if ( !NetworkState.networkConnected(getActivity())){
             showNoNetwork();
             loadFromDB();
         } else {
@@ -123,7 +123,7 @@ public class LatestFragment extends Fragment {
 
                 adapter.notifyDataSetChanged();
 
-                if ( !NetworkState.networkConneted(getActivity())){
+                if ( !NetworkState.networkConnected(getActivity())){
 
                     showNoNetwork();
 
