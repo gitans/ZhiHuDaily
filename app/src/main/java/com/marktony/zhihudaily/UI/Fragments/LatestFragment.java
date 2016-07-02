@@ -181,19 +181,21 @@ public class LatestFragment extends Fragment {
             }
         });
 
-        rvLatestNews.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                // 确保只有当recycler view的item滑动到最上面的一个时refresh layout才能下拉
-                refresh.setEnabled(linearLayoutManager.findFirstVisibleItemPosition() == 0);
-            }
-        });
-
         if (refresh.isRefreshing()){
             refresh.setRefreshing(false);
         }
+
+        rvLatestNews.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
 
         return view;
     }
