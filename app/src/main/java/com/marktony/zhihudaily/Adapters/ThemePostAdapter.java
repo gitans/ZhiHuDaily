@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.Adapters;
+package com.marktony.zhihudaily.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;

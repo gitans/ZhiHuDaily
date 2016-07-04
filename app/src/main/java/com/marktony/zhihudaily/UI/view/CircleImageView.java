@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.ui.Views;
+package com.marktony.zhihudaily.ui.view;
 
 /**
  * Created by lizhaotailang on 2016/3/21.

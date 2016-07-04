@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.ui.Activities;
+package com.marktony.zhihudaily.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +12,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.marktony.zhihudaily.Adapters.CommentsAdapter;
+import com.marktony.zhihudaily.adapters.CommentsAdapter;
 import com.marktony.zhihudaily.bean.Comment;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.utils.Api;

@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.ui.Fragments;
+package com.marktony.zhihudaily.ui.fragment;
 
 
 import android.content.ContentValues;
@@ -27,11 +27,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.marktony.zhihudaily.Adapters.LatestPostAdapter;
+import com.marktony.zhihudaily.adapters.LatestPostAdapter;
 import com.marktony.zhihudaily.bean.LatestPost;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.ui.Activities.ZhihuReadActivity;
+import com.marktony.zhihudaily.ui.activity.ZhihuReadActivity;
 import com.marktony.zhihudaily.utils.Api;
 import com.marktony.zhihudaily.utils.NetworkState;
 import com.marktony.zhihudaily.db.DatabaseHelper;

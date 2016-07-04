@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="?attr/layoutBackgroundCustomized"
-    tools:context="com.marktony.zhihudaily.ui.Activities.FanfouPostDetailActivity">
+    tools:context="com.marktony.zhihudaily.ui.activity.FanfouPostDetailActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                 android:paddingRight="16dp"
                 android:paddingLeft="16dp">
 
-                <com.marktony.zhihudaily.ui.Views.CircleImageView
+                <com.marktony.zhihudaily.ui.view.CircleImageView
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:id="@+id/avatar"

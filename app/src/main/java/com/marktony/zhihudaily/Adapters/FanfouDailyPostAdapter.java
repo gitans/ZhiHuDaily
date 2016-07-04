@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.Adapters;
+package com.marktony.zhihudaily.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.bean.FanfouDailyPost;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
-import com.marktony.zhihudaily.ui.Views.CircleImageView;
+import com.marktony.zhihudaily.ui.view.CircleImageView;
 
 import java.util.List;
 

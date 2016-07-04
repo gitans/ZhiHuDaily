@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.ui.Fragments;
+package com.marktony.zhihudaily.ui.fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -20,11 +20,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.marktony.zhihudaily.Adapters.FanfouDailyPostAdapter;
+import com.marktony.zhihudaily.adapters.FanfouDailyPostAdapter;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.bean.FanfouDailyPost;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
-import com.marktony.zhihudaily.ui.Activities.FanfouPostDetailActivity;
+import com.marktony.zhihudaily.ui.activity.FanfouPostDetailActivity;
 import com.marktony.zhihudaily.utils.Api;
 
 import org.json.JSONArray;

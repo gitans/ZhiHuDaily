@@ -14,7 +14,7 @@
         android:paddingRight="16dp"
         android:paddingLeft="16dp">
 
-        <com.marktony.zhihudaily.ui.Views.CircleImageView
+        <com.marktony.zhihudaily.ui.view.CircleImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:id="@+id/avatar"

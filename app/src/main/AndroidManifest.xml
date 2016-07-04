@@ -18,12 +18,12 @@
         3.2之后的sdk必须配置三个值keyboardHidden|orientation|screensize
         -->
         <activity
-            android:name=".ui.Activities.MainActivity"
+            android:name=".ui.activity.MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.Activities.SplashActivity"
+            android:name=".ui.activity.SplashActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:noHistory="true"
             android:theme="@style/AppTheme.FullScreen">
@@ -34,30 +34,30 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.Activities.ZhihuReadActivity"
+            android:name=".ui.activity.ZhihuReadActivity"
             android:label="@string/title_activity_read" />
         <activity
-            android:name=".ui.Activities.SettingsActivity"
+            android:name=".ui.activity.SettingsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/settings"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.Activities.AboutActivity"
+            android:name=".ui.activity.AboutActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/about"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.Activities.CommentsActivity"
+            android:name=".ui.activity.CommentsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_comments"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.Activities.FanfouPostDetailActivity"
+            android:name=".ui.activity.FanfouPostDetailActivity"
             android:label="@string/title_activity_fanfou_post_detail"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.Activities.GuokrReadActivity"
+            android:name=".ui.activity.GuokrReadActivity"
             android:label="@string/title_activity_guokr_read"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
