@@ -26,7 +26,6 @@
     <string name="latest_post">Latest Posts</string>
     <string name="hot_post">Hot Posts</string>
     <string name="theme_post">Theme Posts</string>
-    <string name="title_activity_fanfou_post_detail">Fanfou Handpick</string>
     <string name="guokr_handpick">Guokr Handpick</string>
     <string name="change_theme">Change Theme</string>
     <string name="settings">Settings</string>
@@ -38,7 +37,7 @@
     <string name="share_to">Share to</string>
 
     <!--activity关于-->
-    <string name="version">Version:V2.2</string>
+    <string name="version">Version:V2.3</string>
     <string name="rate">Rate</string>
     <string name="feedback">Report Bugs / Advices</string>
     <string name="donate">Donate Developer</string>

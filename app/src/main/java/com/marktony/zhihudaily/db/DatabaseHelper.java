@@ -17,11 +17,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table if not exists LatestPosts(id integer primary key,title text not null,type integer not null,img_url text not null,date integer not null)");
-        db.execSQL("create table if not exists Contents(id integer primary key,content text not null,date integer not null)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        db.execSQL("drop table if exists Contents");
+        db.execSQL("alter table LatestPosts add 'Contents' text");
+        onCreate(db);
     }
 }

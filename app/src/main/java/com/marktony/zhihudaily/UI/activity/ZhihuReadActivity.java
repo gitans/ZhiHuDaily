@@ -39,7 +39,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-
 public class ZhihuReadActivity extends AppCompatActivity {
 
     private WebView webViewRead;
@@ -379,9 +378,9 @@ public class ZhihuReadActivity extends AppCompatActivity {
     private String loadContentFromDB(String id){
 
         String content = null;
-        DatabaseHelper dbHelper = new DatabaseHelper(ZhihuReadActivity.this,"History.db",null,1);
+        DatabaseHelper dbHelper = new DatabaseHelper(ZhihuReadActivity.this,"History.db",null,2);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        Cursor cursor = db.query("Contents",null,null,null,null,null,null);
+        Cursor cursor = db.query("LatestPosts",null,null,null,null,null,null);
         if (cursor.moveToFirst()){
             do {
                 if (cursor.getString(cursor.getColumnIndex("id")).equals(id)){

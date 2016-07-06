@@ -133,6 +133,7 @@ public class CommentsActivity extends AppCompatActivity {
 
         rvComments = (RecyclerView) findViewById(R.id.rv_comments);
         rvComments.setLayoutManager(new LinearLayoutManager(CommentsActivity.this));
+
     }
 
 

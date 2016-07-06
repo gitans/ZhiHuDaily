@@ -52,11 +52,6 @@
             android:label="@string/title_activity_comments"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.activity.FanfouPostDetailActivity"
-            android:label="@string/title_activity_fanfou_post_detail"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".ui.activity.GuokrReadActivity"
             android:label="@string/title_activity_guokr_read"
             android:theme="@style/AppTheme.NoActionBar" />

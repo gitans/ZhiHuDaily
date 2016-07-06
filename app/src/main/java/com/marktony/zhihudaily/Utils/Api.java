@@ -105,15 +105,6 @@ public class Api {
     // check out the home page of editor
     // http://news-at.zhihu.com/api/4/editor/#{id}/profile-page/android
 
-    // Fanfou handpick API
-    // 取全部的 API 地址列表。该地址返回值为 JSON 格式。
-    // get all the apis.(json format)
-    public static final String FANFOU_API = "http://blog.fanfou.com/digest/json/index.json";
-
-    // Base url. Base url + 上面列表中的 Api 地址部分，即得到完整的 API 地址。
-    // base url. Base url + api url in FANFOU_API, it's full api url.
-    public static final String FANFOU_DAILY = "http://blog.fanfou.com/digest";
-
     // Guokr base url
     public static final String GUOKR_ARTICLE_BASE_URL = "http://apis.guokr.com/handpick/article.json";
 

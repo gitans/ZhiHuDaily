@@ -41,8 +41,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -71,6 +73,9 @@ public class LatestFragment extends Fragment {
     private int month = 5;
     private int day = 20;
 
+    // 用于记录加载更多的次数
+    private int groupCount = -1;
+
     private final String TAG = "LatestFragment";
 
     public void onCreate(Bundle savedInstanceState) {
@@ -80,7 +85,7 @@ public class LatestFragment extends Fragment {
 
         queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
-        dbhelper = new DatabaseHelper(getActivity(),"History.db",null,1);
+        dbhelper = new DatabaseHelper(getActivity(),"History.db",null,2);
         db = dbhelper.getWritableDatabase();
 
         sp = getActivity().getSharedPreferences("user_settings", Context.MODE_PRIVATE);
@@ -124,15 +129,21 @@ public class LatestFragment extends Fragment {
                 adapter.notifyDataSetChanged();
 
                 if ( !NetworkState.networkConnected(getActivity())){
-
                     showNoNetwork();
-
                     loadFromDB();
                 } else {
-
                     load(null);
-
                 }
+
+                Calendar c = Calendar.getInstance();
+                c.add(Calendar.DAY_OF_MONTH,-1);
+
+                year = c.get(Calendar.YEAR);
+                month = c.get(Calendar.MONTH);
+                day = c.get(Calendar.DAY_OF_MONTH);
+
+                groupCount = -1;
+
             }
 
         });
@@ -143,7 +154,7 @@ public class LatestFragment extends Fragment {
 
                 final DatePickerDialog dialog = new DatePickerDialog(getActivity());
 
-                // 给dialog设置初始日期
+                // 给dialog设置初始日期,即默认被选中的日期
                 dialog.date(day,month,year);
 
                 Calendar calendar = Calendar.getInstance();
@@ -165,7 +176,7 @@ public class LatestFragment extends Fragment {
                         month = dialog.getMonth();
                         day = dialog.getDay();
 
-                        load(parseDate(day,month,year));
+                        load(parseDate(dialog.getDate()));
 
                         dialog.dismiss();
                     }
@@ -181,24 +192,43 @@ public class LatestFragment extends Fragment {
             }
         });
 
-        if (refresh.isRefreshing()){
-            refresh.setRefreshing(false);
-        }
-
         rvLatestNews.setOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            boolean isSlidingToLast = false;
+
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                // 当不滚动时
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    // 获取最后一个完全显示的itemposition
+                    int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
+                    int totalItemCount = manager.getItemCount();
+
+                    // 判断是否滚动到底部并且是向下滑动
+                    if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
+
+                        loadMore();
+
+                    }
+                }
+
                 super.onScrollStateChanged(recyclerView, newState);
             }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+
+                isSlidingToLast = dy > 0;
             }
         });
 
         return view;
     }
+
+
 
     private void initViews(View view) {
 
@@ -231,7 +261,7 @@ public class LatestFragment extends Fragment {
             }
         });
 
-        String url = null;
+        String url;
 
         if (date == null){
             url =  Api.LATEST;
@@ -276,9 +306,7 @@ public class LatestFragment extends Fragment {
                                 values.put("img_url",stringList.get(0));
 
                                 if (date == null){
-                                    Calendar c = Calendar.getInstance();
-                                    String date = parseDate(c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH),c.get(Calendar.YEAR));
-
+                                    String date = jsonObject.getString("date");
                                     values.put("date",Integer.valueOf(date));
                                     storeContent(id,date);
                                 } else {
@@ -340,28 +368,18 @@ public class LatestFragment extends Fragment {
     }
 
     /**
-     * 对传入的int型的日期转换为string类型
-     * @param day 天数
-     * @param month 月份
-     * @param year 年份
-     * @return 转换后的string类型的日期
+     * 将long类date转换为String类型
+     * @param date date
+     * @return String date
      */
-    private String parseDate(int day,int month,int year){
+    private String parseDate(long date){
 
-        String date = null;
+        String sDate;
+        Date d = new Date(date + 24*60*60*1000);
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        sDate = format.format(d);
 
-        // month+1的原因为通过date picker dialog获取到的月份是从0开始的
-        if (month <= 8 && day < 10){
-            date = String.valueOf(year) + "0" + (month + 1) + "0" + day;
-        } else if (month <= 8 && day >= 10){
-            date = String.valueOf(year) + "0" + (month + 1) + day;
-        } else if (month > 8 && day < 10){
-            date = String.valueOf(year) + (month + 1) + "0" + day;
-        } else {
-            date = String.valueOf(year) + (month + 1) + day;
-        }
-
-        return date;
+        return sDate;
     }
 
     // 通过snackbar提示没有网络连接
@@ -458,7 +476,7 @@ public class LatestFragment extends Fragment {
             @Override
             public void onResponse(JSONObject jsonObject) {
 
-                if ( !queryIDExists("Contents",id)){
+                if ( !queryIDExists("LatestPosts",id)){
                     ContentValues values = new ContentValues();
 
                     try {
@@ -466,7 +484,7 @@ public class LatestFragment extends Fragment {
                             values.put("id",Integer.valueOf(id));
                             values.put("content", jsonObject.getString("body"));
                             values.put("date",Integer.valueOf(date));
-                            db.insert("Contents",null,values);
+                            db.insert("LatestPosts",null,values);
                             values.clear();
                         }
 
@@ -492,11 +510,10 @@ public class LatestFragment extends Fragment {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DAY_OF_MONTH,-2);
 
-        String[] whereArgs = {parseDate(c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH),c.get(Calendar.YEAR))};
+        String[] whereArgs = {parseDate(c.getTimeInMillis())};
 
         db.delete("LatestPosts","date<?",whereArgs);
 
-        db.delete("Contents","date<?",whereArgs);
     }
 
     @Override
@@ -510,5 +527,89 @@ public class LatestFragment extends Fragment {
         if (refresh.isRefreshing()){
             refresh.setRefreshing(false);
         }
+    }
+
+    // 用于加载更多
+    private void loadMore() {
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        Date d = new Date(year-1900,month,day - groupCount);
+        final String date = format.format(d);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,Api.HISTORY + date, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+
+                try {
+                    if ( !jsonObject.getString("date").isEmpty()){
+
+                        JSONArray array = jsonObject.getJSONArray("stories");
+                        for (int i = 0; i < array.length(); i++){
+
+                            JSONArray images = array.getJSONObject(i).getJSONArray("images");
+                            String id = array.getJSONObject(i).getString("id");
+                            String type = array.getJSONObject(i).getString("type");
+                            String title = array.getJSONObject(i).getString("title");
+                            List<String> stringList = new ArrayList<String>();
+                            for (int j = 0; j < images.length(); j++){
+                                String imgUrl = images.getString(j);
+                                stringList.add(imgUrl);
+                            }
+
+                            LatestPost item = new LatestPost(title, stringList, type, id);
+
+                            list.add(item);
+
+                            if ( !queryIDExists("LatestPosts",id)){
+
+                                ContentValues values = new ContentValues();
+                                values.put("id",Integer.valueOf(id));
+                                values.put("title",title);
+                                values.put("type",Integer.valueOf(type));
+                                values.put("img_url",stringList.get(0));
+
+                                if (date == null){
+                                    String date = jsonObject.getString("date");
+                                    values.put("date",Integer.valueOf(date));
+                                    storeContent(id,date);
+                                } else {
+                                    values.put("date",Integer.valueOf(date));
+                                    storeContent(id,date);
+                                }
+
+                                db.insert("LatestPosts",null,values);
+
+                                values.clear();
+                            }
+
+                        }
+                    }
+
+                    adapter.notifyDataSetChanged();
+
+                    groupCount++;
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                if (refresh.isRefreshing()){
+                    Snackbar.make(fab, R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
+                    refresh.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            refresh.setRefreshing(false);
+                        }
+                    });
+                }
+            }
+        });
+
+        request.setTag(TAG);
+        queue.add(request);
+
     }
 }

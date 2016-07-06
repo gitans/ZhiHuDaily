@@ -36,7 +36,7 @@
     <string name="share_to">分享至</string>
 
     <!--activity关于-->
-    <string name="version">版本:V2.2</string>
+    <string name="version">版本:V2.3</string>
     <string name="rate">为知乎小报应用评分</string>
     <string name="feedback">反馈Bug / 建议</string>
     <string name="donate">捐赠开发者</string>
@@ -77,7 +77,6 @@
     <string name="no_picture_mode_description">阅读时不再加载图片</string>
     <!--setting-->
 
-    <string name="title_activity_fanfou_post_detail">饭否精选</string>
     <string name="guokr_handpick">果壳精选</string>
     <string name="title_activity_guokr_read">果壳精选</string>
     <string name="action_open_in_browser">在浏览器中打开</string>

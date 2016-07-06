@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.ui.fragment.FanfouFragment;
 import com.marktony.zhihudaily.ui.fragment.GuokrFragment;
 import com.marktony.zhihudaily.ui.fragment.HotPostFragment;
 import com.marktony.zhihudaily.ui.fragment.ThemeFragment;
@@ -113,11 +112,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_hot_post) {
 
             changeFragment(new HotPostFragment());
-            toolbar.setTitle(item.getTitle());
-
-        } else if (id == R.id.nav_fanfou_daily){
-
-            changeFragment(new FanfouFragment());
             toolbar.setTitle(item.getTitle());
 
         } else if (id == R.id.nav_guokr){
