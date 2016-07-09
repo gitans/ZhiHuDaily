@@ -85,7 +85,7 @@ public class LatestFragment extends Fragment {
 
         queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
-        dbhelper = new DatabaseHelper(getActivity(),"History.db",null,2);
+        dbhelper = new DatabaseHelper(getActivity(),"History.db",null,3);
         db = dbhelper.getWritableDatabase();
 
         sp = getActivity().getSharedPreferences("user_settings", Context.MODE_PRIVATE);
@@ -114,7 +114,6 @@ public class LatestFragment extends Fragment {
             loadFromDB();
         } else {
             load(null);
-
         }
 
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -297,7 +296,7 @@ public class LatestFragment extends Fragment {
 
                             list.add(item);
 
-                            if ( !queryIDExists("LatestPosts",id)){
+                            if (!queryIDExists("LatestPosts",id)){
 
                                 ContentValues values = new ContentValues();
                                 values.put("id",Integer.valueOf(id));
@@ -306,9 +305,9 @@ public class LatestFragment extends Fragment {
                                 values.put("img_url",stringList.get(0));
 
                                 if (date == null){
-                                    String date = jsonObject.getString("date");
-                                    values.put("date",Integer.valueOf(date));
-                                    storeContent(id,date);
+                                    String d = jsonObject.getString("date");
+                                    values.put("date",Integer.valueOf(d));
+                                    storeContent(id,d);
                                 } else {
                                     values.put("date",Integer.valueOf(date));
                                     storeContent(id,date);
@@ -476,7 +475,7 @@ public class LatestFragment extends Fragment {
             @Override
             public void onResponse(JSONObject jsonObject) {
 
-                if ( !queryIDExists("LatestPosts",id)){
+                if (queryIDExists("LatestPosts",id)){
                     ContentValues values = new ContentValues();
 
                     try {
@@ -484,7 +483,7 @@ public class LatestFragment extends Fragment {
                             values.put("id",Integer.valueOf(id));
                             values.put("content", jsonObject.getString("body"));
                             values.put("date",Integer.valueOf(date));
-                            db.insert("LatestPosts",null,values);
+                            db.insert("Contents",null,values);
                             values.clear();
                         }
 
@@ -513,6 +512,7 @@ public class LatestFragment extends Fragment {
         String[] whereArgs = {parseDate(c.getTimeInMillis())};
 
         db.delete("LatestPosts","date<?",whereArgs);
+        db.delete("Contents","date<?",whereArgs);
 
     }
 
@@ -560,7 +560,7 @@ public class LatestFragment extends Fragment {
 
                             list.add(item);
 
-                            if ( !queryIDExists("LatestPosts",id)){
+                            if (!queryIDExists("LatestPosts",id)){
 
                                 ContentValues values = new ContentValues();
                                 values.put("id",Integer.valueOf(id));
@@ -569,9 +569,9 @@ public class LatestFragment extends Fragment {
                                 values.put("img_url",stringList.get(0));
 
                                 if (date == null){
-                                    String date = jsonObject.getString("date");
-                                    values.put("date",Integer.valueOf(date));
-                                    storeContent(id,date);
+                                    String d = jsonObject.getString("date");
+                                    values.put("date",Integer.valueOf(d));
+                                    storeContent(id,d);
                                 } else {
                                     values.put("date",Integer.valueOf(date));
                                     storeContent(id,date);

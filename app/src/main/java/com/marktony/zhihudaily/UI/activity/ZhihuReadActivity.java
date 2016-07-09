@@ -141,18 +141,23 @@ public class ZhihuReadActivity extends AppCompatActivity {
             } else {
                 parseByTheme = "<body style=\"background-color:#212b30\">\n";
             }
-            String css = "<link rel=\"stylesheet\" href=\"file:///android_asset/zhihu_master.css\" type=\"text/css\">";
-            String html = "<!DOCTYPE html>\n"
-                    + "<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">\n"
-                    + "<head>\n"
-                    + "\t<meta charset=\"utf-8\" />"
-                    + css
-                    + "\n</head>\n"
-                    + parseByTheme
-                    + loadContentFromDB(id).replace("<div class=\"img-place-holder\">", "")
-                    + "</body></html>";
 
-            webViewRead.loadDataWithBaseURL("x-data://base",html,"text/html","utf-8",null);
+            if (loadContentFromDB(id) == null || loadContentFromDB(id).isEmpty()){
+                Snackbar.make(fab, R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
+            } else {
+                String css = "<link rel=\"stylesheet\" href=\"file:///android_asset/zhihu_master.css\" type=\"text/css\">";
+                String html = "<!DOCTYPE html>\n"
+                        + "<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">\n"
+                        + "<head>\n"
+                        + "\t<meta charset=\"utf-8\" />"
+                        + css
+                        + "\n</head>\n"
+                        + parseByTheme
+                        + loadContentFromDB(id).replace("<div class=\"img-place-holder\">", "")
+                        + "</body></html>";
+
+                webViewRead.loadDataWithBaseURL("x-data://base",html,"text/html","utf-8",null);
+            }
 
             if (dialog.isShowing()){
                 dialog.dismiss();
@@ -378,9 +383,9 @@ public class ZhihuReadActivity extends AppCompatActivity {
     private String loadContentFromDB(String id){
 
         String content = null;
-        DatabaseHelper dbHelper = new DatabaseHelper(ZhihuReadActivity.this,"History.db",null,2);
+        DatabaseHelper dbHelper = new DatabaseHelper(ZhihuReadActivity.this,"History.db",null,3);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        Cursor cursor = db.query("LatestPosts",null,null,null,null,null,null);
+        Cursor cursor = db.query("Contents",null,null,null,null,null,null);
         if (cursor.moveToFirst()){
             do {
                 if (cursor.getString(cursor.getColumnIndex("id")).equals(id)){
