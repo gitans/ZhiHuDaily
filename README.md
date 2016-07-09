@@ -33,8 +33,8 @@ Completed features:
 ![screenshot](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/screenshot.png)
 
 ## Download link and market 下载链接与应用商店
-* [fir.im](http://fir.im/gc6w)
 * [![google-play-badge](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/google-play-badge.png)](https://play.google.com/store/apps/details?id=com.marktony.zhihudaily)
+* [fir.im](http://fir.im/gc6w)
 * [Xiaomi App market 小米应用商店](http://app.mi.com/detail/312703?ref=search)
 * [Meizu App market 魅族应用商店](http://app.flyme.cn/apps/public/detail?package_name=com.marktony.zhihudaily)
 * Smartisan App market 锤子应用商店
