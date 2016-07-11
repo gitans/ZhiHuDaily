@@ -29,10 +29,10 @@ Completed features:
 * Share 分享（调用Android内置分享功能实现）
 * Auto download the post content 自动离线
 
-## Screenshot 截屏
+## Screenshots 截屏
 ![screenshot](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/screenshot.png)
 
-## Download link and market 下载链接与应用商店
+## Download links and market 下载链接与应用商店
 * [![google-play-badge](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/google-play-badge.png)](https://play.google.com/store/apps/details?id=com.marktony.zhihudaily)
 * [fir.im](http://fir.im/gc6w)
 * [Xiaomi App market 小米应用商店](http://app.mi.com/detail/312703?ref=search)
