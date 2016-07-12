@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.ui.activity;
+package com.marktony.zhihudaily.uis.activity;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.utils.UtilFunctions;
+import com.marktony.zhihudaily.util.UtilFunctions;
 
 public class AboutActivity extends AppCompatActivity {
 

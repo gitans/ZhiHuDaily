@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.ui.activity;
+package com.marktony.zhihudaily.uis.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;

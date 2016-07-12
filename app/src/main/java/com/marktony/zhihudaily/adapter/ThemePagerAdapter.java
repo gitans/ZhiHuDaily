@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.marktony.zhihudaily.bean.ThemeList;
-import com.marktony.zhihudaily.ui.fragment.PageFragment;
+import com.marktony.zhihudaily.uis.fragment.PageFragment;
 
 import java.util.List;
 

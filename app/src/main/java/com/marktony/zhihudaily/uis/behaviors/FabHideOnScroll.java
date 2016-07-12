@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.ui.behavior;
+package com.marktony.zhihudaily.uis.behaviors;
 
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
