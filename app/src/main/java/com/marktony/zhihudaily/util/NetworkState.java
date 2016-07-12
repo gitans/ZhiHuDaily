@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.utils;
+package com.marktony.zhihudaily.util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

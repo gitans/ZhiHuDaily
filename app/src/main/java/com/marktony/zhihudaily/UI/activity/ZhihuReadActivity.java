@@ -30,9 +30,9 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.utils.Api;
-import com.marktony.zhihudaily.utils.NetworkState;
-import com.marktony.zhihudaily.utils.UtilFunctions;
+import com.marktony.zhihudaily.util.Api;
+import com.marktony.zhihudaily.util.NetworkState;
+import com.marktony.zhihudaily.util.UtilFunctions;
 import com.marktony.zhihudaily.db.DatabaseHelper;
 
 import org.json.JSONException;

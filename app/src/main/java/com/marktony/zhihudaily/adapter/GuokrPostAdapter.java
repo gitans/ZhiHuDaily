@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.adapters;
+package com.marktony.zhihudaily.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

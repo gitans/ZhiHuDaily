@@ -21,7 +21,7 @@ import com.marktony.zhihudaily.ui.fragment.GuokrFragment;
 import com.marktony.zhihudaily.ui.fragment.HotPostFragment;
 import com.marktony.zhihudaily.ui.fragment.ThemeFragment;
 import com.marktony.zhihudaily.ui.fragment.LatestFragment;
-import com.marktony.zhihudaily.utils.UtilFunctions;
+import com.marktony.zhihudaily.util.UtilFunctions;
 
 import java.io.File;
 

@@ -8,7 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.utils.UtilFunctions;
+import com.marktony.zhihudaily.util.UtilFunctions;
 import com.rey.material.widget.Switch;
 
 public class SettingsActivity extends AppCompatActivity {
