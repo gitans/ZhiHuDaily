@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.uis.fragment;
+package com.marktony.zhihudaily.ui.fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -23,7 +23,7 @@ import com.marktony.zhihudaily.adapter.GuokrPostAdapter;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.bean.GuokrHandpickPost;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
-import com.marktony.zhihudaily.uis.activity.GuokrReadActivity;
+import com.marktony.zhihudaily.ui.activity.GuokrReadActivity;
 import com.marktony.zhihudaily.util.Api;
 
 import org.json.JSONArray;

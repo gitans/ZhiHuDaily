@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.uis.fragment;
+package com.marktony.zhihudaily.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,8 +26,8 @@ import com.marktony.zhihudaily.adapter.ThemePostAdapter;
 import com.marktony.zhihudaily.bean.ThemePost;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.uis.activity.ZhihuReadActivity;
-import com.marktony.zhihudaily.uis.behaviors.HidingScrollListener;
+import com.marktony.zhihudaily.ui.activity.ZhihuReadActivity;
+import com.marktony.zhihudaily.ui.behavior.HidingScrollListener;
 import com.marktony.zhihudaily.util.Api;
 
 import org.json.JSONArray;

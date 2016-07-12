@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.uis.activity;
+package com.marktony.zhihudaily.ui.activity;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -17,10 +17,10 @@ import android.view.MenuItem;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.uis.fragment.GuokrFragment;
-import com.marktony.zhihudaily.uis.fragment.HotPostFragment;
-import com.marktony.zhihudaily.uis.fragment.ThemeFragment;
-import com.marktony.zhihudaily.uis.fragment.LatestFragment;
+import com.marktony.zhihudaily.ui.fragment.GuokrFragment;
+import com.marktony.zhihudaily.ui.fragment.HotPostFragment;
+import com.marktony.zhihudaily.ui.fragment.ThemeFragment;
+import com.marktony.zhihudaily.ui.fragment.LatestFragment;
 import com.marktony.zhihudaily.util.UtilFunctions;
 
 import java.io.File;

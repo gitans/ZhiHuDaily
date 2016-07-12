@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.uis.fragment;
+package com.marktony.zhihudaily.ui.fragment;
 
 
 import android.content.ContentValues;
@@ -31,7 +31,7 @@ import com.marktony.zhihudaily.adapter.LatestPostAdapter;
 import com.marktony.zhihudaily.bean.LatestPost;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.uis.activity.ZhihuReadActivity;
+import com.marktony.zhihudaily.ui.activity.ZhihuReadActivity;
 import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.NetworkState;
 import com.marktony.zhihudaily.db.DatabaseHelper;

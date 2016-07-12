@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.uis.fragment;
+package com.marktony.zhihudaily.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
