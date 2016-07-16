@@ -4,8 +4,10 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.util.UtilFunctions;
@@ -13,9 +15,10 @@ import com.rey.material.widget.Switch;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private Switch switchLoadSplash;
-    private Switch switchNoPictureMode;
     private Toolbar toolbar;
+
+    private AppCompatCheckBox cbLoadSplash;
+    private AppCompatCheckBox cbNoPictureMode;
 
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
@@ -32,22 +35,18 @@ public class SettingsActivity extends AppCompatActivity {
 
         initViews();
 
-        switchLoadSplash.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
+        cbLoadSplash.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(Switch view, boolean checked) {
-                switchLoadSplash.setChecked(checked);
-
-                editor.putBoolean("load_splash",checked);
+            public void onClick(View view) {
+                editor.putBoolean("load_splash",cbLoadSplash.isChecked());
                 editor.apply();
             }
         });
 
-        switchNoPictureMode.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
+        cbNoPictureMode.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(Switch view, boolean checked) {
-                switchNoPictureMode.setChecked(checked);
-
-                editor.putBoolean("no_picture_mode",checked);
+            public void onClick(View view) {
+                editor.putBoolean("no_picture_mode",cbNoPictureMode.isChecked());
                 editor.apply();
             }
         });
@@ -69,12 +68,11 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void initViews() {
 
-        // 初始化switch，通过读取sp中的值
-        switchLoadSplash = (Switch) findViewById(R.id.switch_load_splash);
-        switchLoadSplash.setChecked(sp.getBoolean("load_splash",false));
+        cbLoadSplash = (AppCompatCheckBox) findViewById(R.id.cb_load_splash);
+        cbLoadSplash.setChecked(sp.getBoolean("load_splash",false));
 
-        switchNoPictureMode = (Switch) findViewById(R.id.switch_no_picture_mode);
-        switchNoPictureMode.setChecked( sp.getBoolean("no_picture_mode",false));
+        cbNoPictureMode = (AppCompatCheckBox) findViewById(R.id.cb_no_picture_mode);
+        cbNoPictureMode.setChecked(sp.getBoolean("no_picture_mode",false));
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

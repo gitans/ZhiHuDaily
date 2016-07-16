@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
@@ -21,7 +22,6 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -43,7 +43,6 @@ public class ZhihuReadActivity extends AppCompatActivity {
 
     private WebView webViewRead;
     private FloatingActionButton fab;
-    private Toolbar toolbar;
     private ImageView ivFirstImg;
     private TextView tvCopyRight;
     private CollapsingToolbarLayout toolbarLayout;
@@ -53,7 +52,7 @@ public class ZhihuReadActivity extends AppCompatActivity {
     private int likes = 0;
     private int comments = 0;
 
-    private MaterialDialog dialog;
+    private AlertDialog dialog;
 
     private String shareUrl = null;
     private String id;
@@ -75,11 +74,8 @@ public class ZhihuReadActivity extends AppCompatActivity {
 
         sp = getSharedPreferences("user_settings",MODE_PRIVATE);
 
-        dialog = new MaterialDialog.Builder(ZhihuReadActivity.this)
-                .content(getString(R.string.loading))
-                .progress(true,0)
-                .build();
-
+        dialog = new AlertDialog.Builder(ZhihuReadActivity.this).create();
+        dialog.setView(getLayoutInflater().inflate(R.layout.loading_layout,null));
         dialog.show();
 
         Intent intent = getIntent();
@@ -366,7 +362,7 @@ public class ZhihuReadActivity extends AppCompatActivity {
         webViewRead.setScrollbarFadingEnabled(true);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ivFirstImg = (ImageView) findViewById(R.id.head_img);

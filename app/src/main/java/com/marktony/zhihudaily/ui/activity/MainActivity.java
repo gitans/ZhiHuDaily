@@ -1,5 +1,6 @@
 package com.marktony.zhihudaily.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -9,13 +10,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.ui.fragment.GuokrFragment;
 import com.marktony.zhihudaily.ui.fragment.HotPostFragment;
@@ -73,17 +73,16 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.action_copy_right) {
-            MaterialDialog dialog = new MaterialDialog.Builder(MainActivity.this)
-                    .title(R.string.action_copy_right)
-                    .neutralText(R.string.got_it)
-                    .content(R.string.copy_right)
-                    .onNeutral(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            dialog.dismiss();
-                        }
-                    }).build();
 
+            AlertDialog dialog = new AlertDialog.Builder(MainActivity.this).create();
+            dialog.setTitle(R.string.action_copy_right);
+            dialog.setMessage(getString(R.string.copy_right));
+            dialog.setButton(DialogInterface.BUTTON_NEUTRAL, getString(R.string.got_it), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
             dialog.show();
 
             return true;

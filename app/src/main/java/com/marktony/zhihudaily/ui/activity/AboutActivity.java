@@ -2,12 +2,13 @@ package com.marktony.zhihudaily.ui.activity;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -16,8 +17,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.util.UtilFunctions;
 
@@ -77,29 +76,25 @@ public class AboutActivity extends AppCompatActivity {
         layoutCoffee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MaterialDialog dialog = new MaterialDialog.Builder(AboutActivity.this)
-                        .title(R.string.donate)
-                        .content(R.string.donate_content)
-                        .positiveText(R.string.positive)
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                //将指定账号添加到剪切板
-                                ClipboardManager manager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                                ClipData clipData = ClipData.newPlainText("text", getString(R.string.donate_account));
-                                manager.setPrimaryClip(clipData);
 
-                                dialog.dismiss();
-                            }
-                        })
-                        .negativeText(R.string.negative)
-                        .onNegative(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                dialog.dismiss();
-                            }
-                        }).build();
+                AlertDialog dialog = new AlertDialog.Builder(AboutActivity.this).create();
+                dialog.setTitle(R.string.donate);
+                dialog.setMessage(getString(R.string.donate_content));
+                dialog.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.positive), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //将指定账号添加到剪切板
+                        ClipboardManager manager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                        ClipData clipData = ClipData.newPlainText("text", getString(R.string.donate_account));
+                        manager.setPrimaryClip(clipData);
+                    }
+                });
+                dialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.negative), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
+                    }
+                });
                 dialog.show();
 
             }

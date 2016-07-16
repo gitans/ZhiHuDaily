@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
@@ -18,7 +19,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -45,7 +45,7 @@ public class GuokrReadActivity extends AppCompatActivity {
     private WebView wbMain;
     private CollapsingToolbarLayout toolbarLayout;
 
-    private MaterialDialog loadingDialog;
+    private AlertDialog dialog;
 
     private String id;
     private String headlineUrl;
@@ -75,12 +75,8 @@ public class GuokrReadActivity extends AppCompatActivity {
 
         queue = Volley.newRequestQueue(getApplicationContext());
 
-        loadingDialog = new MaterialDialog.Builder(GuokrReadActivity.this)
-                .content(getString(R.string.loading))
-                .progress(true,0)
-                .build();
-
-        loadingDialog.show();
+        dialog = new AlertDialog.Builder(GuokrReadActivity.this).create();
+        dialog.setView(getLayoutInflater().inflate(R.layout.loading_layout,null));
 
         id = getIntent().getStringExtra("id");
         headlineUrl = getIntent().getStringExtra("headlineImageUrl");
@@ -188,8 +184,8 @@ public class GuokrReadActivity extends AppCompatActivity {
                         }
                     }
 
-                    if (loadingDialog.isShowing()){
-                        loadingDialog.dismiss();
+                    if (dialog.isShowing()){
+                        dialog.dismiss();
                     }
 
                 } catch (JSONException e) {
@@ -202,8 +198,8 @@ public class GuokrReadActivity extends AppCompatActivity {
 
                 Snackbar.make(fab,R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
 
-                if (loadingDialog.isShowing()){
-                    loadingDialog.dismiss();
+                if (dialog.isShowing()){
+                    dialog.dismiss();
                 }
             }
         });

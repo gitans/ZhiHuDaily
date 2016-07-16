@@ -44,7 +44,6 @@ Or scan the QR code 或者扫描二维码
 ![code](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/code.png)
 
 ## Open source projects 开源项目
-* [Material-Dialogs](https://github.com/afollestad/material-dialogs)
 * [Glide](https://github.com/bumptech/glide)
 * [Material](https://github.com/rey5137/material)
 * [AOSP](https://source.android.com/index.html)
