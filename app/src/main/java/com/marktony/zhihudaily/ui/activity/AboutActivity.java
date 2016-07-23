@@ -22,13 +22,11 @@ import com.marktony.zhihudaily.util.UtilFunctions;
 
 public class AboutActivity extends AppCompatActivity {
 
-
     private LinearLayout layoutRate;
     private LinearLayout layoutFeedback;
     private LinearLayout layoutCoffee;
     private TextView tvGitHub;
     private TextView tvZhihu;
-    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +62,9 @@ public class AboutActivity extends AppCompatActivity {
                     Intent intent = new Intent(Intent.ACTION_SENDTO,uri);
                     intent.putExtra(Intent.EXTRA_SUBJECT,getString(R.string.mail_topic));
                     intent.putExtra(Intent.EXTRA_TEXT,
-                            getString(R.string.device_model) + Build.MODEL
-                                    + "\n" + getString(R.string.sdk_version) + Build.VERSION.RELEASE + "\n");
+                            getString(R.string.device_model) + Build.MODEL + "\n"
+                                    + getString(R.string.sdk_version) + Build.VERSION.RELEASE + "\n"
+                                    + getString(R.string.version));
                     startActivity(intent);
                 }catch (android.content.ActivityNotFoundException ex){
                     Snackbar.make(layoutFeedback, R.string.no_mail_app,Snackbar.LENGTH_SHORT).show();
@@ -134,10 +133,10 @@ public class AboutActivity extends AppCompatActivity {
         layoutRate = (LinearLayout) findViewById(R.id.LL_rate);
         layoutFeedback = (LinearLayout) findViewById(R.id.LL_feedback);
         layoutCoffee = (LinearLayout) findViewById(R.id.LL_coffee);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         tvGitHub = (TextView) findViewById(R.id.tv_GitHub);
         tvZhihu = (TextView) findViewById(R.id.tv_zhihu);
-        setSupportActionBar(toolbar);
+
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }

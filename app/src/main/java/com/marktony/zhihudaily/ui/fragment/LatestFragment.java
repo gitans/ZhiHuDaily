@@ -235,6 +235,7 @@ public class LatestFragment extends Fragment {
         rvLatestNews.setLayoutManager(linearLayoutManager);
         refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setRippleColor(getResources().getColor(R.color.colorPrimaryDark));
 
         //设置下拉刷新的按钮的颜色
         refresh.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);

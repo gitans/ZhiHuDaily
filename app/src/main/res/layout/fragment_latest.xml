@@ -29,6 +29,8 @@
         app:layout_behavior="com.marktony.zhihudaily.ui.behavior.FabHideOnScroll"
         android:layout_gravity="bottom|end"
         android:src="@drawable/calendar"
-        app:backgroundTint="?attr/fabColorCustomized" />
+        app:backgroundTint="?attr/fabColorCustomized"
+        app:elevation="4dp"
+        app:borderWidth="0dp"/>
 
 </android.support.design.widget.CoordinatorLayout>
