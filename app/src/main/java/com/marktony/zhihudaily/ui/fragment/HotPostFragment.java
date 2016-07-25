@@ -23,6 +23,7 @@ import com.marktony.zhihudaily.adapter.HotPostAdapter;
 import com.marktony.zhihudaily.bean.HotPost;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
+import com.marktony.zhihudaily.ui.DividerItemDecoration;
 import com.marktony.zhihudaily.ui.activity.ZhihuReadActivity;
 import com.marktony.zhihudaily.util.Api;
 
@@ -85,7 +86,7 @@ public class HotPostFragment extends Fragment {
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_hot_post);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),LinearLayoutManager.VERTICAL));
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
 
         //设置下拉刷新的按钮的颜色

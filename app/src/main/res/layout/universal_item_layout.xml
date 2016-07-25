@@ -1,44 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/card_view_item"
-    android:layout_marginTop="8dp"
-    app:cardUseCompatPadding="true"
-    app:cardPreventCornerOverlap="false"
+    android:layout_height="96dp"
     android:focusable="true"
     android:clickable="true"
+    android:orientation="horizontal"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:background="?attr/viewBackgroundCustomized"
     android:foreground="?android:attr/selectableItemBackground">
 
-    <LinearLayout
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/universal_item_iv"
+        android:layout_gravity="center_vertical" />
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="96dp"
-        android:orientation="horizontal"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:background="?attr/viewBackgroundCustomized">
+        android:layout_height="match_parent"
+        android:id="@+id/universal_item_tv_title"
+        android:textColor="?attr/textColorCustomized"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:gravity="center_vertical"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textSize="18sp" />
 
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:id="@+id/universal_item_iv"
-            android:layout_gravity="center_vertical" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/universal_item_tv_title"
-            android:textColor="?attr/textColorCustomized"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            android:gravity="center_vertical"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:textSize="18sp" />
-
-    </LinearLayout>
-
-</android.support.v7.widget.CardView>
+</LinearLayout>

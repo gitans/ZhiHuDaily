@@ -23,6 +23,7 @@ import com.marktony.zhihudaily.adapter.GuokrPostAdapter;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.bean.GuokrHandpickPost;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.ui.DividerItemDecoration;
 import com.marktony.zhihudaily.ui.activity.GuokrReadActivity;
 import com.marktony.zhihudaily.util.Api;
 
@@ -95,7 +96,7 @@ public class GuokrFragment extends Fragment {
 
         rvGuokr = (RecyclerView) view.findViewById(R.id.rv_guokr_handpick);
         rvGuokr.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        rvGuokr.addItemDecoration(new DividerItemDecoration(getActivity(),LinearLayoutManager.VERTICAL));
         refreshGuokr = (SwipeRefreshLayout) view.findViewById(R.id.refresh_guokr);
 
         //设置下拉刷新的按钮的颜色

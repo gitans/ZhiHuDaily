@@ -26,6 +26,7 @@ import com.marktony.zhihudaily.adapter.ThemePostAdapter;
 import com.marktony.zhihudaily.bean.ThemePost;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
+import com.marktony.zhihudaily.ui.DividerItemDecoration;
 import com.marktony.zhihudaily.ui.activity.ZhihuReadActivity;
 import com.marktony.zhihudaily.ui.behavior.HidingScrollListener;
 import com.marktony.zhihudaily.util.Api;
@@ -86,6 +87,7 @@ public class PageFragment extends android.support.v4.app.Fragment {
         ivTheme = (ImageView) view.findViewById(R.id.iv_theme);
         rvThemePosts = (RecyclerView) view.findViewById(R.id.rv_theme_post);
         rvThemePosts.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvThemePosts.addItemDecoration(new DividerItemDecoration(getActivity(),LinearLayoutManager.VERTICAL));
         tvThemeDescription = (TextView) view.findViewById(R.id.tv_theme_description);
         header = (RelativeLayout) view.findViewById(R.id.header);
 

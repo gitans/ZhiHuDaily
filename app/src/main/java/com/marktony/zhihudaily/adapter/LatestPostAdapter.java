@@ -72,14 +72,12 @@ public class LatestPostAdapter extends RecyclerView.Adapter<LatestPostAdapter.La
         private ImageView itemImg;
         private TextView tvLatestNewsTitle;
         private OnRecyclerViewOnClickListener listener;
-        private CardView item;
 
         public LatestItemViewHolder(View itemView,OnRecyclerViewOnClickListener listener) {
             super(itemView);
 
             itemImg = (ImageView) itemView.findViewById(R.id.universal_item_iv);
             tvLatestNewsTitle = (TextView) itemView.findViewById(R.id.universal_item_tv_title);
-            item = (CardView) itemView.findViewById(R.id.card_view_item);
             this.listener = listener;
             itemView.setOnClickListener(this);
         }

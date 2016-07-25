@@ -31,6 +31,7 @@ import com.marktony.zhihudaily.adapter.LatestPostAdapter;
 import com.marktony.zhihudaily.bean.LatestPost;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
+import com.marktony.zhihudaily.ui.DividerItemDecoration;
 import com.marktony.zhihudaily.ui.activity.ZhihuReadActivity;
 import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.NetworkState;
@@ -233,6 +234,7 @@ public class LatestFragment extends Fragment {
 
         rvLatestNews = (RecyclerView) view.findViewById(R.id.rv_main);
         rvLatestNews.setLayoutManager(linearLayoutManager);
+        rvLatestNews.addItemDecoration(new DividerItemDecoration(getActivity(),LinearLayoutManager.VERTICAL));
         refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setRippleColor(getResources().getColor(R.color.colorPrimaryDark));
