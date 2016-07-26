@@ -510,7 +510,7 @@ public class LatestFragment extends Fragment {
     private void deleteTimeoutPosts(){
 
         Calendar c = Calendar.getInstance();
-        c.add(Calendar.DAY_OF_MONTH,-2);
+        c.add(Calendar.DAY_OF_MONTH,-sp.getInt("time_to_save",3));
 
         String[] whereArgs = {parseDate(c.getTimeInMillis())};
 

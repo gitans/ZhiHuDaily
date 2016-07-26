@@ -48,29 +48,13 @@
                 android:textColor="?attr/textColorCustomized"
                 android:layout_marginTop="8dp" />
 
-            <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_time"
-                    android:layout_weight="1"
-                    android:textColor="?attr/textColorCustomized"
-                    android:gravity="start"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_likes"
-                    android:layout_weight="1"
-                    android:textColor="?attr/textColorCustomized"
-                    android:gravity="end"/>
-
-            </LinearLayout>
+                android:id="@+id/tv_time"
+                android:textColor="?attr/textColorCustomized"
+                android:gravity="start"
+                android:layout_marginTop="8dp"/>
 
         </LinearLayout>
 

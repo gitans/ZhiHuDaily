@@ -42,7 +42,7 @@
     <string name="feedback">Report Bugs / Advices</string>
     <string name="donate">Donate Developer</string>
     <string name="donate_content">Alipay account will be copied to clipboard.Launch Alipay and paste it to finish donating.Thanks for support!</string>
-    <string name="donate_account">18627441225</string>
+    <string name="donate_account">marktonymengyi@gmail.com</string>
     <string name="sendto">mailto:marktonymengyi@gmail.com</string>
     <string name="mail_topic">ZhihuDaily Feedback / Advice</string>
     <string name="rate_description">If you like the Translator app,please do rate it</string>
@@ -84,5 +84,11 @@
 
     <string name="title_activity_guokr_read">Guokr Handpick</string>
     <string name="action_open_in_browser">Open in browser</string>
+    <string name="tv_open_source_license">Open source license</string>
+    <string name="in_app_browser">In-App Browser</string>
+    <string name="in_app_browser_description">Open links within the app</string>
+    <string name="time_to_save">Time to save the posts</string>
+    <string name="time_to_save_description">day(s) later, they will be deleted automatically</string>
+    <string name="choose">Choose</string>
 
 </resources>

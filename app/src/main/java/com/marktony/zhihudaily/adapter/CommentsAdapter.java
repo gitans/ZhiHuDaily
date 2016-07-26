@@ -50,8 +50,6 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
                 .into(holder.ivAvatar);
 
         holder.tvComment.setText(comment.getComment());
-        String s = comment.getLikes() + R.string.likes;
-        holder.tvLikes.setText(s);
         holder.tvAuthor.setText(comment.getAuthor());
 
         // 注意这里的时间戳一定要乘以1000，在这里被坑了好久
@@ -72,7 +70,6 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         private TextView tvAuthor;
         private TextView tvComment;
         private TextView tvTime;
-        private TextView tvLikes;
 
         public CommentsViewHolder(View itemView) {
             super(itemView);
@@ -81,7 +78,6 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
             tvAuthor = (TextView) itemView.findViewById(R.id.tv_author);
             tvComment = (TextView) itemView.findViewById(R.id.tv_comment);
             tvTime = (TextView) itemView.findViewById(R.id.tv_time);
-            tvLikes = (TextView) itemView.findViewById(R.id.tv_likes);
         }
     }
 }

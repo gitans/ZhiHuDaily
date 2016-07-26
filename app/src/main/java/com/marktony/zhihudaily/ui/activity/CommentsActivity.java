@@ -27,10 +27,7 @@ import java.util.List;
 
 public class CommentsActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
     private RecyclerView rvComments;
-
-    private String id;
 
     private List<Comment> list = new ArrayList<Comment>();
 
@@ -44,7 +41,7 @@ public class CommentsActivity extends AppCompatActivity {
 
         initViews();
 
-        id = getIntent().getStringExtra("id");
+        String id = getIntent().getStringExtra("id");
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.COMMENTS + id +"/" + "long-comments", new Response.Listener<JSONObject>() {
             @Override
@@ -57,8 +54,7 @@ public class CommentsActivity extends AppCompatActivity {
                             Comment item = new Comment(o.getString("avatar"),
                                     o.getString("author"),
                                     o.getString("content"),
-                                    o.getString("time"),
-                                    o.getString("likes"));
+                                    o.getString("time"));
                             list.add(item);
                         }
                     }
@@ -87,8 +83,7 @@ public class CommentsActivity extends AppCompatActivity {
                             Comment item = new Comment(o.getString("avatar"),
                                     o.getString("author"),
                                     o.getString("content"),
-                                    o.getString("time"),
-                                    o.getString("likes"));
+                                    o.getString("time"));
                             list.add(item);
                         }
                     }
@@ -126,7 +121,7 @@ public class CommentsActivity extends AppCompatActivity {
 
     private void initViews() {
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

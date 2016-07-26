@@ -97,30 +97,33 @@ public class ZhihuReadActivity extends AppCompatActivity {
         webViewRead.getSettings().setDomStorageEnabled(true);
         //开启application Cache功能
         webViewRead.getSettings().setAppCacheEnabled(false);
-        //不调用第三方浏览器即可进行页面反应
-        webViewRead.setWebViewClient(new WebViewClient() {
 
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                webViewRead.loadUrl(url);
-                return true;
-            }
+        if (sp.getBoolean("in_app_browser",true)){
+            //不调用第三方浏览器即可进行页面反应
+            webViewRead.setWebViewClient(new WebViewClient() {
 
-        });
-
-        // 设置在本WebView内可以通过按下返回上一个html页面
-        webViewRead.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN){
-                    if (keyCode == KeyEvent.KEYCODE_BACK && webViewRead.canGoBack()){
-                        webViewRead.goBack();
-                        return true;
-                    }
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    webViewRead.loadUrl(url);
+                    return true;
                 }
-                return false;
-            }
-        });
+
+            });
+
+            // 设置在本WebView内可以通过按下返回上一个html页面
+            webViewRead.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if (event.getAction() == KeyEvent.ACTION_DOWN){
+                        if (keyCode == KeyEvent.KEYCODE_BACK && webViewRead.canGoBack()){
+                            webViewRead.goBack();
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+            });
+        }
 
         // 设置是否加载图片，true不加载，false加载图片
         webViewRead.getSettings().setBlockNetworkImage(sp.getBoolean("no_picture_mode",false));

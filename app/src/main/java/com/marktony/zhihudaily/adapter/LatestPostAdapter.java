@@ -38,8 +38,7 @@ public class LatestPostAdapter extends RecyclerView.Adapter<LatestPostAdapter.La
     @Override
     public LatestItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.universal_item_layout,parent,false);
-        LatestItemViewHolder holder = new LatestItemViewHolder(view,mListener);
-        return holder;
+        return new LatestItemViewHolder(view,mListener);
     }
 
     @Override

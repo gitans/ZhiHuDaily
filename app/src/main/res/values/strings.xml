@@ -41,7 +41,7 @@
     <string name="feedback">反馈Bug / 建议</string>
     <string name="donate">捐赠开发者</string>
     <string name="donate_content">支付宝账号将会复制到粘贴板，进入支付宝可直接粘贴完成捐赠，感谢您的支持！</string>
-    <string name="donate_account">18627441225</string>
+    <string name="donate_account">marktonymengyi@gmail.com</string>
     <string name="sendto">mailto:marktonymengyi@gmail.com</string>
     <string name="mail_topic">知乎小报使用反馈与建议</string>
     <string name="device_model">设备型号:</string>
@@ -80,5 +80,11 @@
     <string name="guokr_handpick">果壳精选</string>
     <string name="title_activity_guokr_read">果壳精选</string>
     <string name="action_open_in_browser">在浏览器中打开</string>
+    <string name="tv_open_source_license">开源许可</string>
+    <string name="in_app_browser">使用内置浏览器</string>
+    <string name="in_app_browser_description">应用内查看链接</string>
+    <string name="time_to_save">消息内容保存时间</string>
+    <string name="time_to_save_description">天后自动删除</string>
+    <string name="choose">选择</string>
 
 </resources>

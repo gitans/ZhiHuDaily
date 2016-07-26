@@ -14,19 +14,13 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.util.UtilFunctions;
 
 public class AboutActivity extends AppCompatActivity {
 
-    private LinearLayout layoutRate;
-    private LinearLayout layoutFeedback;
-    private LinearLayout layoutCoffee;
-    private TextView tvGitHub;
-    private TextView tvZhihu;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +32,7 @@ public class AboutActivity extends AppCompatActivity {
 
         initViews();
 
-        layoutRate.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.layout_rate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 
@@ -48,13 +42,13 @@ public class AboutActivity extends AppCompatActivity {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 } catch (android.content.ActivityNotFoundException ex){
-                    Snackbar.make(layoutRate, R.string.no_app_store_found,Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(toolbar, R.string.no_app_store_found,Snackbar.LENGTH_SHORT).show();
                 }
 
             }
         });
 
-        layoutFeedback.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.layout_feedback).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try{
@@ -67,12 +61,12 @@ public class AboutActivity extends AppCompatActivity {
                                     + getString(R.string.version));
                     startActivity(intent);
                 }catch (android.content.ActivityNotFoundException ex){
-                    Snackbar.make(layoutFeedback, R.string.no_mail_app,Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(toolbar, R.string.no_mail_app,Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
 
-        layoutCoffee.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.layout_coffee).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -99,17 +93,25 @@ public class AboutActivity extends AppCompatActivity {
             }
         });
 
-        tvGitHub.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.tv_GitHub).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(getString(R.string.github_url))));
             }
         });
 
-        tvZhihu.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.tv_zhihu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(getString(R.string.zhihu_url))));
+            }
+        });
+
+        findViewById(R.id.tv_open_source_license).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AboutActivity.this,OpenSourceLicenseActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -130,13 +132,8 @@ public class AboutActivity extends AppCompatActivity {
 
     private void initViews() {
 
-        layoutRate = (LinearLayout) findViewById(R.id.LL_rate);
-        layoutFeedback = (LinearLayout) findViewById(R.id.LL_feedback);
-        layoutCoffee = (LinearLayout) findViewById(R.id.LL_coffee);
-        tvGitHub = (TextView) findViewById(R.id.tv_GitHub);
-        tvZhihu = (TextView) findViewById(R.id.tv_zhihu);
-
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }

@@ -117,30 +117,33 @@ public class GuokrReadActivity extends AppCompatActivity {
         wbMain.getSettings().setDomStorageEnabled(true);
         //开启application Cache功能
         wbMain.getSettings().setAppCacheEnabled(false);
-        //不调用第三方浏览器即可进行页面反应
-        wbMain.setWebViewClient(new WebViewClient() {
 
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                wbMain.loadUrl(url);
-                return true;
-            }
+        if (sp.getBoolean("in_app_browser",true)){
+            //不调用第三方浏览器即可进行页面反应
+            wbMain.setWebViewClient(new WebViewClient() {
 
-        });
-
-        // 设置在本WebView内可以通过按下返回上一个html页面
-        wbMain.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN){
-                    if (keyCode == KeyEvent.KEYCODE_BACK && wbMain.canGoBack()){
-                        wbMain.goBack();
-                        return true;
-                    }
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    wbMain.loadUrl(url);
+                    return true;
                 }
-                return false;
-            }
-        });
+
+            });
+
+            // 设置在本WebView内可以通过按下返回上一个html页面
+            wbMain.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if (event.getAction() == KeyEvent.ACTION_DOWN){
+                        if (keyCode == KeyEvent.KEYCODE_BACK && wbMain.canGoBack()){
+                            wbMain.goBack();
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+            });
+        }
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.GUOKR_ARTICLE_BASE_URL + "?pick_id=" + id, new Response.Listener<JSONObject>() {
             @Override

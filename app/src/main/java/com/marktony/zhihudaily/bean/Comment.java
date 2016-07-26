@@ -9,14 +9,12 @@ public class Comment {
     private String author;
     private String comment;
     private String time;
-    private String likes;
 
-    public Comment(String avatarUrl,String author,String comment,String time,String likes){
+    public Comment(String avatarUrl,String author,String comment,String time ){
         this.avatarUrl = avatarUrl;
         this.author = author;
         this.comment = comment;
         this.time = time;
-        this.likes = likes;
     }
 
     public String getAuthor() {
@@ -29,10 +27,6 @@ public class Comment {
 
     public String getComment() {
         return comment;
-    }
-
-    public String getLikes() {
-        return likes;
     }
 
     public String getTime() {
