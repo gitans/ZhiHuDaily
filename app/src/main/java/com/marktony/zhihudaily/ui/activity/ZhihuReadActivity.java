@@ -98,7 +98,7 @@ public class ZhihuReadActivity extends AppCompatActivity {
         //开启application Cache功能
         webViewRead.getSettings().setAppCacheEnabled(false);
 
-        if (sp.getBoolean("in_app_browser",true)){
+        if (sp.getBoolean("in_app_browser",false)){
             //不调用第三方浏览器即可进行页面反应
             webViewRead.setWebViewClient(new WebViewClient() {
 
@@ -301,10 +301,15 @@ public class ZhihuReadActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent shareIntent = new Intent().setAction(Intent.ACTION_SEND).setType("text/plain");
-                String shareText = title + " " +  shareUrl + getString(R.string.share_extra);
-                shareIntent.putExtra(Intent.EXTRA_TEXT,shareText);
-                startActivity(Intent.createChooser(shareIntent,getString(R.string.share_to)));
+                try {
+                    Intent shareIntent = new Intent().setAction(Intent.ACTION_SEND).setType("text/plain");
+                    String shareText = title + " " +  shareUrl + getString(R.string.share_extra);
+                    shareIntent.putExtra(Intent.EXTRA_TEXT,shareText);
+                    startActivity(Intent.createChooser(shareIntent,getString(R.string.share_to)));
+                } catch (android.content.ActivityNotFoundException ex){
+                    Snackbar.make(fab,R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
+                }
+
 
             }
         });

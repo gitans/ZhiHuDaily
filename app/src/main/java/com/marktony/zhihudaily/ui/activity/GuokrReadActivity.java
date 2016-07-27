@@ -87,10 +87,16 @@ public class GuokrReadActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent shareIntent = new Intent().setAction(Intent.ACTION_SEND).setType("text/plain");
-                String shareText = title + " " +  Api.GUOKR_ARTICLE_LINK_V1 + id + getString(R.string.share_extra);
-                shareIntent.putExtra(Intent.EXTRA_TEXT,shareText);
-                startActivity(Intent.createChooser(shareIntent,getString(R.string.share_to)));
+
+                try {
+                    Intent shareIntent = new Intent().setAction(Intent.ACTION_SEND).setType("text/plain");
+                    String shareText = title + " " +  Api.GUOKR_ARTICLE_LINK_V1 + id + getString(R.string.share_extra);
+                    shareIntent.putExtra(Intent.EXTRA_TEXT,shareText);
+                    startActivity(Intent.createChooser(shareIntent,getString(R.string.share_to)));
+                } catch (android.content.ActivityNotFoundException ex){
+                    Snackbar.make(fab,R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -118,7 +124,7 @@ public class GuokrReadActivity extends AppCompatActivity {
         //开启application Cache功能
         wbMain.getSettings().setAppCacheEnabled(false);
 
-        if (sp.getBoolean("in_app_browser",true)){
+        if (sp.getBoolean("in_app_browser",false)){
             //不调用第三方浏览器即可进行页面反应
             wbMain.setWebViewClient(new WebViewClient() {
 

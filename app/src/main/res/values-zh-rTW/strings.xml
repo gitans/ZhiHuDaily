@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">知乎小報</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+        <!--常用-->
+    <string name="positive">確定</string>
+    <string name="negative">取消</string>
+    <string name="got_it">知道了</string>
+    <string name="loading">載入中</string>
+    <string name="point">提示</string>
+
+    <string name="welcome_to_zhihudaily">歡迎來到知乎小報</string>
+    <string name="action_copy_right">版權信息</string>
+    <string name="title_activity_read">閱讀</string>
+    <string name="likes">贊</string>
+    <string name="comments">評論</string>
+    <string name="title_activity_comments">評論</string>
+    <string name="title_activity_comment">評論</string>
+    <string name="wrong_process">發生了一些錯誤!</string>
+    <string name="no_network_connected">當前沒有網路連接…</string>
+    <string name="go_to_set">去設置</string>
+
+        <!--navigation view menu-->
+    <string name="latest_post">知乎日報</string>
+    <string name="hot_post">熱門消息</string>
+    <string name="theme_post">主題日報</string>
+    <string name="change_theme">切換主題</string>
+    <string name="settings">設置</string>
+    <string name="about">關於</string>
+        <!--navigation view menu end-->
+
+    <string name="other">其他</string>
+    <string name="share_extra">" 分享自 知乎小報"</string>
+    <string name="share_to">分享至</string>
+
+        <!--activity關於-->
+    <string name="version">版本:V2.5</string>
+    <string name="rate">為知乎小報應用評分</string>
+    <string name="feedback">反饋Bug / 建議</string>
+    <string name="donate">捐贈開發者</string>
+    <string name="donate_content">支付寶賬號將會複製到粘貼板，進入支付寶可直接粘貼完成捐贈，感謝您的支持！</string>
+    <string name="donate_account">marktonymengyi@gmail.com</string>
+    <string name="sendto">mailto:marktonymengyi@gmail.com</string>
+    <string name="mail_topic">知乎小報使用反饋與建議</string>
+    <string name="device_model">設備型號:</string>
+    <string name="sdk_version">SDK版本:</string>
+    <string name="no_mail_app">沒有找到郵件類App</string>
+    <string name="no_app_store_found">沒有市場類App</string>
+    <string name="no_browser_found">沒有安裝瀏覽器</string>
+    <string name="author">作者</string>
+    <string name="author_name">黎趙太郎</string>
+    <string name="author_description">湖南,長沙</string>
+    <string name="follow_me_on_github">在GitHub關注我</string>
+    <string name="follow_me_on_zhihu">在知乎關注我</string>
+    <string name="support">支持</string>
+    <string name="feedback_description">幫助我改進知乎小報App</string>
+    <string name="coffee">請我喝杯咖啡</string>
+    <string name="coffee_description">如果你認同我的工作，可以請我喝杯咖啡表示支持</string>
+    <string name="github_url">https://github.com/marktony</string>
+    <string name="zhihu_url">https://www.zhihu.com/people/kirin-momo</string>
+    <string name="rate_description">如果你喜歡知乎小報App,請在商店中給它一個好評吧</string>
+    <string name="zhihu_account">\@黎趙太郎</string>
+        <!--activity關於 end-->
+
+    <string name="copy_right">
+        本App所使用的所有API均由 知乎（Zhihu.Inc） 提供，
+        Github用戶izzyleung採取非正常手段獲取。
+        獲取與共享之行為或有侵犯知乎權益的嫌疑。
+        若被告知需停止共享與使用，izzyleung會及時刪除頁面與整個項目。
+        請您暸解相關情況，並遵守知乎協議。
+        </string>
+
+        <!--settings_preference_fragment-->
+    <string name="no_splash">禁止載入啟動頁</string>
+    <string name="no_splash_description">直接進入主界面</string>
+    <string name="no_picture_mode">無圖模式</string>
+    <string name="no_picture_mode_description">閱讀時不再載入圖片</string>
+        <!--setting-->
+
+    <string name="guokr_handpick">果殼精選</string>
+    <string name="title_activity_guokr_read">果殼精選</string>
+    <string name="action_open_in_browser">在瀏覽器中打開</string>
+    <string name="tv_open_source_license">開源許可</string>
+    <string name="in_app_browser">使用內置瀏覽器</string>
+    <string name="in_app_browser_description">應用內查看鏈接</string>
+    
+</resources>
