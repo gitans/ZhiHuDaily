@@ -46,12 +46,14 @@ public class SplashActivity extends AppCompatActivity {
 
         sp = getSharedPreferences("user_settings",MODE_PRIVATE);
 
-        if (sp.getBoolean("load_splash",false)){
+        if (sp.getBoolean("load_splash",true)){
 
             Intent intent = new Intent(SplashActivity.this,MainActivity.class);
             startActivity(intent);
             finish();
+
             } else {
+
                 queue = Volley.newRequestQueue(getApplicationContext());
 
                 setContentView(R.layout.activity_splash);
@@ -127,4 +129,5 @@ public class SplashActivity extends AppCompatActivity {
             queue.cancelAll(TAG);
         }
     }
+
 }
