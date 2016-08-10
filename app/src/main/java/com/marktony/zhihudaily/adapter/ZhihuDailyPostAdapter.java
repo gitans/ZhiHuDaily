@@ -1,7 +1,6 @@
 package com.marktony.zhihudaily.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,52 +9,51 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.marktony.zhihudaily.bean.ThemePost;
+import com.marktony.zhihudaily.bean.ZhihuDailyPost;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by lizhaotailang on 2016/3/24.
- * theme posts adapter
+ * Created by lizhaotailang on 2016/3/18.
+ * 知乎日报消息适配器
+ * latest posts adapter
  */
-public class ThemePostAdapter  extends RecyclerView.Adapter<ThemePostAdapter.ThemePostViewHolder>{
+public class ZhihuDailyPostAdapter extends RecyclerView.Adapter<ZhihuDailyPostAdapter.LatestItemViewHolder> {
 
-    private final List<ThemePost> list;
+    private final Context context;
     private final LayoutInflater inflater;
-    private Context context;
+    private List<ZhihuDailyPost> list = new ArrayList<ZhihuDailyPost>();
     private OnRecyclerViewOnClickListener mListener;
 
-    public ThemePostAdapter(Context context, List<ThemePost> list){
-        this.list = list;
+    public ZhihuDailyPostAdapter(Context context, List<ZhihuDailyPost> list){
         this.context = context;
+        this.list = list;
         this.inflater = LayoutInflater.from(context);
     }
 
     @Override
-    public ThemePostViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
+    public LatestItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.universal_item_layout,parent,false);
-        return new ThemePostViewHolder(view,mListener);
+        return new LatestItemViewHolder(view,mListener);
     }
 
     @Override
-    public void onBindViewHolder(ThemePostViewHolder holder, int position) {
-        ThemePost themePost = list.get(position);
-        if (themePost.getFirstImg() == null){
-            holder.ivItemImg.setVisibility(View.GONE);
+    public void onBindViewHolder(LatestItemViewHolder holder, int position) {
+        ZhihuDailyPost item = list.get(position);
+
+        if (item.getFirstImg() == null){
+            holder.itemImg.setImageResource(R.drawable.no_img);
         } else {
-
             Glide.with(context)
-                    .load(themePost.getFirstImg())
-                    .asBitmap()
+                    .load(item.getFirstImg())
+                    .error(R.drawable.no_img)
                     .centerCrop()
-                    .into(holder.ivItemImg);
+                    .into(holder.itemImg);
         }
-
-        holder.tvLatestNewsTitle.setText(themePost.getTitle());
-
+        holder.tvLatestNewsTitle.setText(item.getTitle());
     }
 
     @Override
@@ -67,19 +65,17 @@ public class ThemePostAdapter  extends RecyclerView.Adapter<ThemePostAdapter.The
         this.mListener = listener;
     }
 
-    public class ThemePostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class LatestItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private ImageView ivItemImg;
+        private ImageView itemImg;
         private TextView tvLatestNewsTitle;
         private OnRecyclerViewOnClickListener listener;
-        private CardView item;
 
-        public ThemePostViewHolder(View itemView,OnRecyclerViewOnClickListener listener) {
+        public LatestItemViewHolder(View itemView,OnRecyclerViewOnClickListener listener) {
             super(itemView);
 
-            ivItemImg = (ImageView) itemView.findViewById(R.id.universal_item_iv);
+            itemImg = (ImageView) itemView.findViewById(R.id.universal_item_iv);
             tvLatestNewsTitle = (TextView) itemView.findViewById(R.id.universal_item_tv_title);
-            item = (CardView) itemView.findViewById(R.id.card_view_item);
             this.listener = listener;
             itemView.setOnClickListener(this);
         }

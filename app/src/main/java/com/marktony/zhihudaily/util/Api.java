@@ -77,13 +77,13 @@ public class Api {
     // add it to http://news-at.zhihu.com/api/4/theme/
     // 得到对应主题日报 JSON 格式的内容
     // just like the latest post, add the id you got in theme post, and u will get the content as json format
-    public static final String THEME = "http://news-at.zhihu.com/api/4/theme/";
+    // public static final String THEME = "http://news-at.zhihu.com/api/4/theme/";
 
     // 热门消息
     // hot posts
     // 请注意！ 此 API 仍可访问，但是其内容未出现在最新的『知乎日报』 App 中。
     // Please pay attention to this api. It is accessible yet, but it doesn't appear in the ZhihuDaily APP.
-    public static final String HOT = "http://news-at.zhihu.com/api/3/news/hot";
+    // public static final String HOT = "http://news-at.zhihu.com/api/3/news/hot";
 
     // 查看新闻的推荐者
     // checkout the recommenders
@@ -118,7 +118,7 @@ public class Api {
 
     // 获取果壳文章的具体信息 V2
     // V2
-    public static final String GUOKR_ARTICLE_LINK_V2 = "http://jingxuan.guokr.com/pick/v2/";
+    // public static final String GUOKR_ARTICLE_LINK_V2 = "http://jingxuan.guokr.com/pick/v2/";
 
     // 获取果壳精选的轮播文章列表
     // carousel posts

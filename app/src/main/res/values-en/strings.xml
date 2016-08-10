@@ -12,7 +12,6 @@
     <string name="point">Tips</string>
 
     <string name="welcome_to_zhihudaily">Welcome to Zhihu Daily</string>
-    <string name="action_copy_right">Copyright</string>
     <string name="title_activity_read">Read</string>
     <string name="likes">Like</string>
     <string name="comments">Comment</string>
@@ -23,9 +22,6 @@
     <string name="go_to_set">SETTINGS</string>
 
     <!--navigation view menu-->
-    <string name="latest_post">Latest Posts</string>
-    <string name="hot_post">Hot Posts</string>
-    <string name="theme_post">Theme Posts</string>
     <string name="guokr_handpick">Guokr Handpick</string>
     <string name="change_theme">Change Theme</string>
     <string name="settings">Settings</string>
@@ -37,7 +33,7 @@
     <string name="share_to">Share to</string>
 
     <!--activity关于-->
-    <string name="version">Version:V2.5</string>
+    <string name="version">Version:V3.0.0</string>
     <string name="rate">Rate</string>
     <string name="feedback">Report Bugs / Advices</string>
     <string name="donate">Donate Developer</string>
@@ -64,12 +60,6 @@
     <string name="zhihu_url">https://www.zhihu.com/people/kirin-momo</string>
     <string name="zhihu_account">\@黎赵太郎</string>
     <!--activity关于 end-->
-
-     <string name="copy_right">
-         All the APIs that Zhihu Daily used are come from Zhihu.Inc.
-         GitHub user izzyleung got it by abnormal means.
-         Please respect the Zhihu agreement.
-    </string>
 
     <!--settings_preference_fragment-->
     <string name="no_splash">Do not Show Start Image</string>

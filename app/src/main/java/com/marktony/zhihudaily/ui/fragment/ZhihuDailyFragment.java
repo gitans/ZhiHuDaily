@@ -27,8 +27,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.marktony.zhihudaily.adapter.LatestPostAdapter;
-import com.marktony.zhihudaily.bean.LatestPost;
+import com.marktony.zhihudaily.adapter.ZhihuDailyPostAdapter;
+import com.marktony.zhihudaily.bean.ZhihuDailyPost;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.ui.DividerItemDecoration;
@@ -53,16 +53,15 @@ import java.util.List;
  * 最新消息
  * latest posts
  */
-public class LatestFragment extends Fragment {
+public class ZhihuDailyFragment extends Fragment {
 
     private RecyclerView rvLatestNews;
     private SwipeRefreshLayout refresh;
     private FloatingActionButton fab;
     private RequestQueue queue;
-    private List<LatestPost> list = new ArrayList<LatestPost>();
+    private List<ZhihuDailyPost> list = new ArrayList<ZhihuDailyPost>();
 
-    private LatestPostAdapter adapter;
-    private LinearLayoutManager linearLayoutManager;
+    private ZhihuDailyPostAdapter adapter;
 
     private DatabaseHelper dbhelper;
     private SQLiteDatabase db;
@@ -77,12 +76,18 @@ public class LatestFragment extends Fragment {
     // 用于记录加载更多的次数
     private int groupCount = -1;
 
-    private final String TAG = "LatestFragment";
+    private final String TAG = "ZhihuDailyFragment";
+
+    public ZhihuDailyFragment() {
+
+    }
+
+    public static ZhihuDailyFragment newInstance() {
+        return new ZhihuDailyFragment();
+    }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        linearLayoutManager = new LinearLayoutManager(getActivity());
 
         queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
@@ -106,7 +111,7 @@ public class LatestFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_latest,container,false);
+        View view = inflater.inflate(R.layout.fragment_zhihu_daily,container,false);
 
         initViews(view);
 
@@ -233,7 +238,7 @@ public class LatestFragment extends Fragment {
     private void initViews(View view) {
 
         rvLatestNews = (RecyclerView) view.findViewById(R.id.rv_main);
-        rvLatestNews.setLayoutManager(linearLayoutManager);
+        rvLatestNews.setLayoutManager(new LinearLayoutManager(getContext()));
         rvLatestNews.addItemDecoration(new DividerItemDecoration(getActivity(),LinearLayoutManager.VERTICAL));
         refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
@@ -295,7 +300,7 @@ public class LatestFragment extends Fragment {
                                 stringList.add(imgUrl);
                             }
 
-                            LatestPost item = new LatestPost(title, stringList, type, id);
+                            ZhihuDailyPost item = new ZhihuDailyPost(title, stringList, type, id);
 
                             list.add(item);
 
@@ -324,7 +329,7 @@ public class LatestFragment extends Fragment {
                         }
                     }
 
-                    adapter = new LatestPostAdapter(getActivity(),list);
+                    adapter = new ZhihuDailyPostAdapter(getActivity(),list);
                     rvLatestNews.setAdapter(adapter);
                     adapter.setItemClickListener(new OnRecyclerViewOnClickListener() {
                         @Override
@@ -418,14 +423,14 @@ public class LatestFragment extends Fragment {
                 String type = String.valueOf(cursor.getInt(cursor.getColumnIndex("type")));
 
                 if ((title != null) && (list.get(0) != null) && (!id.equals("")) && (!type.equals(""))){
-                    LatestPost item = new LatestPost(title,list,type,id);
+                    ZhihuDailyPost item = new ZhihuDailyPost(title,list,type,id);
                     this.list.add(item);
                 }
             } while (cursor.moveToNext());
         }
         cursor.close();
 
-        adapter = new LatestPostAdapter(getActivity(),list);
+        adapter = new ZhihuDailyPostAdapter(getActivity(),list);
         rvLatestNews.setAdapter(adapter);
         adapter.setItemClickListener(new OnRecyclerViewOnClickListener() {
             @Override
@@ -559,7 +564,7 @@ public class LatestFragment extends Fragment {
                                 stringList.add(imgUrl);
                             }
 
-                            LatestPost item = new LatestPost(title, stringList, type, id);
+                            ZhihuDailyPost item = new ZhihuDailyPost(title, stringList, type, id);
 
                             list.add(item);
 

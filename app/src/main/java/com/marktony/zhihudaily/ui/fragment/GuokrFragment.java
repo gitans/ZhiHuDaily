@@ -56,6 +56,10 @@ public class GuokrFragment extends Fragment {
 
     }
 
+    public static GuokrFragment newInstance() {
+        return new GuokrFragment();
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

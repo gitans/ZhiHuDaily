@@ -6,14 +6,14 @@ import java.util.List;
 /**
  * Created by lizhaotailang on 2016/3/18.
  */
-public class LatestPost {
+public class ZhihuDailyPost {
 
     private String title;
     private List<String> images = new ArrayList<String>();
     private String type;
     private String id;
 
-    public LatestPost(String title, List<String> images, String type, String id){
+    public ZhihuDailyPost(String title, List<String> images, String type, String id){
         this.title = title;
         this.images = images;
         this.type = type;

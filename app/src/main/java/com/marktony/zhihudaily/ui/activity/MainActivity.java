@@ -1,38 +1,23 @@
 package com.marktony.zhihudaily.ui.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.ui.fragment.GuokrFragment;
-import com.marktony.zhihudaily.ui.fragment.HotPostFragment;
-import com.marktony.zhihudaily.ui.fragment.ThemeFragment;
-import com.marktony.zhihudaily.ui.fragment.LatestFragment;
+import com.marktony.zhihudaily.adapter.MainPagerAdapter;
 import com.marktony.zhihudaily.util.UtilFunctions;
 
 import java.io.File;
 
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-
-    private Toolbar toolbar;
-    private DrawerLayout drawer;
-    private ActionBarDrawerToggle toggle;
-    private NavigationView navigationView;
-
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,20 +28,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         initViews();
-
-        navigationView.setCheckedItem(R.id.nav_home);
-        LatestFragment fragment = new LatestFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_container,fragment).commit();
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        }
-
-        super.onBackPressed();
 
     }
 
@@ -72,54 +43,7 @@ public class MainActivity extends AppCompatActivity
 
         int id = item.getItemId();
 
-        if (id == R.id.action_copy_right) {
-
-            AlertDialog dialog = new AlertDialog.Builder(MainActivity.this).create();
-            dialog.setTitle(R.string.action_copy_right);
-            dialog.setMessage(getString(R.string.copy_right));
-            dialog.setButton(DialogInterface.BUTTON_NEUTRAL, getString(R.string.got_it), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-
-                }
-            });
-            dialog.show();
-
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-
-        //toolbar的标题应该根据不同的id来判断
-        int id = item.getItemId();
-
-        if (id == R.id.nav_home) {
-
-            changeFragment(new LatestFragment());
-            toolbar.setTitle(getString(R.string.app_name));
-
-        } else if (id == R.id.nav_theme_post) {
-
-            changeFragment(new ThemeFragment());
-            toolbar.setTitle(item.getTitle());
-
-        } else if (id == R.id.nav_hot_post) {
-
-            changeFragment(new HotPostFragment());
-            toolbar.setTitle(item.getTitle());
-
-        } else if (id == R.id.nav_guokr){
-
-            changeFragment(new GuokrFragment());
-            toolbar.setTitle(item.getTitle());
-
-        } else if (id == R.id.nav_change_theme){
-
+        if (id == R.id.action_change_theme) {
             if (UtilFunctions.getThemeState(MainActivity.this) == 0){
                 UtilFunctions.setThemeState(MainActivity.this,1);
             } else {
@@ -128,43 +52,25 @@ public class MainActivity extends AppCompatActivity
 
             this.finish();
             this.startActivity(this.getIntent());
-
-
-        } else if (id == R.id.nav_settings) {
-
+        } else if (id == R.id.action_settings) {
             startActivity(new Intent(MainActivity.this,SettingsActivity.class));
-
-        } else if (id == R.id.nav_about) {
-
+        } else if (id == R.id.action_about) {
             startActivity(new Intent(MainActivity.this,AboutActivity.class));
-
         }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
 
         return true;
     }
 
     private void initViews() {
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+        viewPager.setOffscreenPageLimit(3);
+        viewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), MainActivity.this));
+        tabLayout.setupWithViewPager(viewPager);
 
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-    }
-
-    //改变fragment
-    private void changeFragment(Fragment fragment){
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_container,fragment).commit();
     }
 
     @Override

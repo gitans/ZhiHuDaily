@@ -12,7 +12,6 @@
     <string name="point">提示</string>
 
     <string name="welcome_to_zhihudaily">欢迎来到知乎小报</string>
-    <string name="action_copy_right">版权信息</string>
     <string name="title_activity_read">阅读</string>
     <string name="likes">赞</string>
     <string name="comments">评论</string>
@@ -22,21 +21,17 @@
     <string name="no_network_connected">当前没有网络连接…</string>
     <string name="go_to_set">去设置</string>
 
-    <!--navigation view menu-->
-    <string name="latest_post">知乎日报</string>
-    <string name="hot_post">热门消息</string>
-    <string name="theme_post">主题日报</string>
+    <!--main menu-->
     <string name="change_theme">切换主题</string>
     <string name="settings">设置</string>
     <string name="about">关于</string>
     <!--navigation view menu end-->
 
-    <string name="other">其他</string>
     <string name="share_extra">" 分享自 知乎小报"</string>
     <string name="share_to">分享至</string>
 
     <!--activity关于-->
-    <string name="version">版本:V2.5</string>
+    <string name="version">版本:V3.0.0</string>
     <string name="rate">为知乎小报应用评分</string>
     <string name="feedback">反馈Bug / 建议</string>
     <string name="donate">捐赠开发者</string>
@@ -63,14 +58,6 @@
     <string name="rate_description">如果你喜欢知乎小报App,请在商店中给它一个好评吧</string>
     <string name="zhihu_account">\@黎赵太郎</string>
     <!--activity关于 end-->
-
-    <string name="copy_right">
-        本App所使用的所有API均由 知乎（Zhihu.Inc） 提供，
-        Github用户izzyleung采取非正常手段获取。
-        获取与共享之行为或有侵犯知乎权益的嫌疑。
-        若被告知需停止共享与使用，izzyleung会及时删除页面与整个项目。
-        请您暸解相关情况，并遵守知乎协议。
-    </string>
 
     <!--settings_preference_fragment-->
     <string name="no_splash">禁止加载启动页</string>

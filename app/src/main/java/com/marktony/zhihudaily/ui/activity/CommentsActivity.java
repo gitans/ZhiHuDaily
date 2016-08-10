@@ -15,6 +15,7 @@ import com.android.volley.toolbox.Volley;
 import com.marktony.zhihudaily.adapter.CommentsAdapter;
 import com.marktony.zhihudaily.bean.Comment;
 import com.marktony.zhihudaily.R;
+import com.marktony.zhihudaily.ui.DividerItemDecoration;
 import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.UtilFunctions;
 
@@ -128,6 +129,7 @@ public class CommentsActivity extends AppCompatActivity {
 
         rvComments = (RecyclerView) findViewById(R.id.rv_comments);
         rvComments.setLayoutManager(new LinearLayoutManager(CommentsActivity.this));
+        rvComments.addItemDecoration(new DividerItemDecoration(CommentsActivity.this, LinearLayoutManager.VERTICAL));
 
     }
 
