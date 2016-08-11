@@ -163,9 +163,11 @@ public class GuokrReadActivity extends AppCompatActivity {
 
                             String parseByTheme = null;
                             if (UtilFunctions.getThemeState(GuokrReadActivity.this) == 0){
-                                parseByTheme = "<div class=\"article\" id=\"contentMain\">";
+                                parseByTheme = "<div class=\"article\" id=\"contentMain\">"
+                                        + "<div class=\"content\" id=\"articleContent\" >";
                             } else {
-                                parseByTheme = "<div class=\"article\" id=\"contentMain\" style=\"background-color:#212b30\">";
+                                parseByTheme = "<div class=\"article\" id=\"contentMain\" style=\"background-color:#212b30\">"
+                                        + "<div class=\"content\" id=\"articleContent\" style=\"background-color:#212b30\">";
                             }
 
                             String css = "\n<link rel=\"stylesheet\" href=\"file:///android_asset/guokr_master.css\" />\n";
@@ -178,7 +180,6 @@ public class GuokrReadActivity extends AppCompatActivity {
                                     + "\n</head>"
                                     + "<body>"
                                     + parseByTheme
-                                    + "<div class=\"content\" id=\"articleContent\">"
                                     + content
                                     + "</div></div>"
                                     +"<script>\n"

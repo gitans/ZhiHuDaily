@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.marktony.zhihudaily.bean.Comment;
+import com.marktony.zhihudaily.bean.ZhihuComment;
 import com.marktony.zhihudaily.R;
 
 import java.text.SimpleDateFormat;
@@ -21,13 +21,13 @@ import java.util.List;
  */
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentsViewHolder> {
 
-    private List<Comment> list;
+    private List<ZhihuComment> list;
     private final Context context;
     private final LayoutInflater inflater;
 
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-    public CommentsAdapter(Context context,List<Comment> list){
+    public CommentsAdapter(Context context,List<ZhihuComment> list){
         this.context = context;
         this.list = list;
         inflater = LayoutInflater.from(context);
@@ -42,7 +42,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
     @Override
     public void onBindViewHolder(CommentsViewHolder holder, int position) {
-        Comment comment = list.get(position);
+        ZhihuComment comment = list.get(position);
 
         Glide.with(context)
                 .load(comment.getAvatarUrl())

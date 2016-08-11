@@ -13,13 +13,13 @@
     <ImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:id="@+id/universal_item_iv"
+        android:id="@+id/zhihu_item_iv"
         android:layout_gravity="center_vertical" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/universal_item_tv_title"
+        android:id="@+id/zhihu_item_tv_title"
         android:textColor="?attr/textColorCustomized"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"

@@ -13,7 +13,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.marktony.zhihudaily.adapter.CommentsAdapter;
-import com.marktony.zhihudaily.bean.Comment;
+import com.marktony.zhihudaily.bean.ZhihuComment;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.ui.DividerItemDecoration;
 import com.marktony.zhihudaily.util.Api;
@@ -30,7 +30,7 @@ public class CommentsActivity extends AppCompatActivity {
 
     private RecyclerView rvComments;
 
-    private List<Comment> list = new ArrayList<Comment>();
+    private List<ZhihuComment> list = new ArrayList<ZhihuComment>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class CommentsActivity extends AppCompatActivity {
                     if (array.length()!=0){
                         for (int i = array.length()-1;i >= 0; i--){
                             JSONObject o = array.getJSONObject(i);
-                            Comment item = new Comment(o.getString("avatar"),
+                            ZhihuComment item = new ZhihuComment(o.getString("avatar"),
                                     o.getString("author"),
                                     o.getString("content"),
                                     o.getString("time"));
@@ -81,7 +81,7 @@ public class CommentsActivity extends AppCompatActivity {
                     if (array.length()!=0){
                         for (int i = array.length()-1;i >= 0 ;i--){
                             JSONObject o = array.getJSONObject(i);
-                            Comment item = new Comment(o.getString("avatar"),
+                            ZhihuComment item = new ZhihuComment(o.getString("avatar"),
                                     o.getString("author"),
                                     o.getString("content"),
                                     o.getString("time"));

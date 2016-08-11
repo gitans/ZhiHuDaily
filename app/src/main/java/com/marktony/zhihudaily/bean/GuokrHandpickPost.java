@@ -8,12 +8,14 @@ public class GuokrHandpickPost {
     private String title;
     private String headlineImg;
     private String id;
+    private String summary;
 
-    public GuokrHandpickPost(String id,String title,String headline_img) {
+    public GuokrHandpickPost(String id,String title,String headline_img, String summary) {
 
         this.title = title;
         this.headlineImg = headline_img;
         this.id = id;
+        this.summary = summary;
 
     }
 
@@ -27,5 +29,9 @@ public class GuokrHandpickPost {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getSummary() {
+        return summary;
     }
 }

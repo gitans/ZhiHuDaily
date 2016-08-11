@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.marktony.zhihudaily.R;
+import com.marktony.zhihudaily.ui.fragment.DoubanMomentFragment;
 import com.marktony.zhihudaily.ui.fragment.GuokrFragment;
 import com.marktony.zhihudaily.ui.fragment.ZhihuDailyFragment;
 
@@ -28,6 +29,8 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         if (position == 1){
             return GuokrFragment.newInstance();
+        } else if (position == 2){
+            return DoubanMomentFragment.newInstance();
         }
         return ZhihuDailyFragment.newInstance();
     }

@@ -36,7 +36,7 @@ public class ZhihuDailyPostAdapter extends RecyclerView.Adapter<ZhihuDailyPostAd
 
     @Override
     public LatestItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.universal_item_layout,parent,false);
+        View view = inflater.inflate(R.layout.zhihu_item_layout,parent,false);
         return new LatestItemViewHolder(view,mListener);
     }
 
@@ -74,8 +74,8 @@ public class ZhihuDailyPostAdapter extends RecyclerView.Adapter<ZhihuDailyPostAd
         public LatestItemViewHolder(View itemView,OnRecyclerViewOnClickListener listener) {
             super(itemView);
 
-            itemImg = (ImageView) itemView.findViewById(R.id.universal_item_iv);
-            tvLatestNewsTitle = (TextView) itemView.findViewById(R.id.universal_item_tv_title);
+            itemImg = (ImageView) itemView.findViewById(R.id.zhihu_item_iv);
+            tvLatestNewsTitle = (TextView) itemView.findViewById(R.id.zhihu_item_tv_title);
             this.listener = listener;
             itemView.setOnClickListener(this);
         }

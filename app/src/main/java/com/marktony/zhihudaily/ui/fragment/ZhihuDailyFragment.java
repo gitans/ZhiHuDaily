@@ -111,7 +111,7 @@ public class ZhihuDailyFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_zhihu_daily,container,false);
+        View view = inflater.inflate(R.layout.fragment_douban_zhihu_daily,container,false);
 
         initViews(view);
 
@@ -130,8 +130,6 @@ public class ZhihuDailyFragment extends Fragment {
                 if (!list.isEmpty()){
                     list.clear();
                 }
-
-                adapter.notifyDataSetChanged();
 
                 if ( !NetworkState.networkConnected(getActivity())){
                     showNoNetwork();

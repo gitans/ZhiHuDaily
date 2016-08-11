@@ -21,6 +21,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.marktony.zhihudaily.adapter.GuokrPostAdapter;
 import com.marktony.zhihudaily.R;
+import com.marktony.zhihudaily.app.VolleySingleton;
 import com.marktony.zhihudaily.bean.GuokrHandpickPost;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.ui.DividerItemDecoration;
@@ -43,8 +44,6 @@ public class GuokrFragment extends Fragment {
     private RecyclerView rvGuokr;
     private SwipeRefreshLayout refreshGuokr;
 
-    private RequestQueue queue;
-
     private ArrayList<GuokrHandpickPost> guokrList = new ArrayList<GuokrHandpickPost>();
 
     private GuokrPostAdapter adapter;
@@ -58,14 +57,6 @@ public class GuokrFragment extends Fragment {
 
     public static GuokrFragment newInstance() {
         return new GuokrFragment();
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-
     }
 
     @Nullable
@@ -85,8 +76,6 @@ public class GuokrFragment extends Fragment {
                 if (!guokrList.isEmpty()){
                     guokrList.clear();
                 }
-
-                adapter.notifyDataSetChanged();
 
                 requestData();
 
@@ -134,7 +123,8 @@ public class GuokrFragment extends Fragment {
                             GuokrHandpickPost item = new GuokrHandpickPost(
                                     o.getString("id"),
                                     o.getString("title"),
-                                    o.getString("headline_img"));
+                                    o.getString("headline_img_tb"),
+                                    o.getString("summary"));
 
                             guokrList.add(item);
                         }
@@ -187,19 +177,16 @@ public class GuokrFragment extends Fragment {
         });
 
         request.setTag(TAG);
-        queue.add(request);
+        VolleySingleton.getVolleySingleton(getContext()).addToRequestQueue(request);
     }
 
     @Override
     public void onStop() {
         super.onStop();
 
-        if (queue != null){
-            queue.cancelAll(TAG);
-        }
-
         if (refreshGuokr.isRefreshing()){
             refreshGuokr.setRefreshing(false);
         }
     }
+
 }
