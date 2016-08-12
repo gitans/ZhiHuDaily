@@ -34,6 +34,7 @@ import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.ui.DividerItemDecoration;
 import com.marktony.zhihudaily.ui.activity.ZhihuReadActivity;
 import com.marktony.zhihudaily.util.Api;
+import com.marktony.zhihudaily.util.DateFormatter;
 import com.marktony.zhihudaily.util.NetworkState;
 import com.marktony.zhihudaily.db.DatabaseHelper;
 import com.rey.material.app.DatePickerDialog;
@@ -179,7 +180,7 @@ public class ZhihuDailyFragment extends Fragment {
                         month = dialog.getMonth();
                         day = dialog.getDay();
 
-                        load(parseDate(dialog.getDate()));
+                        load(new DateFormatter().ZhihuDailyDateFormat(dialog.getDate()));
 
                         dialog.dismiss();
                     }
@@ -372,21 +373,6 @@ public class ZhihuDailyFragment extends Fragment {
         queue.add(request);
     }
 
-    /**
-     * 将long类date转换为String类型
-     * @param date date
-     * @return String date
-     */
-    private String parseDate(long date){
-
-        String sDate;
-        Date d = new Date(date + 24*60*60*1000);
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-        sDate = format.format(d);
-
-        return sDate;
-    }
-
     // 通过snackbar提示没有网络连接
     public void showNoNetwork(){
         Snackbar.make(fab,R.string.no_network_connected,Snackbar.LENGTH_INDEFINITE)
@@ -515,7 +501,7 @@ public class ZhihuDailyFragment extends Fragment {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DAY_OF_MONTH,-2);
 
-        String[] whereArgs = {parseDate(c.getTimeInMillis())};
+        String[] whereArgs = {new DateFormatter().ZhihuDailyDateFormat(c.getTimeInMillis())};
 
         db.delete("LatestPosts","date<?",whereArgs);
         db.delete("Contents","date<?",whereArgs);

@@ -28,7 +28,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.util.Api;
-import com.marktony.zhihudaily.util.UtilFunctions;
+import com.marktony.zhihudaily.util.ThemeHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,14 +60,14 @@ public class GuokrReadActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        if (UtilFunctions.getThemeState(GuokrReadActivity.this) == 0){
+        if (ThemeHelper.getThemeState(GuokrReadActivity.this) == 0){
             setTheme(R.style.DayTheme);
         } else {
             setTheme(R.style.NightTheme);
         }
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_guokr_read);
+        setContentView(R.layout.universal_read_layout);
 
         initViews();
 
@@ -162,7 +162,7 @@ public class GuokrReadActivity extends AppCompatActivity {
                             content = jsonObject.getJSONArray("result").getJSONObject(0).getString("content");
 
                             String parseByTheme = null;
-                            if (UtilFunctions.getThemeState(GuokrReadActivity.this) == 0){
+                            if (ThemeHelper.getThemeState(GuokrReadActivity.this) == 0){
                                 parseByTheme = "<div class=\"article\" id=\"contentMain\">"
                                         + "<div class=\"content\" id=\"articleContent\" >";
                             } else {
@@ -250,8 +250,8 @@ public class GuokrReadActivity extends AppCompatActivity {
         fab = (FloatingActionButton) findViewById(R.id.fab);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ivHeadline = (ImageView) findViewById(R.id.iv_guokr_headline);
-        wbMain = (WebView) findViewById(R.id.wb_guokr_read);
+        ivHeadline = (ImageView) findViewById(R.id.image_view);
+        wbMain = (WebView) findViewById(R.id.web_view);
 
     }
 

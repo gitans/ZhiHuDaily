@@ -12,7 +12,7 @@ import com.marktony.zhihudaily.R;
 /**
  * Created by lizhaotailang on 2016/4/23.
  */
-public class UtilFunctions {
+public class ThemeHelper {
 
     public static int getThemeState(Context context){
         // 从SharedPreferences读取主题的值，如果为日间主题，返回0，夜间主题返回1
@@ -34,7 +34,7 @@ public class UtilFunctions {
     }
 
     public static void setTheme(Activity activity){
-        if ( UtilFunctions.getThemeState(activity) == 0){
+        if ( ThemeHelper.getThemeState(activity) == 0){
             activity.setTheme(R.style.DayTheme);
         } else {
             activity.setTheme(R.style.NightTheme);
@@ -51,7 +51,7 @@ public class UtilFunctions {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
             // finally change the color
-            if (UtilFunctions.getThemeState(activity) == 0){
+            if (ThemeHelper.getThemeState(activity) == 0){
                 window.setStatusBarColor(activity.getResources().getColor(R.color.colorStatusBarLight));
             } else {
                 window.setStatusBarColor(activity.getResources().getColor(R.color.colorStatusBarDark));

@@ -32,7 +32,7 @@ import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.NetworkState;
-import com.marktony.zhihudaily.util.UtilFunctions;
+import com.marktony.zhihudaily.util.ThemeHelper;
 import com.marktony.zhihudaily.db.DatabaseHelper;
 
 import org.json.JSONException;
@@ -62,13 +62,13 @@ public class ZhihuReadActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-        if (UtilFunctions.getThemeState(ZhihuReadActivity.this) == 0){
+        if (ThemeHelper.getThemeState(ZhihuReadActivity.this) == 0){
             setTheme(R.style.DayTheme);
         } else {
             setTheme(R.style.NightTheme);
         }
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_zhihu_read);
+        setContentView(R.layout.universal_read_layout);
 
         initViews();
 
@@ -135,7 +135,7 @@ public class ZhihuReadActivity extends AppCompatActivity {
             ivFirstImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
             String parseByTheme = null;
-            if (UtilFunctions.getThemeState(ZhihuReadActivity.this) == 0){
+            if (ThemeHelper.getThemeState(ZhihuReadActivity.this) == 0){
                 parseByTheme = "<body>\n";
             } else {
                 parseByTheme = "<body style=\"background-color:#212b30\">\n";
@@ -228,7 +228,7 @@ public class ZhihuReadActivity extends AppCompatActivity {
                             // 根据主题的不同确定不同的加载内容
                             // load content judging by different theme
                             String parseByTheme = null;
-                            if (UtilFunctions.getThemeState(ZhihuReadActivity.this) == 0){
+                            if (ThemeHelper.getThemeState(ZhihuReadActivity.this) == 0){
                                 parseByTheme = "<body>\n";
                             } else {
                                 parseByTheme = "<body style=\"background-color:#212b30\">\n";
@@ -366,15 +366,15 @@ public class ZhihuReadActivity extends AppCompatActivity {
     // 初始化view
     private void initViews() {
 
-        webViewRead = (WebView) findViewById(R.id.wb_read);
+        webViewRead = (WebView) findViewById(R.id.web_view);
         webViewRead.setScrollbarFadingEnabled(true);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ivFirstImg = (ImageView) findViewById(R.id.head_img);
-        tvCopyRight = (TextView) findViewById(R.id.tv_copyright);
+        ivFirstImg = (ImageView) findViewById(R.id.image_view);
+        tvCopyRight = (TextView) findViewById(R.id.text_view);
         toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
 
     }

@@ -45,12 +45,7 @@ public class DoubanMomentAdapter extends RecyclerView.Adapter<DoubanMomentAdapte
 
         holder.tvTitle.setText(item.getTitle());
         holder.tvSummary.setText(item.getAbs());
-
-        if (item.getThumb() == null) {
-            holder.imageView.setImageResource(R.drawable.no_img);
-        } else {
-            Glide.with(context).load(item.getThumb()).asBitmap().centerCrop().into(holder.imageView);
-        }
+        Glide.with(context).load(item.getThumb()).asBitmap().error(R.drawable.no_img).centerCrop().into(holder.imageView);
 
     }
 

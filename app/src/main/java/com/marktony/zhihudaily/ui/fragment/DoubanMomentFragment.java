@@ -24,12 +24,17 @@ import com.marktony.zhihudaily.app.VolleySingleton;
 import com.marktony.zhihudaily.bean.DoubanMomentPost;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.ui.DividerItemDecoration;
+import com.marktony.zhihudaily.ui.activity.DoubanReadActivity;
+import com.marktony.zhihudaily.util.Api;
+import com.marktony.zhihudaily.util.DateFormatter;
+import com.rey.material.app.DatePickerDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by Lizhaotailang on 2016/8/11.
@@ -40,6 +45,10 @@ public class DoubanMomentFragment extends Fragment {
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
     private FloatingActionButton fab;
+
+    private DateFormatter formatter = new DateFormatter();
+
+    private int year, month, day; // 用于加载对应日期的消息
 
     private ArrayList<DoubanMomentPost> list = new ArrayList<>();
 
@@ -55,6 +64,17 @@ public class DoubanMomentFragment extends Fragment {
         return new DoubanMomentFragment();
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Calendar c = Calendar.getInstance();
+
+        // init the date
+        year = c.get(Calendar.YEAR);
+        month = c.get(Calendar.MONTH);
+        day = c.get(Calendar.DAY_OF_MONTH);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -62,18 +82,52 @@ public class DoubanMomentFragment extends Fragment {
 
         initViews(view);
 
-        requestData();
+        requestData(formatter.DoubanDateFormat(Calendar.getInstance().getTimeInMillis()));
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                requestData(formatter.DoubanDateFormat(Calendar.getInstance().getTimeInMillis()));
             }
         });
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                list.clear();
+
+                final DatePickerDialog dialog = new DatePickerDialog(getContext());
+                dialog.date(day + 1, month, year);
+                Calendar calendar = Calendar.getInstance();
+                // birthday of douban moment is 2014,5,12
+                calendar.set(2014, 5, 12);
+                dialog.dateRange(calendar.getTimeInMillis(), Calendar.getInstance().getTimeInMillis());
+                dialog.show();
+
+                dialog.positiveAction(getString(R.string.positive));
+                dialog.negativeAction(getString(R.string.negative));
+
+                dialog.positiveActionClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        year = dialog.getYear();
+                        month = dialog.getMonth();
+                        day = dialog.getDay() - 1;
+
+                        requestData(formatter.DoubanDateFormat(dialog.getDate()));
+
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.negativeActionClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
 
             }
         });
@@ -91,7 +145,7 @@ public class DoubanMomentFragment extends Fragment {
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
     }
 
-    private void requestData(){
+    private void requestData(String date){
 
         refreshLayout.post(new Runnable() {
             @Override
@@ -100,7 +154,11 @@ public class DoubanMomentFragment extends Fragment {
             }
         });
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, "https://moment.douban.com/api/stream/date/2016-08-11", new Response.Listener<JSONObject>() {
+        if (!list.isEmpty()){
+            list.clear();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.DOUBAN_MOMENT + date, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
 
@@ -127,26 +185,27 @@ public class DoubanMomentFragment extends Fragment {
                         }
                     }
 
-                    if (list.size() != 0){
+                    adapter = new DoubanMomentAdapter(getActivity(),list);
+                    adapter.setItemClickListener(new OnRecyclerViewOnClickListener() {
+                        @Override
+                        public void OnItemClick(View v, int position) {
+                            DoubanMomentPost item = list.get(position);
+                            Intent i = new Intent(getActivity(), DoubanReadActivity.class);
+                            i.putExtra("id", item.getId());
+                            i.putExtra("title", item.getTitle());
+                            i.putExtra("image", item.getThumb());
+                            startActivity(i);
+                        }
+                    });
 
-                        adapter = new DoubanMomentAdapter(getActivity(),list);
-                        adapter.setItemClickListener(new OnRecyclerViewOnClickListener() {
-                            @Override
-                            public void OnItemClick(View v, int position) {
-                                Snackbar.make(fab,String.valueOf(position),Snackbar.LENGTH_SHORT).show();
-                            }
-                        });
+                    recyclerView.setAdapter(adapter);
 
-                        recyclerView.setAdapter(adapter);
-
-                        refreshLayout.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                refreshLayout.setRefreshing(false);
-                            }
-                        });
-
-                    }
+                    refreshLayout.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            refreshLayout.setRefreshing(false);
+                        }
+                    });
 
                 } catch (JSONException e) {
                     e.printStackTrace();

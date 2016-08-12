@@ -8,14 +8,14 @@ import android.view.MenuItem;
 
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.ui.fragment.SettingsPreferenceFragment;
-import com.marktony.zhihudaily.util.UtilFunctions;
+import com.marktony.zhihudaily.util.ThemeHelper;
 
 public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
-        UtilFunctions.setTheme(SettingsActivity.this);
+        ThemeHelper.setTheme(SettingsActivity.this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);

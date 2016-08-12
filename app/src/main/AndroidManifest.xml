@@ -56,6 +56,10 @@
             android:label="@string/title_activity_guokr_read"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <activity android:name=".ui.activity.DoubanReadActivity"
+            android:label="@string/title_activity_read"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name=".ui.activity.OpenSourceLicenseActivity"
             android:label="@string/tv_open_source_license"
             android:theme="@style/AppTheme.NoActionBar"/>

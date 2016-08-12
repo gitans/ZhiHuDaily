@@ -12,7 +12,7 @@ import android.view.MenuItem;
 
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.adapter.MainPagerAdapter;
-import com.marktony.zhihudaily.util.UtilFunctions;
+import com.marktony.zhihudaily.util.ThemeHelper;
 
 import java.io.File;
 
@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        UtilFunctions.setTheme(MainActivity.this);
+        ThemeHelper.setTheme(MainActivity.this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -44,10 +44,10 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_change_theme) {
-            if (UtilFunctions.getThemeState(MainActivity.this) == 0){
-                UtilFunctions.setThemeState(MainActivity.this,1);
+            if (ThemeHelper.getThemeState(MainActivity.this) == 0){
+                ThemeHelper.setThemeState(MainActivity.this,1);
             } else {
-                UtilFunctions.setThemeState(MainActivity.this,0);
+                ThemeHelper.setThemeState(MainActivity.this,0);
             }
 
             this.finish();
