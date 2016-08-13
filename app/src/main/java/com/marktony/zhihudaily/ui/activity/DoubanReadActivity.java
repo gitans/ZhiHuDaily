@@ -110,13 +110,11 @@ public class DoubanReadActivity extends AppCompatActivity {
             public void onResponse(JSONObject jsonObject) {
 
                 if ( !jsonObject.isNull("content")){
-                    String css = "<link rel=\"stylesheet\" href=\"file:///android_asset/douban_moment_init.css\" type=\"text/css\">"
-                            + "<link rel=\"stylesheet\" href=\"file:///android_asset/douban_moment.css\" type=\"text/css\">";
-                    String parseTheme = null;
+                    String css = null;
                     if (ThemeHelper.getThemeState(DoubanReadActivity.this) == 0){
-                        parseTheme = "<body>\n";
+                        css = "<link rel=\"stylesheet\" href=\"file:///android_asset/douban_light.css\" type=\"text/css\">";
                     } else {
-                        parseTheme = "<body style=\"background-color:#212b30;color:#696e74\">\n";
+                        css = "<link rel=\"stylesheet\" href=\"file:///android_asset/douban_dark.css\" type=\"text/css\">";
                     }
 
                     try {
@@ -139,8 +137,7 @@ public class DoubanReadActivity extends AppCompatActivity {
                                 + "<head>\n"
                                 + "\t<meta charset=\"utf-8\" />"
                                 + css
-                                + "\n</head>\n"
-                                + parseTheme
+                                + "\n</head>\n <body>"
                                 + "<div class=\"container bs-docs-container\">\n" +
                                 "            <div class=\"post-container\">\n" +
                                 content +

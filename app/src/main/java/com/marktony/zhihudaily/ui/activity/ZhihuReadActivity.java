@@ -12,6 +12,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -134,25 +135,27 @@ public class ZhihuReadActivity extends AppCompatActivity {
             ivFirstImg.setImageResource(R.drawable.no_img);
             ivFirstImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-            String parseByTheme = null;
-            if (ThemeHelper.getThemeState(ZhihuReadActivity.this) == 0){
-                parseByTheme = "<body>\n";
-            } else {
-                parseByTheme = "<body style=\"background-color:#212b30\">\n";
+            String content = loadContentFromDB(id).replace("<div class=\"img-place-holder\">", "");
+            content = content.replace("<div class=\"headline\">", "");
+
+            String theme = "<body className=\"\" onload=\"onLoaded()\">";
+            if (ThemeHelper.getThemeState(ZhihuReadActivity.this) == 1){
+                theme = "<body className=\"\" onload=\"onLoaded()\" class=\"night\">";
             }
 
             if (loadContentFromDB(id) == null || loadContentFromDB(id).isEmpty()){
                 Snackbar.make(fab, R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
             } else {
-                String css = "<link rel=\"stylesheet\" href=\"file:///android_asset/zhihu_master.css\" type=\"text/css\">";
+                String css = "<link rel=\"stylesheet\" href=\"file:///android_asset/zhihu_daily.css\" type=\"text/css\">";
+
                 String html = "<!DOCTYPE html>\n"
                         + "<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">\n"
                         + "<head>\n"
                         + "\t<meta charset=\"utf-8\" />"
                         + css
                         + "\n</head>\n"
-                        + parseByTheme
-                        + loadContentFromDB(id).replace("<div class=\"img-place-holder\">", "")
+                        + theme
+                        + content
                         + "</body></html>";
 
                 webViewRead.loadDataWithBaseURL("x-data://base",html,"text/html","utf-8",null);
@@ -211,7 +214,7 @@ public class ZhihuReadActivity extends AppCompatActivity {
                             // javascript is included,but here I don't use it
                             // 不再选择加载网络css，而是加载本地assets文件夹中的css
                             // use the css file from local assets folder,not from network
-                            String css = "<link rel=\"stylesheet\" href=\"file:///android_asset/zhihu_master.css\" type=\"text/css\">";
+                            String css = "<link rel=\"stylesheet\" href=\"file:///android_asset/zhihu_daily.css\" type=\"text/css\">";
 
                             // body中替换掉img-place-holder div
                             // replace the img-place-holder with an empty value in body
@@ -227,11 +230,9 @@ public class ZhihuReadActivity extends AppCompatActivity {
 
                             // 根据主题的不同确定不同的加载内容
                             // load content judging by different theme
-                            String parseByTheme = null;
-                            if (ThemeHelper.getThemeState(ZhihuReadActivity.this) == 0){
-                                parseByTheme = "<body>\n";
-                            } else {
-                                parseByTheme = "<body style=\"background-color:#212b30\">\n";
+                            String theme = "<body className=\"\" onload=\"onLoaded()\">";
+                            if (ThemeHelper.getThemeState(ZhihuReadActivity.this) == 1){
+                                theme = "<body className=\"\" onload=\"onLoaded()\" class=\"night\">";
                             }
 
                             String html = "<!DOCTYPE html>\n"
@@ -240,9 +241,11 @@ public class ZhihuReadActivity extends AppCompatActivity {
                                     + "\t<meta charset=\"utf-8\" />"
                                     + css
                                     + "\n</head>\n"
-                                    + parseByTheme
+                                    + theme
                                     + content
                                     + "</body></html>";
+
+                            Log.d("html", html);
 
                             webViewRead.loadDataWithBaseURL("x-data://base",html,"text/html","utf-8",null);
 
