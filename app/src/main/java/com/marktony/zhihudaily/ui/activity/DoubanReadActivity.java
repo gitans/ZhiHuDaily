@@ -29,6 +29,7 @@ import com.marktony.zhihudaily.app.VolleySingleton;
 import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.ThemeHelper;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -101,8 +102,8 @@ public class DoubanReadActivity extends AppCompatActivity {
 
         });
 
-        // 设置是否加载图片，true不加载，false加载图片
-        webView.getSettings().setBlockNetworkImage(sp.getBoolean("no_picture_mode",false));
+        // 设置是否加载图片，true不加载，false加载图片sp.getBoolean("no_picture_mode",false)
+        webView.getSettings().setBlockNetworkImage(false);
         webView.getSettings().setLoadsImagesAutomatically(true);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.DOUBAN_ARTICLE_DETAIL + id, new Response.Listener<JSONObject>() {
             @Override
@@ -115,12 +116,26 @@ public class DoubanReadActivity extends AppCompatActivity {
                     if (ThemeHelper.getThemeState(DoubanReadActivity.this) == 0){
                         parseTheme = "<body>\n";
                     } else {
-                        parseTheme = "<body style=\"background-color:#212b30\">\n";
+                        parseTheme = "<body style=\"background-color:#212b30;color:#696e74\">\n";
                     }
 
                     try {
+
+                        String content = jsonObject.getString("content");
+
+                        JSONArray images = jsonObject.getJSONArray("photos");
+
+                        // 这是谁设计的api，你站出来，我保证不打死你。。。
+                        for (int i = 0; i < images.length(); i++){
+                            JSONObject o = images.getJSONObject(i);
+                            String tag = o.getString("tag_name");
+                            String old = "<img id=\"" + tag + "\" />";
+                            String newStr = "<img id=\"" + tag + "\" " + "src=\"" + o.getJSONObject("medium").getString("url") + "\"/>";
+                            content = content.replace(old, newStr);
+                        }
+
                         String html = "<!DOCTYPE html>\n"
-                                + "<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">\n"
+                                + "<html lang=\"ZH-CN\" xmlns=\"http://www.w3.org/1999/xhtml\">\n"
                                 + "<head>\n"
                                 + "\t<meta charset=\"utf-8\" />"
                                 + css
@@ -128,7 +143,7 @@ public class DoubanReadActivity extends AppCompatActivity {
                                 + parseTheme
                                 + "<div class=\"container bs-docs-container\">\n" +
                                 "            <div class=\"post-container\">\n" +
-                                jsonObject.getString("content") +
+                                content +
                                 "            </div>\n" +
                                 "        </div>"
                                 + "</body></html>";

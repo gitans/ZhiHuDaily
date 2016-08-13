@@ -142,6 +142,7 @@ public class DoubanMomentFragment extends Fragment {
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         refreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
         refreshLayout.setSize(SwipeRefreshLayout.DEFAULT);
+        refreshLayout.setDistanceToTriggerSync(300);
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
     }
 
