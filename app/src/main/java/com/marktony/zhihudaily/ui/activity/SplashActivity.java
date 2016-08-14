@@ -68,7 +68,7 @@ public class SplashActivity extends AppCompatActivity {
                             try {
                                 if (jsonObject.getString("img").isEmpty() || jsonObject.isNull("img")){
                                     ivWelcome.setImageResource(R.drawable.welcome);
-                                    tvWelcomeName.setText(R.string.welcome_to_zhihudaily);
+                                    tvWelcomeName.setText(R.string.welcome_to_paper_plane);
                                 } else {
 
                                     Glide.with(SplashActivity.this)
@@ -86,7 +86,7 @@ public class SplashActivity extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError volleyError) {
                             ivWelcome.setImageResource(R.drawable.welcome);
-                            tvWelcomeName.setText(R.string.welcome_to_zhihudaily);
+                            tvWelcomeName.setText(R.string.welcome_to_paper_plane);
                         }
                     });
 
@@ -94,7 +94,7 @@ public class SplashActivity extends AppCompatActivity {
                     queue.add(request);
                 } else {
                     ivWelcome.setImageResource(R.drawable.welcome);
-                    tvWelcomeName.setText(R.string.welcome_to_zhihudaily);
+                    tvWelcomeName.setText(R.string.welcome_to_paper_plane);
                 }
 
                 final Intent intent = new Intent(SplashActivity.this,MainActivity.class);

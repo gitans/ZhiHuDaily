@@ -9,7 +9,6 @@ import java.util.Date;
 
 public class DateFormatter {
 
-
     /**
      * 将long类date转换为String类型
      * @param date date
@@ -31,11 +30,6 @@ public class DateFormatter {
         sDate = format.format(d);
 
         return sDate;
-    }
-
-    public String DoubanDateFormat(int year, int month, int day){
-
-        return "" + year + "-" + month + "-" + day;
     }
 
 }

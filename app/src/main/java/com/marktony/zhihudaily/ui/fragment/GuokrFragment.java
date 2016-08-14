@@ -14,11 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.marktony.zhihudaily.adapter.GuokrPostAdapter;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.app.VolleySingleton;
@@ -165,7 +163,7 @@ public class GuokrFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Snackbar.make(rvGuokr,R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(rvGuokr,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
                 refreshGuokr.post(new Runnable() {
                     @Override
                     public void run() {

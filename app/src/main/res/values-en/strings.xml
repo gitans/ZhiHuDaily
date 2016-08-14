@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Zhihu Daily</string>
+    <string name="app_name">Paper Plane</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -11,13 +11,13 @@
     <string name="loading">Loading</string>
     <string name="point">Tips</string>
 
-    <string name="welcome_to_zhihudaily">Welcome to Zhihu Daily</string>
+    <string name="welcome_to_paper_plane">Welcome to Paper Plane</string>
     <string name="title_activity_read">Read</string>
     <string name="likes">Like</string>
     <string name="comments">Comment</string>
     <string name="title_activity_comments">Comments</string>
     <string name="title_activity_comment">Comments</string>
-    <string name="wrong_process">Something wrong!</string>
+    <string name="loaded_failed">Load failed!</string>
     <string name="no_network_connected">No Network Connected…</string>
     <string name="go_to_set">SETTINGS</string>
 
@@ -29,7 +29,8 @@
     <!--navigation view menu end-->
 
     <string name="other">Others</string>
-    <string name="share_extra">Shared From Zhihu Daily</string>
+
+    <string name="share_extra"> Shared From Paper Plane</string>
     <string name="share_to">Share to</string>
 
     <!--activity关于-->
@@ -40,7 +41,7 @@
     <string name="donate_content">Alipay account will be copied to clipboard.Launch Alipay and paste it to finish donating.Thanks for support!</string>
     <string name="donate_account">marktonymengyi@gmail.com</string>
     <string name="sendto">mailto:marktonymengyi@gmail.com</string>
-    <string name="mail_topic">Zhihu Daily Feedback / Advice</string>
+    <string name="mail_topic">Paper Plane Feedback / Advice</string>
     <string name="rate_description">If you like the Translator app,please do rate it</string>
     <string name="device_model">Device Version:</string>
     <string name="sdk_version">SDK Version:</string>
@@ -53,7 +54,7 @@
     <string name="follow_me_on_github">Follow Me on GitHub</string>
     <string name="follow_me_on_zhihu">Follow Me on ZhiHu</string>
     <string name="support">Support</string>
-    <string name="feedback_description">Help me to improve the ZhiHuDaily app</string>
+    <string name="feedback_description">Help me to improve the Paper Plane app</string>
     <string name="coffee">Give Me A Cup of Coffee</string>
     <string name="coffee_description">If you think I deserve to get paid for my work, you can give me a cup of coffee</string>
     <string name="github_url">https://github.com/marktony</string>
@@ -65,6 +66,7 @@
     <string name="no_splash">Do not Show Start Image</string>
     <string name="no_splash_description">Go to homepage directly</string>
     <string name="no_picture_mode">No image mode</string>
+
     <string name="no_picture_mode_description">None image will be loaded when you read articles</string>
     <!--setting-->
 

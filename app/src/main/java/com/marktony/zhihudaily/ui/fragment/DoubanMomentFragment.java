@@ -1,6 +1,7 @@
 package com.marktony.zhihudaily.ui.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -33,8 +34,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Lizhaotailang on 2016/8/11.
@@ -84,21 +87,12 @@ public class DoubanMomentFragment extends Fragment {
 
         requestData(formatter.DoubanDateFormat(Calendar.getInstance().getTimeInMillis()));
 
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                requestData(formatter.DoubanDateFormat(Calendar.getInstance().getTimeInMillis()));
-            }
-        });
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                list.clear();
-
                 final DatePickerDialog dialog = new DatePickerDialog(getContext());
-                dialog.date(day + 1, month, year);
+                dialog.date(day, month, year);
                 Calendar calendar = Calendar.getInstance();
                 // birthday of douban moment is 2014,5,12
                 calendar.set(2014, 5, 12);
@@ -114,7 +108,7 @@ public class DoubanMomentFragment extends Fragment {
 
                         year = dialog.getYear();
                         month = dialog.getMonth();
-                        day = dialog.getDay() - 1;
+                        day = dialog.getDay();
 
                         requestData(formatter.DoubanDateFormat(dialog.getDate()));
 
@@ -132,6 +126,53 @@ public class DoubanMomentFragment extends Fragment {
             }
         });
 
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                Calendar c = Calendar.getInstance();
+
+                // init the date
+                year = c.get(Calendar.YEAR);
+                month = c.get(Calendar.MONTH);
+                day = c.get(Calendar.DAY_OF_MONTH);
+
+                requestData(formatter.DoubanDateFormat(Calendar.getInstance().getTimeInMillis()));
+            }
+        });
+
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            boolean isSlidingToLast = false;
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                // 当不滚动时
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    // 获取最后一个完全显示的itemposition
+                    int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
+                    int totalItemCount = manager.getItemCount();
+
+                    // 判断是否滚动到底部并且是向下滑动
+                    if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
+                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                        Date date = new Date(year - 1900, month, --day);
+                        loadMore(format.format(date));
+                    }
+                }
+
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                isSlidingToLast = dy > 0;
+            }
+        });
+
         return view;
     }
 
@@ -139,21 +180,31 @@ public class DoubanMomentFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_main);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
-        refreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
-        refreshLayout.setSize(SwipeRefreshLayout.DEFAULT);
-        refreshLayout.setDistanceToTriggerSync(300);
+
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setRippleColor(getResources().getColor(R.color.colorPrimaryDark));
+
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        //设置下拉刷新的按钮的颜色
+        refreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        //设置手指在屏幕上下拉多少距离开始刷新
+        refreshLayout.setDistanceToTriggerSync(300);
+        //设置下拉刷新按钮的背景颜色
+        refreshLayout.setProgressBackgroundColorSchemeColor(Color.WHITE);
+        //设置下拉刷新按钮的大小
+        refreshLayout.setSize(SwipeRefreshLayout.DEFAULT);
     }
 
     private void requestData(String date){
 
-        refreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                refreshLayout.setRefreshing(true);
-            }
-        });
+        if (!refreshLayout.isRefreshing()){
+            refreshLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    refreshLayout.setRefreshing(true);
+                }
+            });
+        }
 
         if (!list.isEmpty()){
             list.clear();
@@ -187,6 +238,7 @@ public class DoubanMomentFragment extends Fragment {
                     }
 
                     adapter = new DoubanMomentAdapter(getActivity(),list);
+                    recyclerView.setAdapter(adapter);
                     adapter.setItemClickListener(new OnRecyclerViewOnClickListener() {
                         @Override
                         public void OnItemClick(View v, int position) {
@@ -198,8 +250,6 @@ public class DoubanMomentFragment extends Fragment {
                             startActivity(i);
                         }
                     });
-
-                    recyclerView.setAdapter(adapter);
 
                     refreshLayout.post(new Runnable() {
                         @Override
@@ -216,7 +266,62 @@ public class DoubanMomentFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Snackbar.make(fab,R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
+                refreshLayout.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshLayout.setRefreshing(false);
+                    }
+                });
+
+            }
+        });
+
+        request.setTag(TAG);
+        VolleySingleton.getVolleySingleton(getContext()).addToRequestQueue(request);
+    }
+
+    // 写的有些重复，可以合并到上面的request 中去
+    private void loadMore(String date){
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.DOUBAN_MOMENT + date, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+
+                try {
+                    if ( !jsonObject.isNull("posts")){
+                        JSONArray array = jsonObject.getJSONArray("posts");
+                        for (int i = 0; i < array.length(); i++){
+
+                            JSONObject o = array.getJSONObject(i);
+
+                            String thumb_medium = null;
+                            if (o.getJSONArray("thumbs").length() != 0) {
+                                thumb_medium = o.getJSONArray("thumbs").getJSONObject(0).getJSONObject("medium").getString("url");
+                            }
+
+                            DoubanMomentPost item = new DoubanMomentPost(
+                                    o.getInt("id"),
+                                    o.getString("title"),
+                                    o.getString("abstract"),
+                                    thumb_medium
+                            );
+
+                            list.add(item);
+                        }
+                    }
+
+                    adapter.notifyDataSetChanged();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
                 refreshLayout.post(new Runnable() {
                     @Override
                     public void run() {

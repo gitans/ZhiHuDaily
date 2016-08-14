@@ -94,7 +94,7 @@ public class GuokrReadActivity extends AppCompatActivity {
                     shareIntent.putExtra(Intent.EXTRA_TEXT,shareText);
                     startActivity(Intent.createChooser(shareIntent,getString(R.string.share_to)));
                 } catch (android.content.ActivityNotFoundException ex){
-                    Snackbar.make(fab,R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
                 }
 
             }
@@ -206,7 +206,7 @@ public class GuokrReadActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
-                Snackbar.make(fab,R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
 
                 if (dialog.isShowing()){
                     dialog.dismiss();
@@ -221,7 +221,7 @@ public class GuokrReadActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.menu_guokr_read,menu);
+        getMenuInflater().inflate(R.menu.menu_read,menu);
 
         return super.onCreateOptionsMenu(menu);
     }

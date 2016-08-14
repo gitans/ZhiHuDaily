@@ -15,6 +15,7 @@ import com.marktony.zhihudaily.bean.DoubanMomentPost;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Lizhaotailang on 2016/8/11.
@@ -24,7 +25,7 @@ public class DoubanMomentAdapter extends RecyclerView.Adapter<DoubanMomentAdapte
 
     private final Context context;
     private final LayoutInflater inflater;
-    private ArrayList<DoubanMomentPost> list;
+    private List<DoubanMomentPost> list;
 
     private OnRecyclerViewOnClickListener listener;
 

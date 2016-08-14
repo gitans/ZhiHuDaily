@@ -224,7 +224,6 @@ public class ZhihuDailyFragment extends Fragment {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-
                 isSlidingToLast = dy > 0;
             }
         });
@@ -358,7 +357,7 @@ public class ZhihuDailyFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 if (refresh.isRefreshing()){
-                    Snackbar.make(fab, R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(fab, R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
                     refresh.post(new Runnable() {
                         @Override
                         public void run() {
@@ -589,7 +588,7 @@ public class ZhihuDailyFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 if (refresh.isRefreshing()){
-                    Snackbar.make(fab, R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(fab, R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
                     refresh.post(new Runnable() {
                         @Override
                         public void run() {

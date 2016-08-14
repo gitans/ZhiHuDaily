@@ -144,7 +144,7 @@ public class ZhihuReadActivity extends AppCompatActivity {
             }
 
             if (loadContentFromDB(id) == null || loadContentFromDB(id).isEmpty()){
-                Snackbar.make(fab, R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(fab, R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
             } else {
                 String css = "<link rel=\"stylesheet\" href=\"file:///android_asset/zhihu_daily.css\" type=\"text/css\">";
 
@@ -263,7 +263,7 @@ public class ZhihuReadActivity extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
-                    Snackbar.make(fab, R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(fab, R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
 
                     if (dialog.isShowing()){
                         dialog.dismiss();
@@ -287,13 +287,13 @@ public class ZhihuReadActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     } else {
-                        Snackbar.make(fab,R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
                     }
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
-                    Snackbar.make(fab,R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
                 }
             });
 
@@ -310,7 +310,7 @@ public class ZhihuReadActivity extends AppCompatActivity {
                     shareIntent.putExtra(Intent.EXTRA_TEXT,shareText);
                     startActivity(Intent.createChooser(shareIntent,getString(R.string.share_to)));
                 } catch (android.content.ActivityNotFoundException ex){
-                    Snackbar.make(fab,R.string.wrong_process,Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
                 }
 
 
