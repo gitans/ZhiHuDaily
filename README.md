@@ -1,8 +1,8 @@
-# ZhiHuDaily 知乎小报
+# Paper Plane 纸飞机
 
-ZhiHuDaily is an unofficial client of http://daily.zhihu.com/ based on Android platform. The content comes from http://daily.zhihu.com/. API comes from [izzyleung](https://github.com/izzyleung). If this App invade Zhihu's rights, I will delete the whole repository. Please pay attention to the situation and observe Zhihu's agreement.
+原名知乎小报，V3.0.0之后正式更名为纸飞机，是一款集合了知乎日报、果壳精选和豆瓣一刻的综合性阅读客户端。
 
-知乎小报是一款基于Android平台开发的知乎日报第三方客户端。内容来源于知乎日报官方，API来自 [izzyleung](https://github.com/izzyleung)。如果本App存在侵犯知乎权益的嫌疑，那么本人将删除整个项目。请您暸解相关情况，并遵守知乎协议。
+其中知乎日报API来自 [izzyleung](https://github.com/izzyleung)
 
 **Welcome star and fork, welcom pull request,if there is a bug, please let me know by sending an email**
 
@@ -14,20 +14,7 @@ ZhiHuDaily is an unofficial client of http://daily.zhihu.com/ based on Android p
 > 以下所有 API 均由 知乎（Zhihu.Inc） 提供，本人（Xiao Liang）采取非正常手段获取。获取与共享之行为或有侵犯知乎权益的嫌疑。若被告知需停止共享与使用，本人会及时删除此页面与整个项目。
 请您暸解相关情况，并遵守知乎协议。
 
-The app contains six model: latest posts, theme posts, hot posts, past posts and guokr handpick.
-
-App内容主要分为6部分:最新日报、主题日报、热门日报、历史日报、果壳精选。
-
-Completed features:
-目前已经完成的功能有：
-
-* Welcome page欢迎页
-* No image mode 浏览时无图模式
-* The number of likes,comments 赞、评论数量查看
-* Content of comment 查看评论内容
-* Night mode 夜间模式
-* Share 分享（调用Android内置分享功能实现）
-* Auto download the post content 自动离线
+项目目前仍然在维护当中，预计会在9月下旬进行项目重构，采用Google官方的MVP架构。
 
 ## Screenshots 截屏
 ![screenshot](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/screenshot.png)
