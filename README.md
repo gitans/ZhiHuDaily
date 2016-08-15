@@ -17,14 +17,11 @@
 
 ## 下载链接与应用商店
 * [![google-play-badge](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/google-play-badge.png)](https://play.google.com/store/apps/details?id=com.marktony.zhihudaily)
-* [fir.im](http://fir.im/gc6w)
 * [小米应用商店](http://app.mi.com/detail/312703?ref=search)
 * [魅族应用商店](http://app.flyme.cn/apps/public/detail?package_name=com.marktony.zhihudaily)
+* [酷市场](http://www.coolapk.com/apk/com.marktony.zhihudaily)
 * 锤子应用商店
 
-或者扫描二维码
-
-![code](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/code.png)
 
 ## 联系我
 marktonymengyi#gmail.com (替换#为@)
