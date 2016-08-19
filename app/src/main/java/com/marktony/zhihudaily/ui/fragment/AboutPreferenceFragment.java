@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.PreferenceFragmentCompat;
@@ -57,11 +58,16 @@ public class AboutPreferenceFragment extends PreferenceFragmentCompat {
             @Override
             public boolean onPreferenceClick(android.support.v7.preference.Preference preference) {
 
-                try{
+                CustomTabsIntent.Builder customTabsIntent = new CustomTabsIntent.Builder();
+                customTabsIntent.setToolbarColor(getResources().getColor(R.color.colorPrimary));
+                customTabsIntent.setShowTitle(true);
+                customTabsIntent.build().launchUrl(getActivity(), Uri.parse(getString(R.string.github_url)));
+
+                /*try{
                     startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(getString(R.string.github_url))));
                 } catch (android.content.ActivityNotFoundException ex){
                     Snackbar.make(toolbar, R.string.no_browser_found,Snackbar.LENGTH_SHORT).show();
-                }
+                }*/
                 return false;
             }
         });
@@ -69,7 +75,13 @@ public class AboutPreferenceFragment extends PreferenceFragmentCompat {
         findPreference("follow_me_on_zhihu").setOnPreferenceClickListener(new android.support.v7.preference.Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(android.support.v7.preference.Preference preference) {
-                startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(getString(R.string.zhihu_url))));
+
+                CustomTabsIntent.Builder customTabsIntent = new CustomTabsIntent.Builder();
+                customTabsIntent.setToolbarColor(getResources().getColor(R.color.colorPrimary));
+                customTabsIntent.setShowTitle(true);
+                customTabsIntent.build().launchUrl(getActivity(), Uri.parse(getString(R.string.zhihu_url)));
+
+                // startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(getString(R.string.zhihu_url))));
                 return false;
             }
         });

@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.marktony.zhihudaily"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 24
         versionCode 12
         versionName "V3.0.0"
@@ -22,11 +22,14 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile files('libs/library-1.0.19.jar')
+    testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.1.1'
     compile 'com.android.support:design:24.1.1'
     compile 'com.android.support:recyclerview-v7:24.1.1'
     compile 'com.android.support:preference-v14:24.1.1'
+    compile 'com.android.support:customtabs:24.1.1'
+    compile 'com.google.code.gson:gson:2.7'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.github.rey5137:material:1.2.2'
-    testCompile 'junit:junit:4.12'
+
 }
