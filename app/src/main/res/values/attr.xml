@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <attr name="my_theme" format="integer">
+        <enum name="day" value="0"/>
+        <enum name="night" value="1"/>
+    </attr>
+
     <attr name="textColorCustomized" format="color" />
     <attr name="viewBackgroundCustomized" format="color" />
     <attr name="layoutBackgroundCustomized" format="color" />

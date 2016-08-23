@@ -13,6 +13,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.marktony.zhihudaily.adapter.CommentsAdapter;
+import com.marktony.zhihudaily.app.App;
 import com.marktony.zhihudaily.bean.ZhihuComment;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.ui.DividerItemDecoration;
@@ -34,10 +35,8 @@ public class CommentsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        ThemeHelper.setTheme(CommentsActivity.this);
-
         super.onCreate(savedInstanceState);
+        setTheme(App.getThemeResources());
         setContentView(R.layout.activity_comments);
 
         initViews();

@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.marktony.zhihudaily.R;
+import com.marktony.zhihudaily.app.App;
 import com.marktony.zhihudaily.ui.fragment.AboutPreferenceFragment;
 import com.marktony.zhihudaily.util.ThemeHelper;
 
@@ -14,10 +15,8 @@ public class AboutActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        ThemeHelper.setTheme(AboutActivity.this);
-
         super.onCreate(savedInstanceState);
+        setTheme(App.getThemeResources());
         setContentView(R.layout.activity_about);
 
         initViews();

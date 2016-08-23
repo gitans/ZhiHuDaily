@@ -25,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.R;
+import com.marktony.zhihudaily.app.App;
 import com.marktony.zhihudaily.app.VolleySingleton;
 import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.ThemeHelper;
@@ -53,12 +54,8 @@ public class DoubanReadActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        if (ThemeHelper.getThemeState(DoubanReadActivity.this) == 0){
-            setTheme(R.style.DayTheme);
-        } else {
-            setTheme(R.style.NightTheme);
-        }
         super.onCreate(savedInstanceState);
+        setTheme(App.getThemeResources());
         setContentView(R.layout.universal_read_layout);
 
         initViews();

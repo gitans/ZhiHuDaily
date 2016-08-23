@@ -1,33 +1,56 @@
 package com.marktony.zhihudaily.ui.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.adapter.MainPagerAdapter;
-import com.marktony.zhihudaily.util.ThemeHelper;
+import com.marktony.zhihudaily.app.App;
+import com.marktony.zhihudaily.ui.fragment.MainFragment;
+import com.marktony.zhihudaily.util.Theme;
 
-import java.io.File;
 
+public class MainActivity extends AppCompatActivity implements MainFragment.OnViewPagerCreated {
 
-public class MainActivity extends AppCompatActivity {
+    private ViewGroup viewGroup;
+    private ImageView imageView;
+    private MainFragment fragment;
+
+    private final long ANIMTION_TIME = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        ThemeHelper.setTheme(MainActivity.this);
-
         super.onCreate(savedInstanceState);
+        setTheme(App.getThemeResources());
         setContentView(R.layout.activity_main);
 
+        addFragment();
         initViews();
+
+    }
+
+    private void addFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        if (fragment != null){
+            fragmentTransaction.remove(fragment);
+        }
+        fragment = MainFragment.newInstance();
+        fragmentTransaction.add(R.id.layout_fragment, fragment);
+        fragmentTransaction.commit();
 
     }
 
@@ -44,14 +67,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_change_theme) {
-            if (ThemeHelper.getThemeState(MainActivity.this) == 0){
-                ThemeHelper.setThemeState(MainActivity.this,1);
-            } else {
-                ThemeHelper.setThemeState(MainActivity.this,0);
-            }
-
-            this.finish();
-            this.startActivity(this.getIntent());
+           changeTheme();
         } else if (id == R.id.action_settings) {
             startActivity(new Intent(MainActivity.this,SettingsActivity.class));
         } else if (id == R.id.action_about) {
@@ -62,22 +78,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
-        viewPager.setOffscreenPageLimit(4);
-        viewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), MainActivity.this));
-        tabLayout.setupWithViewPager(viewPager);
-
+        viewGroup = (ViewGroup) findViewById(R.id.layout_fragment);
+        imageView = (ImageView) findViewById(R.id.imageview);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        deleteDir(getCacheDir());
+    /**
+     * 改变主题
+     */
+    private void changeTheme(){
+        setDrawableCahe();
+        setTheme();
+        getState();
     }
 
     // 屏幕方向改变时调用的方法，拦截屏幕切换
@@ -88,21 +99,87 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * 递归删除应用下的缓存
-     * @param dir 需要删除的文件或者文件目录
-     * @return 文件是否删除
+     * 获取布局的DrawableCahe给ImageView覆盖Fragment
      */
-    private static boolean deleteDir(File dir) {
-        if (dir != null && dir.isDirectory()) {
-            String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                boolean success = deleteDir(new File(dir, children[i]));
-                if (!success) {
-                    return false;
-                }
-            }
+    private void setDrawableCahe() {
+        //设置false清除缓存
+        viewGroup.setDrawingCacheEnabled(false);
+        //设置true之后可以获取Bitmap
+        viewGroup.setDrawingCacheEnabled(true);
+        imageView.setImageBitmap(viewGroup.getDrawingCache());
+        imageView.setAlpha(1f);
+        imageView.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * 设置主题
+     */
+    private void setTheme() {
+        TypedValue typedValue = new TypedValue();
+        getTheme().resolveAttribute(R.attr.my_theme, typedValue, true);
+        switch (typedValue.data){
+
+            case Theme.DAY_THEME:
+                App.setThemeValue(Theme.NIGHT_THEME);
+                setTheme(Theme.RESOURCES_NIGHT_THEME);
+                break;
+            case Theme.NIGHT_THEME:
+                App.setThemeValue(Theme.DAY_THEME);
+                setTheme(Theme.RESOURCES_DAY_THEME);
+                break;
         }
-        return dir.delete();
+    }
+
+    /**
+     * 主题选择的本地存储
+     */
+    private void save() {
+        SharedPreferences sharedPreferences = getSharedPreferences("user_settings",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("theme", App.getThemeValue());
+        editor.commit();
+    }
+
+    /**
+     * 获取当前fragment状态
+     */
+    public void getState() {
+        addFragment();
+    }
+
+    /**
+     * ImageView的动画
+     * @param view
+     */
+    private void startAnimation(final View view) {
+        ValueAnimator animator = ValueAnimator.ofFloat(1f).setDuration(ANIMTION_TIME);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float n = (float) animation.getAnimatedValue();
+                view.setAlpha(1f - n);
+            }
+        });
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                imageView.setVisibility(View.INVISIBLE);
+            }
+        });
+        animator.start();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        save();
+        // deleteDir(getCacheDir());
+    }
+
+    @Override
+    public void viewPagerCreated() {
+        startAnimation(imageView);
     }
 
 }

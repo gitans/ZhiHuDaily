@@ -27,6 +27,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.R;
+import com.marktony.zhihudaily.app.App;
 import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.ThemeHelper;
 
@@ -59,14 +60,8 @@ public class GuokrReadActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        if (ThemeHelper.getThemeState(GuokrReadActivity.this) == 0){
-            setTheme(R.style.DayTheme);
-        } else {
-            setTheme(R.style.NightTheme);
-        }
-
         super.onCreate(savedInstanceState);
+        setTheme(App.getThemeResources());
         setContentView(R.layout.universal_read_layout);
 
         initViews();

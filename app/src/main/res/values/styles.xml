@@ -24,6 +24,7 @@
     </style>
 
     <style name="DayTheme" parent="AppTheme.NoActionBar">
+        <item name="my_theme">day</item>
         <item name="textColorCustomized">#525252</item>
         <item name="viewBackgroundCustomized">#f7f7f7</item>
         <item name="layoutBackgroundCustomized">#f7f7f7</item>
@@ -34,6 +35,7 @@
     </style>
 
     <style name="NightTheme" parent="AppTheme.NoActionBar">
+        <item name="my_theme">night</item>
         <item name="textColorCustomized">#979d9f</item>
         <item name="viewBackgroundCustomized">#37474f</item>
         <item name="layoutBackgroundCustomized">#212b30</item>

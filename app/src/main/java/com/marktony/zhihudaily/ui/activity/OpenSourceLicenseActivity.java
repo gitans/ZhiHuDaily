@@ -7,16 +7,15 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 
 import com.marktony.zhihudaily.R;
+import com.marktony.zhihudaily.app.App;
 import com.marktony.zhihudaily.util.ThemeHelper;
 
 public class OpenSourceLicenseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        ThemeHelper.setTheme(OpenSourceLicenseActivity.this);
-
         super.onCreate(savedInstanceState);
+        setTheme(App.getThemeResources());
         setContentView(R.layout.activity_open_source_license);
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));

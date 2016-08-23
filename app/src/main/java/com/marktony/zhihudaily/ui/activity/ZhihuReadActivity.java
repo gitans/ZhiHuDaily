@@ -12,7 +12,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -244,8 +243,6 @@ public class ZhihuReadActivity extends AppCompatActivity {
                                     + theme
                                     + content
                                     + "</body></html>";
-
-                            Log.d("html", html);
 
                             webViewRead.loadDataWithBaseURL("x-data://base",html,"text/html","utf-8",null);
 
