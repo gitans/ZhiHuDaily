@@ -8,7 +8,7 @@ import android.webkit.WebView;
 
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.app.App;
-import com.marktony.zhihudaily.util.ThemeHelper;
+import com.marktony.zhihudaily.util.Theme;
 
 public class OpenSourceLicenseActivity extends AppCompatActivity {
 
@@ -17,6 +17,8 @@ public class OpenSourceLicenseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTheme(App.getThemeResources());
         setContentView(R.layout.activity_open_source_license);
+
+        Theme.setStatusBarColor(this);
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

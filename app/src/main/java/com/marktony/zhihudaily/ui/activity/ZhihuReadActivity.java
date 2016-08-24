@@ -30,10 +30,11 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.R;
+import com.marktony.zhihudaily.app.App;
 import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.NetworkState;
-import com.marktony.zhihudaily.util.ThemeHelper;
 import com.marktony.zhihudaily.db.DatabaseHelper;
+import com.marktony.zhihudaily.util.Theme;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -61,13 +62,8 @@ public class ZhihuReadActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
-        if (ThemeHelper.getThemeState(ZhihuReadActivity.this) == 0){
-            setTheme(R.style.DayTheme);
-        } else {
-            setTheme(R.style.NightTheme);
-        }
         super.onCreate(savedInstanceState);
+        setTheme(App.getThemeResources());
         setContentView(R.layout.universal_read_layout);
 
         initViews();
@@ -138,7 +134,7 @@ public class ZhihuReadActivity extends AppCompatActivity {
             content = content.replace("<div class=\"headline\">", "");
 
             String theme = "<body className=\"\" onload=\"onLoaded()\">";
-            if (ThemeHelper.getThemeState(ZhihuReadActivity.this) == 1){
+            if (App.getThemeValue() == Theme.NIGHT_THEME){
                 theme = "<body className=\"\" onload=\"onLoaded()\" class=\"night\">";
             }
 
@@ -230,7 +226,7 @@ public class ZhihuReadActivity extends AppCompatActivity {
                             // 根据主题的不同确定不同的加载内容
                             // load content judging by different theme
                             String theme = "<body className=\"\" onload=\"onLoaded()\">";
-                            if (ThemeHelper.getThemeState(ZhihuReadActivity.this) == 1){
+                            if (App.getThemeValue() == Theme.NIGHT_THEME){
                                 theme = "<body className=\"\" onload=\"onLoaded()\" class=\"night\">";
                             }
 

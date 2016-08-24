@@ -28,7 +28,7 @@ import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.app.App;
 import com.marktony.zhihudaily.app.VolleySingleton;
 import com.marktony.zhihudaily.util.Api;
-import com.marktony.zhihudaily.util.ThemeHelper;
+import com.marktony.zhihudaily.util.Theme;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -114,7 +114,7 @@ public class DoubanReadActivity extends AppCompatActivity {
                 if ( !jsonObject.isNull("content")){
 
                     String css = null;
-                    if (ThemeHelper.getThemeState(DoubanReadActivity.this) == 0){
+                    if (App.getThemeValue() == Theme.DAY_THEME){
                         css = "<link rel=\"stylesheet\" href=\"file:///android_asset/douban_light.css\" type=\"text/css\">";
                     } else {
                         css = "<link rel=\"stylesheet\" href=\"file:///android_asset/douban_dark.css\" type=\"text/css\">";

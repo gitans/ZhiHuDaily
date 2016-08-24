@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnVi
         setTheme(App.getThemeResources());
         setContentView(R.layout.activity_main);
 
+        Theme.setStatusBarColor(this);
+
         addFragment();
         initViews();
 
@@ -67,7 +69,10 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnVi
         int id = item.getItemId();
 
         if (id == R.id.action_change_theme) {
-           changeTheme();
+            changeTheme();
+            save();
+            Theme.setStatusBarColor(this);
+
         } else if (id == R.id.action_settings) {
             startActivity(new Intent(MainActivity.this,SettingsActivity.class));
         } else if (id == R.id.action_about) {
@@ -173,7 +178,6 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnVi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        save();
         // deleteDir(getCacheDir());
     }
 

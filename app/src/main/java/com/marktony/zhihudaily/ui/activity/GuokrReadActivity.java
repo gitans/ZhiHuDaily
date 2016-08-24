@@ -29,7 +29,7 @@ import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.app.App;
 import com.marktony.zhihudaily.util.Api;
-import com.marktony.zhihudaily.util.ThemeHelper;
+import com.marktony.zhihudaily.util.Theme;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -157,7 +157,7 @@ public class GuokrReadActivity extends AppCompatActivity {
                             content = jsonObject.getJSONArray("result").getJSONObject(0).getString("content");
 
                             String parseByTheme = null;
-                            if (ThemeHelper.getThemeState(GuokrReadActivity.this) == 0){
+                            if (App.getThemeValue() == Theme.DAY_THEME){
                                 parseByTheme = "<div class=\"article\" id=\"contentMain\">"
                                         + "<div class=\"content\" id=\"articleContent\" >";
                             } else {

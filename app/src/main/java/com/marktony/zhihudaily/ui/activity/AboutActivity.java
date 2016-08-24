@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.app.App;
 import com.marktony.zhihudaily.ui.fragment.AboutPreferenceFragment;
-import com.marktony.zhihudaily.util.ThemeHelper;
+import com.marktony.zhihudaily.util.Theme;
 
 public class AboutActivity extends AppCompatActivity {
 
@@ -18,6 +18,8 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTheme(App.getThemeResources());
         setContentView(R.layout.activity_about);
+
+        Theme.setStatusBarColor(this);
 
         initViews();
 

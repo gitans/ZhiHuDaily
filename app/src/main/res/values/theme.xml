@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--定义app的日间与夜间模式-->
+    <style name="DayTheme" parent="AppTheme.NoActionBar">
+        <item name="my_theme">day</item>
+        <item name="textColor">@android:color/primary_text_light</item>
+        <item name="textColorSecondary">@android:color/secondary_text_light</item>
+        <item name="textColorCustomized">#525252</item>
+        <item name="viewBackgroundCustomized">#f7f7f7</item>
+        <item name="layoutBackgroundCustomized">#f7f7f7</item>
+        <item name="toolbarBackgroundCustomized">@color/colorAccent</item>
+        <item name="fabColorCustomized">@color/colorAccent</item>
+        <item name="textColorWhiteCustomized">#f7f7f7</item>
+    </style>
+
+    <style name="NightTheme" parent="AppTheme.NoActionBar">
+        <item name="my_theme">night</item>
+        <item name="textColor">@android:color/primary_text_dark</item>
+        <item name="textColorSecondary">@android:color/secondary_text_dark</item>
+        <item name="textColorCustomized">#979d9f</item>
+        <item name="viewBackgroundCustomized">#37474f</item>
+        <item name="layoutBackgroundCustomized">#212b30</item>
+        <item name="toolbarBackgroundCustomized">#263238</item>
+        <item name="fabColorCustomized">#546e7a</item>
+        <item name="textColorWhiteCustomized">#979d9f</item>
+    </style>
+
+</resources>

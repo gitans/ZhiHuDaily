@@ -18,7 +18,7 @@ import com.marktony.zhihudaily.bean.ZhihuComment;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.ui.DividerItemDecoration;
 import com.marktony.zhihudaily.util.Api;
-import com.marktony.zhihudaily.util.ThemeHelper;
+import com.marktony.zhihudaily.util.Theme;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,6 +38,8 @@ public class CommentsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTheme(App.getThemeResources());
         setContentView(R.layout.activity_comments);
+
+        Theme.setStatusBarColor(this);
 
         initViews();
 
