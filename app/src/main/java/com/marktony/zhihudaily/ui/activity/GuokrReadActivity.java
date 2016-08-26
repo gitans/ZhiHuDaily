@@ -24,6 +24,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.R;
@@ -51,8 +52,6 @@ public class GuokrReadActivity extends AppCompatActivity {
     private String id;
     private String headlineUrl;
     private String title;
-
-    private String content;
 
     private SharedPreferences sp;
 
@@ -146,7 +145,26 @@ public class GuokrReadActivity extends AppCompatActivity {
             });
         }
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.GUOKR_ARTICLE_BASE_URL + "?pick_id=" + id, new Response.Listener<JSONObject>() {
+        StringRequest request = new StringRequest(Request.Method.GET, Api.GUOKR_ARTICLE_LINK_V2 + id, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                if (App.getThemeValue() == Theme.NIGHT_THEME){
+                    s = s.replace("<div class=\"article \" id=\"contentMain\">", "<div class=\"article \" id=\"contentMain\" style=\"background-color:#212b30; color:#878787\">");
+                    s = s.replace(" <div class=\"content clearfix\" id=\"articleContent\">", " <div class=\"content clearfix\" id=\"articleContent\"> style=\"background-color:#212b30\"");
+                }
+                wbMain.loadDataWithBaseURL("x-data://base",s,"text/html","utf-8",null);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
+                if (dialog.isShowing()){
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        /*JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.GUOKR_ARTICLE_BASE_URL + "?pick_id=" + id, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try {
@@ -158,34 +176,37 @@ public class GuokrReadActivity extends AppCompatActivity {
 
                             String parseByTheme = null;
                             if (App.getThemeValue() == Theme.DAY_THEME){
-                                parseByTheme = "<div class=\"article\" id=\"contentMain\">"
-                                        + "<div class=\"content\" id=\"articleContent\" >";
+                                parseByTheme = "<div class=\"container \">\n <div class=\"content clearfix\" id=\"articleContent\">";
                             } else {
-                                parseByTheme = "<div class=\"article\" id=\"contentMain\" style=\"background-color:#212b30\">"
-                                        + "<div class=\"content\" id=\"articleContent\" style=\"background-color:#212b30\">";
+                                parseByTheme = "<div class=\"container \" style=\"background-color:#212b30\">\n <div class=\"content clearfix\" id=\"articleContent\" style=\"background-color:#212b30\">";
                             }
 
-                            String css = "\n<link rel=\"stylesheet\" href=\"file:///android_asset/guokr_master.css\" />\n";
+                            String css = "\n<link rel=\"stylesheet\" href=\"http://static.guokr.com/apps/handpick/styles/5a4658ba.articleInline.css\" />\n";
 
                             String html = "<!DOCTYPE html>\n"
-                                    + "<html>\n"
+                                    + "<html class=\"no-js screen-scroll\">\n"
                                     + "<head>\n"
                                     + "\t<meta charset=\"utf-8\" />"
+                                    + "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0,maximum-scale=1,user-scalable=no\" />"
+                                    + "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge,chrome=1\" />\n" +
+                                    "        <meta name=\"format-detection\" content=\"telephone=no\" />"
                                     + css
                                     + "\n</head>"
                                     + "<body>"
                                     + parseByTheme
                                     + content
-                                    + "</div></div>"
-                                    +"<script>\n"
-                                    + "var ukey = null;\n"
-                                    + "</script>\n"
-                                    + "<script src=\"file:///android_asset/guokr.base.js\"></script>\n"
-                                    + "<script src=\"file:///android_asset/guokr.articleInline.js\"></script>"
+                                    + "</div>"
+                                    + "</div>"
+                                    + " <script>\n" +
+                                    "            var ukey = null;\n" +
+                                    "        </script>\n" +
+                                    "        <script src=\"http://static.guokr.com/apps/handpick/scripts/9c661fc7.base.js\"></script>\n" +
+                                    "<script src=\"http://static.guokr.com/apps/handpick/scripts/96c3e257.articleInline.js\"></script>"
                                     + "</body></html>";
 
-                            wbMain.loadDataWithBaseURL("x-data://base",html,"text/html","utf-8",null);
+                            // wbMain.loadDataWithBaseURL("x-data://base",html,"text/html","utf-8",null);
 
+                            wbMain.loadUrl("http://jingxuan.guokr.com/pick/v2/20467/");
                         }
                     }
 
@@ -207,7 +228,7 @@ public class GuokrReadActivity extends AppCompatActivity {
                     dialog.dismiss();
                 }
             }
-        });
+        });*/
 
         queue.add(request);
 
