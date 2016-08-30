@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.ui.activity;
+package com.marktony.zhihudaily.about;
 
 import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +8,6 @@ import android.view.MenuItem;
 
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.app.App;
-import com.marktony.zhihudaily.ui.fragment.AboutPreferenceFragment;
 import com.marktony.zhihudaily.util.Theme;
 
 public class AboutActivity extends AppCompatActivity {

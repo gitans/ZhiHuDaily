@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.ui.activity;
+package com.marktony.zhihudaily.settings;
 
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.app.App;
-import com.marktony.zhihudaily.ui.fragment.SettingsPreferenceFragment;
+import com.marktony.zhihudaily.settings.SettingsPreferenceFragment;
 import com.marktony.zhihudaily.util.Theme;
 
 public class SettingsActivity extends AppCompatActivity {

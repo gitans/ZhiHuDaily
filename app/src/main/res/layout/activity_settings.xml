@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     android:clipToPadding="true"
     android:background="?attr/layoutBackgroundCustomized"
-    tools:context="com.marktony.zhihudaily.ui.activity.SettingsActivity" >
+    tools:context="com.marktony.zhihudaily.settings.SettingsActivity" >
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

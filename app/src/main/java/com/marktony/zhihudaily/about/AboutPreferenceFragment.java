@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.ui.fragment;
+package com.marktony.zhihudaily.about;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;

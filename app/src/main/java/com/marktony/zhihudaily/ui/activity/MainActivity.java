@@ -18,7 +18,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.marktony.zhihudaily.R;
+import com.marktony.zhihudaily.about.AboutActivity;
 import com.marktony.zhihudaily.app.App;
+import com.marktony.zhihudaily.settings.SettingsActivity;
 import com.marktony.zhihudaily.ui.fragment.MainFragment;
 import com.marktony.zhihudaily.util.Theme;
 

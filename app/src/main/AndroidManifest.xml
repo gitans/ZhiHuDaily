@@ -38,12 +38,12 @@
             android:name=".ui.activity.ZhihuReadActivity"
             android:label="@string/title_activity_read" />
         <activity
-            android:name=".ui.activity.SettingsActivity"
+            android:name=".settings.SettingsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/settings"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.activity.AboutActivity"
+            android:name=".about.AboutActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/about"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -64,6 +64,9 @@
         <activity android:name=".ui.activity.OpenSourceLicenseActivity"
             android:label="@string/tv_open_source_license"
             android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".inner_browser.InnerBrowserActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
     </application>
 
