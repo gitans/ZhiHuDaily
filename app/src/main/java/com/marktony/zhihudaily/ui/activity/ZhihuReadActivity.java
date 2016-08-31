@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,6 +17,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -31,6 +33,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.app.App;
+import com.marktony.zhihudaily.inner_browser.InnerBrowserActivity;
 import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.NetworkState;
 import com.marktony.zhihudaily.db.DatabaseHelper;
@@ -95,12 +98,14 @@ public class ZhihuReadActivity extends AppCompatActivity {
         webViewRead.getSettings().setAppCacheEnabled(false);
 
         if (sp.getBoolean("in_app_browser",false)){
+
             //不调用第三方浏览器即可进行页面反应
             webViewRead.setWebViewClient(new WebViewClient() {
 
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                    webViewRead.loadUrl(url);
+                    // webViewRead.loadUrl(url);
+                    startActivity(new Intent(ZhihuReadActivity.this, InnerBrowserActivity.class).putExtra("url", url));
                     return true;
                 }
 

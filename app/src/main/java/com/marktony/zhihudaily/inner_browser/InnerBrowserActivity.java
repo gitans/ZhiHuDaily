@@ -3,6 +3,7 @@ package com.marktony.zhihudaily.inner_browser;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.app.App;

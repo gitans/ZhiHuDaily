@@ -14,7 +14,7 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.widget.Toolbar;
 
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.ui.activity.OpenSourceLicenseActivity;
+import com.marktony.zhihudaily.license.OpenSourceLicenseActivity;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 

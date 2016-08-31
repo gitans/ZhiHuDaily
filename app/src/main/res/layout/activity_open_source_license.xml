@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="?attr/layoutBackgroundCustomized"
     android:fitsSystemWindows="true"
-    tools:context="com.marktony.zhihudaily.ui.activity.OpenSourceLicenseActivity">
+    tools:context="com.marktony.zhihudaily.license.OpenSourceLicenseActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

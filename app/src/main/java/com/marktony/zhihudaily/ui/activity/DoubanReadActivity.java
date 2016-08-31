@@ -27,6 +27,7 @@ import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.app.App;
 import com.marktony.zhihudaily.app.VolleySingleton;
+import com.marktony.zhihudaily.inner_browser.InnerBrowserActivity;
 import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.Theme;
 
@@ -82,7 +83,6 @@ public class DoubanReadActivity extends AppCompatActivity {
             imageView.setImageResource(R.drawable.no_img);
         }
 
-
         //能够和js交互
         webView.getSettings().setJavaScriptEnabled(true);
         //缩放,设置为不能缩放可以防止页面上出现放大和缩小的图标
@@ -95,10 +95,9 @@ public class DoubanReadActivity extends AppCompatActivity {
         webView.getSettings().setAppCacheEnabled(false);
         //不调用第三方浏览器即可进行页面反应
         webView.setWebViewClient(new WebViewClient() {
-
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                webView.loadUrl(url);
+                startActivity(new Intent(DoubanReadActivity.this, InnerBrowserActivity.class).putExtra("url", url));
                 return sp.getBoolean("in_app_browser",false);
             }
 

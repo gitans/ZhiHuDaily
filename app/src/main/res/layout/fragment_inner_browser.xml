@@ -27,14 +27,38 @@
 
         <ProgressBar
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="2dp"
             style="?android:attr/progressBarStyleHorizontal"
-            android:id="@+id/progress_bar"/>
+            android:id="@+id/progress_bar"
+            android:layout_gravity="center" />
 
         <WebView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/web_view"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/image_view"
+                android:visibility="gone"
+                android:src="@drawable/internet_error"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/text_view"
+                android:visibility="gone"
+                android:text="网络走丢了..."
+                android:gravity="center"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

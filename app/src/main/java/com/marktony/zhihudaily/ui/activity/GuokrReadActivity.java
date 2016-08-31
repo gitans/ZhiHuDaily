@@ -29,6 +29,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.app.App;
+import com.marktony.zhihudaily.inner_browser.InnerBrowserActivity;
 import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.Theme;
 
@@ -124,7 +125,7 @@ public class GuokrReadActivity extends AppCompatActivity {
 
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                    wbMain.loadUrl(url);
+                    startActivity(new Intent(GuokrReadActivity.this, InnerBrowserActivity.class).putExtra("url", url));
                     return true;
                 }
 

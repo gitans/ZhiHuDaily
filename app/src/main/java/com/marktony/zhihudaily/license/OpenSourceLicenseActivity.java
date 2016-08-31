@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.ui.activity;
+package com.marktony.zhihudaily.license;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
