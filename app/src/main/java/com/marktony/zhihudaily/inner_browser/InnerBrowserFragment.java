@@ -1,12 +1,13 @@
 package com.marktony.zhihudaily.inner_browser;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,6 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.marktony.zhihudaily.R;
+import com.marktony.zhihudaily.util.NetworkState;
 
 /**
  * Created by Lizhaotailang on 2016/8/30.
@@ -60,23 +62,37 @@ public class InnerBrowserFragment extends Fragment {
         initViews(view);
         initWebViewSettings(webView);
 
+        // if not set this, click the back arrow will call nothing
+        setHasOptionsMenu(true);
+
         webView.setWebChromeClient(new WebChromeClient(){
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
-                progressBar.setMax(100);
-                progressBar.setProgress(newProgress);
-                toolbar.setTitle(webView.getTitle());
+                changeToolbarAndProgressBar(newProgress);
             }
         });
 
         webView.setWebViewClient(new WebViewClient(){
+
             @Override
-            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+            public void onReceivedError(WebView view1, WebResourceRequest request, WebResourceError error) {
+
                 webView.setVisibility(View.GONE);
-                // TODO: 2016/8/31 添加imageview 的监听事件
                 imageView.setVisibility(View.VISIBLE);
-                // TODO: 2016/8/31 text view 内容需要添加到string文件中，需要添加英文版 
                 textView.setVisibility(View.VISIBLE);
+
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (NetworkState.networkConnected(getContext())){
+                            webView.loadUrl(url);
+                            webView.setVisibility(View.VISIBLE);
+                            imageView.setVisibility(View.GONE);
+                            textView.setVisibility(View.GONE);
+                        }
+                    }
+                });
+
             }
 
             @Override
@@ -86,14 +102,21 @@ public class InnerBrowserFragment extends Fragment {
             }
         });
 
-        webView.loadUrl(url);
-
-        imageView.setOnClickListener(new View.OnClickListener() {
+        // 设置在本WebView内可以通过按下返回上一个html页面
+        webView.setOnKeyListener(new View.OnKeyListener() {
             @Override
-            public void onClick(View view) {
-                // webView.loadUrl(url);
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN){
+                    if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()){
+                        webView.goBack();
+                        return true;
+                    }
+                }
+                return false;
             }
         });
+
+        webView.loadUrl(url);
 
         return view;
     }
@@ -123,12 +146,26 @@ public class InnerBrowserFragment extends Fragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_read, menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // TODO: 2016/8/31 调用返回事件失败 
+
         if (item.getItemId() == android.R.id.home){
             getActivity().onBackPressed();
+        } else if (item.getItemId() == R.id.action_open_in_browser){
+            startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(webView.getUrl())));
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void changeToolbarAndProgressBar(int newProgress) {
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setMax(100);
+        progressBar.setProgress(newProgress);
+        toolbar.setTitle(webView.getTitle());
     }
 
 }
