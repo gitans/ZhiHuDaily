@@ -14,7 +14,7 @@
         <android.support.v7.preference.CheckBoxPreference
             android:title="@string/in_app_browser"
             android:key="in_app_browser"
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:summary="@string/in_app_browser_description" />
 
     </android.support.v7.preference.PreferenceCategory>

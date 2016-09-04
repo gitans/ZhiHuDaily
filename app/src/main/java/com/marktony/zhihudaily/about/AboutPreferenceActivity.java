@@ -1,6 +1,5 @@
 package com.marktony.zhihudaily.about;
 
-import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -10,7 +9,7 @@ import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.app.App;
 import com.marktony.zhihudaily.util.Theme;
 
-public class AboutActivity extends AppCompatActivity {
+public class AboutPreferenceActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +21,20 @@ public class AboutActivity extends AppCompatActivity {
 
         initViews();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.about_container,new AboutPreferenceFragment()).commit();
+        AboutPreferenceFragment fragment = new AboutPreferenceFragment();
 
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.about_container,fragment)
+                .commit();
+
+        new AboutPresenter(AboutPreferenceActivity.this, fragment);
+
+    }
+
+    private void initViews() {
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -34,15 +45,4 @@ public class AboutActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-    }
-
-    private void initViews() {
-
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-    }
 }

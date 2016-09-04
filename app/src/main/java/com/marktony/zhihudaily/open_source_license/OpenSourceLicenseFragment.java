@@ -65,7 +65,7 @@ public class OpenSourceLicenseFragment extends Fragment
 
     @Override
     public void initViews(View view) {
-        AppCompatActivity activity = ((OpenSourceLicenseActivity)getActivity());
+        AppCompatActivity activity = (OpenSourceLicenseActivity) getActivity();
         activity.setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         webView = (WebView) view.findViewById(R.id.web_view);

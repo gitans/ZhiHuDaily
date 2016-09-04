@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="?attr/layoutBackgroundCustomized"
-    tools:context="com.marktony.zhihudaily.about.AboutActivity">
+    tools:context="com.marktony.zhihudaily.about.AboutPreferenceActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -19,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/toolbarBackgroundCustomized"
+            android:title="@string/about"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>

@@ -103,7 +103,6 @@ public class ZhihuReadActivity extends AppCompatActivity {
 
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                    // webViewRead.loadUrl(url);
                     startActivity(new Intent(ZhihuReadActivity.this, InnerBrowserActivity.class).putExtra("url", url));
                     return true;
                 }

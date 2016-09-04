@@ -36,6 +36,7 @@
     <string name="sdk_version">SDK版本:</string>
     <string name="no_mail_app">没有找到邮件类App</string>
     <string name="no_app_store_found">没有市场类App</string>
+    <string name="no_browser_found">没有安装浏览器</string>
     <string name="author">作者</string>
     <string name="author_name">黎赵太郎</string>
     <string name="author_description">湖南,长沙</string>

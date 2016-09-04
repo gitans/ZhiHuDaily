@@ -37,6 +37,7 @@
     <string name="sdk_version">SDK Version:</string>
     <string name="no_mail_app">No Mail App Installed</string>
     <string name="no_app_store_found">No App Store Installed</string>
+    <string name="no_browser_found">No Browser Installed</string>
     <string name="author">Author</string>
     <string name="author_name">Li Zhaotailang</string>
     <string name="author_description">Changsha, Hunan, China</string>

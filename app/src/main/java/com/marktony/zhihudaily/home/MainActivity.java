@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.about.AboutActivity;
+import com.marktony.zhihudaily.about.AboutPreferenceActivity;
 import com.marktony.zhihudaily.app.App;
 import com.marktony.zhihudaily.settings.SettingsActivity;
 import com.marktony.zhihudaily.util.Theme;
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnVi
         } else if (id == R.id.action_settings) {
             startActivity(new Intent(MainActivity.this,SettingsActivity.class));
         } else if (id == R.id.action_about) {
-            startActivity(new Intent(MainActivity.this,AboutActivity.class));
+            startActivity(new Intent(MainActivity.this,AboutPreferenceActivity.class));
         }
 
         return true;

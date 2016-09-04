@@ -1,47 +1,30 @@
 package com.marktony.zhihudaily.about;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.open_source_license.OpenSourceLicenseActivity;
-
-import static android.content.Context.CLIPBOARD_SERVICE;
 
 /**
- * Created by lizha on 2016/7/26.
+ * Created by lizhaotailang on 2016/7/26.
  */
 
-public class AboutPreferenceFragment extends PreferenceFragmentCompat {
+public class AboutPreferenceFragment extends PreferenceFragmentCompat implements AboutContract.View {
 
-    @Override
+    private Toolbar toolbar;
+    private AboutContract.Presenter presenter;
+
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
 
         addPreferencesFromResource(R.xml.about_preference_fragment);
 
-        final Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-
         findPreference("rate").setOnPreferenceClickListener(new android.support.v7.preference.Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(android.support.v7.preference.Preference preference) {
-                try {
-                    Uri uri = Uri.parse("market://details?id=" + getActivity().getPackageName());
-                    Intent intent = new Intent(Intent.ACTION_VIEW,uri);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                } catch (android.content.ActivityNotFoundException ex){
-                    Snackbar.make(toolbar, R.string.no_app_store_found,Snackbar.LENGTH_SHORT).show();
-                }
+                presenter.rate();
                 return false;
             }
         });
@@ -49,7 +32,7 @@ public class AboutPreferenceFragment extends PreferenceFragmentCompat {
         findPreference("open_source_license").setOnPreferenceClickListener(new android.support.v7.preference.Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(android.support.v7.preference.Preference preference) {
-                startActivity(new Intent(getActivity(),OpenSourceLicenseActivity.class));
+                presenter.openLicense();
                 return false;
             }
         });
@@ -57,17 +40,7 @@ public class AboutPreferenceFragment extends PreferenceFragmentCompat {
         findPreference("follow_me_on_github").setOnPreferenceClickListener(new android.support.v7.preference.Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(android.support.v7.preference.Preference preference) {
-
-                CustomTabsIntent.Builder customTabsIntent = new CustomTabsIntent.Builder();
-                customTabsIntent.setToolbarColor(getResources().getColor(R.color.colorPrimary));
-                customTabsIntent.setShowTitle(true);
-                customTabsIntent.build().launchUrl(getActivity(), Uri.parse(getString(R.string.github_url)));
-
-                /*try{
-                    startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(getString(R.string.github_url))));
-                } catch (android.content.ActivityNotFoundException ex){
-                    Snackbar.make(toolbar, R.string.no_browser_found,Snackbar.LENGTH_SHORT).show();
-                }*/
+                presenter.followOnGithub();
                 return false;
             }
         });
@@ -75,13 +48,7 @@ public class AboutPreferenceFragment extends PreferenceFragmentCompat {
         findPreference("follow_me_on_zhihu").setOnPreferenceClickListener(new android.support.v7.preference.Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(android.support.v7.preference.Preference preference) {
-
-                CustomTabsIntent.Builder customTabsIntent = new CustomTabsIntent.Builder();
-                customTabsIntent.setToolbarColor(getResources().getColor(R.color.colorPrimary));
-                customTabsIntent.setShowTitle(true);
-                customTabsIntent.build().launchUrl(getActivity(), Uri.parse(getString(R.string.zhihu_url)));
-
-                // startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(getString(R.string.zhihu_url))));
+                presenter.followOnZhihu();
                 return false;
             }
         });
@@ -89,18 +56,8 @@ public class AboutPreferenceFragment extends PreferenceFragmentCompat {
         findPreference("feedback").setOnPreferenceClickListener(new android.support.v7.preference.Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(android.support.v7.preference.Preference preference) {
-                try{
-                    Uri uri = Uri.parse(getString(R.string.sendto));
-                    Intent intent = new Intent(Intent.ACTION_SENDTO,uri);
-                    intent.putExtra(Intent.EXTRA_SUBJECT,getString(R.string.mail_topic));
-                    intent.putExtra(Intent.EXTRA_TEXT,
-                            getString(R.string.device_model) + Build.MODEL + "\n"
-                                    + getString(R.string.sdk_version) + Build.VERSION.RELEASE + "\n"
-                                    + getString(R.string.version));
-                    startActivity(intent);
-                }catch (android.content.ActivityNotFoundException ex){
-                    Snackbar.make(toolbar, R.string.no_mail_app,Snackbar.LENGTH_SHORT).show();
-                }
+                presenter.feedback();
+
                 return false;
             }
         });
@@ -108,30 +65,48 @@ public class AboutPreferenceFragment extends PreferenceFragmentCompat {
         findPreference("coffee").setOnPreferenceClickListener(new android.support.v7.preference.Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(android.support.v7.preference.Preference preference) {
-
-                AlertDialog dialog = new AlertDialog.Builder(getActivity()).create();
-                dialog.setTitle(R.string.donate);
-                dialog.setMessage(getString(R.string.donate_content));
-                dialog.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.positive), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        //将指定账号添加到剪切板
-                        ClipboardManager manager = (ClipboardManager) getActivity().getSystemService(CLIPBOARD_SERVICE);
-                        ClipData clipData = ClipData.newPlainText("text", getString(R.string.donate_account));
-                        manager.setPrimaryClip(clipData);
-                    }
-                });
-                dialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.negative), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                });
-                dialog.show();
-
+                presenter.donate();
                 return false;
             }
         });
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.start();
+    }
+
+    @Override
+    public void setPresenter(AboutContract.Presenter presenter) {
+        if (presenter != null){
+            this.presenter = presenter;
+        }
+    }
+
+    // some problems occur when set support action bar
+    // with PreferenceFragmentCompat
+    // setting display home as up enable can not work either
+    // so work it in activity directly
+    @Override
+    public void initViews(View view) {
+        toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+    }
+
+    @Override
+    public void showRateError() {
+        Snackbar.make(toolbar, R.string.no_app_store_found,Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showFeedbackError() {
+        Snackbar.make(toolbar, R.string.no_mail_app,Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showBrowserNotFoundError() {
+        Snackbar.make(toolbar, R.string.no_browser_found,Snackbar.LENGTH_SHORT).show();
+    }
+
 }
