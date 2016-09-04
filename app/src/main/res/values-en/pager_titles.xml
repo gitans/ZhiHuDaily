@@ -2,9 +2,9 @@
 <resources>
 
     <string-array name="page_titles">
-        <item>ZhihuDaily</item>
-        <item>Guokr</item>
-        <item>Douban</item>
+        <item>Zhihu Daily</item>
+        <item>Guokr Handpick</item>
+        <item>Douban Daily</item>
     </string-array>
 
 </resources>

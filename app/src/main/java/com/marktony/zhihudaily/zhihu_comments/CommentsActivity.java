@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.ui.activity;
+package com.marktony.zhihudaily.zhihu_comments;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

@@ -19,15 +19,4 @@
 
     </android.support.v7.preference.PreferenceCategory>
 
-    <android.support.v7.preference.PreferenceCategory
-        android:title="@string/other">
-
-        <android.support.v7.preference.CheckBoxPreference
-            android:title="@string/no_splash"
-            android:key="load_splash"
-            android:defaultValue="false"
-            android:summary="@string/no_splash_description" />
-
-    </android.support.v7.preference.PreferenceCategory>
-
 </android.support.v7.preference.PreferenceScreen>

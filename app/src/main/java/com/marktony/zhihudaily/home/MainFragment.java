@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.ui.fragment;
+package com.marktony.zhihudaily.home;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.adapter.MainPagerAdapter;
-import com.marktony.zhihudaily.ui.activity.MainActivity;
 
 /**
  * Created by Lizhaotailang on 2016/8/23.

@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.ui.activity;
+package com.marktony.zhihudaily.zhihu_read;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,7 +16,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -38,6 +36,7 @@ import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.NetworkState;
 import com.marktony.zhihudaily.db.DatabaseHelper;
 import com.marktony.zhihudaily.util.Theme;
+import com.marktony.zhihudaily.zhihu_comments.CommentsActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;

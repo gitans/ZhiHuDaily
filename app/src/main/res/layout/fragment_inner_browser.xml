@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/text_view"
                 android:visibility="gone"
-                android:text="网络走丢了..."
+                android:text="@string/network_error"
                 android:gravity="center"/>
 
         </LinearLayout>

@@ -42,14 +42,5 @@ public class SettingsPreferenceFragment extends PreferenceFragmentCompat {
             }
         });
 
-        findPreference("load_splash").setOnPreferenceClickListener(new android.support.v7.preference.Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(android.support.v7.preference.Preference preference) {
-                editor.putBoolean("load_splash",preference.getSharedPreferences().getBoolean("load_splash",false));
-                editor.apply();
-                return false;
-            }
-        });
-
     }
 }

@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.ui.fragment;
+package com.marktony.zhihudaily.home;
 
 import android.content.Intent;
 import android.graphics.Color;

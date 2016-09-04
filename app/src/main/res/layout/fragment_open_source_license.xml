@@ -2,12 +2,11 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_open_source_license"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/layoutBackgroundCustomized"
     android:fitsSystemWindows="true"
-    tools:context="com.marktony.zhihudaily.license.OpenSourceLicenseActivity">
+    tools:context="com.marktony.zhihudaily.open_source_license.OpenSourceLicenseActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

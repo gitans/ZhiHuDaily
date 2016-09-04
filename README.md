@@ -13,6 +13,7 @@
 请您暸解相关情况，并遵守知乎协议。
 
 项目目前仍然在维护当中，预计会在9月下旬进行项目重构，采用Google官方的MVP架构。
+*现在的代码很乱，不建议fork*
 
 ## 截屏
 ![screenshot](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/screenshot.png)

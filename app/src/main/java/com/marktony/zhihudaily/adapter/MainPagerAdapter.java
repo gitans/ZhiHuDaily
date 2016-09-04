@@ -6,9 +6,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.ui.fragment.DoubanMomentFragment;
-import com.marktony.zhihudaily.ui.fragment.GuokrFragment;
-import com.marktony.zhihudaily.ui.fragment.ZhihuDailyFragment;
+import com.marktony.zhihudaily.home.DoubanMomentFragment;
+import com.marktony.zhihudaily.home.GuokrFragment;
+import com.marktony.zhihudaily.home.ZhihuDailyFragment;
 
 /**
  * Created by Lizhaotailang on 2016/8/10.

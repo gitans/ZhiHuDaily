@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.ui.activity;
+package com.marktony.zhihudaily.home;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -21,7 +21,6 @@ import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.about.AboutActivity;
 import com.marktony.zhihudaily.app.App;
 import com.marktony.zhihudaily.settings.SettingsActivity;
-import com.marktony.zhihudaily.ui.fragment.MainFragment;
 import com.marktony.zhihudaily.util.Theme;
 
 

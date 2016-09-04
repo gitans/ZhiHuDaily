@@ -1,22 +1,15 @@
 <resources>
     <string name="app_name">纸飞机</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <!--常用-->
     <string name="positive">确定</string>
     <string name="negative">取消</string>
-    <string name="got_it">知道了</string>
     <string name="loading">加载中</string>
-    <string name="point">提示</string>
 
-    <string name="welcome_to_paper_plane">欢迎来到纸飞机</string>
     <string name="title_activity_read">阅读</string>
     <string name="likes">赞</string>
     <string name="comments">评论</string>
     <string name="title_activity_comments">评论</string>
-    <string name="title_activity_comment">评论</string>
     <string name="loaded_failed">加载失败!</string>
     <string name="no_network_connected">当前没有网络连接…</string>
     <string name="go_to_set">去设置</string>
@@ -43,7 +36,6 @@
     <string name="sdk_version">SDK版本:</string>
     <string name="no_mail_app">没有找到邮件类App</string>
     <string name="no_app_store_found">没有市场类App</string>
-    <string name="no_browser_found">没有安装浏览器</string>
     <string name="author">作者</string>
     <string name="author_name">黎赵太郎</string>
     <string name="author_description">湖南,长沙</string>
@@ -60,18 +52,15 @@
     <!--activity关于 end-->
 
     <!--settings_preference_fragment-->
-    <string name="no_splash">禁止加载启动页</string>
-    <string name="no_splash_description">直接进入主界面</string>
     <string name="no_picture_mode">无图模式</string>
-    <string name="other">其他</string>
     <string name="no_picture_mode_description">阅读时不再加载图片</string>
     <!--setting-->
 
-    <string name="guokr_handpick">果壳精选</string>
     <string name="title_activity_guokr_read">果壳精选</string>
     <string name="action_open_in_browser">在浏览器中打开</string>
     <string name="tv_open_source_license">开源许可</string>
     <string name="in_app_browser">使用内置浏览器</string>
     <string name="in_app_browser_description">应用内查看链接</string>
+    <string name="network_error">网络走丢了...</string>
 
 </resources>
