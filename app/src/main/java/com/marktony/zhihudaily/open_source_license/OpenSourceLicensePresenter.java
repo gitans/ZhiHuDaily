@@ -1,29 +1,29 @@
 package com.marktony.zhihudaily.open_source_license;
 
-import android.webkit.WebView;
 
 /**
  * Created by Lizhaotailang on 2016/9/3.
  */
 
-public class OpenSourceLicensePresenter implements OpenSourceListenConstract.Presenter {
+public class OpenSourceLicensePresenter implements OpenSourceListenContract.Presenter {
 
-    private OpenSourceListenConstract.View view;
+    private OpenSourceListenContract.View view;
     private String filePath;
 
-    public OpenSourceLicensePresenter(OpenSourceListenConstract.View view) {
+    public OpenSourceLicensePresenter(OpenSourceListenContract.View view) {
         this.view = view;
         this.view.setPresenter(this);
     }
 
     @Override
-    public void showLicense(WebView webView) {
-        webView.loadUrl(filePath);
+    public void showLicense() {
+        view.loadLicense(filePath);
     }
 
     @Override
     public void start() {
-        filePath = "file:///android_asset/open_source_license.html";
+        filePath = "file:///android_asset/license.html";
+        showLicense();
     }
 
 }

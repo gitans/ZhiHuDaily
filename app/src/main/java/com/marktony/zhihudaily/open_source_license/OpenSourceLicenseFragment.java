@@ -17,9 +17,10 @@ import com.marktony.zhihudaily.R;
  * Created by Lizhaotailang on 2016/9/3.
  */
 
-public class OpenSourceLicenseFragment extends Fragment implements OpenSourceListenConstract.View{
+public class OpenSourceLicenseFragment extends Fragment
+        implements OpenSourceListenContract.View{
 
-    private OpenSourceListenConstract.Presenter presenter;
+    private OpenSourceListenContract.Presenter presenter;
     private WebView webView;
 
     public OpenSourceLicenseFragment() {
@@ -40,9 +41,10 @@ public class OpenSourceLicenseFragment extends Fragment implements OpenSourceLis
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_open_source_license, container, false);
+
         initViews(view);
         setHasOptionsMenu(true);
-        presenter.showLicense(webView);
+
         return view;
     }
 
@@ -55,7 +57,7 @@ public class OpenSourceLicenseFragment extends Fragment implements OpenSourceLis
     }
 
     @Override
-    public void setPresenter(OpenSourceListenConstract.Presenter presenter) {
+    public void setPresenter(OpenSourceListenContract.Presenter presenter) {
         if (presenter != null){
             this.presenter = presenter;
         }
@@ -67,6 +69,11 @@ public class OpenSourceLicenseFragment extends Fragment implements OpenSourceLis
         activity.setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         webView = (WebView) view.findViewById(R.id.web_view);
+    }
+
+    @Override
+    public void loadLicense(String path) {
+        webView.loadUrl(path);
     }
 
 }

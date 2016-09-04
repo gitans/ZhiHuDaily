@@ -17,10 +17,14 @@ public class OpenSourceLicenseActivity extends AppCompatActivity {
 
         Theme.setStatusBarColor(this);
 
+        OpenSourceLicenseFragment fragment = OpenSourceLicenseFragment.newInstance();
+
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container, OpenSourceLicenseFragment.newInstance())
+                .add(R.id.container, fragment)
                 .commit();
+
+        new OpenSourceLicensePresenter(fragment);
 
     }
 
