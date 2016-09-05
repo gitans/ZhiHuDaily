@@ -12,7 +12,8 @@ import com.marktony.zhihudaily.R;
  * Created by lizhaotailang on 2016/7/26.
  */
 
-public class AboutPreferenceFragment extends PreferenceFragmentCompat implements AboutContract.View {
+public class AboutPreferenceFragment extends PreferenceFragmentCompat
+        implements AboutContract.View {
 
     private Toolbar toolbar;
     private AboutContract.Presenter presenter;
@@ -57,7 +58,6 @@ public class AboutPreferenceFragment extends PreferenceFragmentCompat implements
             @Override
             public boolean onPreferenceClick(android.support.v7.preference.Preference preference) {
                 presenter.feedback();
-
                 return false;
             }
         });

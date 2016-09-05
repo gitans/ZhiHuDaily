@@ -20,7 +20,7 @@ import android.widget.ImageView;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.about.AboutPreferenceActivity;
 import com.marktony.zhihudaily.app.App;
-import com.marktony.zhihudaily.settings.SettingsActivity;
+import com.marktony.zhihudaily.settings.SettingsPreferenceActivity;
 import com.marktony.zhihudaily.util.Theme;
 
 
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnVi
             Theme.setStatusBarColor(this);
 
         } else if (id == R.id.action_settings) {
-            startActivity(new Intent(MainActivity.this,SettingsActivity.class));
+            startActivity(new Intent(MainActivity.this,SettingsPreferenceActivity.class));
         } else if (id == R.id.action_about) {
             startActivity(new Intent(MainActivity.this,AboutPreferenceActivity.class));
         }

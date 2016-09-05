@@ -33,7 +33,7 @@
             android:name=".zhihu_read.ZhihuReadActivity"
             android:label="@string/title_activity_read" />
         <activity
-            android:name=".settings.SettingsActivity"
+            android:name=".settings.SettingsPreferenceActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/settings"
             android:theme="@style/AppTheme.NoActionBar" />

@@ -53,15 +53,17 @@
     <!--activity关于 end-->
 
     <!--settings_preference_fragment-->
+    <string name="basic_settings">基本设置</string>
     <string name="no_picture_mode">无图模式</string>
     <string name="no_picture_mode_description">阅读时不再加载图片</string>
+    <string name="in_app_browser">使用内置浏览器</string>
+    <string name="in_app_browser_description">应用内查看链接</string>
     <!--setting-->
 
     <string name="title_activity_guokr_read">果壳精选</string>
     <string name="action_open_in_browser">在浏览器中打开</string>
     <string name="tv_open_source_license">开源许可</string>
-    <string name="in_app_browser">使用内置浏览器</string>
-    <string name="in_app_browser_description">应用内查看链接</string>
-    <string name="network_error">网络走丢了...</string>
+
+    <string name="network_error">网络走丢了…点击重试</string>
 
 </resources>

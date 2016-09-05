@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Paper Plane</string>
 
-    <!--常用-->
+    <!--general-->
     <string name="positive">@android:string/ok</string>
     <string name="negative">@android:string/cancel</string>
     <string name="loading">Loading</string>
@@ -23,7 +23,7 @@
     <string name="share_extra"> Shared From Paper Plane</string>
     <string name="share_to">Share to</string>
 
-    <!--activity关于-->
+    <!--activity about-->
     <string name="version">Version:V3.0.0</string>
     <string name="rate">Rate</string>
     <string name="feedback">Report Bugs / Advices</string>
@@ -50,19 +50,19 @@
     <string name="github_url">https://github.com/marktony</string>
     <string name="zhihu_url">https://www.zhihu.com/people/kirin-momo</string>
     <string name="zhihu_account">\@黎赵太郎</string>
-    <!--activity关于 end-->
+    <!--activity about end-->
 
     <!--settings_preference_fragment-->
+    <string name="basic_settings">Basic Settings</string>
     <string name="no_picture_mode">No image mode</string>
-
     <string name="no_picture_mode_description">None image will be loaded when you read articles</string>
+    <string name="in_app_browser">In-App Browser</string>
+    <string name="in_app_browser_description">Open links within the app</string>
     <!--setting-->
 
     <string name="title_activity_guokr_read">Guokr Handpick</string>
     <string name="action_open_in_browser">Open in browser</string>
     <string name="tv_open_source_license">Open source license</string>
-    <string name="in_app_browser">In-App Browser</string>
-    <string name="in_app_browser_description">Open links within the app</string>
     <string name="network_error">Internet is lost, tap to retry</string>
 
 </resources>

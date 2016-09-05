@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <android.support.v7.preference.PreferenceCategory
-        android:title="@string/title_activity_read">
+        android:title="@string/basic_settings">
 
         <android.support.v7.preference.CheckBoxPreference
             android:title="@string/no_picture_mode"
@@ -16,6 +16,11 @@
             android:key="in_app_browser"
             android:defaultValue="true"
             android:summary="@string/in_app_browser_description" />
+
+        <android.support.v7.preference.Preference
+            android:title="清除图片缓存"
+            android:key="clear_glide_cache"
+            android:summary="图片缓存大小"/>
 
     </android.support.v7.preference.PreferenceCategory>
 
