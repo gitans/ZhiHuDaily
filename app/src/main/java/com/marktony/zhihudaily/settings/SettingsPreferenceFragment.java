@@ -5,6 +5,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.marktony.zhihudaily.R;
@@ -31,6 +32,8 @@ public class SettingsPreferenceFragment extends PreferenceFragmentCompat
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
 
         addPreferencesFromResource(R.xml.settings_preference_fragment);
+
+        initViews(getView());
 
         findPreference("no_picture_mode").setOnPreferenceClickListener(new android.support.v7.preference.Preference.OnPreferenceClickListener() {
             @Override
@@ -66,7 +69,7 @@ public class SettingsPreferenceFragment extends PreferenceFragmentCompat
 
     @Override
     public void showCleanGlideCacheDone() {
-        Snackbar.make(toolbar, "清除成功！", Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(toolbar, R.string.clear_image_cache_successfully, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

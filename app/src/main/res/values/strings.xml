@@ -58,6 +58,8 @@
     <string name="no_picture_mode_description">阅读时不再加载图片</string>
     <string name="in_app_browser">使用内置浏览器</string>
     <string name="in_app_browser_description">应用内查看链接</string>
+    <string name="clear_image_cache">清除图片缓存</string>
+    <string name="clear_image_cache_successfully">清理成功</string>
     <!--setting-->
 
     <string name="title_activity_guokr_read">果壳精选</string>

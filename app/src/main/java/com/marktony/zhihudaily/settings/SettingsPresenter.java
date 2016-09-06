@@ -2,6 +2,8 @@ package com.marktony.zhihudaily.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.preference.Preference;
 
 import com.bumptech.glide.Glide;
@@ -19,12 +21,33 @@ public class SettingsPresenter implements SettingsContract.Presenter {
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
 
+    public static final int CLEAR_GLIDE_CACHE_DONE = 1;
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case CLEAR_GLIDE_CACHE_DONE:
+                    view.showCleanGlideCacheDone();
+                    break;
+                default:
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
+
     public SettingsPresenter(Context context, SettingsContract.View view){
         this.context = context;
         this.view = view;
         this.view.setPresenter(this);
         sp = context.getSharedPreferences("user_settings",MODE_PRIVATE);
         editor = sp.edit();
+    }
+
+    @Override
+    public void start() {
+
     }
 
     @Override
@@ -44,16 +67,13 @@ public class SettingsPresenter implements SettingsContract.Presenter {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                // TODO: 2016/9/5 better it 
                 Glide.get(context).clearDiskCache();
-                
+                Message msg = new Message();
+                msg.what = CLEAR_GLIDE_CACHE_DONE;
+                handler.sendMessage(msg);
             }
         }).start();
-    }
-
-    @Override
-    public void start() {
-
+        Glide.get(context).clearMemory();
     }
 
 }

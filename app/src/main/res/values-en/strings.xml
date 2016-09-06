@@ -57,7 +57,9 @@
     <string name="no_picture_mode">No image mode</string>
     <string name="no_picture_mode_description">None image will be loaded when you read articles</string>
     <string name="in_app_browser">In-App Browser</string>
-    <string name="in_app_browser_description">Open links within the app</string>
+    <string name="in_app_browser_description">Open links with the built-in browser</string>
+    <string name="clear_image_cache">Clear Image Cache</string>
+    <string name="clear_image_cache_successfully">Cache successfully cleared</string>
     <!--setting-->
 
     <string name="title_activity_guokr_read">Guokr Handpick</string>
