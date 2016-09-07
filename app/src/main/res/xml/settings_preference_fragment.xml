@@ -23,4 +23,15 @@
 
     </android.support.v7.preference.PreferenceCategory>
 
+    <android.support.v7.preference.PreferenceCategory
+        android:title="@string/other_settings">
+
+        <android.support.v7.preference.CheckBoxPreference
+            android:title="@string/navigation_bar_tint"
+            android:key="navigation_bar_tint"
+            android:defaultValue="false"
+            android:summary="@string/navigation_Bar_tint_summary" />
+
+    </android.support.v7.preference.PreferenceCategory>
+
 </android.support.v7.preference.PreferenceScreen>

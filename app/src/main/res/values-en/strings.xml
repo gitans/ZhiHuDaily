@@ -53,13 +53,16 @@
     <!--activity about end-->
 
     <!--settings_preference_fragment-->
-    <string name="basic_settings">Basic Settings</string>
+    <string name="basic_settings">Basic</string>
     <string name="no_picture_mode">No image mode</string>
-    <string name="no_picture_mode_description">None image will be loaded when you read articles</string>
+    <string name="no_picture_mode_description">Images will not be loaded when reading articles</string>
     <string name="in_app_browser">In-App Browser</string>
     <string name="in_app_browser_description">Open links with the built-in browser</string>
     <string name="clear_image_cache">Clear Image Cache</string>
     <string name="clear_image_cache_successfully">Cache successfully cleared</string>
+    <string name="other_settings">Other</string>
+    <string name="navigation_bar_tint">Navigation Bar Tint</string>
+    <string name="navigation_Bar_tint_summary">Only supported on Android 5.0+</string>
     <!--setting-->
 
     <string name="title_activity_guokr_read">Guokr Handpick</string>

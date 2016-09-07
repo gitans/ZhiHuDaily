@@ -25,6 +25,8 @@ public interface SettingsContract {
 
         void cleanGlideCache();
 
+        void setNavigationBarTint(Preference preference);
+
     }
 
 }

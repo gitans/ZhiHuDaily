@@ -60,6 +60,9 @@
     <string name="in_app_browser_description">应用内查看链接</string>
     <string name="clear_image_cache">清除图片缓存</string>
     <string name="clear_image_cache_successfully">清理成功</string>
+    <string name="other_settings">其他</string>
+    <string name="navigation_bar_tint">导航栏变色</string>
+    <string name="navigation_Bar_tint_summary">支持Android 5.0及以上设备</string>
     <!--setting-->
 
     <string name="title_activity_guokr_read">果壳精选</string>

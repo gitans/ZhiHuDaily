@@ -5,13 +5,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 
 import com.marktony.zhihudaily.R;
 
 /**
- * Created by lizha on 2016/7/26.
+ * Created by lizhaotailang on 2016/7/26.
  */
 
 public class SettingsPreferenceFragment extends PreferenceFragmentCompat
@@ -55,6 +54,14 @@ public class SettingsPreferenceFragment extends PreferenceFragmentCompat
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 presenter.cleanGlideCache();
+                return false;
+            }
+        });
+
+        findPreference("navigation_bar_tint").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                presenter.setNavigationBarTint();
                 return false;
             }
         });
