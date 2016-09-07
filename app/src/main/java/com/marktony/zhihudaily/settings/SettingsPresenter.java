@@ -62,7 +62,7 @@ public class SettingsPresenter implements SettingsContract.Presenter {
 
     @Override
     public void setInAppBrowser(Preference preference) {
-        editor.putBoolean("in_app_browser",preference.getSharedPreferences().getBoolean("in_app_browser",false));
+        editor.putBoolean("in_app_browser", preference.getSharedPreferences().getBoolean("in_app_browser",false));
         editor.apply();
     }
 
@@ -82,9 +82,8 @@ public class SettingsPresenter implements SettingsContract.Presenter {
 
     @Override
     public void setNavigationBarTint(Preference preference) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ((AppCompatActivity) context).getWindow().setNavigationBarColor(ContextCompat.getColor(context, R.color.colorPrimary));
-        }
+        editor.putBoolean("navigation_bar_tint", preference.getSharedPreferences().getBoolean("navigation_bar_tint",false));
+        editor.apply();
     }
 
 }

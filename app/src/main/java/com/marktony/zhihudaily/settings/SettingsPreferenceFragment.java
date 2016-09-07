@@ -1,7 +1,10 @@
 package com.marktony.zhihudaily.settings;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.preference.CheckBoxPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +21,8 @@ public class SettingsPreferenceFragment extends PreferenceFragmentCompat
 
     private SettingsContract.Presenter presenter;
     private Toolbar toolbar;
+
+    private CheckBoxPreference preferenceNavitionbar;
 
     public SettingsPreferenceFragment() {
 
@@ -58,10 +63,10 @@ public class SettingsPreferenceFragment extends PreferenceFragmentCompat
             }
         });
 
-        findPreference("navigation_bar_tint").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        preferenceNavitionbar.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                presenter.setNavigationBarTint();
+                showNavigationBarTint(preference);
                 return false;
             }
         });
@@ -80,6 +85,16 @@ public class SettingsPreferenceFragment extends PreferenceFragmentCompat
     }
 
     @Override
+    public void showNavigationBarTint(Preference preference) {
+        if (preference.getSharedPreferences().getBoolean("navigation_bar_tint", false)){
+            getActivity().getWindow().setNavigationBarColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
+        } else {
+            getActivity().getWindow().setNavigationBarColor(ContextCompat.getColor(getContext(), android.R.color.background_dark));
+        }
+
+    }
+
+    @Override
     public void setPresenter(SettingsContract.Presenter presenter) {
         if (presenter != null){
             this.presenter = presenter;
@@ -89,6 +104,12 @@ public class SettingsPreferenceFragment extends PreferenceFragmentCompat
     @Override
     public void initViews(View view) {
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        preferenceNavitionbar = (CheckBoxPreference) findPreference("navigation_bar_tint");
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            preferenceNavitionbar.setEnabled(false);
+        } else {
+            // showNavigationBarTint();
+        }
     }
 
 }
