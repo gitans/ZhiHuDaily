@@ -7,6 +7,8 @@
     android:orientation="horizontal"
     android:paddingLeft="8dp"
     android:paddingRight="8dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
     android:background="?attr/viewBackgroundCustomized"
     android:foreground="?android:attr/selectableItemBackground">
 
@@ -35,7 +37,7 @@
             android:gravity="center_vertical"
             android:maxLines="2"
             android:textColor="?attr/textColorCustomized"
-            android:ellipsize="end"/>
+            android:ellipsize="end" />
 
     </LinearLayout>
 

@@ -21,11 +21,14 @@ import java.util.List;
  * Created by Lizhaotailang on 2016/8/11.
  */
 
-public class DoubanMomentAdapter extends RecyclerView.Adapter<DoubanMomentAdapter.DoubanMomentViewHolder> {
+public class DoubanMomentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final Context context;
     private final LayoutInflater inflater;
     private List<DoubanMomentPost> list;
+
+    private static final int TYPE_NORMAL = 0x00;
+    private static final int TYPE_NO_IMG = 0x01;
 
     private OnRecyclerViewOnClickListener listener;
 
@@ -36,26 +39,41 @@ public class DoubanMomentAdapter extends RecyclerView.Adapter<DoubanMomentAdapte
     }
 
     @Override
-    public DoubanMomentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new DoubanMomentViewHolder(inflater.inflate(R.layout.guokr_douban_post_layout, parent, false), listener);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        switch (viewType) {
+            case TYPE_NORMAL:
+                return new NormalViewHolder(inflater.inflate(R.layout.guokr_douban_post_layout, parent, false), listener);
+            case TYPE_NO_IMG:
+                return new NoImgViewHolder(inflater.inflate(R.layout.guokr_douban_post_layout_without_img, parent, false), listener);
+        }
+        return null;
     }
 
     @Override
-    public void onBindViewHolder(DoubanMomentViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         DoubanMomentPost item = list.get(position);
-
-        holder.tvTitle.setText(item.getTitle());
-        holder.tvSummary.setText(item.getAbs());
-
-        Glide.with(context)
-                .load(item.getThumb())
-                .asBitmap()
-                .centerCrop()
-                .error(R.drawable.no_img)
-                .into(holder.imageView);
-
+        if (holder instanceof NormalViewHolder) {
+            Glide.with(context)
+                    .load(item.getThumb())
+                    .asBitmap()
+                    .centerCrop()
+                    .into(((NormalViewHolder)holder).ivHeadlineImg);
+            ((NormalViewHolder)holder).tvTitle.setText(item.getTitle());
+            ((NormalViewHolder)holder).tvSummary.setText(item.getAbs());
+        } else if (holder instanceof NoImgViewHolder) {
+            ((NoImgViewHolder)holder).tvTitle.setText(item.getTitle());
+            ((NoImgViewHolder)holder).tvSummary.setText(item.getAbs());
+        }
     }
 
+
+    @Override
+    public int getItemViewType(int position) {
+        if (list.get(position).getThumb() == null) {
+            return TYPE_NO_IMG;
+        }
+        return TYPE_NORMAL;
+    }
 
     @Override
     public int getItemCount() {
@@ -66,20 +84,47 @@ public class DoubanMomentAdapter extends RecyclerView.Adapter<DoubanMomentAdapte
         this.listener = listener;
     }
 
-    public class DoubanMomentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class NormalViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        OnRecyclerViewOnClickListener listener;
-        ImageView imageView;
+        ImageView ivHeadlineImg;
         TextView tvTitle;
         TextView tvSummary;
 
-        public DoubanMomentViewHolder(View itemView, OnRecyclerViewOnClickListener listener) {
+        OnRecyclerViewOnClickListener listener;
+
+        public NormalViewHolder(View itemView, OnRecyclerViewOnClickListener listener) {
             super(itemView);
-            imageView = (ImageView) itemView.findViewById(R.id.image_view);
+            ivHeadlineImg = (ImageView) itemView.findViewById(R.id.image_view);
             tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
             tvSummary = (TextView) itemView.findViewById(R.id.tv_summary);
 
             this.listener = listener;
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (listener != null){
+                listener.OnItemClick(view, getLayoutPosition());
+            }
+        }
+    }
+
+    public class NoImgViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        TextView tvTitle;
+        TextView tvSummary;
+
+        OnRecyclerViewOnClickListener listener;
+
+        public NoImgViewHolder(View itemView, OnRecyclerViewOnClickListener listener) {
+            super(itemView);
+            tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
+            tvSummary = (TextView) itemView.findViewById(R.id.tv_summary);
+
+            this.listener = listener;
+
             itemView.setOnClickListener(this);
         }
 
