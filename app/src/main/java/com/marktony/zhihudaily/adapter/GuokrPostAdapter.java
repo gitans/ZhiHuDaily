@@ -19,11 +19,14 @@ import java.util.List;
 /**
  * Created by lizhaotailang on 2016/6/14.
  */
-public class GuokrPostAdapter extends RecyclerView.Adapter<GuokrPostAdapter.GuokrPostViewHolder> {
+public class GuokrPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final Context context;
     private final LayoutInflater inflater;
     private List<GuokrHandpickPost> list;
+
+    private static final int TYPE_NORMAL = 0x00;
+    private static final int TYPE_NO_IMG = 0x01;
 
     private OnRecyclerViewOnClickListener mListener;
 
@@ -34,26 +37,28 @@ public class GuokrPostAdapter extends RecyclerView.Adapter<GuokrPostAdapter.Guok
     }
 
     @Override
-    public GuokrPostViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        View view = inflater.inflate(R.layout.guokr_douban_post_layout,parent,false);
-
-        return new GuokrPostViewHolder(view,mListener);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        switch (viewType) {
+            case TYPE_NORMAL:
+                return new NormalViewHolder(inflater.inflate(R.layout.guokr_douban_post_layout, parent, false), mListener);
+            case TYPE_NO_IMG:
+                return new NoImgViewHolder(inflater.inflate(R.layout.guokr_douban_post_layout_without_img, parent, false), mListener);
+        }
+        return null;
     }
 
     @Override
-    public void onBindViewHolder(GuokrPostViewHolder holder, int position) {
-
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         GuokrHandpickPost item = list.get(position);
-
-        Glide.with(context)
-                .load(item.getHeadlineImg())
-                .asBitmap()
-                .centerCrop()
-                .into(holder.ivHeadlineImg);
-
-        holder.tvTitle.setText(item.getTitle());
-        holder.tvSummary.setText(item.getSummary());
+        if (holder instanceof NormalViewHolder) {
+            Glide.with(context)
+                    .load(item.getHeadlineImg())
+                    .asBitmap()
+                    .centerCrop()
+                    .into(((NormalViewHolder)holder).ivHeadlineImg);
+            ((NormalViewHolder)holder).tvTitle.setText(item.getTitle());
+            ((NormalViewHolder)holder).tvSummary.setText(item.getSummary());
+        }
 
     }
 
@@ -66,7 +71,7 @@ public class GuokrPostAdapter extends RecyclerView.Adapter<GuokrPostAdapter.Guok
         this.mListener = listener;
     }
 
-    public class GuokrPostViewHolder extends RecyclerView.ViewHolder implements RecyclerView.OnClickListener {
+    public class NormalViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         ImageView ivHeadlineImg;
         TextView tvTitle;
@@ -74,9 +79,8 @@ public class GuokrPostAdapter extends RecyclerView.Adapter<GuokrPostAdapter.Guok
 
         OnRecyclerViewOnClickListener listener;
 
-        public GuokrPostViewHolder(View itemView,OnRecyclerViewOnClickListener listener) {
+        public NormalViewHolder(View itemView, OnRecyclerViewOnClickListener listener) {
             super(itemView);
-
             ivHeadlineImg = (ImageView) itemView.findViewById(R.id.image_view);
             tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
             tvSummary = (TextView) itemView.findViewById(R.id.tv_summary);
@@ -86,14 +90,37 @@ public class GuokrPostAdapter extends RecyclerView.Adapter<GuokrPostAdapter.Guok
             itemView.setOnClickListener(this);
         }
 
-
         @Override
-        public void onClick(View v) {
+        public void onClick(View view) {
             if (listener != null){
-                listener.OnItemClick(v,getLayoutPosition());
+                listener.OnItemClick(view, getLayoutPosition());
             }
         }
+    }
 
+    public class NoImgViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        TextView tvTitle;
+        TextView tvSummary;
+
+        OnRecyclerViewOnClickListener listener;
+
+        public NoImgViewHolder(View itemView, OnRecyclerViewOnClickListener listener) {
+            super(itemView);
+            tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
+            tvSummary = (TextView) itemView.findViewById(R.id.tv_summary);
+
+            this.listener = listener;
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (listener != null){
+                listener.OnItemClick(view, getLayoutPosition());
+            }
+        }
     }
 
 }

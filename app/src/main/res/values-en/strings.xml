@@ -60,9 +60,6 @@
     <string name="in_app_browser_description">Open links with the built-in browser</string>
     <string name="clear_image_cache">Clear Image Cache</string>
     <string name="clear_image_cache_successfully">Cache successfully cleared</string>
-    <string name="other_settings">Other</string>
-    <string name="navigation_bar_tint">Navigation Bar Tint</string>
-    <string name="navigation_Bar_tint_summary">Only supported on Android 5.0+</string>
     <!--setting-->
 
     <string name="title_activity_guokr_read">Guokr Handpick</string>

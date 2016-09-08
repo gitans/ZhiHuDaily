@@ -15,8 +15,6 @@ public interface SettingsContract {
 
         void showCleanGlideCacheDone();
 
-        void showNavigationBarTint(Preference preference);
-
     }
 
     interface Presenter extends BasePresenter {
@@ -26,9 +24,6 @@ public interface SettingsContract {
         void setInAppBrowser(Preference preference);
 
         void cleanGlideCache();
-
-        // TODO: 2016/9/8 the parameter should not be Preference, boolean instead 
-        void setNavigationBarTint(Preference preference);
 
     }
 

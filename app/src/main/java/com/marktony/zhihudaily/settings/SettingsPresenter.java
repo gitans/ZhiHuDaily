@@ -2,15 +2,11 @@ package com.marktony.zhihudaily.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.Preference;
 
 import com.bumptech.glide.Glide;
-import com.marktony.zhihudaily.R;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -78,12 +74,6 @@ public class SettingsPresenter implements SettingsContract.Presenter {
             }
         }).start();
         Glide.get(context).clearMemory();
-    }
-
-    @Override
-    public void setNavigationBarTint(Preference preference) {
-        editor.putBoolean("navigation_bar_tint", preference.getSharedPreferences().getBoolean("navigation_bar_tint",false));
-        editor.apply();
     }
 
 }
