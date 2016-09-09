@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,9 @@ import com.marktony.zhihudaily.ui.DividerItemDecoration;
 import com.marktony.zhihudaily.ui.activity.DoubanReadActivity;
 import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.DateFormatter;
-import com.rey.material.app.DatePickerDialog;
+// import com.rey.material.app.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,7 +45,7 @@ import java.util.Date;
  * Created by Lizhaotailang on 2016/8/11.
  */
 
-public class DoubanMomentFragment extends Fragment {
+public class DoubanMomentFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
@@ -90,7 +93,7 @@ public class DoubanMomentFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                final DatePickerDialog dialog = new DatePickerDialog(getContext());
+                /*final DatePickerDialog dialog = new DatePickerDialog(getContext());
                 dialog.date(day, month, year);
                 Calendar calendar = Calendar.getInstance();
                 // birthday of douban moment is 2014,5,12
@@ -120,7 +123,17 @@ public class DoubanMomentFragment extends Fragment {
                     public void onClick(View v) {
                         dialog.dismiss();
                     }
-                });
+                });*/
+
+                Calendar now = Calendar.getInstance();
+                DatePickerDialog dialog = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+
+                    }
+                }, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
+
+                dialog.show(getActivity().getFragmentManager(), "TAG");
 
             }
         });
@@ -333,6 +346,11 @@ public class DoubanMomentFragment extends Fragment {
 
         request.setTag(TAG);
         VolleySingleton.getVolleySingleton(getContext()).addToRequestQueue(request);
+    }
+
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        Log.d("OnDateSet", "You choosed " + year + "/" + monthOfYear + "/" + dayOfMonth);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.zhihu_read;
+package com.marktony.zhihudaily.ui.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;

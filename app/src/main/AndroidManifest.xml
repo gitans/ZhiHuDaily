@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".zhihu_read.ZhihuReadActivity"
+            android:name=".ui.activity.ZhihuReadActivity"
             android:label="@string/title_activity_read" />
         <activity
             android:name=".settings.SettingsPreferenceActivity"

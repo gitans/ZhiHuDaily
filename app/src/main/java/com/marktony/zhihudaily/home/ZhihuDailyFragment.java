@@ -32,7 +32,7 @@ import com.marktony.zhihudaily.bean.ZhihuDailyPost;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.ui.DividerItemDecoration;
-import com.marktony.zhihudaily.zhihu_read.ZhihuReadActivity;
+import com.marktony.zhihudaily.ui.activity.ZhihuReadActivity;
 import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.DateFormatter;
 import com.marktony.zhihudaily.util.NetworkState;
