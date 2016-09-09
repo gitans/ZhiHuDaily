@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,9 +27,7 @@ import com.marktony.zhihudaily.ui.DividerItemDecoration;
 import com.marktony.zhihudaily.ui.activity.DoubanReadActivity;
 import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.DateFormatter;
-// import com.rey.material.app.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
-import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,7 +42,7 @@ import java.util.Date;
  * Created by Lizhaotailang on 2016/8/11.
  */
 
-public class DoubanMomentFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
+public class DoubanMomentFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
@@ -53,7 +50,7 @@ public class DoubanMomentFragment extends Fragment implements DatePickerDialog.O
 
     private DateFormatter formatter = new DateFormatter();
 
-    private int year, month, day; // 用于加载对应日期的消息
+    private int yearRecord, monthRecord, dayRecord; // 用于加载对应日期的消息
 
     private ArrayList<DoubanMomentPost> list = new ArrayList<>();
 
@@ -75,9 +72,9 @@ public class DoubanMomentFragment extends Fragment implements DatePickerDialog.O
         Calendar c = Calendar.getInstance();
 
         // init the date
-        year = c.get(Calendar.YEAR);
-        month = c.get(Calendar.MONTH);
-        day = c.get(Calendar.DAY_OF_MONTH);
+        yearRecord = c.get(Calendar.YEAR);
+        monthRecord = c.get(Calendar.MONTH);
+        dayRecord = c.get(Calendar.DAY_OF_MONTH);
     }
 
     @Nullable
@@ -93,47 +90,29 @@ public class DoubanMomentFragment extends Fragment implements DatePickerDialog.O
             @Override
             public void onClick(View view) {
 
-                /*final DatePickerDialog dialog = new DatePickerDialog(getContext());
-                dialog.date(day, month, year);
-                Calendar calendar = Calendar.getInstance();
-                // birthday of douban moment is 2014,5,12
-                calendar.set(2014, 5, 12);
-                dialog.dateRange(calendar.getTimeInMillis(), Calendar.getInstance().getTimeInMillis());
-                dialog.show();
-
-                dialog.positiveAction(getString(R.string.positive));
-                dialog.negativeAction(getString(R.string.negative));
-
-                dialog.positiveActionClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        year = dialog.getYear();
-                        month = dialog.getMonth();
-                        day = dialog.getDay();
-
-                        requestData(formatter.DoubanDateFormat(dialog.getDate()));
-
-                        dialog.dismiss();
-                    }
-                });
-
-                dialog.negativeActionClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });*/
-
                 Calendar now = Calendar.getInstance();
+                now.set(yearRecord, monthRecord, dayRecord);
                 DatePickerDialog dialog = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-
+                        yearRecord = year;
+                        monthRecord = monthOfYear;
+                        dayRecord = dayOfMonth;
+                        Calendar temp = Calendar.getInstance();
+                        temp.clear();
+                        temp.set(year, monthOfYear, dayOfMonth);
+                        requestData(formatter.DoubanDateFormat(temp.getTimeInMillis()));
                     }
                 }, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
 
-                dialog.show(getActivity().getFragmentManager(), "TAG");
+                dialog.setMaxDate(Calendar.getInstance());
+                Calendar minDate = Calendar.getInstance();
+                minDate.set(2014, 5, 12);
+                dialog.setMinDate(minDate);
+                // set the dialog not vibrate when date change, default value is true
+                dialog.vibrate(false);
+
+                dialog.show(getActivity().getFragmentManager(), "DatePickerDialog");
 
             }
         });
@@ -145,9 +124,9 @@ public class DoubanMomentFragment extends Fragment implements DatePickerDialog.O
                 Calendar c = Calendar.getInstance();
 
                 // init the date
-                year = c.get(Calendar.YEAR);
-                month = c.get(Calendar.MONTH);
-                day = c.get(Calendar.DAY_OF_MONTH);
+                yearRecord = c.get(Calendar.YEAR);
+                monthRecord = c.get(Calendar.MONTH);
+                dayRecord = c.get(Calendar.DAY_OF_MONTH);
 
                 requestData(formatter.DoubanDateFormat(Calendar.getInstance().getTimeInMillis()));
             }
@@ -170,7 +149,7 @@ public class DoubanMomentFragment extends Fragment implements DatePickerDialog.O
                     // 判断是否滚动到底部并且是向下滑动
                     if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
                         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                        Date date = new Date(year - 1900, month, --day);
+                        Date date = new Date(yearRecord - 1900, monthRecord, --dayRecord);
                         loadMore(format.format(date));
                     }
                 }
@@ -348,9 +327,5 @@ public class DoubanMomentFragment extends Fragment implements DatePickerDialog.O
         VolleySingleton.getVolleySingleton(getContext()).addToRequestQueue(request);
     }
 
-    @Override
-    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        Log.d("OnDateSet", "You choosed " + year + "/" + monthOfYear + "/" + dayOfMonth);
-    }
 
 }

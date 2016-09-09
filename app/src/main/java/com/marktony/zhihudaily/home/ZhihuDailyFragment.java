@@ -37,7 +37,7 @@ import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.DateFormatter;
 import com.marktony.zhihudaily.util.NetworkState;
 import com.marktony.zhihudaily.db.DatabaseHelper;
-import com.rey.material.app.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -70,9 +70,9 @@ public class ZhihuDailyFragment extends Fragment {
     private SharedPreferences sp;
 
     // 2013.5.20是知乎日报api首次上线
-    private int year = 2013;
-    private int month = 5;
-    private int day = 20;
+    private int yearRecord = 2013;
+    private int monthRecord = 5;
+    private int dayRecord = 20;
 
     // 用于记录加载更多的次数
     private int groupCount = -1;
@@ -103,9 +103,9 @@ public class ZhihuDailyFragment extends Fragment {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DAY_OF_MONTH,-1);
 
-        year = c.get(Calendar.YEAR);
-        month = c.get(Calendar.MONTH);
-        day = c.get(Calendar.DAY_OF_MONTH);
+        yearRecord = c.get(Calendar.YEAR);
+        monthRecord = c.get(Calendar.MONTH);
+        dayRecord = c.get(Calendar.DAY_OF_MONTH);
 
     }
 
@@ -142,9 +142,9 @@ public class ZhihuDailyFragment extends Fragment {
                 Calendar c = Calendar.getInstance();
                 c.add(Calendar.DAY_OF_MONTH,-1);
 
-                year = c.get(Calendar.YEAR);
-                month = c.get(Calendar.MONTH);
-                day = c.get(Calendar.DAY_OF_MONTH);
+                yearRecord = c.get(Calendar.YEAR);
+                monthRecord = c.get(Calendar.MONTH);
+                dayRecord = c.get(Calendar.DAY_OF_MONTH);
 
                 groupCount = -1;
 
@@ -156,42 +156,28 @@ public class ZhihuDailyFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                final DatePickerDialog dialog = new DatePickerDialog(getActivity());
-
-                // 给dialog设置初始日期,即默认被选中的日期
-                dialog.date(day,month,year);
-
-                Calendar calendar = Calendar.getInstance();
-                // 最小日期设置为2013年5月20日，知乎日报的诞生日期为2013年5月19日，如果传入的日期小于19，那么将会出现错误
-                calendar.set(2013,5,20);
-                // 通过calendar给dialog设置最大和最小日期
-                // 其中最大日期为当前日期的前一天
-                dialog.dateRange(calendar.getTimeInMillis(),Calendar.getInstance().getTimeInMillis() - 24*60*60*1000);
-                dialog.show();
-
-                dialog.positiveAction(getString(R.string.positive));
-                dialog.negativeAction(getString(R.string.negative));
-
-                dialog.positiveActionClickListener(new View.OnClickListener() {
+                Calendar now = Calendar.getInstance();
+                now.set(yearRecord, monthRecord, dayRecord);
+                DatePickerDialog dialog = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
                     @Override
-                    public void onClick(View v) {
-
-                        year = dialog.getYear();
-                        month = dialog.getMonth();
-                        day = dialog.getDay();
-
-                        load(new DateFormatter().ZhihuDailyDateFormat(dialog.getDate()));
-
-                        dialog.dismiss();
+                    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+                        yearRecord = year;
+                        monthRecord = monthOfYear;
+                        dayRecord = dayOfMonth;
+                        Calendar temp = Calendar.getInstance();
+                        temp.clear();
+                        temp.set(year, monthOfYear, dayOfMonth);
+                        load(new DateFormatter().ZhihuDailyDateFormat(temp.getTimeInMillis()));
                     }
-                });
+                }, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
 
-                dialog.negativeActionClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
+                dialog.setMaxDate(Calendar.getInstance());
+                Calendar minDate = Calendar.getInstance();
+                minDate.set(2013, 5, 20);
+                dialog.setMinDate(minDate);
+                dialog.vibrate(false);
+
+                dialog.show(getActivity().getFragmentManager(), "DatePickerDialog");
 
             }
         });
@@ -524,7 +510,7 @@ public class ZhihuDailyFragment extends Fragment {
     private void loadMore() {
 
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-        Date d = new Date(year-1900,month,day - groupCount);
+        Date d = new Date(yearRecord -1900, monthRecord, dayRecord - groupCount);
         final String date = format.format(d);
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,Api.HISTORY + date, new Response.Listener<JSONObject>() {
