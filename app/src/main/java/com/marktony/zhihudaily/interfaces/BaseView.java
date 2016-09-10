@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily;
+package com.marktony.zhihudaily.interfaces;
 
 import android.view.View;
 

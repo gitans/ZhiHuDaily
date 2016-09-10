@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily;
+package com.marktony.zhihudaily.interfaces;
 
 /**
  * Created by Lizhaotailang on 2016/9/3.

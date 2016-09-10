@@ -28,6 +28,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.marktony.zhihudaily.adapter.ZhihuDailyPostAdapter;
+import com.marktony.zhihudaily.app.VolleySingleton;
 import com.marktony.zhihudaily.bean.ZhihuDailyPost;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
@@ -59,7 +60,7 @@ public class ZhihuDailyFragment extends Fragment {
     private RecyclerView rvLatestNews;
     private SwipeRefreshLayout refresh;
     private FloatingActionButton fab;
-    private RequestQueue queue;
+
     private List<ZhihuDailyPost> list = new ArrayList<ZhihuDailyPost>();
 
     private ZhihuDailyPostAdapter adapter;
@@ -89,8 +90,6 @@ public class ZhihuDailyFragment extends Fragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
         dbhelper = new DatabaseHelper(getActivity(),"History.db",null,3);
         db = dbhelper.getWritableDatabase();
@@ -355,7 +354,7 @@ public class ZhihuDailyFragment extends Fragment {
         });
 
         request.setTag(TAG);
-        queue.add(request);
+        VolleySingleton.getVolleySingleton(getContext()).addToRequestQueue(request);
     }
 
     // 通过snackbar提示没有网络连接
@@ -477,7 +476,7 @@ public class ZhihuDailyFragment extends Fragment {
         });
 
         request.setTag(TAG);
-        queue.add(request);
+        VolleySingleton.getVolleySingleton(getContext()).addToRequestQueue(request);
 
     }
 
@@ -497,8 +496,8 @@ public class ZhihuDailyFragment extends Fragment {
     public void onStop() {
         super.onStop();
 
-        if (queue != null){
-            queue.cancelAll(TAG);
+        if (VolleySingleton.getVolleySingleton(getContext()).getRequestQueue() != null){
+            VolleySingleton.getVolleySingleton(getContext()).getRequestQueue().cancelAll(TAG);
         }
 
         if (refresh.isRefreshing()){
@@ -586,7 +585,7 @@ public class ZhihuDailyFragment extends Fragment {
         });
 
         request.setTag(TAG);
-        queue.add(request);
+        VolleySingleton.getVolleySingleton(getContext()).addToRequestQueue(request);
 
     }
 }

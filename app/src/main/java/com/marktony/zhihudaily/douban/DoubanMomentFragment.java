@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.home;
+package com.marktony.zhihudaily.douban;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -42,7 +42,7 @@ import java.util.Date;
  * Created by Lizhaotailang on 2016/8/11.
  */
 
-public class DoubanMomentFragment extends Fragment {
+public class DoubanMomentFragment extends Fragment implements DoubanMomentContract.View {
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
@@ -70,7 +70,6 @@ public class DoubanMomentFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Calendar c = Calendar.getInstance();
-
         // init the date
         yearRecord = c.get(Calendar.YEAR);
         monthRecord = c.get(Calendar.MONTH);
@@ -120,14 +119,6 @@ public class DoubanMomentFragment extends Fragment {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
-                Calendar c = Calendar.getInstance();
-
-                // init the date
-                yearRecord = c.get(Calendar.YEAR);
-                monthRecord = c.get(Calendar.MONTH);
-                dayRecord = c.get(Calendar.DAY_OF_MONTH);
-
                 requestData(formatter.DoubanDateFormat(Calendar.getInstance().getTimeInMillis()));
             }
         });
@@ -167,7 +158,14 @@ public class DoubanMomentFragment extends Fragment {
         return view;
     }
 
-    private void initViews(View view) {
+    @Override
+    public void setPresenter(DoubanMomentContract.Presenter presenter) {
+
+    }
+
+    @Override
+    public void initViews(View view) {
+
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_main);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
@@ -184,6 +182,7 @@ public class DoubanMomentFragment extends Fragment {
         refreshLayout.setProgressBackgroundColorSchemeColor(Color.WHITE);
         //设置下拉刷新按钮的大小
         refreshLayout.setSize(SwipeRefreshLayout.DEFAULT);
+
     }
 
     private void requestData(String date){
@@ -327,5 +326,36 @@ public class DoubanMomentFragment extends Fragment {
         VolleySingleton.getVolleySingleton(getContext()).addToRequestQueue(request);
     }
 
+
+    @Override
+    public void startLoading() {
+
+        refreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                refreshLayout.setRefreshing(true);
+            }
+        });
+
+    }
+
+    @Override
+    public void stopLoading() {
+
+        refreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                refreshLayout.setRefreshing(false);
+            }
+        });
+
+    }
+
+    @Override
+    public void showLoadError() {
+
+        Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
+
+    }
 
 }

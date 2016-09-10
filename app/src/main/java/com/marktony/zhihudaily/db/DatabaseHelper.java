@@ -27,6 +27,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             case 2:
                 db.execSQL("create table if not exists Contents(id integer primary key,date integer not null,content text not null)");
+            // case 3:
+                /*db.execSQL("drop table if exists LatestPosts");
+                db.execSQL("drop table if exists Contents");
+                // more
+                db.execSQL("create table if not exists Zhihu(id integer primary key autoincrement)");
+                // more
+                db.execSQL("create table if not exists Guokr(id integer primary key autoincrement)");
+                // more
+                db.execSQL("create table if not exists Douban(id integer primary key autoincrement)");
+                */
         }
     }
 }
