@@ -98,7 +98,7 @@ public class DoubanReadActivity extends AppCompatActivity {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 startActivity(new Intent(DoubanReadActivity.this, InnerBrowserActivity.class).putExtra("url", url));
-                return sp.getBoolean("in_app_browser",false);
+                return sp.getBoolean("in_app_browser",true);
             }
 
         });

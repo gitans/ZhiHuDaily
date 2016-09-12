@@ -119,7 +119,7 @@ public class ZhihuDailyFragment extends Fragment {
             showNoNetwork();
             loadFromDB();
         } else {
-            load(null);
+            load(new DateFormatter().ZhihuDailyDateFormat(Calendar.getInstance().getTimeInMillis()));
         }
 
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -135,7 +135,7 @@ public class ZhihuDailyFragment extends Fragment {
                     showNoNetwork();
                     loadFromDB();
                 } else {
-                    load(null);
+                    load(new DateFormatter().ZhihuDailyDateFormat(Calendar.getInstance().getTimeInMillis()));
                 }
 
                 Calendar c = Calendar.getInstance();
@@ -251,13 +251,7 @@ public class ZhihuDailyFragment extends Fragment {
             }
         });
 
-        String url;
-
-        if (date == null){
-            url =  Api.LATEST;
-        } else {
-            url = Api.HISTORY + date;
-        }
+        String url = Api.HISTORY + date;
 
         if ( !list.isEmpty()){
             list.clear();

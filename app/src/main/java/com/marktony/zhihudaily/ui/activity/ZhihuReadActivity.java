@@ -96,7 +96,7 @@ public class ZhihuReadActivity extends AppCompatActivity {
         //开启application Cache功能
         webViewRead.getSettings().setAppCacheEnabled(false);
 
-        if (sp.getBoolean("in_app_browser",false)){
+        if (sp.getBoolean("in_app_browser",true)){
 
             //不调用第三方浏览器即可进行页面反应
             webViewRead.setWebViewClient(new WebViewClient() {

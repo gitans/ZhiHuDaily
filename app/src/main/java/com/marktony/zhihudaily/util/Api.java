@@ -18,11 +18,12 @@ public class Api {
     // get the open screen page image url
     // start_image后面为图像分辨率
     // The end of start_image is the open screen image's resolution
-    public static final String START_IMAGE = "http://news-at.zhihu.com/api/4/start-image/1080*1776";
+    // public static final String START_IMAGE = "http://news-at.zhihu.com/api/4/start-image/1080*1776";
 
     // 最新消息
     // latest posts
-    public static final String LATEST = "http://news-at.zhihu.com/api/4/news/latest";
+    // NEWS API替代，拼接当日日期后可以获取
+    // public static final String LATEST = "http://news-at.zhihu.com/api/4/news/latest";
 
     // 消息内容获取与离线下载
     // content of post and download offline

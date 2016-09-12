@@ -119,7 +119,7 @@ public class GuokrReadActivity extends AppCompatActivity {
         //开启application Cache功能
         wbMain.getSettings().setAppCacheEnabled(false);
 
-        if (sp.getBoolean("in_app_browser",false)){
+        if (sp.getBoolean("in_app_browser",true)){
             //不调用第三方浏览器即可进行页面反应
             wbMain.setWebViewClient(new WebViewClient() {
 
