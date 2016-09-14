@@ -16,8 +16,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table if not exists LatestPosts(id integer primary key,title text not null,type integer not null,img_url text not null,date integer not null)");
-        db.execSQL("create table if not exists Contents(id integer primary key,date integer not null,content text not null)");
+        db.execSQL("create table if not exists LatestPosts("
+                + "id integer primary key,"
+                + "title text not null,"
+                + "type integer not null,"
+                + "img_url text not null,"
+                + "date integer not null)");
+        db.execSQL("create table if not exists Contents("
+                + "id integer primary key,"
+                + "date integer not null,"
+                + "content text not null)");
     }
 
     @Override
@@ -28,15 +36,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             case 2:
                 db.execSQL("create table if not exists Contents(id integer primary key,date integer not null,content text not null)");
             // case 3:
-                /*db.execSQL("drop table if exists LatestPosts");
-                db.execSQL("drop table if exists Contents");
+                // delete table if exists
+                // db.execSQL("drop table if exists LatestPosts");
+                // db.execSQL("drop table if exists Contents");
+                // create a new table of zhihu daily
+                /*db.execSQL("create table if not exists Zhihu("
+                        + "id integer primary key autoincrement,"
+                        + "zhihu_id integer not null,"
+                        + "type integer not null,"
+                        + "title text not null,"
+                        + "image text,"
+                        + "image_source text,"
+                        + "date text,"
+                        + "share_url text,"
+                        + "body text)");*/
+
+
                 // more
-                db.execSQL("create table if not exists Zhihu(id integer primary key autoincrement)");
+                //db.execSQL("create table if not exists Guokr(id integer primary key autoincrement)");
                 // more
-                db.execSQL("create table if not exists Guokr(id integer primary key autoincrement)");
-                // more
-                db.execSQL("create table if not exists Douban(id integer primary key autoincrement)");
-                */
+                //db.execSQL("create table if not exists Douban(id integer primary key autoincrement)");
+
         }
     }
 }

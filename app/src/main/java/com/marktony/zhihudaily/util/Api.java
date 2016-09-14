@@ -107,7 +107,7 @@ public class Api {
     // http://news-at.zhihu.com/api/4/editor/#{id}/profile-page/android
 
     // Guokr base url
-    public static final String GUOKR_ARTICLE_BASE_URL = "http://apis.guokr.com/handpick/article.json";
+    // public static final String GUOKR_ARTICLE_BASE_URL = "http://apis.guokr.com/handpick/article.json";
 
     // 获取果壳精选的文章列表,通过组合相应的参数成为完整的url
     // Guokr handpick articles. make complete url by combining params
