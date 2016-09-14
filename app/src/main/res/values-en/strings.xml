@@ -7,9 +7,6 @@
     <string name="loading">Loading</string>
 
     <string name="title_activity_read">Read</string>
-    <string name="likes">Like</string>
-    <string name="comments">Comment</string>
-    <string name="title_activity_comments">Comments</string>
     <string name="loaded_failed">Load failed!</string>
     <string name="no_network_connected">No Network Connected…</string>
     <string name="go_to_set">SETTINGS</string>

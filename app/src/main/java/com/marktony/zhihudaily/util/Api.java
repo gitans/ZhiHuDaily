@@ -44,7 +44,7 @@ public class Api {
     // 输入新闻的ID，获取对应新闻的额外信息，如评论数量，所获的『赞』的数量。
     // add the post id then you can get the extra info, like the comment account and the like account
     // example:http://news-at.zhihu.com/api/4/story-extra/#{id}
-    public static final String STORY_EXTRA = "http://news-at.zhihu.com/api/4/story-extra/";
+    // public static final String STORY_EXTRA = "http://news-at.zhihu.com/api/4/story-extra/";
 
     // 新闻对应长评论查看
     // long comments of post
@@ -63,11 +63,11 @@ public class Api {
     // replace id
     // 得到短评论 JSON 格式的内容
     // get the short comment as json format
-    public static final String COMMENTS = "http://news-at.zhihu.com/api/4/story/";
+    // public static final String COMMENTS = "http://news-at.zhihu.com/api/4/story/";
 
     // 主题日报列表查看
     // Theme posts
-    public static final String THEMES = "http://news-at.zhihu.com/api/4/themes";
+    // public static final String THEMES = "http://news-at.zhihu.com/api/4/themes";
 
     // 主题日报内容查看
     // check out the content of theme post

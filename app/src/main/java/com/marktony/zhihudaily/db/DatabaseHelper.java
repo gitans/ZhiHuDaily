@@ -51,11 +51,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         + "share_url text,"
                         + "body text)");*/
 
+                /*db.execSQL("create table if not exists Guokr("
+                        + "id integer primary key autoincrement," // primary key
+                        + "guokr_id integer not null," // id of guokr post
+                        + "category text," // category
+                        + "link_v2_sync_img text," // an url of one img
+                        + "source_name text," // source name
+                        + "title text not null," // title
+                        + "headline_img_tb text," // url of headline image thumb
+                        + "link_v2 text," // url of link v2
+                        + "date_picked real not null," // a double number which is the time of post picked date
+                        + "is_top integer," // boolean type, 0 means false, 1 means true
+                        + "link text," // link v1
+                        + "headline_img text," // headline image
+                        + "page_source text," // page source, url
+                        + "author text," // author
+                        + "summary text," // summary
+                        + "source text," // source like "group"
+                        + "date_created real," // like date_picked
+                        + "body text)"); // main content*/
 
-                // more
-                //db.execSQL("create table if not exists Guokr(id integer primary key autoincrement)");
-                // more
-                //db.execSQL("create table if not exists Douban(id integer primary key autoincrement)");
+                /*db.execSQL("create table if not exists Douban("
+                        + "id integer primary key autoincrement,"  // primary key
+                        + "douban_id integer not null,"  // douban id
+                        + "type text not null,"
+                        + "share_pic_url text not null,"
+                        + "title text not null,"
+                        + "created_time text not null,"
+                        + "date text not null,"
+                        + "abstract text not null,"
+                        + "column text,"
+                        + "short_url text,"
+                        + "url text not null,"
+                        + "original_url text,"
+                        + "publish_time text,"
+                        + "display_style text)");*/
 
         }
     }

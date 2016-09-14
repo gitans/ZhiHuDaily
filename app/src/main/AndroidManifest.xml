@@ -43,11 +43,6 @@
             android:label="@string/about"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".zhihu_comments.CommentsActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_comments"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".ui.activity.GuokrReadActivity"
             android:label="@string/title_activity_guokr_read"
             android:theme="@style/AppTheme.NoActionBar" />

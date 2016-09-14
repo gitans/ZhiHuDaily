@@ -36,7 +36,6 @@ import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.NetworkState;
 import com.marktony.zhihudaily.db.DatabaseHelper;
 import com.marktony.zhihudaily.util.Theme;
-import com.marktony.zhihudaily.zhihu_comments.CommentsActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,9 +50,6 @@ public class ZhihuReadActivity extends AppCompatActivity {
     private CollapsingToolbarLayout toolbarLayout;
 
     private RequestQueue queue;
-
-    private int likes = 0;
-    private int comments = 0;
 
     private AlertDialog dialog;
 
@@ -268,32 +264,6 @@ public class ZhihuReadActivity extends AppCompatActivity {
             });
 
             queue.add(request);
-
-            // 请求评论和赞的数量
-            // request the account of comments and likes
-            JsonObjectRequest re = new JsonObjectRequest(Request.Method.GET, Api.STORY_EXTRA + id, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject jsonObject) {
-
-                    if (!jsonObject.isNull("comments")){
-                        try {
-                            likes = jsonObject.getInt("popularity");
-                            comments = jsonObject.getInt("comments");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
-                    }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-                    Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
-                }
-            });
-
-            queue.add(re);
         }
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -317,25 +287,8 @@ public class ZhihuReadActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_zhihu_read,menu);
+        getMenuInflater().inflate(R.menu.menu_read,menu);
         return true;
-    }
-
-    // 在onPrepareOptionsMenu方法中更新数据
-    // update data in onPrepareOptionsMenu function
-    // 如果是在create方法中更新，那么只会创建一次，可能获取不到最新的数据
-    // if update in create function, it will be created only once, we may not gain the latest data
-    // 而在这个方法中去更新，可以保证每次都是最新的
-    // update in this function, it can make sure the data we gained is latest
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-
-        String temp = getResources().getString(R.string.likes) + ":" + likes;
-        menu.findItem(R.id.action_likes).setTitle(temp);
-        temp = getResources().getString(R.string.comments) + ":" + comments;
-        menu.findItem(R.id.action_comments).setTitle(temp);
-
-        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -349,10 +302,6 @@ public class ZhihuReadActivity extends AppCompatActivity {
         // 重新做网络请求之类的
         if (id == android.R.id.home){
             onBackPressed();
-        }
-
-        if (id == R.id.action_comments){
-            startActivity(new Intent(ZhihuReadActivity.this,CommentsActivity.class).putExtra("id",this.id));
         }
 
         if (id == R.id.action_open_in_browser){
