@@ -55,7 +55,7 @@ import java.util.List;
  * 最新消息
  * latest posts
  */
-public class ZhihuDailyFragment extends Fragment {
+public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.View{
 
     private RecyclerView rvLatestNews;
     private SwipeRefreshLayout refresh;
@@ -79,6 +79,8 @@ public class ZhihuDailyFragment extends Fragment {
     private int groupCount = -1;
 
     private final String TAG = "ZhihuDailyFragment";
+
+    private ZhihuDailyContract.Presenter presenter;
 
     public ZhihuDailyFragment() {
 
@@ -217,8 +219,33 @@ public class ZhihuDailyFragment extends Fragment {
     }
 
 
+    @Override
+    public void setPresenter(ZhihuDailyContract.Presenter presenter) {
+        if (presenter == null) {
+            this.presenter = presenter;
+        }
+    }
 
-    private void initViews(View view) {
+    @Override
+    public void initViews(View view) {
+        rvLatestNews = (RecyclerView) view.findViewById(R.id.rv_main);
+        rvLatestNews.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvLatestNews.addItemDecoration(new DividerItemDecoration(getActivity(),LinearLayoutManager.VERTICAL));
+        refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setRippleColor(getResources().getColor(R.color.colorPrimaryDark));
+
+        //设置下拉刷新的按钮的颜色
+        refresh.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        //设置手指在屏幕上下拉多少距离开始刷新
+        refresh.setDistanceToTriggerSync(300);
+        //设置下拉刷新按钮的背景颜色
+        refresh.setProgressBackgroundColorSchemeColor(Color.WHITE);
+        //设置下拉刷新按钮的大小
+        refresh.setSize(SwipeRefreshLayout.DEFAULT);
+    }
+
+    /*private void initViews(View view) {
 
         rvLatestNews = (RecyclerView) view.findViewById(R.id.rv_main);
         rvLatestNews.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -236,7 +263,7 @@ public class ZhihuDailyFragment extends Fragment {
         //设置下拉刷新按钮的大小
         refresh.setSize(SwipeRefreshLayout.DEFAULT);
 
-    }
+    }*/
 
     /**
      * 用于加载最新日报或者历史日报
@@ -581,5 +608,30 @@ public class ZhihuDailyFragment extends Fragment {
         request.setTag(TAG);
         VolleySingleton.getVolleySingleton(getContext()).addToRequestQueue(request);
 
+    }
+
+    @Override
+    public void showError() {
+
+    }
+
+    @Override
+    public void showLoading() {
+        refresh.post(new Runnable() {
+            @Override
+            public void run() {
+                refresh.setRefreshing(true);
+            }
+        });
+    }
+
+    @Override
+    public void stopLoading() {
+        refresh.post(new Runnable() {
+            @Override
+            public void run() {
+                refresh.setRefreshing(false);
+            }
+        });
     }
 }

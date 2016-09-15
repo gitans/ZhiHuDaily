@@ -1,6 +1,6 @@
 package com.marktony.zhihudaily.douban;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Context;
 
 import com.marktony.zhihudaily.bean.DoubanMomentPost;
 
@@ -13,14 +13,14 @@ import java.util.ArrayList;
 public class DoubanMomentPresenter implements DoubanMomentContract.Presenter {
 
     private DoubanMomentContract.View view;
-    private AppCompatActivity activity;
+    private Context context;
 
     private ArrayList<DoubanMomentPost> list = new ArrayList<>();
 
     private int year, month, day;
 
-    public DoubanMomentPresenter(AppCompatActivity activity, DoubanMomentContract.View view) {
-        this.activity = activity;
+    public DoubanMomentPresenter(Context context, DoubanMomentContract.View view) {
+        this.context = context;
         this.view = view;
         this.view.setPresenter(this);
     }

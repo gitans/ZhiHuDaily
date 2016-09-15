@@ -7,8 +7,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.douban.DoubanMomentFragment;
+import com.marktony.zhihudaily.douban.DoubanMomentPresenter;
 import com.marktony.zhihudaily.home.GuokrFragment;
+import com.marktony.zhihudaily.home.GuokrPresenter;
 import com.marktony.zhihudaily.home.ZhihuDailyFragment;
+import com.marktony.zhihudaily.home.ZhihuDailyPresenter;
 
 /**
  * Created by Lizhaotailang on 2016/8/10.
@@ -28,11 +31,17 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 1){
-            return GuokrFragment.newInstance();
+            GuokrFragment fragment = GuokrFragment.newInstance();
+            new GuokrPresenter(context, fragment);
+            return fragment;
         } else if (position == 2){
-            return DoubanMomentFragment.newInstance();
+            DoubanMomentFragment fragment = DoubanMomentFragment.newInstance();
+            new DoubanMomentPresenter(context, fragment);
+            return fragment;
         }
-        return ZhihuDailyFragment.newInstance();
+        ZhihuDailyFragment fragment = ZhihuDailyFragment.newInstance();
+        new ZhihuDailyPresenter(context, fragment);
+        return fragment;
     }
 
     @Override

@@ -37,16 +37,12 @@ import java.util.ArrayList;
  * 果壳精选
  * guokr handpick
  */
-public class GuokrFragment extends Fragment {
+public class GuokrFragment extends Fragment implements GuokrContract.View{
 
     private RecyclerView rvGuokr;
     private SwipeRefreshLayout refreshGuokr;
-
-    private ArrayList<GuokrHandpickPost> guokrList = new ArrayList<GuokrHandpickPost>();
-
     private GuokrPostAdapter adapter;
-
-    private static final String TAG = "GUOKR";
+    private GuokrContract.Presenter presenter;
 
     // require an empty constructor
     public GuokrFragment(){
@@ -65,7 +61,9 @@ public class GuokrFragment extends Fragment {
 
         initViews(view);
 
-        requestData();
+        presenter.setUrl(Api.GUOKR_ARTICLES);
+
+        /*requestData();
 
         refreshGuokr.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -78,18 +76,24 @@ public class GuokrFragment extends Fragment {
                 requestData();
 
             }
-        });
+        });*/
 
         return view;
     }
 
-    private void initViews(View view) {
+    @Override
+    public void setPresenter(GuokrContract.Presenter presenter) {
+        if (presenter != null){
+            this.presenter = presenter;
+        }
+    }
 
+    @Override
+    public void initViews(View view) {
         rvGuokr = (RecyclerView) view.findViewById(R.id.rv_guokr_handpick);
         rvGuokr.setLayoutManager(new LinearLayoutManager(getActivity()));
         rvGuokr.addItemDecoration(new DividerItemDecoration(getActivity(),LinearLayoutManager.VERTICAL));
         refreshGuokr = (SwipeRefreshLayout) view.findViewById(R.id.refresh_guokr);
-
         //设置下拉刷新的按钮的颜色
         refreshGuokr.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
         //设置手指在屏幕上下拉多少距离开始刷新
@@ -100,7 +104,7 @@ public class GuokrFragment extends Fragment {
         refreshGuokr.setSize(SwipeRefreshLayout.DEFAULT);
     }
 
-    private void requestData(){
+    /*private void requestData(){
 
         refreshGuokr.post(new Runnable() {
             @Override
@@ -176,15 +180,45 @@ public class GuokrFragment extends Fragment {
 
         request.setTag(TAG);
         VolleySingleton.getVolleySingleton(getContext()).addToRequestQueue(request);
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void onStop() {
         super.onStop();
 
         if (refreshGuokr.isRefreshing()){
             refreshGuokr.setRefreshing(false);
         }
+    }*/
+
+    @Override
+    public void showError() {
+        Snackbar.make(refreshGuokr, "Error", Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showSuccess() {
+        Snackbar.make(refreshGuokr, "Success", Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showLoading() {
+        refreshGuokr.post(new Runnable() {
+            @Override
+            public void run() {
+                refreshGuokr.setRefreshing(true);
+            }
+        });
+    }
+
+    @Override
+    public void stopLoading() {
+        refreshGuokr.post(new Runnable() {
+            @Override
+            public void run() {
+                refreshGuokr.setRefreshing(false);
+            }
+        });
     }
 
 }
