@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by Lizhaotailang on 2016/9/16.
  */
 
-public class GuokrHandpickPost {
+public class GuokrHandpickNews {
 
     private String now;
     private boolean ok;
@@ -28,11 +28,11 @@ public class GuokrHandpickPost {
         this.ok = ok;
     }
 
-    public ArrayList<GuokrHandpickPost.result> getResult() {
+    public ArrayList<GuokrHandpickNews.result> getResult() {
         return result;
     }
 
-    public void setResult(ArrayList<GuokrHandpickPost.result> result) {
+    public void setResult(ArrayList<GuokrHandpickNews.result> result) {
         this.result = result;
     }
 
@@ -152,11 +152,11 @@ public class GuokrHandpickPost {
             this.title = title;
         }
 
-        public GuokrHandpickPost.source_data getSource_data() {
+        public GuokrHandpickNews.source_data getSource_data() {
             return source_data;
         }
 
-        public void setSource_data(GuokrHandpickPost.source_data source_data) {
+        public void setSource_data(GuokrHandpickNews.source_data source_data) {
             this.source_data = source_data;
         }
 

@@ -1,15 +1,11 @@
 package com.marktony.zhihudaily.home;
 
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,34 +17,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.marktony.zhihudaily.adapter.ZhihuDailyPostAdapter;
-import com.marktony.zhihudaily.app.VolleySingleton;
-import com.marktony.zhihudaily.bean.ZhihuDailyPost;
-import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.adapter.ZhihuDailyNewsAdapter;
+import com.marktony.zhihudaily.bean.ZhihuDailyNews;
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.ui.DividerItemDecoration;
-import com.marktony.zhihudaily.ui.activity.ZhihuReadActivity;
-import com.marktony.zhihudaily.util.Api;
+import com.marktony.zhihudaily.DividerItemDecoration;
+import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.util.DateFormatter;
 import com.marktony.zhihudaily.util.NetworkState;
 import com.marktony.zhihudaily.db.DatabaseHelper;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by lizhaotailang on 2016/3/21.
@@ -57,23 +37,20 @@ import java.util.List;
  */
 public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.View{
 
-    private RecyclerView rvLatestNews;
+    private RecyclerView recyclerView;
     private SwipeRefreshLayout refresh;
     private FloatingActionButton fab;
 
-    private List<ZhihuDailyPost> list = new ArrayList<ZhihuDailyPost>();
-
-    private ZhihuDailyPostAdapter adapter;
+    private ZhihuDailyNewsAdapter adapter;
 
     private DatabaseHelper dbhelper;
     private SQLiteDatabase db;
 
     private SharedPreferences sp;
 
-    // 2013.5.20是知乎日报api首次上线
-    private int yearRecord = 2013;
-    private int monthRecord = 5;
-    private int dayRecord = 20;
+    private int mYear = Calendar.getInstance().get(Calendar.YEAR);
+    private int mMonth = Calendar.getInstance().get(Calendar.MONTH);
+    private int mDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 
     // 用于记录加载更多的次数
     private int groupCount = -1;
@@ -98,15 +75,7 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
 
         sp = getActivity().getSharedPreferences("user_settings", Context.MODE_PRIVATE);
 
-        deleteTimeoutPosts();
-
-        // 获取当前日期的前一天
-        Calendar c = Calendar.getInstance();
-        c.add(Calendar.DAY_OF_MONTH,-1);
-
-        yearRecord = c.get(Calendar.YEAR);
-        monthRecord = c.get(Calendar.MONTH);
-        dayRecord = c.get(Calendar.DAY_OF_MONTH);
+        // deleteTimeoutPosts();
 
     }
 
@@ -117,19 +86,21 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
 
         initViews(view);
 
-        if ( !NetworkState.networkConnected(getActivity())){
+        presenter.loadPosts(Calendar.getInstance().getTimeInMillis(), false);
+
+        /*if ( !NetworkState.networkConnected(getActivity())){
             showNoNetwork();
             loadFromDB();
         } else {
             load(new DateFormatter().ZhihuDailyDateFormat(Calendar.getInstance().getTimeInMillis()));
-        }
+        }*/
 
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
             @Override
             public void onRefresh() {
-
-                if (!list.isEmpty()){
+                presenter.refresh();
+                /*if (!list.isEmpty()){
                     list.clear();
                 }
 
@@ -143,11 +114,11 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
                 Calendar c = Calendar.getInstance();
                 c.add(Calendar.DAY_OF_MONTH,-1);
 
-                yearRecord = c.get(Calendar.YEAR);
-                monthRecord = c.get(Calendar.MONTH);
-                dayRecord = c.get(Calendar.DAY_OF_MONTH);
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
 
-                groupCount = -1;
+                groupCount = -1;*/
 
             }
 
@@ -158,22 +129,23 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
             public void onClick(View v) {
 
                 Calendar now = Calendar.getInstance();
-                now.set(yearRecord, monthRecord, dayRecord);
+                now.set(mYear, mMonth, mDay);
                 DatePickerDialog dialog = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-                        yearRecord = year;
-                        monthRecord = monthOfYear;
-                        dayRecord = dayOfMonth;
+                        mYear = year;
+                        mMonth = monthOfYear;
+                        mDay = dayOfMonth;
                         Calendar temp = Calendar.getInstance();
                         temp.clear();
                         temp.set(year, monthOfYear, dayOfMonth);
-                        load(new DateFormatter().ZhihuDailyDateFormat(temp.getTimeInMillis()));
+                        presenter.loadPosts(temp.getTimeInMillis(), true);
                     }
                 }, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
 
                 dialog.setMaxDate(Calendar.getInstance());
                 Calendar minDate = Calendar.getInstance();
+                // 2013.5.20是知乎日报api首次上线
                 minDate.set(2013, 5, 20);
                 dialog.setMinDate(minDate);
                 dialog.vibrate(false);
@@ -183,7 +155,7 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
             }
         });
 
-        rvLatestNews.setOnScrollListener(new RecyclerView.OnScrollListener() {
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
 
             boolean isSlidingToLast = false;
 
@@ -199,9 +171,9 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
 
                     // 判断是否滚动到底部并且是向下滑动
                     if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
-
-                        loadMore();
-
+                        Calendar c = Calendar.getInstance();
+                        c.set(mYear, mMonth, --mDay);
+                        presenter.loadMore(c.getTimeInMillis());
                     }
                 }
 
@@ -221,16 +193,16 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
 
     @Override
     public void setPresenter(ZhihuDailyContract.Presenter presenter) {
-        if (presenter == null) {
+        if (presenter != null) {
             this.presenter = presenter;
         }
     }
 
     @Override
     public void initViews(View view) {
-        rvLatestNews = (RecyclerView) view.findViewById(R.id.rv_main);
-        rvLatestNews.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvLatestNews.addItemDecoration(new DividerItemDecoration(getActivity(),LinearLayoutManager.VERTICAL));
+        recyclerView = (RecyclerView) view.findViewById(R.id.rv_main);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),LinearLayoutManager.VERTICAL));
         refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setRippleColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -245,31 +217,11 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
         refresh.setSize(SwipeRefreshLayout.DEFAULT);
     }
 
-    /*private void initViews(View view) {
-
-        rvLatestNews = (RecyclerView) view.findViewById(R.id.rv_main);
-        rvLatestNews.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvLatestNews.addItemDecoration(new DividerItemDecoration(getActivity(),LinearLayoutManager.VERTICAL));
-        refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
-        fab = (FloatingActionButton) view.findViewById(R.id.fab);
-        fab.setRippleColor(getResources().getColor(R.color.colorPrimaryDark));
-
-        //设置下拉刷新的按钮的颜色
-        refresh.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
-        //设置手指在屏幕上下拉多少距离开始刷新
-        refresh.setDistanceToTriggerSync(300);
-        //设置下拉刷新按钮的背景颜色
-        refresh.setProgressBackgroundColorSchemeColor(Color.WHITE);
-        //设置下拉刷新按钮的大小
-        refresh.setSize(SwipeRefreshLayout.DEFAULT);
-
-    }*/
-
     /**
      * 用于加载最新日报或者历史日报
      * @param date 日期
      */
-    private void load(final String date){
+    /*private void load(final String date){
 
         refresh.post(new Runnable() {
             @Override
@@ -278,7 +230,7 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
             }
         });
 
-        String url = Api.HISTORY + date;
+        String url = Api.ZHIHU_HISTORY + date;
 
         if ( !list.isEmpty()){
             list.clear();
@@ -333,12 +285,12 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
                         }
                     }
 
-                    adapter = new ZhihuDailyPostAdapter(getActivity(),list);
-                    rvLatestNews.setAdapter(adapter);
+                    adapter = new ZhihuDailyNewsAdapter(getActivity(),list);
+                    recyclerView.setAdapter(adapter);
                     adapter.setItemClickListener(new OnRecyclerViewOnClickListener() {
                         @Override
                         public void OnItemClick(View v, int position) {
-                            Intent intent = new Intent(getActivity(),ZhihuReadActivity.class);
+                            Intent intent = new Intent(getActivity(),ZhihuDetailActivity.class);
                             intent.putExtra("id",list.get(position).getId());
                             intent.putExtra("title",list.get(position).getTitle());
                             startActivity(intent);
@@ -376,10 +328,10 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
 
         request.setTag(TAG);
         VolleySingleton.getVolleySingleton(getContext()).addToRequestQueue(request);
-    }
+    }*/
 
     // 通过snackbar提示没有网络连接
-    public void showNoNetwork(){
+    /*public void showNoNetwork(){
         Snackbar.make(fab,R.string.no_network_connected,Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.go_to_set, new View.OnClickListener() {
                     @Override
@@ -387,13 +339,13 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
                         startActivity(new Intent(Settings.ACTION_SETTINGS));
                     }
                 }).show();
-    }
+    }*/
 
 
     /**
      * 从数据库中加载已经保存的数据
      */
-    private void loadFromDB(){
+    /*private void loadFromDB(){
 
         refresh.post(new Runnable() {
             @Override
@@ -419,12 +371,12 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
         }
         cursor.close();
 
-        adapter = new ZhihuDailyPostAdapter(getActivity(),list);
-        rvLatestNews.setAdapter(adapter);
+        adapter = new ZhihuDailyNewsAdapter(getActivity(),list);
+        recyclerView.setAdapter(adapter);
         adapter.setItemClickListener(new OnRecyclerViewOnClickListener() {
             @Override
             public void OnItemClick(View v, int position) {
-                Intent intent = new Intent(getActivity(),ZhihuReadActivity.class);
+                Intent intent = new Intent(getActivity(),ZhihuDetailActivity.class);
                 intent.putExtra("id",list.get(position).getId());
                 intent.putExtra("title",list.get(position).getTitle());
                 startActivity(intent);
@@ -438,15 +390,10 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
             }
         });
 
-    }
+    }*/
 
-    /**
-     * 查询数据库中是否已经存在此id
-     * @param tableName 要查询的表的名称
-     * @param id 要查询的string id
-     * @return 返回是否存在boolean
-     */
-    private boolean queryIDExists(String tableName,String id){
+
+    /*private boolean queryIDExists(String tableName,String id){
         Cursor cursor = db.query(tableName,null,null,null,null,null,null);
         if (cursor.moveToFirst()){
             do {
@@ -459,16 +406,11 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
         cursor.close();
 
         return false;
-    }
+    }*/
 
-    /**
-     * 将指定id的内容储存值数据库中
-     * @param id 所要保存内容的id
-     * @param date 日期
-     */
-    private void storeContent(final String id, final String date){
+    /*private void storeContent(final String id, final String date){
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.NEWS + id, new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.ZHIHU_NEWS + id, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
 
@@ -499,9 +441,9 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
         request.setTag(TAG);
         VolleySingleton.getVolleySingleton(getContext()).addToRequestQueue(request);
 
-    }
+    }*/
 
-    private void deleteTimeoutPosts(){
+    /*private void deleteTimeoutPosts(){
 
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DAY_OF_MONTH,-2);
@@ -511,9 +453,9 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
         db.delete("LatestPosts","date<?",whereArgs);
         db.delete("Contents","date<?",whereArgs);
 
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void onStop() {
         super.onStop();
 
@@ -524,16 +466,16 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
         if (refresh.isRefreshing()){
             refresh.setRefreshing(false);
         }
-    }
+    }*/
 
     // 用于加载更多
-    private void loadMore() {
+    /*private void loadMore() {
 
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-        Date d = new Date(yearRecord -1900, monthRecord, dayRecord - groupCount);
+        Date d = new Date(mYear -1900, mMonth, mDay - groupCount);
         final String date = format.format(d);
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,Api.HISTORY + date, new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,Api.ZHIHU_HISTORY + date, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
 
@@ -608,11 +550,11 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
         request.setTag(TAG);
         VolleySingleton.getVolleySingleton(getContext()).addToRequestQueue(request);
 
-    }
+    }*/
 
     @Override
     public void showError() {
-
+        Snackbar.make(fab, R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -634,4 +576,21 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
             }
         });
     }
+
+    @Override
+    public void showResults(ArrayList<ZhihuDailyNews.Question> list) {
+        if (adapter == null) {
+            adapter = new ZhihuDailyNewsAdapter(getContext(), list);
+            adapter.setItemClickListener(new OnRecyclerViewOnClickListener() {
+                @Override
+                public void OnItemClick(View v, int position) {
+                    presenter.startReading(position);
+                }
+            });
+            recyclerView.setAdapter(adapter);
+        } else {
+            adapter.notifyDataSetChanged();
+        }
+    }
+
 }

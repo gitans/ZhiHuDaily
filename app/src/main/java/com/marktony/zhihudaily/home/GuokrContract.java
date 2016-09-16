@@ -1,8 +1,8 @@
 package com.marktony.zhihudaily.home;
 
-import com.marktony.zhihudaily.bean.GuokrHandpickPost;
-import com.marktony.zhihudaily.interfaces.BasePresenter;
-import com.marktony.zhihudaily.interfaces.BaseView;
+import com.marktony.zhihudaily.bean.GuokrHandpickNews;
+import com.marktony.zhihudaily.BasePresenter;
+import com.marktony.zhihudaily.BaseView;
 
 import java.util.ArrayList;
 
@@ -16,7 +16,7 @@ public interface GuokrContract {
 
         void showError();
 
-        void showResults(ArrayList<GuokrHandpickPost.result> list);
+        void showResults(ArrayList<GuokrHandpickNews.result> list);
 
         void showLoading();
 

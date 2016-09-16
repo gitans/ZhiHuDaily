@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.bean.GuokrHandpickPost;
+import com.marktony.zhihudaily.bean.GuokrHandpickNews;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 
 import java.util.ArrayList;
@@ -19,15 +19,15 @@ import java.util.List;
 /**
  * Created by lizhaotailang on 2016/6/14.
  */
-public class GuokrPostAdapter extends RecyclerView.Adapter<GuokrPostAdapter.GuokrPostViewHolder> {
+public class GuokrNewsAdapter extends RecyclerView.Adapter<GuokrNewsAdapter.GuokrPostViewHolder> {
 
     private final Context context;
     private final LayoutInflater inflater;
-    private List<GuokrHandpickPost.result> list;
+    private List<GuokrHandpickNews.result> list;
 
     private OnRecyclerViewOnClickListener mListener;
 
-    public GuokrPostAdapter(Context context, ArrayList<GuokrHandpickPost.result> list) {
+    public GuokrNewsAdapter(Context context, ArrayList<GuokrHandpickNews.result> list) {
         this.context = context;
         this.list = list;
         inflater = LayoutInflater.from(context);
@@ -44,7 +44,7 @@ public class GuokrPostAdapter extends RecyclerView.Adapter<GuokrPostAdapter.Guok
     @Override
     public void onBindViewHolder(GuokrPostViewHolder holder, int position) {
 
-        GuokrHandpickPost.result item = list.get(position);
+        GuokrHandpickNews.result item = list.get(position);
 
         Glide.with(context)
                 .load(item.getHeadline_img_tb())

@@ -1,8 +1,8 @@
 package com.marktony.zhihudaily.douban;
 
-import com.marktony.zhihudaily.bean.DoubanMomentPost;
-import com.marktony.zhihudaily.interfaces.BasePresenter;
-import com.marktony.zhihudaily.interfaces.BaseView;
+import com.marktony.zhihudaily.bean.DoubanMomentNews;
+import com.marktony.zhihudaily.BasePresenter;
+import com.marktony.zhihudaily.BaseView;
 
 import java.util.ArrayList;
 
@@ -20,7 +20,7 @@ public interface DoubanMomentContract {
 
         void showLoadError();
 
-        void showResults(ArrayList<DoubanMomentPost.posts> list);
+        void showResults(ArrayList<DoubanMomentNews.posts> list);
 
     }
 
@@ -28,11 +28,11 @@ public interface DoubanMomentContract {
 
         void startReading(int position);
 
-        void loadPosts(long date);
-
-        void setDate(int year, int month, int day);
+        void loadPosts(long date, boolean clearing);
 
         void refresh();
+
+        void loadMore(long date);
 
     }
 

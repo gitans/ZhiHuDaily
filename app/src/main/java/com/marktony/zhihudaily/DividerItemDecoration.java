@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.ui;
+package com.marktony.zhihudaily;
 
 import android.content.Context;
 import android.content.res.TypedArray;

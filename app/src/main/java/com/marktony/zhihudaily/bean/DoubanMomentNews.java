@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Created by Lizhaotailang on 2016/9/16.
  */
 
-public class DoubanMomentPost {
+public class DoubanMomentNews {
 
     private int count;
     private ArrayList<posts> posts;
@@ -24,11 +24,11 @@ public class DoubanMomentPost {
         this.count = count;
     }
 
-    public ArrayList<DoubanMomentPost.posts> getPosts() {
+    public ArrayList<DoubanMomentNews.posts> getPosts() {
         return posts;
     }
 
-    public void setPosts(ArrayList<DoubanMomentPost.posts> posts) {
+    public void setPosts(ArrayList<DoubanMomentNews.posts> posts) {
         this.posts = posts;
     }
 
@@ -87,11 +87,11 @@ public class DoubanMomentPost {
             small small;
             int id;
 
-            public DoubanMomentPost.posts.medium getMedium() {
+            public DoubanMomentNews.posts.medium getMedium() {
                 return medium;
             }
 
-            public void setMedium(DoubanMomentPost.posts.medium medium) {
+            public void setMedium(DoubanMomentNews.posts.medium medium) {
                 this.medium = medium;
             }
 
@@ -103,11 +103,11 @@ public class DoubanMomentPost {
                 this.description = description;
             }
 
-            public DoubanMomentPost.posts.large getLarge() {
+            public DoubanMomentNews.posts.large getLarge() {
                 return large;
             }
 
-            public void setLarge(DoubanMomentPost.posts.large large) {
+            public void setLarge(DoubanMomentNews.posts.large large) {
                 this.large = large;
             }
 
@@ -119,11 +119,11 @@ public class DoubanMomentPost {
                 this.tag_name = tag_name;
             }
 
-            public DoubanMomentPost.posts.small getSmall() {
+            public DoubanMomentNews.posts.small getSmall() {
                 return small;
             }
 
-            public void setSmall(DoubanMomentPost.posts.small small) {
+            public void setSmall(DoubanMomentNews.posts.small small) {
                 this.small = small;
             }
 
@@ -214,11 +214,11 @@ public class DoubanMomentPost {
             this.is_liked = is_liked;
         }
 
-        public DoubanMomentPost.author getAuthor() {
+        public DoubanMomentNews.author getAuthor() {
             return author;
         }
 
-        public void setAuthor(DoubanMomentPost.author author) {
+        public void setAuthor(DoubanMomentNews.author author) {
             this.author = author;
         }
 

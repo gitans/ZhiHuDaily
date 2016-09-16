@@ -12,11 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.marktony.zhihudaily.adapter.GuokrPostAdapter;
+import com.marktony.zhihudaily.adapter.GuokrNewsAdapter;
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.bean.GuokrHandpickPost;
+import com.marktony.zhihudaily.bean.GuokrHandpickNews;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
-import com.marktony.zhihudaily.ui.DividerItemDecoration;
+import com.marktony.zhihudaily.DividerItemDecoration;
 import com.marktony.zhihudaily.util.Api;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class GuokrFragment extends Fragment implements GuokrContract.View{
 
     private RecyclerView rvGuokr;
     private SwipeRefreshLayout refreshGuokr;
-    private GuokrPostAdapter adapter;
+    private GuokrNewsAdapter adapter;
     private GuokrContract.Presenter presenter;
 
     // require an empty constructor
@@ -91,9 +91,9 @@ public class GuokrFragment extends Fragment implements GuokrContract.View{
     }
 
     @Override
-    public void showResults(ArrayList<GuokrHandpickPost.result> list) {
+    public void showResults(ArrayList<GuokrHandpickNews.result> list) {
         if (adapter == null) {
-            adapter = new GuokrPostAdapter(getContext(), list);
+            adapter = new GuokrNewsAdapter(getContext(), list);
             adapter.setItemClickListener(new OnRecyclerViewOnClickListener() {
                 @Override
                 public void OnItemClick(View v, int position) {

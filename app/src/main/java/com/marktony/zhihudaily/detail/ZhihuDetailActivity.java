@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.ui.activity;
+package com.marktony.zhihudaily.detail;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -41,7 +41,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class ZhihuReadActivity extends AppCompatActivity {
+public class ZhihuDetailActivity extends AppCompatActivity {
 
     private WebView webViewRead;
     private FloatingActionButton fab;
@@ -54,7 +54,7 @@ public class ZhihuReadActivity extends AppCompatActivity {
     private AlertDialog dialog;
 
     private String shareUrl = null;
-    private String id;
+    private int id;
 
     private SharedPreferences sp;
 
@@ -68,12 +68,12 @@ public class ZhihuReadActivity extends AppCompatActivity {
 
         sp = getSharedPreferences("user_settings",MODE_PRIVATE);
 
-        dialog = new AlertDialog.Builder(ZhihuReadActivity.this).create();
+        dialog = new AlertDialog.Builder(ZhihuDetailActivity.this).create();
         dialog.setView(getLayoutInflater().inflate(R.layout.loading_layout,null));
         dialog.show();
 
         Intent intent = getIntent();
-        id = intent.getStringExtra("id");
+        id = intent.getIntExtra("id", 0);
         final String title = intent.getStringExtra("title");
         final String image = intent.getStringExtra("image");
 
@@ -99,7 +99,7 @@ public class ZhihuReadActivity extends AppCompatActivity {
 
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                    startActivity(new Intent(ZhihuReadActivity.this, InnerBrowserActivity.class).putExtra("url", url));
+                    startActivity(new Intent(ZhihuDetailActivity.this, InnerBrowserActivity.class).putExtra("url", url));
                     return true;
                 }
 
@@ -124,12 +124,12 @@ public class ZhihuReadActivity extends AppCompatActivity {
         webViewRead.getSettings().setBlockNetworkImage(sp.getBoolean("no_picture_mode",false));
 
         // 如果当前没有网络连接，则加载缓存中的内容
-        if ( !NetworkState.networkConnected(ZhihuReadActivity.this)){
+        if ( !NetworkState.networkConnected(ZhihuDetailActivity.this)){
 
             ivFirstImg.setImageResource(R.drawable.no_img);
             ivFirstImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-            String content = loadContentFromDB(id).replace("<div class=\"img-place-holder\">", "");
+            String content = loadContentFromDB("" + id).replace("<div class=\"img-place-holder\">", "");
             content = content.replace("<div class=\"headline\">", "");
 
             String theme = "<body className=\"\" onload=\"onLoaded()\">";
@@ -137,7 +137,7 @@ public class ZhihuReadActivity extends AppCompatActivity {
                 theme = "<body className=\"\" onload=\"onLoaded()\" class=\"night\">";
             }
 
-            if (loadContentFromDB(id) == null || loadContentFromDB(id).isEmpty()){
+            if (loadContentFromDB("" + id) == null || loadContentFromDB("" + id).isEmpty()){
                 Snackbar.make(fab, R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
             } else {
                 String css = "<link rel=\"stylesheet\" href=\"file:///android_asset/zhihu_daily.css\" type=\"text/css\">";
@@ -161,7 +161,7 @@ public class ZhihuReadActivity extends AppCompatActivity {
 
         } else {
 
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.NEWS + id, new Response.Listener<JSONObject>() {
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.ZHIHU_NEWS + id, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject jsonObject) {
 
@@ -187,7 +187,7 @@ public class ZhihuReadActivity extends AppCompatActivity {
 
                             if ( !jsonObject.isNull("image")){
 
-                                Glide.with(ZhihuReadActivity.this).load(jsonObject.getString("image")).centerCrop().into(ivFirstImg);
+                                Glide.with(ZhihuDetailActivity.this).load(jsonObject.getString("image")).centerCrop().into(ivFirstImg);
 
                                 tvCopyRight.setText(jsonObject.getString("image_source"));
 
@@ -198,7 +198,7 @@ public class ZhihuReadActivity extends AppCompatActivity {
 
                             } else {
 
-                                Glide.with(ZhihuReadActivity.this).load(image).centerCrop().into(ivFirstImg);
+                                Glide.with(ZhihuDetailActivity.this).load(image).centerCrop().into(ivFirstImg);
 
                             }
 
@@ -335,7 +335,7 @@ public class ZhihuReadActivity extends AppCompatActivity {
     private String loadContentFromDB(String id){
 
         String content = null;
-        DatabaseHelper dbHelper = new DatabaseHelper(ZhihuReadActivity.this,"History.db",null,3);
+        DatabaseHelper dbHelper = new DatabaseHelper(ZhihuDetailActivity.this,"History.db",null,3);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.query("Contents",null,null,null,null,null,null);
         if (cursor.moveToFirst()){

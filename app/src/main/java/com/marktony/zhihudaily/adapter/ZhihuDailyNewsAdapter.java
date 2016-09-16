@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.marktony.zhihudaily.bean.ZhihuDailyPost;
+import com.marktony.zhihudaily.bean.ZhihuDailyNews;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
 
@@ -21,14 +21,14 @@ import java.util.List;
  * 知乎日报消息适配器
  * latest posts adapter
  */
-public class ZhihuDailyPostAdapter extends RecyclerView.Adapter<ZhihuDailyPostAdapter.LatestItemViewHolder> {
+public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter<ZhihuDailyNewsAdapter.LatestItemViewHolder> {
 
     private final Context context;
     private final LayoutInflater inflater;
-    private List<ZhihuDailyPost> list = new ArrayList<ZhihuDailyPost>();
+    private List<ZhihuDailyNews.Question> list = new ArrayList<ZhihuDailyNews.Question>();
     private OnRecyclerViewOnClickListener mListener;
 
-    public ZhihuDailyPostAdapter(Context context, List<ZhihuDailyPost> list){
+    public ZhihuDailyNewsAdapter(Context context, List<ZhihuDailyNews.Question> list){
         this.context = context;
         this.list = list;
         this.inflater = LayoutInflater.from(context);
@@ -42,13 +42,13 @@ public class ZhihuDailyPostAdapter extends RecyclerView.Adapter<ZhihuDailyPostAd
 
     @Override
     public void onBindViewHolder(LatestItemViewHolder holder, int position) {
-        ZhihuDailyPost item = list.get(position);
+        ZhihuDailyNews.Question item = list.get(position);
 
-        if (item.getFirstImg() == null){
+        if (item.getImages().get(0) == null){
             holder.itemImg.setImageResource(R.drawable.no_img);
         } else {
             Glide.with(context)
-                    .load(item.getFirstImg())
+                    .load(item.getImages().get(0))
                     .error(R.drawable.no_img)
                     .centerCrop()
                     .into(holder.itemImg);

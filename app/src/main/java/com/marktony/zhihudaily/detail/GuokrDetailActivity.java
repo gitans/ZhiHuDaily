@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.ui.activity;
+package com.marktony.zhihudaily.detail;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -36,7 +36,7 @@ import com.marktony.zhihudaily.util.Theme;
  * 2016.6.15 黎赵太郎
  * 果壳文章阅读
  */
-public class GuokrReadActivity extends AppCompatActivity {
+public class GuokrDetailActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private FloatingActionButton fab;
@@ -66,7 +66,7 @@ public class GuokrReadActivity extends AppCompatActivity {
 
         queue = Volley.newRequestQueue(getApplicationContext());
 
-        dialog = new AlertDialog.Builder(GuokrReadActivity.this).create();
+        dialog = new AlertDialog.Builder(GuokrDetailActivity.this).create();
         dialog.setView(getLayoutInflater().inflate(R.layout.loading_layout,null));
 
         id = getIntent().getIntExtra("id", 0);
@@ -92,7 +92,7 @@ public class GuokrReadActivity extends AppCompatActivity {
         });
 
         if (headlineUrl != null){
-            Glide.with(GuokrReadActivity.this)
+            Glide.with(GuokrDetailActivity.this)
                     .load(headlineUrl)
                     .asBitmap()
                     .centerCrop()
@@ -121,7 +121,7 @@ public class GuokrReadActivity extends AppCompatActivity {
 
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                    startActivity(new Intent(GuokrReadActivity.this, InnerBrowserActivity.class).putExtra("url", url));
+                    startActivity(new Intent(GuokrDetailActivity.this, InnerBrowserActivity.class).putExtra("url", url));
                     return true;
                 }
 

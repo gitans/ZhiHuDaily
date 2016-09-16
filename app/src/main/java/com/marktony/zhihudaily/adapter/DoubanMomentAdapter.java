@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.bean.DoubanMomentPost;
+import com.marktony.zhihudaily.bean.DoubanMomentNews;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 
 import java.util.ArrayList;
@@ -25,14 +25,14 @@ public class DoubanMomentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private final Context context;
     private final LayoutInflater inflater;
-    private List<DoubanMomentPost.posts> list;
+    private List<DoubanMomentNews.posts> list;
 
     private static final int TYPE_NORMAL = 0x00;
     private static final int TYPE_NO_IMG = 0x01;
 
     private OnRecyclerViewOnClickListener listener;
 
-    public DoubanMomentAdapter(@NonNull Context context, @NonNull ArrayList<DoubanMomentPost.posts> list) {
+    public DoubanMomentAdapter(@NonNull Context context, @NonNull ArrayList<DoubanMomentNews.posts> list) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.list = list;
@@ -51,7 +51,7 @@ public class DoubanMomentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        DoubanMomentPost.posts item = list.get(position);
+        DoubanMomentNews.posts item = list.get(position);
         if (holder instanceof NormalViewHolder) {
             Glide.with(context)
                     .load(item.getThumbs().get(0).getMedium().getUrl())

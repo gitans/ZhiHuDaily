@@ -1,7 +1,7 @@
 package com.marktony.zhihudaily.about;
 
-import com.marktony.zhihudaily.interfaces.BasePresenter;
-import com.marktony.zhihudaily.interfaces.BaseView;
+import com.marktony.zhihudaily.BasePresenter;
+import com.marktony.zhihudaily.BaseView;
 
 /**
  * Created by Lizhaotailang on 2016/9/4.

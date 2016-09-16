@@ -1,7 +1,10 @@
 package com.marktony.zhihudaily.home;
 
-import com.marktony.zhihudaily.interfaces.BasePresenter;
-import com.marktony.zhihudaily.interfaces.BaseView;
+import com.marktony.zhihudaily.BasePresenter;
+import com.marktony.zhihudaily.BaseView;
+import com.marktony.zhihudaily.bean.ZhihuDailyNews;
+
+import java.util.ArrayList;
 
 /**
  * Created by Lizhaotailang on 2016/9/16.
@@ -17,13 +20,17 @@ public interface ZhihuDailyContract {
 
         void stopLoading();
 
+        void showResults(ArrayList<ZhihuDailyNews.Question> list);
+
     }
 
     interface Presenter extends BasePresenter {
 
-        void setUrl(String url);
+        void loadPosts(long date, boolean clearing);
 
         void refresh();
+
+        void loadMore(long date);
 
         void startReading(int position);
 

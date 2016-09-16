@@ -5,10 +5,10 @@ import android.content.Intent;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
-import com.marktony.zhihudaily.bean.GuokrHandpickPost;
+import com.marktony.zhihudaily.bean.GuokrHandpickNews;
 import com.marktony.zhihudaily.bean.StringModelImpl;
 import com.marktony.zhihudaily.interfaces.OnStringListener;
-import com.marktony.zhihudaily.ui.activity.GuokrReadActivity;
+import com.marktony.zhihudaily.detail.GuokrDetailActivity;
 import com.marktony.zhihudaily.util.Api;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class GuokrPresenter implements GuokrContract.Presenter, OnStringListener
     private Context context;
     private StringModelImpl model;
 
-    private ArrayList<GuokrHandpickPost.result> list = new ArrayList<GuokrHandpickPost.result>();
+    private ArrayList<GuokrHandpickNews.result> list = new ArrayList<GuokrHandpickNews.result>();
 
     public GuokrPresenter(Context context, GuokrContract.View view) {
         this.context = context;
@@ -34,8 +34,8 @@ public class GuokrPresenter implements GuokrContract.Presenter, OnStringListener
 
     @Override
     public void startReading(int position) {
-        GuokrHandpickPost.result item = list.get(position);
-        context.startActivity(new Intent(context, GuokrReadActivity.class)
+        GuokrHandpickNews.result item = list.get(position);
+        context.startActivity(new Intent(context, GuokrDetailActivity.class)
                 .putExtra("id", item.getId())
                 .putExtra("headlineImageUrl", item.getHeadline_img())
                 .putExtra("title", item.getTitle())
@@ -63,8 +63,8 @@ public class GuokrPresenter implements GuokrContract.Presenter, OnStringListener
     public void onSuccess(String result) {
         view.stopLoading();
         Gson gson = new Gson();
-        GuokrHandpickPost question = gson.fromJson(result, GuokrHandpickPost.class);
-        for (GuokrHandpickPost.result re : question.getResult()){
+        GuokrHandpickNews question = gson.fromJson(result, GuokrHandpickNews.class);
+        for (GuokrHandpickNews.result re : question.getResult()){
             list.add(re);
         }
         view.showResults(list);

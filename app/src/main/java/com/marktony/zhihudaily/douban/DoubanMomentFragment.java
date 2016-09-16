@@ -15,10 +15,10 @@ import android.view.ViewGroup;
 
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.adapter.DoubanMomentAdapter;
-import com.marktony.zhihudaily.bean.DoubanMomentPost;
+import com.marktony.zhihudaily.bean.DoubanMomentNews;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
-import com.marktony.zhihudaily.ui.DividerItemDecoration;
-import com.marktony.zhihudaily.util.DateFormatter;
+import com.marktony.zhihudaily.DividerItemDecoration;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,19 +33,15 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
     private SwipeRefreshLayout refreshLayout;
     private FloatingActionButton fab;
 
-    private DateFormatter formatter = new DateFormatter();
-
-    private int yearRecord, monthRecord, dayRecord; // 用于加载对应日期的消息
-
     private DoubanMomentAdapter adapter;
-
     private DoubanMomentContract.Presenter presenter;
 
-    private static final String TAG = DoubanMomentFragment.class.getSimpleName();
+    private int mYear = Calendar.getInstance().get(Calendar.YEAR);
+    private int mMonth = Calendar.getInstance().get(Calendar.MONTH);
+    private int mDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 
-    public DoubanMomentFragment() {
-
-    }
+    // requires an empty constructor
+    public DoubanMomentFragment() {}
 
     public static DoubanMomentFragment newInstance() {
         return new DoubanMomentFragment();
@@ -54,11 +50,6 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Calendar c = Calendar.getInstance();
-        // init the date
-        yearRecord = c.get(Calendar.YEAR);
-        monthRecord = c.get(Calendar.MONTH);
-        dayRecord = c.get(Calendar.DAY_OF_MONTH);
     }
 
     @Nullable
@@ -68,26 +59,24 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
 
         initViews(view);
 
-        presenter.loadPosts(Calendar.getInstance().getTimeInMillis());
-
-        // requestData(formatter.DoubanDateFormat(Calendar.getInstance().getTimeInMillis()));
+        presenter.loadPosts(Calendar.getInstance().getTimeInMillis(), false);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                /*Calendar now = Calendar.getInstance();
-                now.set(yearRecord, monthRecord, dayRecord);
+                Calendar now = Calendar.getInstance();
+                now.set(mYear, mMonth, mDay);
                 DatePickerDialog dialog = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-                        yearRecord = year;
-                        monthRecord = monthOfYear;
-                        dayRecord = dayOfMonth;
                         Calendar temp = Calendar.getInstance();
                         temp.clear();
                         temp.set(year, monthOfYear, dayOfMonth);
-                        requestData(formatter.DoubanDateFormat(temp.getTimeInMillis()));
+                        mYear = year;
+                        mMonth = monthOfYear;
+                        mDay = dayOfMonth;
+                        presenter.loadPosts(temp.getTimeInMillis(), true);
                     }
                 }, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
 
@@ -98,7 +87,7 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
                 // set the dialog not vibrate when date change, default value is true
                 dialog.vibrate(false);
 
-                dialog.show(getActivity().getFragmentManager(), "DatePickerDialog");*/
+                dialog.show(getActivity().getFragmentManager(), "DatePickerDialog");
 
             }
         });
@@ -106,11 +95,11 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // requestData(formatter.DoubanDateFormat(Calendar.getInstance().getTimeInMillis()));
+                presenter.loadPosts(Calendar.getInstance().getTimeInMillis(), true);
             }
         });
 
-        /*recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
 
             boolean isSlidingToLast = false;
 
@@ -126,9 +115,9 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
 
                     // 判断是否滚动到底部并且是向下滑动
                     if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
-                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                        Date date = new Date(yearRecord - 1900, monthRecord, --dayRecord);
-                        //loadMore(format.format(date));
+                        Calendar c = Calendar.getInstance();
+                        c.set(mYear, mMonth, --mDay);
+                        presenter.loadMore(c.getTimeInMillis());
                     }
                 }
 
@@ -140,7 +129,7 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
                 super.onScrolled(recyclerView, dx, dy);
                 isSlidingToLast = dy > 0;
             }
-        });*/
+        });
 
         return view;
     }
@@ -174,147 +163,6 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
 
     }
 
-    /*private void requestData(String date){
-
-        if (!refreshLayout.isRefreshing()){
-            refreshLayout.post(new Runnable() {
-                @Override
-                public void run() {
-                    refreshLayout.setRefreshing(true);
-                }
-            });
-        }
-
-        if (!list.isEmpty()){
-            list.clear();
-        }
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.DOUBAN_MOMENT + date, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-
-                try {
-                    if ( !jsonObject.isNull("posts")){
-                        JSONArray array = jsonObject.getJSONArray("posts");
-                        for (int i = 0; i < array.length(); i++){
-
-                            JSONObject o = array.getJSONObject(i);
-
-                            String thumb_medium = null;
-                            if (o.getJSONArray("thumbs").length() != 0) {
-                                thumb_medium = o.getJSONArray("thumbs").getJSONObject(0).getJSONObject("medium").getString("url");
-                            }
-
-                            DoubanMomentPost item = new DoubanMomentPost(
-                                    o.getInt("id"),
-                                    o.getString("title"),
-                                    o.getString("abstract"),
-                                    thumb_medium
-                            );
-
-                            list.add(item);
-                        }
-                    }
-
-                    adapter = new DoubanMomentAdapter(getActivity(),list);
-                    recyclerView.setAdapter(adapter);
-                    adapter.setItemClickListener(new OnRecyclerViewOnClickListener() {
-                        @Override
-                        public void OnItemClick(View v, int position) {
-                            DoubanMomentPost item = list.get(position);
-                            Intent i = new Intent(getActivity(), DoubanReadActivity.class);
-                            i.putExtra("id", item.getId());
-                            i.putExtra("title", item.getTitle());
-                            i.putExtra("image", item.getThumb());
-                            startActivity(i);
-                        }
-                    });
-
-                    refreshLayout.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            refreshLayout.setRefreshing(false);
-                        }
-                    });
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
-                refreshLayout.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        refreshLayout.setRefreshing(false);
-                    }
-                });
-
-            }
-        });
-
-        request.setTag(TAG);
-        VolleySingleton.getVolleySingleton(getContext()).addToRequestQueue(request);
-    }*/
-
-    // 写的有些重复，可以合并到上面的request 中去
-    /*private void loadMore(String date){
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.DOUBAN_MOMENT + date, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-
-                try {
-                    if ( !jsonObject.isNull("posts")){
-                        JSONArray array = jsonObject.getJSONArray("posts");
-                        for (int i = 0; i < array.length(); i++){
-
-                            JSONObject o = array.getJSONObject(i);
-
-                            String thumb_medium = null;
-                            if (o.getJSONArray("thumbs").length() != 0) {
-                                thumb_medium = o.getJSONArray("thumbs").getJSONObject(0).getJSONObject("medium").getString("url");
-                            }
-
-                            DoubanMomentPost item = new DoubanMomentPost(
-                                    o.getInt("id"),
-                                    o.getString("title"),
-                                    o.getString("abstract"),
-                                    thumb_medium
-                            );
-
-                            list.add(item);
-                        }
-                    }
-
-                    adapter.notifyDataSetChanged();
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
-                refreshLayout.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        refreshLayout.setRefreshing(false);
-                    }
-                });
-
-            }
-        });
-
-        request.setTag(TAG);
-        VolleySingleton.getVolleySingleton(getContext()).addToRequestQueue(request);
-    }*/
-
     @Override
     public void startLoading() {
         refreshLayout.post(new Runnable() {
@@ -341,7 +189,7 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
     }
 
     @Override
-    public void showResults(ArrayList<DoubanMomentPost.posts> list) {
+    public void showResults(ArrayList<DoubanMomentNews.posts> list) {
         if (adapter == null) {
             adapter = new DoubanMomentAdapter(getContext(), list);
             adapter.setItemClickListener(new OnRecyclerViewOnClickListener() {

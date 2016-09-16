@@ -33,7 +33,7 @@
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
-        app:layout_behavior="com.marktony.zhihudaily.ui.behavior.FabHideOnScroll"
+        app:layout_behavior="com.marktony.zhihudaily.FabHideOnScroll"
         android:layout_gravity="bottom|end"
         android:src="@drawable/calendar"
         app:backgroundTint="?attr/fabColorCustomized"

@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.ui.activity;
+package com.marktony.zhihudaily.detail;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -39,7 +39,7 @@ import org.json.JSONObject;
  * Created by Lizhaotailang on 2016/8/12.
  */
 
-public class DoubanReadActivity extends AppCompatActivity {
+public class DoubanDetailActivity extends AppCompatActivity {
 
     private WebView webView;
     private FloatingActionButton fab;
@@ -63,7 +63,7 @@ public class DoubanReadActivity extends AppCompatActivity {
 
         sp = getSharedPreferences("user_settings",MODE_PRIVATE);
 
-        dialog = new AlertDialog.Builder(DoubanReadActivity.this).create();
+        dialog = new AlertDialog.Builder(DoubanDetailActivity.this).create();
         dialog.setView(getLayoutInflater().inflate(R.layout.loading_layout,null));
         dialog.show();
 
@@ -74,7 +74,7 @@ public class DoubanReadActivity extends AppCompatActivity {
         setCollapsingToolbarLayoutTitle(title);
 
         if (!intent.getStringExtra("image").equals("")){
-            Glide.with(DoubanReadActivity.this)
+            Glide.with(DoubanDetailActivity.this)
                     .load(intent.getStringExtra("image"))
                     .asBitmap()
                     .centerCrop()
@@ -97,7 +97,7 @@ public class DoubanReadActivity extends AppCompatActivity {
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                startActivity(new Intent(DoubanReadActivity.this, InnerBrowserActivity.class).putExtra("url", url));
+                startActivity(new Intent(DoubanDetailActivity.this, InnerBrowserActivity.class).putExtra("url", url));
                 return sp.getBoolean("in_app_browser",true);
             }
 
@@ -136,20 +136,18 @@ public class DoubanReadActivity extends AppCompatActivity {
                             content = content.replace(old, newStr);
                         }
 
-                        String html = "<!DOCTYPE html>\n"
-                                + "<html lang=\"ZH-CN\" xmlns=\"http://www.w3.org/1999/xhtml\">\n"
-                                + "<head>\n"
-                                + "\t<meta charset=\"utf-8\" />"
-                                + css
-                                + "\n</head>\n <body>"
-                                + "<div class=\"container bs-docs-container\">\n" +
-                                "            <div class=\"post-container\">\n" +
-                                content +
-                                "            </div>\n" +
-                                "        </div>"
-                                + "</body></html>";
+                        StringBuilder builder = new StringBuilder();
+                        builder.append( "<!DOCTYPE html>\n");
+                        builder.append("<html lang=\"ZH-CN\" xmlns=\"http://www.w3.org/1999/xhtml\">\n");
+                        builder.append("<head>\n<meta charset=\"utf-8\" />\n");
+                        builder.append(css);
+                        builder.append("\n</head>\n<body>\n");
+                        builder.append("<div class=\"container bs-docs-container\">\n");
+                        builder.append("<div class=\"post-container\">\n");
+                        builder.append(content);
+                        builder.append("</div>\n</div>\n</body>\n</html>");
 
-                        webView.loadDataWithBaseURL("x-data://base",html,"text/html","utf-8",null);
+                        webView.loadDataWithBaseURL("x-data://base",builder.toString(),"text/html","utf-8",null);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -173,7 +171,7 @@ public class DoubanReadActivity extends AppCompatActivity {
             }
         });
 
-        VolleySingleton.getVolleySingleton(DoubanReadActivity.this).addToRequestQueue(request);
+        VolleySingleton.getVolleySingleton(DoubanDetailActivity.this).addToRequestQueue(request);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

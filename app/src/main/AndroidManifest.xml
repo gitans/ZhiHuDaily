@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.ZhihuReadActivity"
+            android:name=".detail.ZhihuDetailActivity"
             android:label="@string/title_activity_read" />
         <activity
             android:name=".settings.SettingsPreferenceActivity"
@@ -43,11 +43,11 @@
             android:label="@string/about"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.activity.GuokrReadActivity"
+            android:name=".detail.GuokrDetailActivity"
             android:label="@string/title_activity_guokr_read"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".ui.activity.DoubanReadActivity"
+        <activity android:name=".detail.DoubanDetailActivity"
             android:label="@string/title_activity_read"
             android:theme="@style/AppTheme.NoActionBar" />
 

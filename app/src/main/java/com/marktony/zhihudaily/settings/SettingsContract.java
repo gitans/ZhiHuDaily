@@ -2,8 +2,8 @@ package com.marktony.zhihudaily.settings;
 
 import android.support.v7.preference.Preference;
 
-import com.marktony.zhihudaily.interfaces.BasePresenter;
-import com.marktony.zhihudaily.interfaces.BaseView;
+import com.marktony.zhihudaily.BasePresenter;
+import com.marktony.zhihudaily.BaseView;
 
 /**
  * Created by Lizhaotailang on 2016/9/5.
