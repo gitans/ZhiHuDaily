@@ -23,7 +23,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
@@ -32,9 +31,6 @@ import com.marktony.zhihudaily.app.App;
 import com.marktony.zhihudaily.inner_browser.InnerBrowserActivity;
 import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.Theme;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * 2016.6.15 黎赵太郎
@@ -50,7 +46,7 @@ public class GuokrReadActivity extends AppCompatActivity {
 
     private AlertDialog dialog;
 
-    private String id;
+    private int id;
     private String headlineUrl;
     private String title;
 
@@ -73,7 +69,7 @@ public class GuokrReadActivity extends AppCompatActivity {
         dialog = new AlertDialog.Builder(GuokrReadActivity.this).create();
         dialog.setView(getLayoutInflater().inflate(R.layout.loading_layout,null));
 
-        id = getIntent().getStringExtra("id");
+        id = getIntent().getIntExtra("id", 0);
         headlineUrl = getIntent().getStringExtra("headlineImageUrl");
         title = getIntent().getStringExtra("title");
 

@@ -23,11 +23,11 @@ public class GuokrPostAdapter extends RecyclerView.Adapter<GuokrPostAdapter.Guok
 
     private final Context context;
     private final LayoutInflater inflater;
-    private List<GuokrHandpickPost> list;
+    private List<GuokrHandpickPost.result> list;
 
     private OnRecyclerViewOnClickListener mListener;
 
-    public GuokrPostAdapter(Context context, ArrayList<GuokrHandpickPost> list) {
+    public GuokrPostAdapter(Context context, ArrayList<GuokrHandpickPost.result> list) {
         this.context = context;
         this.list = list;
         inflater = LayoutInflater.from(context);
@@ -44,10 +44,10 @@ public class GuokrPostAdapter extends RecyclerView.Adapter<GuokrPostAdapter.Guok
     @Override
     public void onBindViewHolder(GuokrPostViewHolder holder, int position) {
 
-        GuokrHandpickPost item = list.get(position);
+        GuokrHandpickPost.result item = list.get(position);
 
         Glide.with(context)
-                .load(item.getHeadlineImg())
+                .load(item.getHeadline_img_tb())
                 .asBitmap()
                 .centerCrop()
                 .into(holder.ivHeadlineImg);

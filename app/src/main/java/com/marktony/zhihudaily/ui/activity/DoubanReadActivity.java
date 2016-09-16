@@ -73,7 +73,7 @@ public class DoubanReadActivity extends AppCompatActivity {
 
         setCollapsingToolbarLayoutTitle(title);
 
-        if (intent.getStringExtra("image") != null){
+        if (!intent.getStringExtra("image").equals("")){
             Glide.with(DoubanReadActivity.this)
                     .load(intent.getStringExtra("image"))
                     .asBitmap()

@@ -1,6 +1,5 @@
 package com.marktony.zhihudaily.home;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,22 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.marktony.zhihudaily.adapter.GuokrPostAdapter;
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.app.VolleySingleton;
 import com.marktony.zhihudaily.bean.GuokrHandpickPost;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.ui.DividerItemDecoration;
-import com.marktony.zhihudaily.ui.activity.GuokrReadActivity;
 import com.marktony.zhihudaily.util.Api;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -63,20 +52,12 @@ public class GuokrFragment extends Fragment implements GuokrContract.View{
 
         presenter.setUrl(Api.GUOKR_ARTICLES);
 
-        /*requestData();
-
         refreshGuokr.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
-                if (!guokrList.isEmpty()){
-                    guokrList.clear();
-                }
-
-                requestData();
-
+                presenter.refresh();
             }
-        });*/
+        });
 
         return view;
     }
@@ -104,101 +85,26 @@ public class GuokrFragment extends Fragment implements GuokrContract.View{
         refreshGuokr.setSize(SwipeRefreshLayout.DEFAULT);
     }
 
-    /*private void requestData(){
-
-        refreshGuokr.post(new Runnable() {
-            @Override
-            public void run() {
-                refreshGuokr.setRefreshing(true);
-            }
-        });
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.GUOKR_ARTICLES, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-
-                try {
-                    if (jsonObject.getString("ok").equals("true")){
-                        JSONArray array = jsonObject.getJSONArray("result");
-                        for (int i = 0; i < array.length(); i++){
-                            JSONObject o = array.getJSONObject(i);
-                            GuokrHandpickPost item = new GuokrHandpickPost(
-                                    o.getString("id"),
-                                    o.getString("title"),
-                                    o.getString("headline_img_tb"),
-                                    o.getString("summary"));
-
-                            guokrList.add(item);
-                        }
-                    }
-
-                    if (guokrList.size() != 0){
-
-                        adapter = new GuokrPostAdapter(getActivity(),guokrList);
-                        adapter.setItemClickListener(new OnRecyclerViewOnClickListener() {
-                            @Override
-                            public void OnItemClick(View v, int position) {
-
-                                Intent intent = new Intent(getActivity(),GuokrReadActivity.class);
-                                intent.putExtra("id",guokrList.get(position).getId());
-                                intent.putExtra("headlineImageUrl",guokrList.get(position).getHeadlineImg());
-                                intent.putExtra("title",guokrList.get(position).getTitle());
-
-                                startActivity(intent);
-                            }
-                        });
-
-                        rvGuokr.setAdapter(adapter);
-
-                        refreshGuokr.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                refreshGuokr.setRefreshing(false);
-                            }
-                        });
-
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Snackbar.make(rvGuokr,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
-                refreshGuokr.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        refreshGuokr.setRefreshing(false);
-                    }
-                });
-
-            }
-        });
-
-        request.setTag(TAG);
-        VolleySingleton.getVolleySingleton(getContext()).addToRequestQueue(request);
-    }*/
-
-    /*@Override
-    public void onStop() {
-        super.onStop();
-
-        if (refreshGuokr.isRefreshing()){
-            refreshGuokr.setRefreshing(false);
-        }
-    }*/
-
     @Override
     public void showError() {
-        Snackbar.make(refreshGuokr, "Error", Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(rvGuokr,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
-    public void showSuccess() {
-        Snackbar.make(refreshGuokr, "Success", Snackbar.LENGTH_SHORT).show();
+    public void showResults(ArrayList<GuokrHandpickPost.result> list) {
+        if (adapter == null) {
+            adapter = new GuokrPostAdapter(getContext(), list);
+            adapter.setItemClickListener(new OnRecyclerViewOnClickListener() {
+                @Override
+                public void OnItemClick(View v, int position) {
+                    presenter.startReading(position);
+                }
+            });
+            rvGuokr.setAdapter(adapter);
+        } else {
+            adapter.notifyDataSetChanged();
+        }
+
     }
 
     @Override

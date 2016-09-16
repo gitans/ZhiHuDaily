@@ -1,6 +1,5 @@
 package com.marktony.zhihudaily.douban;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,29 +13,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.adapter.DoubanMomentAdapter;
-import com.marktony.zhihudaily.app.VolleySingleton;
 import com.marktony.zhihudaily.bean.DoubanMomentPost;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.ui.DividerItemDecoration;
-import com.marktony.zhihudaily.ui.activity.DoubanReadActivity;
-import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.DateFormatter;
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by Lizhaotailang on 2016/8/11.
@@ -52,9 +37,9 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
 
     private int yearRecord, monthRecord, dayRecord; // 用于加载对应日期的消息
 
-    private ArrayList<DoubanMomentPost> list = new ArrayList<>();
-
     private DoubanMomentAdapter adapter;
+
+    private DoubanMomentContract.Presenter presenter;
 
     private static final String TAG = DoubanMomentFragment.class.getSimpleName();
 
@@ -83,13 +68,15 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
 
         initViews(view);
 
-        requestData(formatter.DoubanDateFormat(Calendar.getInstance().getTimeInMillis()));
+        presenter.loadPosts(Calendar.getInstance().getTimeInMillis());
+
+        // requestData(formatter.DoubanDateFormat(Calendar.getInstance().getTimeInMillis()));
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Calendar now = Calendar.getInstance();
+                /*Calendar now = Calendar.getInstance();
                 now.set(yearRecord, monthRecord, dayRecord);
                 DatePickerDialog dialog = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
                     @Override
@@ -111,7 +98,7 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
                 // set the dialog not vibrate when date change, default value is true
                 dialog.vibrate(false);
 
-                dialog.show(getActivity().getFragmentManager(), "DatePickerDialog");
+                dialog.show(getActivity().getFragmentManager(), "DatePickerDialog");*/
 
             }
         });
@@ -119,11 +106,11 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                requestData(formatter.DoubanDateFormat(Calendar.getInstance().getTimeInMillis()));
+                // requestData(formatter.DoubanDateFormat(Calendar.getInstance().getTimeInMillis()));
             }
         });
 
-        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+        /*recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
 
             boolean isSlidingToLast = false;
 
@@ -141,7 +128,7 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
                     if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
                         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                         Date date = new Date(yearRecord - 1900, monthRecord, --dayRecord);
-                        loadMore(format.format(date));
+                        //loadMore(format.format(date));
                     }
                 }
 
@@ -153,14 +140,16 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
                 super.onScrolled(recyclerView, dx, dy);
                 isSlidingToLast = dy > 0;
             }
-        });
+        });*/
 
         return view;
     }
 
     @Override
     public void setPresenter(DoubanMomentContract.Presenter presenter) {
-
+        if (presenter != null) {
+            this.presenter = presenter;
+        }
     }
 
     @Override
@@ -185,7 +174,7 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
 
     }
 
-    private void requestData(String date){
+    /*private void requestData(String date){
 
         if (!refreshLayout.isRefreshing()){
             refreshLayout.post(new Runnable() {
@@ -269,10 +258,10 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
 
         request.setTag(TAG);
         VolleySingleton.getVolleySingleton(getContext()).addToRequestQueue(request);
-    }
+    }*/
 
     // 写的有些重复，可以合并到上面的request 中去
-    private void loadMore(String date){
+    /*private void loadMore(String date){
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Api.DOUBAN_MOMENT + date, new Response.Listener<JSONObject>() {
             @Override
@@ -324,38 +313,47 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
 
         request.setTag(TAG);
         VolleySingleton.getVolleySingleton(getContext()).addToRequestQueue(request);
-    }
-
+    }*/
 
     @Override
     public void startLoading() {
-
         refreshLayout.post(new Runnable() {
             @Override
             public void run() {
                 refreshLayout.setRefreshing(true);
             }
         });
-
     }
 
     @Override
     public void stopLoading() {
-
         refreshLayout.post(new Runnable() {
             @Override
             public void run() {
                 refreshLayout.setRefreshing(false);
             }
         });
-
     }
 
     @Override
     public void showLoadError() {
-
         Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void showResults(ArrayList<DoubanMomentPost.posts> list) {
+        if (adapter == null) {
+            adapter = new DoubanMomentAdapter(getContext(), list);
+            adapter.setItemClickListener(new OnRecyclerViewOnClickListener() {
+                @Override
+                public void OnItemClick(View v, int position) {
+                    presenter.startReading(position);
+                }
+            });
+            recyclerView.setAdapter(adapter);
+        } else {
+            adapter.notifyDataSetChanged();
+        }
     }
 
 }

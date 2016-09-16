@@ -31,6 +31,11 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter, OnStri
     }
 
     @Override
+    public void refresh() {
+
+    }
+
+    @Override
     public void startReading(int position) {
 
     }

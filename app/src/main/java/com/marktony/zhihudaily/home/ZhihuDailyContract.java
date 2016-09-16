@@ -23,6 +23,8 @@ public interface ZhihuDailyContract {
 
         void setUrl(String url);
 
+        void refresh();
+
         void startReading(int position);
 
     }

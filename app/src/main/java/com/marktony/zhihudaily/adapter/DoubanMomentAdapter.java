@@ -25,14 +25,14 @@ public class DoubanMomentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private final Context context;
     private final LayoutInflater inflater;
-    private List<DoubanMomentPost> list;
+    private List<DoubanMomentPost.posts> list;
 
     private static final int TYPE_NORMAL = 0x00;
     private static final int TYPE_NO_IMG = 0x01;
 
     private OnRecyclerViewOnClickListener listener;
 
-    public DoubanMomentAdapter(@NonNull Context context, @NonNull ArrayList<DoubanMomentPost> list) {
+    public DoubanMomentAdapter(@NonNull Context context, @NonNull ArrayList<DoubanMomentPost.posts> list) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.list = list;
@@ -51,10 +51,10 @@ public class DoubanMomentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        DoubanMomentPost item = list.get(position);
+        DoubanMomentPost.posts item = list.get(position);
         if (holder instanceof NormalViewHolder) {
             Glide.with(context)
-                    .load(item.getThumb())
+                    .load(item.getThumbs().get(0).getMedium().getUrl())
                     .asBitmap()
                     .centerCrop()
                     .into(((NormalViewHolder)holder).ivHeadlineImg);
@@ -69,7 +69,7 @@ public class DoubanMomentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemViewType(int position) {
-        if (list.get(position).getThumb() == null) {
+        if (list.get(position).getThumbs().size() == 0) {
             return TYPE_NO_IMG;
         }
         return TYPE_NORMAL;
