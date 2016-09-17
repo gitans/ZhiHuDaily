@@ -1,5 +1,7 @@
 package com.marktony.zhihudaily.detail;
 
+import android.webkit.WebView;
+
 import com.marktony.zhihudaily.BasePresenter;
 import com.marktony.zhihudaily.BaseView;
 
@@ -40,6 +42,8 @@ public interface DoubanDetailContract {
         void shareTo();
 
         void openInBrowser();
+
+        void openUrl(WebView webView, String url);
 
     }
 

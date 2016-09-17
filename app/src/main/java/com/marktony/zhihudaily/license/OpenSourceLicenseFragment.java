@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.open_source_license;
+package com.marktony.zhihudaily.license;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

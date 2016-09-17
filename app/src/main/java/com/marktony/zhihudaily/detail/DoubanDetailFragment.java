@@ -23,7 +23,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.innerbrowser.InnerBrowserActivity;
 
 /**
  * Created by Lizhaotailang on 2016/9/17.
@@ -144,7 +143,7 @@ public class DoubanDetailFragment extends Fragment
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                startActivity(new Intent(getActivity(), InnerBrowserActivity.class).putExtra("url", url));
+                presenter.openUrl(webView, url);
                 return use;
             }
 

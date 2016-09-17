@@ -51,7 +51,7 @@
             android:label="@string/title_activity_read"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".open_source_license.OpenSourceLicenseActivity"
+        <activity android:name=".license.OpenSourceLicenseActivity"
             android:label="@string/tv_open_source_license"
             android:theme="@style/AppTheme.NoActionBar"/>
 

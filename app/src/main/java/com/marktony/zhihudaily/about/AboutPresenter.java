@@ -13,9 +13,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import com.marktony.zhihudaily.R;
+import com.marktony.zhihudaily.customtabs.CustomFallback;
 import com.marktony.zhihudaily.customtabs.CustomTabActivityHelper;
 import com.marktony.zhihudaily.innerbrowser.InnerBrowserActivity;
-import com.marktony.zhihudaily.open_source_license.OpenSourceLicenseActivity;
+import com.marktony.zhihudaily.license.OpenSourceLicenseActivity;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
@@ -74,12 +75,10 @@ public class AboutPresenter implements AboutContract.Presenter {
                     activity,
                     customTabsIntent.build(),
                     Uri.parse(activity.getString(R.string.github_url)),
-                    new CustomTabActivityHelper.CustomTabFallback() {
+                    new CustomFallback() {
                         @Override
                         public void openUri(Activity activity, Uri uri) {
-                            Intent i = new Intent(activity, InnerBrowserActivity.class);
-                            i.putExtra("url", activity.getString(R.string.github_url));
-                            activity.startActivity(i);
+                            super.openUri(activity, uri);
                         }
                     });
         } else {
@@ -98,12 +97,10 @@ public class AboutPresenter implements AboutContract.Presenter {
                     activity,
                     customTabsIntent.build(),
                     Uri.parse(activity.getString(R.string.zhihu_url)),
-                    new CustomTabActivityHelper.CustomTabFallback() {
+                    new CustomFallback() {
                         @Override
                         public void openUri(Activity activity, Uri uri) {
-                            Intent i = new Intent(activity, InnerBrowserActivity.class);
-                            i.putExtra("url", activity.getString(R.string.zhihu_url));
-                            activity.startActivity(i);
+                            super.openUri(activity, uri);
                         }
                     });
         } else {

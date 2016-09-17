@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.open_source_license;
+package com.marktony.zhihudaily.license;
 
 
 /**

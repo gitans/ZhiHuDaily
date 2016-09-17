@@ -1,9 +1,12 @@
 package com.marktony.zhihudaily.detail;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.support.customtabs.CustomTabsIntent;
+import android.support.v7.app.AppCompatActivity;
+import android.webkit.WebView;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
@@ -12,6 +15,8 @@ import com.marktony.zhihudaily.app.App;
 import com.marktony.zhihudaily.bean.DoubanMomentArticle;
 import com.marktony.zhihudaily.bean.DoubanMomentNews;
 import com.marktony.zhihudaily.bean.StringModelImpl;
+import com.marktony.zhihudaily.customtabs.CustomFallback;
+import com.marktony.zhihudaily.customtabs.CustomTabActivityHelper;
 import com.marktony.zhihudaily.interfaces.OnStringListener;
 import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.Theme;
@@ -24,10 +29,11 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by Lizhaotailang on 2016/9/17.
  */
 
-public class DoubanDetailPresenter implements DoubanDetailContract.Presenter, OnStringListener {
+public class DoubanDetailPresenter
+        implements DoubanDetailContract.Presenter, OnStringListener {
 
     private DoubanDetailContract.View view;
-    private Context context;
+    private AppCompatActivity activity;
     private StringModelImpl model;
 
     private SharedPreferences sp;
@@ -35,12 +41,12 @@ public class DoubanDetailPresenter implements DoubanDetailContract.Presenter, On
     private int id;
     private DoubanMomentArticle post;
 
-    public DoubanDetailPresenter(Context context, DoubanDetailContract.View view) {
-        this.context = context;
+    public DoubanDetailPresenter(AppCompatActivity activity, DoubanDetailContract.View view) {
+        this.activity = activity;
         this.view = view;
         this.view.setPresenter(this);
-        sp = context.getSharedPreferences("user_settings",MODE_PRIVATE);
-        model = new StringModelImpl(context);
+        sp = activity.getSharedPreferences("user_settings",MODE_PRIVATE);
+        model = new StringModelImpl(activity);
     }
 
     @Override
@@ -56,10 +62,10 @@ public class DoubanDetailPresenter implements DoubanDetailContract.Presenter, On
                 String shareText = post.getTitle()
                         + " "
                         + post.getShort_url()
-                        + context.getString(R.string.share_extra);
+                        + activity.getString(R.string.share_extra);
 
                 shareIntent.putExtra(Intent.EXTRA_TEXT,shareText);
-                context.startActivity(Intent.createChooser(shareIntent,context.getString(R.string.share_to)));
+                activity.startActivity(Intent.createChooser(shareIntent,activity.getString(R.string.share_to)));
             } catch (android.content.ActivityNotFoundException ex){
                 view.showLoadError();
             }
@@ -72,13 +78,31 @@ public class DoubanDetailPresenter implements DoubanDetailContract.Presenter, On
     public void openInBrowser() {
         if (post.getShort_url() != null){
             try {
-                context.startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(post.getShort_url())));
+                activity.startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(post.getShort_url())));
             } catch (android.content.ActivityNotFoundException ex){
                 view.showLoadError();
             }
         } else {
             view.showLoadError();
         }
+    }
+
+    @Override
+    public void openUrl(WebView webView, String url) {
+        CustomTabsIntent.Builder customTabsIntent = new CustomTabsIntent.Builder()
+                .setToolbarColor(activity.getResources().getColor(R.color.colorPrimaryDark))
+                .setShowTitle(true);
+        CustomTabActivityHelper.openCustomTab(
+                activity,
+                customTabsIntent.build(),
+                Uri.parse(url),
+                new CustomFallback() {
+                    @Override
+                    public void openUri(Activity activity, Uri uri) {
+                        super.openUri(activity, uri);
+                    }
+                }
+        );
     }
 
     @Override
