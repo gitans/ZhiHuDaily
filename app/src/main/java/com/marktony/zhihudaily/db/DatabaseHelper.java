@@ -35,21 +35,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             case 2:
                 db.execSQL("create table if not exists Contents(id integer primary key,date integer not null,content text not null)");
-            // case 3:
+            /*case 3:
                 // delete table if exists
-                // db.execSQL("drop table if exists LatestPosts");
-                // db.execSQL("drop table if exists Contents");
+                db.execSQL("delete from LatestPosts");
+                db.execSQL("delete from Contents");
+                db.execSQL("drop table if exists LatestPosts");
+                db.execSQL("drop table if exists Contents");
                 // create a new table of zhihu daily
-                /*db.execSQL("create table if not exists Zhihu("
+                db.execSQL("create table if not exists Zhihu("
                         + "id integer primary key autoincrement,"
                         + "zhihu_id integer not null,"
-                        + "type integer not null,"
-                        + "title text not null,"
-                        + "image text,"
-                        + "image_source text,"
-                        + "date text,"
-                        + "share_url text,"
-                        + "body text)");*/
+                        + "zhihu_news text,"
+                        + "zhihu_content text)");*/
 
                 /*db.execSQL("create table if not exists Guokr("
                         + "id integer primary key autoincrement," // primary key

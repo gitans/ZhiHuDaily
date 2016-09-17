@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Created by Lizhaotailang on 2016/9/17.
  */
 
-public class DoubanMomentArticle {
+public class DoubanMomentStory {
 
     private int display_style;
     private String short_url;

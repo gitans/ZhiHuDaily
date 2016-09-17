@@ -12,7 +12,7 @@ import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.app.App;
-import com.marktony.zhihudaily.bean.DoubanMomentArticle;
+import com.marktony.zhihudaily.bean.DoubanMomentStory;
 import com.marktony.zhihudaily.bean.DoubanMomentNews;
 import com.marktony.zhihudaily.bean.StringModelImpl;
 import com.marktony.zhihudaily.customtabs.CustomFallback;
@@ -39,7 +39,7 @@ public class DoubanDetailPresenter
     private SharedPreferences sp;
 
     private int id;
-    private DoubanMomentArticle post;
+    private DoubanMomentStory post;
 
     public DoubanDetailPresenter(AppCompatActivity activity, DoubanDetailContract.View view) {
         this.activity = activity;
@@ -119,7 +119,7 @@ public class DoubanDetailPresenter
     @Override
     public void onSuccess(String result) {
         Gson gson = new Gson();
-        post = gson.fromJson(result, DoubanMomentArticle.class);
+        post = gson.fromJson(result, DoubanMomentStory.class);
         view.showResult(convertContent());
         String imageUrl = null;
         if (post.getPhotos().size() != 0) {
