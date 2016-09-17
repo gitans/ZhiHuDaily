@@ -1,10 +1,10 @@
-package com.marktony.zhihudaily.custom_tab;
+package com.marktony.zhihudaily.customtabs;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.marktony.zhihudaily.inner_browser.InnerBrowserActivity;
+import com.marktony.zhihudaily.innerbrowser.InnerBrowserActivity;
 
 /**
  * Created by Lizhaotailang on 2016/9/4.

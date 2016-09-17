@@ -13,8 +13,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.custom_tab.CustomTabActivityHelper;
-import com.marktony.zhihudaily.inner_browser.InnerBrowserActivity;
+import com.marktony.zhihudaily.customtabs.CustomTabActivityHelper;
+import com.marktony.zhihudaily.innerbrowser.InnerBrowserActivity;
 import com.marktony.zhihudaily.open_source_license.OpenSourceLicenseActivity;
 
 import static android.content.Context.CLIPBOARD_SERVICE;

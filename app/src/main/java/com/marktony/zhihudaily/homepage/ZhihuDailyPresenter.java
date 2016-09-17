@@ -1,8 +1,7 @@
-package com.marktony.zhihudaily.home;
+package com.marktony.zhihudaily.homepage;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;

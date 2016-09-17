@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.home;
+package com.marktony.zhihudaily.homepage;
 
 import android.content.Context;
 import android.content.Intent;

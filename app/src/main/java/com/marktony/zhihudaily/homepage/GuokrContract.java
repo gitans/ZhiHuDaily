@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.home;
+package com.marktony.zhihudaily.homepage;
 
 import com.marktony.zhihudaily.bean.GuokrHandpickNews;
 import com.marktony.zhihudaily.BasePresenter;

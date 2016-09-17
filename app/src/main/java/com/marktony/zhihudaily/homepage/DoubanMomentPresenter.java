@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.douban;
+package com.marktony.zhihudaily.homepage;
 
 import android.content.Context;
 import android.content.Intent;
@@ -75,13 +75,13 @@ public class DoubanMomentPresenter implements DoubanMomentContract.Presenter, On
 
     @Override
     public void onSuccess(String result) {
-        view.stopLoading();
         Gson gson = new Gson();
         DoubanMomentNews post = gson.fromJson(result, DoubanMomentNews.class);
         for (DoubanMomentNews.posts item : post.getPosts()) {
             list.add(item);
         }
         view.showResults(list);
+        view.stopLoading();
     }
 
     @Override

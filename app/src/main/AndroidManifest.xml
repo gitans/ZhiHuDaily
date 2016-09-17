@@ -19,7 +19,7 @@
         3.2之后的sdk必须配置三个值keyboardHidden|orientation|screensize
         -->
         <activity
-            android:name=".home.MainActivity"
+            android:name=".homepage.MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
@@ -55,7 +55,7 @@
             android:label="@string/tv_open_source_license"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".inner_browser.InnerBrowserActivity"
+        <activity android:name=".innerbrowser.InnerBrowserActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
 

@@ -5,6 +5,7 @@
     <string name="positive">确定</string>
     <string name="negative">取消</string>
     <string name="loading">加载中</string>
+    <string name="share_error">分享失败</string>
 
     <string name="title_activity_read">阅读</string>
     <string name="loaded_failed">加载失败!</string>

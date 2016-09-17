@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.home;
+package com.marktony.zhihudaily.homepage;
 
 
 import android.content.Context;
@@ -22,8 +22,6 @@ import com.marktony.zhihudaily.bean.ZhihuDailyNews;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.DividerItemDecoration;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
-import com.marktony.zhihudaily.util.DateFormatter;
-import com.marktony.zhihudaily.util.NetworkState;
 import com.marktony.zhihudaily.db.DatabaseHelper;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 

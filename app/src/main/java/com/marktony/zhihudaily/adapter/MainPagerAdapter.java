@@ -6,12 +6,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.douban.DoubanMomentFragment;
-import com.marktony.zhihudaily.douban.DoubanMomentPresenter;
-import com.marktony.zhihudaily.home.GuokrFragment;
-import com.marktony.zhihudaily.home.GuokrPresenter;
-import com.marktony.zhihudaily.home.ZhihuDailyFragment;
-import com.marktony.zhihudaily.home.ZhihuDailyPresenter;
+import com.marktony.zhihudaily.homepage.DoubanMomentFragment;
+import com.marktony.zhihudaily.homepage.DoubanMomentPresenter;
+import com.marktony.zhihudaily.homepage.GuokrFragment;
+import com.marktony.zhihudaily.homepage.GuokrPresenter;
+import com.marktony.zhihudaily.homepage.ZhihuDailyFragment;
+import com.marktony.zhihudaily.homepage.ZhihuDailyPresenter;
 
 /**
  * Created by Lizhaotailang on 2016/8/10.

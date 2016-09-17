@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.custom_tab;
+package com.marktony.zhihudaily.customtabs;
 
 import android.content.Context;
 import android.content.Intent;

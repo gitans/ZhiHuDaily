@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.douban;
+package com.marktony.zhihudaily.homepage;
 
 import android.graphics.Color;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.inner_browser;
+package com.marktony.zhihudaily.innerbrowser;
 
 import android.content.Intent;
 import android.net.Uri;

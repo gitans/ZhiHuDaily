@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.douban;
+package com.marktony.zhihudaily.homepage;
 
 import com.marktony.zhihudaily.bean.DoubanMomentNews;
 import com.marktony.zhihudaily.BasePresenter;
