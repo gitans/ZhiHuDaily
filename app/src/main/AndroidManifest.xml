@@ -59,6 +59,8 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <service android:name=".service.CacheService" />
+
     </application>
 
 </manifest>

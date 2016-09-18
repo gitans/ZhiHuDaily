@@ -60,7 +60,6 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter, OnStri
     public void startReading(int position) {
         context.startActivity(new Intent(context, ZhihuDetailActivity.class)
                 .putExtra("id",list.get(position).getId())
-                .putExtra("title",list.get(position).getTitle())
         );
     }
 

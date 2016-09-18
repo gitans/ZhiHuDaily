@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnVi
     }
 
     /**
-     * 获取布局的DrawableCahe给ImageView覆盖Fragment
+     * 获取布局的DrawableCache给ImageView覆盖Fragment
      */
     private void setDrawableCahe() {
         //设置false清除缓存
@@ -174,12 +174,6 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnVi
             }
         });
         animator.start();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        // deleteDir(getCacheDir());
     }
 
     @Override
