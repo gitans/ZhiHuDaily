@@ -62,6 +62,7 @@ public class DoubanDetailPresenter
                 String shareText = post.getTitle()
                         + " "
                         + post.getShort_url()
+                        + "\t\t\t"
                         + activity.getString(R.string.share_extra);
 
                 shareIntent.putExtra(Intent.EXTRA_TEXT,shareText);

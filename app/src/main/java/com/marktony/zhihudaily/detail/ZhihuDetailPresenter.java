@@ -83,7 +83,7 @@ public class ZhihuDetailPresenter implements ZhihuDetailContract.Presenter, OnSt
     @Override
     public void openUrl(WebView webView, String url) {
         CustomTabsIntent.Builder customTabsIntent = new CustomTabsIntent.Builder()
-                .setToolbarColor(activity.getResources().getColor(R.color.colorPrimaryDark))
+                .setToolbarColor(activity.getResources().getColor(R.color.colorAccent))
                 .setShowTitle(true);
         CustomTabActivityHelper.openCustomTab(
                 activity,

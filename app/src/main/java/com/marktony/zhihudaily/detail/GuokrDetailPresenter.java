@@ -79,7 +79,7 @@ public class GuokrDetailPresenter implements GuokrDetailContract.Presenter, OnSt
     public void share() {
         try {
             Intent shareIntent = new Intent().setAction(Intent.ACTION_SEND).setType("text/plain");
-            String shareText = title + " " +  Api.GUOKR_ARTICLE_LINK_V1 + id + activity.getString(R.string.share_extra);
+            String shareText = title + " " +  Api.GUOKR_ARTICLE_LINK_V1 + id + "\t\t\t" + activity.getString(R.string.share_extra);
             shareIntent.putExtra(Intent.EXTRA_TEXT,shareText);
             activity.startActivity(Intent.createChooser(shareIntent,activity.getString(R.string.share_to)));
         } catch (android.content.ActivityNotFoundException ex){

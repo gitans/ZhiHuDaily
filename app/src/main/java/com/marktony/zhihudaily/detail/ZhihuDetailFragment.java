@@ -192,7 +192,6 @@ public class ZhihuDetailFragment extends Fragment
     public void useInnerBrowser(final boolean use) {
         //不调用第三方浏览器即可进行页面反应
         webView.setWebViewClient(new WebViewClient() {
-
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 presenter.openUrl(view, url);

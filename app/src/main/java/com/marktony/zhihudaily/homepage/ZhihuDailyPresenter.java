@@ -1,7 +1,12 @@
 package com.marktony.zhihudaily.homepage;
 
+import android.app.Service;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
+import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
@@ -9,6 +14,7 @@ import com.marktony.zhihudaily.bean.StringModelImpl;
 import com.marktony.zhihudaily.bean.ZhihuDailyNews;
 import com.marktony.zhihudaily.detail.ZhihuDetailActivity;
 import com.marktony.zhihudaily.interfaces.OnStringListener;
+import com.marktony.zhihudaily.service.CacheService;
 import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.DateFormatter;
 
@@ -28,6 +34,10 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter, OnStri
     private DateFormatter formatter = new DateFormatter();
 
     private ArrayList<ZhihuDailyNews.Question> list = new ArrayList<ZhihuDailyNews.Question>();
+    private ArrayList<Integer> zhihuIds = new ArrayList<Integer>();
+
+    private ServiceConnection conn = null;
+    private CacheService service;
 
     public ZhihuDailyPresenter(Context context, ZhihuDailyContract.View view) {
         this.context = context;
@@ -75,14 +85,41 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter, OnStri
         ZhihuDailyNews post = gson.fromJson(result, ZhihuDailyNews.class);
         for (ZhihuDailyNews.Question item : post.getStories()) {
             list.add(item);
+            zhihuIds.add(item.getId());
         }
         view.showResults(list);
+        Intent intent = new Intent(context, CacheService.class);
+        context.startService(intent);
+        bindCacheService();
+        // service.setZhihuIds(zhihuIds);
     }
 
     @Override
     public void onError(VolleyError error) {
         view.stopLoading();
         view.showError();
+    }
+
+    private void bindCacheService() {
+
+        conn = new ServiceConnection() {
+
+            @Override
+            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+                CacheService.MyBinder binder = (CacheService.MyBinder) iBinder;
+                service = binder.getService();
+                binder.getService().setZhihuIds(zhihuIds);
+                service.startCache();
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName componentName) {
+
+            }
+        };
+
+        Intent intent = new Intent(context, CacheService.class);
+        context.bindService(intent, conn, Service.BIND_AUTO_CREATE);
     }
 
 }
