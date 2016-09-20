@@ -41,19 +41,9 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
 
     private ZhihuDailyNewsAdapter adapter;
 
-    private DatabaseHelper dbhelper;
-    private SQLiteDatabase db;
-
-    private SharedPreferences sp;
-
     private int mYear = Calendar.getInstance().get(Calendar.YEAR);
     private int mMonth = Calendar.getInstance().get(Calendar.MONTH);
     private int mDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-
-    // 用于记录加载更多的次数
-    private int groupCount = -1;
-
-    private final String TAG = "ZhihuDailyFragment";
 
     private ZhihuDailyContract.Presenter presenter;
 
@@ -67,14 +57,6 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        dbhelper = new DatabaseHelper(getActivity(),"History.db",null,3);
-        db = dbhelper.getWritableDatabase();
-
-        sp = getActivity().getSharedPreferences("user_settings", Context.MODE_PRIVATE);
-
-        // deleteTimeoutPosts();
-
     }
 
     @Nullable
@@ -98,26 +80,6 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
             @Override
             public void onRefresh() {
                 presenter.refresh();
-                /*if (!list.isEmpty()){
-                    list.clear();
-                }
-
-                if ( !NetworkState.networkConnected(getActivity())){
-                    showNoNetwork();
-                    loadFromDB();
-                } else {
-                    load(new DateFormatter().ZhihuDailyDateFormat(Calendar.getInstance().getTimeInMillis()));
-                }
-
-                Calendar c = Calendar.getInstance();
-                c.add(Calendar.DAY_OF_MONTH,-1);
-
-                mYear = c.get(Calendar.YEAR);
-                mMonth = c.get(Calendar.MONTH);
-                mDay = c.get(Calendar.DAY_OF_MONTH);
-
-                groupCount = -1;*/
-
             }
 
         });
@@ -163,7 +125,7 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
                 LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 // 当不滚动时
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    // 获取最后一个完全显示的itemposition
+                    // 获取最后一个完全显示的item position
                     int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
                     int totalItemCount = manager.getItemCount();
 

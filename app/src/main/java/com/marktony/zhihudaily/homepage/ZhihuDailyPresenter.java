@@ -2,9 +2,11 @@ package com.marktony.zhihudaily.homepage;
 
 import android.app.Service;
 import android.content.ComponentName;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -12,6 +14,7 @@ import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.marktony.zhihudaily.bean.StringModelImpl;
 import com.marktony.zhihudaily.bean.ZhihuDailyNews;
+import com.marktony.zhihudaily.db.DatabaseHelper;
 import com.marktony.zhihudaily.detail.ZhihuDetailActivity;
 import com.marktony.zhihudaily.interfaces.OnStringListener;
 import com.marktony.zhihudaily.service.CacheService;
@@ -39,11 +42,16 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter, OnStri
     private ServiceConnection conn = null;
     private CacheService service;
 
+    private DatabaseHelper dbHelper;
+    private SQLiteDatabase db;
+
     public ZhihuDailyPresenter(Context context, ZhihuDailyContract.View view) {
         this.context = context;
         this.view = view;
         this.view.setPresenter(this);
         model = new StringModelImpl(context);
+        dbHelper = new DatabaseHelper(context, "History.db", null, 4);
+        db = dbHelper.getWritableDatabase();
     }
 
     @Override
@@ -87,11 +95,26 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter, OnStri
             list.add(item);
             zhihuIds.add(item.getId());
         }
+
         view.showResults(list);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < zhihuIds.size(); i++) {
+                    ContentValues values = new ContentValues();
+                    values.put("zhihu_id", zhihuIds.get(i));
+                    values.put("zhihu_news", new Gson().toJson(list.get(i)));
+                    values.put("zhihu_content", "");
+                    db.insert("Zhihu", null, values);
+                    values.clear();
+                }
+            }
+        }).start();
+
         Intent intent = new Intent(context, CacheService.class);
         context.startService(intent);
         bindCacheService();
-        // service.setZhihuIds(zhihuIds);
     }
 
     @Override

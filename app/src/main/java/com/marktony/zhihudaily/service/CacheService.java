@@ -1,7 +1,10 @@
 package com.marktony.zhihudaily.service;
 
 import android.app.Service;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -13,9 +16,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.marktony.zhihudaily.app.VolleySingleton;
-import com.marktony.zhihudaily.bean.StringModelImpl;
 import com.marktony.zhihudaily.bean.ZhihuDailyStory;
-import com.marktony.zhihudaily.interfaces.OnStringListener;
+import com.marktony.zhihudaily.db.DatabaseHelper;
 import com.marktony.zhihudaily.util.Api;
 
 import java.util.ArrayList;
@@ -24,19 +26,23 @@ import java.util.ArrayList;
  * Created by Lizhaotailang on 2016/9/18.
  */
 
-public class CacheService extends Service implements OnStringListener{
+public class CacheService extends Service {
 
     private ArrayList<Integer> zhihuIds = new ArrayList<Integer>();
     private ArrayList<Integer> guokrIds = new ArrayList<Integer>();
     private ArrayList<Integer> doubanIds = new ArrayList<Integer>();
     private Gson gson = new Gson();
 
+    private DatabaseHelper dbHelper;
+    private SQLiteDatabase db;
+
     private static final String TAG = CacheService.class.getSimpleName();
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d(TAG, "onCreate");
+        dbHelper = new DatabaseHelper(this,"History.db",null,4);
+        db = dbHelper.getWritableDatabase();
     }
 
     @Nullable
@@ -47,19 +53,11 @@ public class CacheService extends Service implements OnStringListener{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(TAG, "onStartCommand");
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy");
-    }
-
-    @Override
     public boolean onUnbind(Intent intent) {
-        Log.d(TAG, "onUnbind");
         return super.onUnbind(intent);
     }
 
@@ -71,11 +69,24 @@ public class CacheService extends Service implements OnStringListener{
         Log.d("story", "onStartCache" + "size" + zhihuIds.size());
         for (int i = 0; i < zhihuIds.size(); i++) {
             final int finalI = i;
+            final int finalI1 = i;
             StringRequest request = new StringRequest(Request.Method.GET, Api.ZHIHU_NEWS + zhihuIds.get(i), new Response.Listener<String>() {
                 @Override
                 public void onResponse(String s) {
                     ZhihuDailyStory story = gson.fromJson(s, ZhihuDailyStory.class);
-                    // Log.d("story", story.getTitle());
+                    /*Cursor cursor = db.query("Zhihu", null, null, null, null, null, null);
+                    if (cursor.moveToFirst()) {
+                        do {
+                            if (cursor.getInt(cursor.getColumnIndex("zhihu_id")) == (zhihuIds.get(finalI1))) {
+                                ContentValues values = new ContentValues();
+                                values.put("zhihu_content", s);
+                                db.update("Zhihu", values, "zhihu_id = ?", new String[] {String.valueOf(story.getId())});
+                                values.clear();
+                                Log.d("content", "" + cursor.getString(cursor.getColumnIndex("zhihu_news")));
+                            }
+                        } while (cursor.moveToNext());
+                    }
+                    cursor.close();*/
                     if (finalI == zhihuIds.size() - 1) {
                         stopSelf();
                     }
@@ -88,21 +99,9 @@ public class CacheService extends Service implements OnStringListener{
                     }
                 }
             });
-
             VolleySingleton.getVolleySingleton(this).getRequestQueue().add(request);
 
         }
-    }
-
-    @Override
-    public void onSuccess(String result) {
-        ZhihuDailyStory story = gson.fromJson(result, ZhihuDailyStory.class);
-        Log.d("story", story.getTitle());
-    }
-
-    @Override
-    public void onError(VolleyError error) {
-        Log.d("story", error.toString());
     }
 
     public class MyBinder extends Binder {

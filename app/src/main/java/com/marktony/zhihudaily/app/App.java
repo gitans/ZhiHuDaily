@@ -12,6 +12,7 @@ import com.marktony.zhihudaily.util.Theme;
 public class App extends Application {
 
     private static int MyTheme = 0;
+
     @Override
     public void onCreate() {
         super.onCreate();

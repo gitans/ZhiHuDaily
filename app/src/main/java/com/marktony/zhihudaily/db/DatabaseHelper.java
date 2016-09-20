@@ -3,6 +3,7 @@ package com.marktony.zhihudaily.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by lizhaotailang on 2016/5/8.
@@ -16,16 +17,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table if not exists LatestPosts("
-                + "id integer primary key,"
-                + "title text not null,"
-                + "type integer not null,"
-                + "img_url text not null,"
-                + "date integer not null)");
-        db.execSQL("create table if not exists Contents("
-                + "id integer primary key,"
-                + "date integer not null,"
-                + "content text not null)");
+
+        db.execSQL("create table if not exists Zhihu("
+                + "id integer primary key autoincrement,"
+                + "zhihu_id integer not null,"
+                + "zhihu_news text,"
+                + "zhihu_content text)");
+
+        db.execSQL("create table if not exists Guokr("
+                + "id integer primary key autoincrement,"
+                + "guokr_id integer not null,"
+                + "guokr_news text,"
+                + "guokr_content text)");
+
+        db.execSQL("create table if not exists Douban("
+                + "id integer primary key autoincrement,"
+                + "douban_id integer not null,"
+                + "douban_news text,"
+                + "douban_content text)");
+
     }
 
     @Override
@@ -34,31 +44,44 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             case 1:
 
             case 2:
+                // code of database creation version 3
+                //  db.execSQL("create table if not exists LatestPosts("
+                //+ "id integer primary key,"
+                //        + "title text not null,"
+                //        + "type integer not null,"
+                //        + "img_url text not null,"
+                //        + "date integer not null)");
+                //db.execSQL("create table if not exists Contents("
+                //        + "id integer primary key,"
+                //        + "date integer not null,"
+                //        + "content text not null)");
                 db.execSQL("create table if not exists Contents(id integer primary key,date integer not null,content text not null)");
-            /*case 3:
+
+            case 3:
                 // delete table if exists
                 db.execSQL("delete from LatestPosts");
                 db.execSQL("delete from Contents");
                 db.execSQL("drop table if exists LatestPosts");
                 db.execSQL("drop table if exists Contents");
+
                 // create a new table of zhihu daily
                 db.execSQL("create table if not exists Zhihu("
                         + "id integer primary key autoincrement,"
                         + "zhihu_id integer not null,"
                         + "zhihu_news text,"
-                        + "zhihu_content text)");*/
+                        + "zhihu_content text)");
 
-                /*db.execSQL("create table if not exists Guokr("
+                db.execSQL("create table if not exists Guokr("
                         + "id integer primary key autoincrement,"
                         + "guokr_id integer not null,"
                         + "guokr_news text,"
-                        + "guokr_content text)"); // main content*/
+                        + "guokr_content text)");
 
-                /*db.execSQL("create table if not exists Douban("
+                db.execSQL("create table if not exists Douban("
                         + "id integer primary key autoincrement,"
                         + "douban_id integer not null,"
                         + "douban_news text,"
-                        + "douban_content text)");*/
+                        + "douban_content text)");
 
         }
     }
