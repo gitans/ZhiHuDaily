@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
-import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
@@ -109,12 +108,11 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter, OnStri
                     db.insert("Zhihu", null, values);
                     values.clear();
                 }
+                Intent intent = new Intent(context, CacheService.class);
+                context.startService(intent);
+                bindCacheService();
             }
         }).start();
-
-        Intent intent = new Intent(context, CacheService.class);
-        context.startService(intent);
-        bindCacheService();
     }
 
     @Override
@@ -132,7 +130,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter, OnStri
                 CacheService.MyBinder binder = (CacheService.MyBinder) iBinder;
                 service = binder.getService();
                 binder.getService().setZhihuIds(zhihuIds);
-                service.startCache();
+                service.startZhihuCache();
             }
 
             @Override

@@ -65,42 +65,86 @@ public class CacheService extends Service {
         this.zhihuIds = zhihuIds;
     }
 
-    public void startCache() {
-        Log.d("story", "onStartCache" + "size" + zhihuIds.size());
+    // TODO: 2016/9/21 需要改进，不能每次都请求数据，理想的状态是已经存在的直接跳过，只请求不存在的部分
+    // TODO: 2016/9/21 service也应该在适当的时候自动停止
+    public void startZhihuCache() {
         for (int i = 0; i < zhihuIds.size(); i++) {
-            final int finalI = i;
-            final int finalI1 = i;
+            final int finali = i;
             StringRequest request = new StringRequest(Request.Method.GET, Api.ZHIHU_NEWS + zhihuIds.get(i), new Response.Listener<String>() {
                 @Override
                 public void onResponse(String s) {
                     ZhihuDailyStory story = gson.fromJson(s, ZhihuDailyStory.class);
-                    /*Cursor cursor = db.query("Zhihu", null, null, null, null, null, null);
+                    Cursor cursor = db.query("Zhihu", null, null, null, null, null, null);
                     if (cursor.moveToFirst()) {
                         do {
-                            if (cursor.getInt(cursor.getColumnIndex("zhihu_id")) == (zhihuIds.get(finalI1))) {
-                                ContentValues values = new ContentValues();
-                                values.put("zhihu_content", s);
-                                db.update("Zhihu", values, "zhihu_id = ?", new String[] {String.valueOf(story.getId())});
-                                values.clear();
-                                Log.d("content", "" + cursor.getString(cursor.getColumnIndex("zhihu_news")));
+                            if (cursor.getInt(cursor.getColumnIndex("zhihu_id")) == (zhihuIds.get(finali))) {
+                                db.beginTransaction();
+                                try {
+                                    ContentValues values = new ContentValues();
+                                    values.put("zhihu_content", s);
+                                    db.update("Zhihu", values, "zhihu_id = ?", new String[] {String.valueOf(story.getId())});
+                                    values.clear();
+                                    db.setTransactionSuccessful();
+                                } catch (Exception e){
+                                    e.printStackTrace();
+                                } finally {
+                                    db.endTransaction();
+                                }
+                                break;
                             }
                         } while (cursor.moveToNext());
                     }
-                    cursor.close();*/
-                    if (finalI == zhihuIds.size() - 1) {
-                        stopSelf();
-                    }
+                    cursor.close();
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
-                    if (finalI == zhihuIds.size() - 1) {
-                        stopSelf();
-                    }
+
                 }
             });
             VolleySingleton.getVolleySingleton(this).getRequestQueue().add(request);
+        }
+    }
 
+    public void setGuokrIds(ArrayList<Integer> guokrIds) {
+        this.guokrIds = guokrIds;
+    }
+
+    public void startGuokrCache() {
+        for (int i = 0; i < guokrIds.size(); i++) {
+            final int finalI = i;
+            StringRequest request = new StringRequest(Api.GUOKR_ARTICLE_LINK_V2 + guokrIds.get(i), new Response.Listener<String>() {
+                @Override
+                public void onResponse(String s) {
+                    Cursor cursor = db.query("Guokr", null, null, null, null, null, null);
+                    if (cursor.moveToFirst()) {
+                        do {
+                            if (cursor.getInt(cursor.getColumnIndex("guokr_id")) == (guokrIds.get(finalI))) {
+                                db.beginTransaction();
+                                try {
+                                    ContentValues values = new ContentValues();
+                                    values.put("guokr_content", s);
+                                    db.update("Guokr", values, "guokr_id = ?", new String[] {String.valueOf(guokrIds.get(finalI))});
+                                    values.clear();
+                                    db.setTransactionSuccessful();
+                                } catch (Exception e){
+                                    e.printStackTrace();
+                                } finally {
+                                    db.endTransaction();
+                                }
+                                break;
+                            }
+                        } while (cursor.moveToNext());
+                    }
+                    cursor.close();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+
+                }
+            });
+            VolleySingleton.getVolleySingleton(this).getRequestQueue().add(request);
         }
     }
 

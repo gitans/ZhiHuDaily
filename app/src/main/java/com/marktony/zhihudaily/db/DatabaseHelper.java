@@ -3,7 +3,6 @@ package com.marktony.zhihudaily.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 /**
  * Created by lizhaotailang on 2016/5/8.
@@ -82,6 +81,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         + "douban_id integer not null,"
                         + "douban_news text,"
                         + "douban_content text)");
+
+                default:
+
 
         }
     }
