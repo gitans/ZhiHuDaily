@@ -38,7 +38,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter, OnStri
     private ArrayList<ZhihuDailyNews.Question> list = new ArrayList<ZhihuDailyNews.Question>();
     private ArrayList<Integer> zhihuIds = new ArrayList<Integer>();
 
-    private ServiceConnection conn = null;
+    private ServiceConnection conn;
     private CacheService service;
 
     private DatabaseHelper dbHelper;
@@ -81,6 +81,35 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter, OnStri
     }
 
     @Override
+    public void bindService() {
+        conn = new ServiceConnection() {
+
+            @Override
+            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+                CacheService.MyBinder binder = (CacheService.MyBinder) iBinder;
+                service = binder.getService();
+                binder.getService().setZhihuIds(zhihuIds);
+                bindService();
+                service.startZhihuCache();
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName componentName) {
+
+            }
+        };
+
+        context.bindService(new Intent(context, CacheService.class), conn, Service.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    public void unBindService() {
+        if (service != null) {
+            service.unbindService(conn);
+        }
+    }
+
+    @Override
     public void start() {
 
     }
@@ -93,54 +122,26 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter, OnStri
         for (ZhihuDailyNews.Question item : post.getStories()) {
             list.add(item);
             zhihuIds.add(item.getId());
+            ContentValues values = new ContentValues();
+            values.put("zhihu_id", item.getId());
+            values.put("zhihu_news", gson.toJson(item));
+            values.put("zhihu_content", "");
+            db.insert("Zhihu", null, values);
+            values.clear();
         }
 
         view.showResults(list);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < zhihuIds.size(); i++) {
-                    ContentValues values = new ContentValues();
-                    values.put("zhihu_id", zhihuIds.get(i));
-                    values.put("zhihu_news", new Gson().toJson(list.get(i)));
-                    values.put("zhihu_content", "");
-                    db.insert("Zhihu", null, values);
-                    values.clear();
-                }
-                Intent intent = new Intent(context, CacheService.class);
-                context.startService(intent);
-                bindCacheService();
-            }
-        }).start();
+        for (int i = 0; i < zhihuIds.size(); i++) {
+
+        }
+
     }
 
     @Override
     public void onError(VolleyError error) {
         view.stopLoading();
         view.showError();
-    }
-
-    private void bindCacheService() {
-
-        conn = new ServiceConnection() {
-
-            @Override
-            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-                CacheService.MyBinder binder = (CacheService.MyBinder) iBinder;
-                service = binder.getService();
-                binder.getService().setZhihuIds(zhihuIds);
-                service.startZhihuCache();
-            }
-
-            @Override
-            public void onServiceDisconnected(ComponentName componentName) {
-
-            }
-        };
-
-        Intent intent = new Intent(context, CacheService.class);
-        context.bindService(intent, conn, Service.BIND_AUTO_CREATE);
     }
 
 }

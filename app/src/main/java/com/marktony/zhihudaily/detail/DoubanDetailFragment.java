@@ -120,15 +120,16 @@ public class DoubanDetailFragment extends Fragment
 
     @Override
     public void showMainImage(String imageUrl) {
-        if (imageUrl == null) {
-            imageView.setImageResource(R.drawable.no_img);
-        } else {
-            Glide.with(getActivity())
-                    .load(imageUrl)
-                    .asBitmap()
-                    .centerCrop()
-                    .into(imageView);
-        }
+        Glide.with(getActivity())
+                .load(imageUrl)
+                .asBitmap()
+                .centerCrop()
+                .into(imageView);
+    }
+
+    @Override
+    public void setMainImageResurce() {
+        imageView.setImageResource(R.drawable.no_img);
     }
 
     @Override

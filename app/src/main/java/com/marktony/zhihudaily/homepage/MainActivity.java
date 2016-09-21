@@ -3,6 +3,8 @@ package com.marktony.zhihudaily.homepage;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -20,6 +22,7 @@ import android.widget.ImageView;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.about.AboutPreferenceActivity;
 import com.marktony.zhihudaily.app.App;
+import com.marktony.zhihudaily.service.CacheService;
 import com.marktony.zhihudaily.settings.SettingsPreferenceActivity;
 import com.marktony.zhihudaily.util.Theme;
 
@@ -42,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnVi
 
         addFragment();
         initViews();
+
+        startService(new Intent(this, CacheService.class));
 
     }
 
@@ -181,4 +186,14 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnVi
         startAnimation(imageView);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (CacheService.class.getName().equals(service.service.getClassName())) {
+                stopService(new Intent(this, CacheService.class));
+            }
+        }
+    }
 }

@@ -65,8 +65,6 @@ public class CacheService extends Service {
         this.zhihuIds = zhihuIds;
     }
 
-    // TODO: 2016/9/21 需要改进，不能每次都请求数据，理想的状态是已经存在的直接跳过，只请求不存在的部分
-    // TODO: 2016/9/21 service也应该在适当的时候自动停止
     public void startZhihuCache() {
         for (int i = 0; i < zhihuIds.size(); i++) {
             final int finali = i;
@@ -77,7 +75,8 @@ public class CacheService extends Service {
                     Cursor cursor = db.query("Zhihu", null, null, null, null, null, null);
                     if (cursor.moveToFirst()) {
                         do {
-                            if (cursor.getInt(cursor.getColumnIndex("zhihu_id")) == (zhihuIds.get(finali))) {
+                            if ((cursor.getInt(cursor.getColumnIndex("zhihu_id")) == (zhihuIds.get(finali)))
+                                    && (cursor.getString(cursor.getColumnIndex("zhihu_content")) != null)) {
                                 db.beginTransaction();
                                 try {
                                     ContentValues values = new ContentValues();
@@ -102,6 +101,7 @@ public class CacheService extends Service {
 
                 }
             });
+            request.setTag(TAG);
             VolleySingleton.getVolleySingleton(this).getRequestQueue().add(request);
         }
     }
@@ -119,7 +119,8 @@ public class CacheService extends Service {
                     Cursor cursor = db.query("Guokr", null, null, null, null, null, null);
                     if (cursor.moveToFirst()) {
                         do {
-                            if (cursor.getInt(cursor.getColumnIndex("guokr_id")) == (guokrIds.get(finalI))) {
+                            if (cursor.getInt(cursor.getColumnIndex("guokr_id")) == (guokrIds.get(finalI))
+                                    && cursor.getString(cursor.getColumnIndex("guokr_content")) == null) {
                                 db.beginTransaction();
                                 try {
                                     ContentValues values = new ContentValues();
@@ -144,6 +145,51 @@ public class CacheService extends Service {
 
                 }
             });
+            request.setTag(TAG);
+            VolleySingleton.getVolleySingleton(this).getRequestQueue().add(request);
+        }
+    }
+
+    public void setDoubanIds(ArrayList<Integer> doubanIds) {
+        this.doubanIds = doubanIds;
+    }
+
+    public void startDoubanCache() {
+        for (int i = 0; i < guokrIds.size(); i++) {
+            final int finalI = i;
+            StringRequest request = new StringRequest(Api.DOUBAN_ARTICLE_DETAIL + guokrIds.get(i), new Response.Listener<String>() {
+                @Override
+                public void onResponse(String s) {
+                    Cursor cursor = db.query("Douban", null, null, null, null, null, null);
+                    if (cursor.moveToFirst()) {
+                        do {
+                            if (cursor.getInt(cursor.getColumnIndex("douban_id")) == (doubanIds.get(finalI))
+                                    && cursor.getString(cursor.getColumnIndex("douban_content")) == null) {
+                                db.beginTransaction();
+                                try {
+                                    ContentValues values = new ContentValues();
+                                    values.put("douban_content", s);
+                                    db.update("Douban", values, "douban_id = ?", new String[] {String.valueOf(doubanIds.get(finalI))});
+                                    values.clear();
+                                    db.setTransactionSuccessful();
+                                } catch (Exception e){
+                                    e.printStackTrace();
+                                } finally {
+                                    db.endTransaction();
+                                }
+                                break;
+                            }
+                        } while (cursor.moveToNext());
+                    }
+                    cursor.close();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+
+                }
+            });
+            request.setTag(TAG);
             VolleySingleton.getVolleySingleton(this).getRequestQueue().add(request);
         }
     }
@@ -154,4 +200,9 @@ public class CacheService extends Service {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        VolleySingleton.getVolleySingleton(this).getRequestQueue().cancelAll(TAG);
+    }
 }

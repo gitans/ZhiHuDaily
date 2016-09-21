@@ -1,14 +1,22 @@
 package com.marktony.zhihudaily.homepage;
 
+import android.app.Service;
+import android.content.ComponentName;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.IBinder;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.marktony.zhihudaily.bean.DoubanMomentNews;
 import com.marktony.zhihudaily.bean.StringModelImpl;
+import com.marktony.zhihudaily.db.DatabaseHelper;
 import com.marktony.zhihudaily.interfaces.OnStringListener;
 import com.marktony.zhihudaily.detail.DoubanDetailActivity;
+import com.marktony.zhihudaily.service.CacheService;
 import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.DateFormatter;
 
@@ -25,13 +33,22 @@ public class DoubanMomentPresenter implements DoubanMomentContract.Presenter, On
     private Context context;
     private StringModelImpl model;
 
+    private DatabaseHelper dbHelper;
+    private SQLiteDatabase db;
+
+    private ServiceConnection conn;
+    private CacheService service;
+
     private ArrayList<DoubanMomentNews.posts> list = new ArrayList<>();
+    private ArrayList<Integer> doubanIds = new ArrayList<>();
 
     public DoubanMomentPresenter(Context context, DoubanMomentContract.View view) {
         this.context = context;
         this.view = view;
         this.view.setPresenter(this);
         model = new StringModelImpl(context);
+        dbHelper = new DatabaseHelper(context, "History.db", null, 4);
+        db = dbHelper.getWritableDatabase();
     }
 
     @Override
@@ -69,6 +86,36 @@ public class DoubanMomentPresenter implements DoubanMomentContract.Presenter, On
     }
 
     @Override
+    public void bindService() {
+        conn = new ServiceConnection() {
+
+            @Override
+            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+                CacheService.MyBinder binder = (CacheService.MyBinder) iBinder;
+                service = binder.getService();
+                binder.getService().setDoubanIds(doubanIds);
+                bindService();
+                service.startDoubanCache();
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName componentName) {
+
+            }
+        };
+
+        context.bindService(new Intent(context, CacheService.class), conn, Service.BIND_AUTO_CREATE);
+
+    }
+
+    @Override
+    public void unBindService() {
+        if (service != null) {
+            service.unbindService(conn);
+        }
+    }
+
+    @Override
     public void start() {
 
     }
@@ -79,9 +126,16 @@ public class DoubanMomentPresenter implements DoubanMomentContract.Presenter, On
         DoubanMomentNews post = gson.fromJson(result, DoubanMomentNews.class);
         for (DoubanMomentNews.posts item : post.getPosts()) {
             list.add(item);
+            doubanIds.add(item.getId());
+            ContentValues values = new ContentValues();
+            values.put("douban_id", item.getId());
+            values.put("douban_news", gson.toJson(item));
+            values.put("douban_content", "");
+            db.insert("Douban", null, values);
         }
         view.showResults(list);
         view.stopLoading();
+
     }
 
     @Override

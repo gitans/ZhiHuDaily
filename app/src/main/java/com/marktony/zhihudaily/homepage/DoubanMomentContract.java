@@ -34,6 +34,10 @@ public interface DoubanMomentContract {
 
         void loadMore(long date);
 
+        void bindService();
+
+        void unBindService();
+
     }
 
 }

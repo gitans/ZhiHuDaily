@@ -127,4 +127,9 @@ public class GuokrFragment extends Fragment implements GuokrContract.View{
         });
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.unBindService();
+    }
 }

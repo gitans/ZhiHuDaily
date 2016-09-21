@@ -34,6 +34,10 @@ public interface ZhihuDailyContract {
 
         void startReading(int position);
 
+        void bindService();
+
+        void unBindService();
+
     }
 
 }

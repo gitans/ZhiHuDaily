@@ -27,6 +27,8 @@ public interface DoubanDetailContract {
 
         void showMainImage(String imageUrl);
 
+        void setMainImageResurce();
+
         void setWebViewImageMode(boolean showImage);
 
         void setUseInnerBrowser(boolean use);

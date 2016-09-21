@@ -204,4 +204,9 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.unBindService();
+    }
 }

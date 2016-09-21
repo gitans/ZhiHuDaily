@@ -553,4 +553,9 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.unBindService();
+    }
 }

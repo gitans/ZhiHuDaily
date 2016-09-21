@@ -122,11 +122,11 @@ public class DoubanDetailPresenter
         Gson gson = new Gson();
         post = gson.fromJson(result, DoubanMomentStory.class);
         view.showResult(convertContent());
-        String imageUrl = null;
         if (post.getPhotos().size() != 0) {
-            imageUrl = post.getThumbs().get(0).getMedium().getUrl();
+            view.showMainImage(post.getPhotos().get(0).getMedium().getUrl());
+        } else {
+            view.setMainImageResurce();
         }
-        view.showMainImage(imageUrl);
         view.setTitle(post.getTitle());
         view.setWebViewImageMode(sp.getBoolean("no_picture_mode",false));
         view.setUseInnerBrowser(sp.getBoolean("in_app_browser",true));
