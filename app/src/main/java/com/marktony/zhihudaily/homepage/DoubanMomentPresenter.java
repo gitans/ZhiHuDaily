@@ -20,6 +20,7 @@ import com.marktony.zhihudaily.detail.DoubanDetailActivity;
 import com.marktony.zhihudaily.service.CacheService;
 import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.DateFormatter;
+import com.marktony.zhihudaily.util.NetworkState;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -75,7 +76,21 @@ public class DoubanMomentPresenter implements DoubanMomentContract.Presenter, On
         if (clearing) {
             list.clear();
         }
-        model.load(Api.DOUBAN_MOMENT + new DateFormatter().DoubanDateFormat(date), this);
+        if (NetworkState.networkConnected(context)) {
+            model.load(Api.DOUBAN_MOMENT + new DateFormatter().DoubanDateFormat(date), this);
+        } else {
+            Gson gson = new Gson();
+            Cursor cursor = db.query("Douban", null, null, null, null, null, null);
+            if (cursor.moveToFirst()) {
+                do {
+                    DoubanMomentNews.posts post = gson.fromJson(cursor.getString(cursor.getColumnIndex("douban_news")), DoubanMomentNews.posts.class);
+                    list.add(post);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            view.stopLoading();
+            view.showResults(list);
+        }
     }
 
     @Override

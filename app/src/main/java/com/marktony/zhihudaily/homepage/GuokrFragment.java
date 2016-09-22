@@ -50,7 +50,7 @@ public class GuokrFragment extends Fragment implements GuokrContract.View{
 
         initViews(view);
 
-        presenter.setUrl(Api.GUOKR_ARTICLES);
+        presenter.loadPosts();
 
         refreshGuokr.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

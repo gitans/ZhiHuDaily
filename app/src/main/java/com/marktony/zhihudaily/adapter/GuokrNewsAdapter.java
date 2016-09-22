@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.bean.GuokrHandpickNews;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
@@ -49,6 +50,8 @@ public class GuokrNewsAdapter extends RecyclerView.Adapter<GuokrNewsAdapter.Guok
         Glide.with(context)
                 .load(item.getHeadline_img_tb())
                 .asBitmap()
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .error(R.drawable.no_img)
                 .centerCrop()
                 .into(holder.ivHeadlineImg);
 

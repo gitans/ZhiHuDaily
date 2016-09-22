@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 
@@ -18,6 +19,7 @@ import com.marktony.zhihudaily.interfaces.OnStringListener;
 import com.marktony.zhihudaily.detail.GuokrDetailActivity;
 import com.marktony.zhihudaily.service.CacheService;
 import com.marktony.zhihudaily.util.Api;
+import com.marktony.zhihudaily.util.NetworkState;
 
 import java.util.ArrayList;
 
@@ -95,15 +97,29 @@ public class GuokrPresenter implements GuokrContract.Presenter, OnStringListener
     }
 
     @Override
-    public void setUrl(String url) {
+    public void loadPosts() {
         view.showLoading();
-        model.load(url, this);
+        if (NetworkState.networkConnected(context)) {
+            model.load(Api.GUOKR_ARTICLES, this);
+        } else {
+            Gson gson = new Gson();
+            Cursor cursor = db.query("Guokr", null, null, null, null, null, null);
+            if (cursor.moveToFirst()) {
+                do {
+                    GuokrHandpickNews.result result = gson.fromJson(cursor.getString(cursor.getColumnIndex("guokr_news")), GuokrHandpickNews.result.class);
+                    list.add(result);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            view.stopLoading();
+            view.showResults(list);
+        }
     }
 
     @Override
     public void refresh() {
         list.clear();
-        setUrl(Api.GUOKR_ARTICLES);
+        loadPosts();
     }
 
     @Override
@@ -115,11 +131,24 @@ public class GuokrPresenter implements GuokrContract.Presenter, OnStringListener
             list.add(re);
             guokrIds.add(re.getId());
 
-            ContentValues values = new ContentValues();
-            values.put("guokr_id", re.getId());
-            values.put("guokr_news", gson.toJson(re));
-            values.put("guokr_content", "");
-            db.insert("Guokr", null, values);
+            if(!queryIfIDExists(re.getId())) {
+                try {
+                    db.beginTransaction();
+                    ContentValues values = new ContentValues();
+                    values.put("guokr_id", re.getId());
+                    values.put("guokr_news", gson.toJson(re));
+                    values.put("guokr_content", "");
+                    values.put("guokr_time", (long)re.getDate_picked());
+                    db.insert("Guokr", null, values);
+                    values.clear();
+                    db.setTransactionSuccessful();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    db.endTransaction();
+                }
+
+            }
 
         }
         view.showResults(list);
@@ -130,6 +159,20 @@ public class GuokrPresenter implements GuokrContract.Presenter, OnStringListener
     public void onError(VolleyError error) {
         view.stopLoading();
         view.showError();
+    }
+
+    private boolean queryIfIDExists(int id){
+        Cursor cursor = db.query("Guokr",null,null,null,null,null,null);
+        if (cursor.moveToFirst()){
+            do {
+                if (id == cursor.getInt(cursor.getColumnIndex("guokr_id"))){
+                    return true;
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return false;
     }
 
 }

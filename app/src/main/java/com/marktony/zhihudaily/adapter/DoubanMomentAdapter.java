@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.bean.DoubanMomentNews;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
@@ -53,16 +54,23 @@ public class DoubanMomentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         DoubanMomentNews.posts item = list.get(position);
         if (holder instanceof NormalViewHolder) {
+
             Glide.with(context)
                     .load(item.getThumbs().get(0).getMedium().getUrl())
                     .asBitmap()
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .error(R.drawable.no_img)
                     .centerCrop()
                     .into(((NormalViewHolder)holder).ivHeadlineImg);
+
             ((NormalViewHolder)holder).tvTitle.setText(item.getTitle());
             ((NormalViewHolder)holder).tvSummary.setText(item.getAbs());
+
         } else if (holder instanceof NoImgViewHolder) {
+
             ((NoImgViewHolder)holder).tvTitle.setText(item.getTitle());
             ((NoImgViewHolder)holder).tvSummary.setText(item.getAbs());
+
         }
     }
 

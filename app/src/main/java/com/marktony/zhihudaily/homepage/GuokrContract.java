@@ -26,7 +26,7 @@ public interface GuokrContract {
 
     interface Presenter extends BasePresenter{
 
-        void setUrl(String url);
+        void loadPosts();
 
         void refresh();
 

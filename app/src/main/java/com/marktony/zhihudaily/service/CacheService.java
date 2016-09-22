@@ -76,12 +76,13 @@ public class CacheService extends Service {
                     if (cursor.moveToFirst()) {
                         do {
                             if ((cursor.getInt(cursor.getColumnIndex("zhihu_id")) == (zhihuIds.get(finali)))
-                                    && (cursor.getString(cursor.getColumnIndex("zhihu_content")) != null)) {
+                                    && (cursor.getString(cursor.getColumnIndex("zhihu_content")).equals(""))) {
                                 db.beginTransaction();
                                 try {
                                     ContentValues values = new ContentValues();
                                     values.put("zhihu_content", s);
                                     db.update("Zhihu", values, "zhihu_id = ?", new String[] {String.valueOf(story.getId())});
+                                    Log.d("zhihu_content", s);
                                     values.clear();
                                     db.setTransactionSuccessful();
                                 } catch (Exception e){
@@ -120,12 +121,13 @@ public class CacheService extends Service {
                     if (cursor.moveToFirst()) {
                         do {
                             if (cursor.getInt(cursor.getColumnIndex("guokr_id")) == (guokrIds.get(finalI))
-                                    && cursor.getString(cursor.getColumnIndex("guokr_content")) == null) {
+                                    && (cursor.getString(cursor.getColumnIndex("guokr_content")).equals(""))) {
                                 db.beginTransaction();
                                 try {
                                     ContentValues values = new ContentValues();
                                     values.put("guokr_content", s);
                                     db.update("Guokr", values, "guokr_id = ?", new String[] {String.valueOf(guokrIds.get(finalI))});
+                                    Log.d("guokr_content", s);
                                     values.clear();
                                     db.setTransactionSuccessful();
                                 } catch (Exception e){
@@ -164,12 +166,13 @@ public class CacheService extends Service {
                     if (cursor.moveToFirst()) {
                         do {
                             if (cursor.getInt(cursor.getColumnIndex("douban_id")) == (doubanIds.get(finalI))
-                                    && cursor.getString(cursor.getColumnIndex("douban_content")) == null) {
+                                    && (cursor.getString(cursor.getColumnIndex("douban_content")).equals(""))) {
                                 db.beginTransaction();
                                 try {
                                     ContentValues values = new ContentValues();
                                     values.put("douban_content", s);
                                     db.update("Douban", values, "douban_id = ?", new String[] {String.valueOf(doubanIds.get(finalI))});
+                                    Log.d("douban_content", s);
                                     values.clear();
                                     db.setTransactionSuccessful();
                                 } catch (Exception e){

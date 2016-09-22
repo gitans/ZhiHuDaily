@@ -9,19 +9,23 @@ import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
+import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.marktony.zhihudaily.bean.StringModelImpl;
 import com.marktony.zhihudaily.bean.ZhihuDailyNews;
+import com.marktony.zhihudaily.bean.ZhihuDailyStory;
 import com.marktony.zhihudaily.db.DatabaseHelper;
 import com.marktony.zhihudaily.detail.ZhihuDetailActivity;
 import com.marktony.zhihudaily.interfaces.OnStringListener;
 import com.marktony.zhihudaily.service.CacheService;
 import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.DateFormatter;
+import com.marktony.zhihudaily.util.NetworkState;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -63,7 +67,21 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter, OnStri
         if (clearing) {
             list.clear();
         }
-        model.load(Api.ZHIHU_HISTORY + formatter.ZhihuDailyDateFormat(date), this);
+        if (NetworkState.networkConnected(context)) {
+            model.load(Api.ZHIHU_HISTORY + formatter.ZhihuDailyDateFormat(date), this);
+        } else {
+            Gson gson = new Gson();
+            Cursor cursor = db.query("Zhihu", null,null,null,null,null,null);
+            if (cursor.moveToFirst()) {
+                do {
+                    ZhihuDailyNews.Question question = gson.fromJson(cursor.getString(cursor.getColumnIndex("zhihu_news")), ZhihuDailyNews.Question.class);
+                    list.add(question);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            view.stopLoading();
+            view.showResults(list);
+        }
     }
 
     @Override
@@ -146,8 +164,8 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter, OnStri
                 } finally {
                     db.endTransaction();
                 }
-            }
 
+            }
         }
 
         view.showResults(list);

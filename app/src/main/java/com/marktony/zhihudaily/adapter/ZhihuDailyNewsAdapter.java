@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.marktony.zhihudaily.bean.ZhihuDailyNews;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
@@ -49,6 +50,7 @@ public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter<ZhihuDailyNewsAd
         } else {
             Glide.with(context)
                     .load(item.getImages().get(0))
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .error(R.drawable.no_img)
                     .centerCrop()
                     .into(holder.itemImg);
