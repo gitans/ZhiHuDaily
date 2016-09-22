@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 
@@ -20,8 +21,11 @@ import com.marktony.zhihudaily.service.CacheService;
 import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.DateFormatter;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Lizhaotailang on 2016/9/16.
@@ -116,25 +120,38 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter, OnStri
 
     @Override
     public void onSuccess(String result) {
-        view.stopLoading();
         Gson gson = new Gson();
         ZhihuDailyNews post = gson.fromJson(result, ZhihuDailyNews.class);
+
+        ContentValues values = new ContentValues();
+
         for (ZhihuDailyNews.Question item : post.getStories()) {
             list.add(item);
             zhihuIds.add(item.getId());
-            ContentValues values = new ContentValues();
-            values.put("zhihu_id", item.getId());
-            values.put("zhihu_news", gson.toJson(item));
-            values.put("zhihu_content", "");
-            db.insert("Zhihu", null, values);
-            values.clear();
+
+            if ( !queryIfIDExists(item.getId())) {
+                db.beginTransaction();
+                try {
+                    DateFormat format = new SimpleDateFormat("yyyyMMdd");
+                    Date date = format.parse(post.getDate());
+                    values.put("zhihu_id", item.getId());
+                    values.put("zhihu_news", gson.toJson(item));
+                    values.put("zhihu_content", "");
+                    values.put("zhihu_time", date.getTime() / 1000);
+                    db.insert("Zhihu", null, values);
+                    values.clear();
+                    db.setTransactionSuccessful();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    db.endTransaction();
+                }
+            }
+
         }
 
         view.showResults(list);
-
-        for (int i = 0; i < zhihuIds.size(); i++) {
-
-        }
+        view.stopLoading();
 
     }
 
@@ -142,6 +159,20 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter, OnStri
     public void onError(VolleyError error) {
         view.stopLoading();
         view.showError();
+    }
+
+    private boolean queryIfIDExists(int id){
+        Cursor cursor = db.query("Zhihu",null,null,null,null,null,null);
+        if (cursor.moveToFirst()){
+            do {
+                if (id == cursor.getInt(cursor.getColumnIndex("zhihu_id"))){
+                    return true;
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return false;
     }
 
 }

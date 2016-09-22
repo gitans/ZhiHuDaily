@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 
@@ -20,8 +21,11 @@ import com.marktony.zhihudaily.service.CacheService;
 import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.DateFormatter;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Lizhaotailang on 2016/9/10.
@@ -127,11 +131,27 @@ public class DoubanMomentPresenter implements DoubanMomentContract.Presenter, On
         for (DoubanMomentNews.posts item : post.getPosts()) {
             list.add(item);
             doubanIds.add(item.getId());
+
             ContentValues values = new ContentValues();
-            values.put("douban_id", item.getId());
-            values.put("douban_news", gson.toJson(item));
-            values.put("douban_content", "");
-            db.insert("Douban", null, values);
+
+            if ( !queryIfIDExists(item.getId())) {
+                db.beginTransaction();
+                try {
+                    values.put("douban_id", item.getId());
+                    values.put("douban_news", gson.toJson(item));
+                    DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    Date date = format.parse(item.getPublished_time());
+                    values.put("douban_time", date.getTime() / 1000);
+                    values.put("douban_content", "");
+                    db.insert("Douban", null, values);
+                    values.clear();
+                    db.setTransactionSuccessful();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    db.endTransaction();
+                }
+            }
         }
         view.showResults(list);
         view.stopLoading();
@@ -142,6 +162,20 @@ public class DoubanMomentPresenter implements DoubanMomentContract.Presenter, On
     public void onError(VolleyError error) {
         view.stopLoading();
         view.showLoadError();
+    }
+
+    private boolean queryIfIDExists(int id){
+        Cursor cursor = db.query("Douban",null,null,null,null,null,null);
+        if (cursor.moveToFirst()){
+            do {
+                if (id == cursor.getInt(cursor.getColumnIndex("douban_id"))){
+                    return true;
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return false;
     }
 
 }

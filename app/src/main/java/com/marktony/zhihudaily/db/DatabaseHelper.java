@@ -21,18 +21,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "id integer primary key autoincrement,"
                 + "zhihu_id integer not null,"
                 + "zhihu_news text,"
+                + "zhihu_time real,"
                 + "zhihu_content text)");
 
         db.execSQL("create table if not exists Guokr("
                 + "id integer primary key autoincrement,"
                 + "guokr_id integer not null,"
                 + "guokr_news text,"
+                + "guokr_time real,"
                 + "guokr_content text)");
 
         db.execSQL("create table if not exists Douban("
                 + "id integer primary key autoincrement,"
                 + "douban_id integer not null,"
                 + "douban_news text,"
+                + "douban_time real,"
                 + "douban_content text)");
 
     }
@@ -68,18 +71,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         + "id integer primary key autoincrement,"
                         + "zhihu_id integer not null,"
                         + "zhihu_news text,"
+                        + "zhihu_time integer,"
                         + "zhihu_content text)");
 
                 db.execSQL("create table if not exists Guokr("
                         + "id integer primary key autoincrement,"
                         + "guokr_id integer not null,"
                         + "guokr_news text,"
+                        + "guokr_time integer,"
                         + "guokr_content text)");
 
                 db.execSQL("create table if not exists Douban("
                         + "id integer primary key autoincrement,"
                         + "douban_id integer not null,"
                         + "douban_news text,"
+                        + "douban_time integer,"
                         + "douban_content text)");
 
                 default:
