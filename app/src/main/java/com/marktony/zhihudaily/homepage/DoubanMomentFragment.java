@@ -185,7 +185,7 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
 
     @Override
     public void showLoadError() {
-        Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_INDEFINITE).show();
     }
 
     @Override
@@ -204,9 +204,4 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        presenter.unBindService();
-    }
 }

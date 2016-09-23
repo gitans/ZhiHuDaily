@@ -72,6 +72,7 @@ public class ZhihuDetailPresenter implements ZhihuDetailContract.Presenter, OnSt
 
     @Override
     public void requestData() {
+        view.showLoading();
         model.load(Api.ZHIHU_NEWS + id, this);
     }
 

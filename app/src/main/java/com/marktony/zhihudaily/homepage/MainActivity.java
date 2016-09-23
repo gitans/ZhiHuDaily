@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnVi
         addFragment();
         initViews();
 
-        startService(new Intent(this, CacheService.class));
+        // startService(new Intent(this, CacheService.class));
 
     }
 
@@ -188,12 +188,13 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnVi
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
             if (CacheService.class.getName().equals(service.service.getClassName())) {
                 stopService(new Intent(this, CacheService.class));
             }
         }
+        super.onDestroy();
     }
+
 }

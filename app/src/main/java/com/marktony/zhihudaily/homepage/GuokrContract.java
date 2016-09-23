@@ -34,8 +34,6 @@ public interface GuokrContract {
 
         void bindService();
 
-        void unBindService();
-
     }
 
 }

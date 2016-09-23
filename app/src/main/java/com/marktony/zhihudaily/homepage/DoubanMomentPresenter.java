@@ -128,13 +128,6 @@ public class DoubanMomentPresenter implements DoubanMomentContract.Presenter, On
     }
 
     @Override
-    public void unBindService() {
-        if (service != null) {
-            service.unbindService(conn);
-        }
-    }
-
-    @Override
     public void start() {
 
     }

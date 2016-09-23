@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -24,6 +23,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Lizhaotailang on 2016/9/18.
+ * // TODO: 2016/9/24 too much memory used
  */
 
 public class CacheService extends Service {
@@ -77,21 +77,21 @@ public class CacheService extends Service {
                         do {
                             if ((cursor.getInt(cursor.getColumnIndex("zhihu_id")) == (zhihuIds.get(finali)))
                                     && (cursor.getString(cursor.getColumnIndex("zhihu_content")).equals(""))) {
-                                db.beginTransaction();
+                                /*db.beginTransaction();
                                 try {
-                                    ContentValues values = new ContentValues();
-                                    values.put("zhihu_content", s);
-                                    db.update("Zhihu", values, "zhihu_id = ?", new String[] {String.valueOf(story.getId())});
-                                    Log.d("zhihu_content", s);
-                                    values.clear();
+
                                     db.setTransactionSuccessful();
                                 } catch (Exception e){
                                     e.printStackTrace();
                                 } finally {
                                     db.endTransaction();
-                                }
-                                break;
+                                }*/
+                                ContentValues values = new ContentValues();
+                                values.put("zhihu_content", s);
+                                db.update("Zhihu", values, "zhihu_id = ?", new String[] {String.valueOf(story.getId())});
+                                values.clear();
                             }
+                            break;
                         } while (cursor.moveToNext());
                     }
                     cursor.close();
@@ -122,19 +122,19 @@ public class CacheService extends Service {
                         do {
                             if (cursor.getInt(cursor.getColumnIndex("guokr_id")) == (guokrIds.get(finalI))
                                     && (cursor.getString(cursor.getColumnIndex("guokr_content")).equals(""))) {
-                                db.beginTransaction();
+                                /*db.beginTransaction();
                                 try {
-                                    ContentValues values = new ContentValues();
-                                    values.put("guokr_content", s);
-                                    db.update("Guokr", values, "guokr_id = ?", new String[] {String.valueOf(guokrIds.get(finalI))});
-                                    Log.d("guokr_content", s);
-                                    values.clear();
+
                                     db.setTransactionSuccessful();
                                 } catch (Exception e){
                                     e.printStackTrace();
                                 } finally {
                                     db.endTransaction();
-                                }
+                                }*/
+                                ContentValues values = new ContentValues();
+                                values.put("guokr_content", s);
+                                db.update("Guokr", values, "guokr_id = ?", new String[] {String.valueOf(guokrIds.get(finalI))});
+                                values.clear();
                                 break;
                             }
                         } while (cursor.moveToNext());
@@ -167,19 +167,19 @@ public class CacheService extends Service {
                         do {
                             if (cursor.getInt(cursor.getColumnIndex("douban_id")) == (doubanIds.get(finalI))
                                     && (cursor.getString(cursor.getColumnIndex("douban_content")).equals(""))) {
-                                db.beginTransaction();
+                                /*db.beginTransaction();
                                 try {
-                                    ContentValues values = new ContentValues();
-                                    values.put("douban_content", s);
-                                    db.update("Douban", values, "douban_id = ?", new String[] {String.valueOf(doubanIds.get(finalI))});
-                                    Log.d("douban_content", s);
-                                    values.clear();
+
                                     db.setTransactionSuccessful();
                                 } catch (Exception e){
                                     e.printStackTrace();
                                 } finally {
                                     db.endTransaction();
-                                }
+                                }*/
+                                ContentValues values = new ContentValues();
+                                values.put("douban_content", s);
+                                db.update("Douban", values, "douban_id = ?", new String[] {String.valueOf(doubanIds.get(finalI))});
+                                values.clear();
                                 break;
                             }
                         } while (cursor.moveToNext());

@@ -9,8 +9,6 @@
 
     <string name="title_activity_read">Read</string>
     <string name="loaded_failed">Load failed!</string>
-    <string name="no_network_connected">No Network Connected…</string>
-    <string name="go_to_set">SETTINGS</string>
 
     <!--navigation view menu-->
     <string name="change_theme">Change Theme</string>

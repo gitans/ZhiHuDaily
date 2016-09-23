@@ -9,13 +9,11 @@ import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
-import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.marktony.zhihudaily.bean.StringModelImpl;
 import com.marktony.zhihudaily.bean.ZhihuDailyNews;
-import com.marktony.zhihudaily.bean.ZhihuDailyStory;
 import com.marktony.zhihudaily.db.DatabaseHelper;
 import com.marktony.zhihudaily.detail.ZhihuDetailActivity;
 import com.marktony.zhihudaily.interfaces.OnStringListener;
@@ -25,7 +23,6 @@ import com.marktony.zhihudaily.util.DateFormatter;
 import com.marktony.zhihudaily.util.NetworkState;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -71,7 +68,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter, OnStri
             model.load(Api.ZHIHU_HISTORY + formatter.ZhihuDailyDateFormat(date), this);
         } else {
             Gson gson = new Gson();
-            Cursor cursor = db.query("Zhihu", null,null,null,null,null,null);
+            Cursor cursor = db.query("Zhihu", null, null, null, null, null, null);
             if (cursor.moveToFirst()) {
                 do {
                     ZhihuDailyNews.Question question = gson.fromJson(cursor.getString(cursor.getColumnIndex("zhihu_news")), ZhihuDailyNews.Question.class);
@@ -122,13 +119,6 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter, OnStri
         };
 
         context.bindService(new Intent(context, CacheService.class), conn, Service.BIND_AUTO_CREATE);
-    }
-
-    @Override
-    public void unBindService() {
-        if (service != null) {
-            service.unbindService(conn);
-        }
     }
 
     @Override

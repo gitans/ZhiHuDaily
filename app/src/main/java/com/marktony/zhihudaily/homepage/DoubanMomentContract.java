@@ -36,8 +36,6 @@ public interface DoubanMomentContract {
 
         void bindService();
 
-        void unBindService();
-
     }
 
 }

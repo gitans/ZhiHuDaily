@@ -39,8 +39,6 @@ public interface DoubanDetailContract {
 
         void loadResult(int id);
 
-        void setArticleId(int id);
-
         void shareTo();
 
         void openInBrowser();

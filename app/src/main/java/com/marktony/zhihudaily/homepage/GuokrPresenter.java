@@ -85,13 +85,6 @@ public class GuokrPresenter implements GuokrContract.Presenter, OnStringListener
     }
 
     @Override
-    public void unBindService() {
-        if (service != null) {
-            service.unbindService(conn);
-        }
-    }
-
-    @Override
     public void start() {
 
     }

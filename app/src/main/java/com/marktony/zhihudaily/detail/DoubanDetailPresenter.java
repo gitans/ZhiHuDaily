@@ -3,6 +3,8 @@ package com.marktony.zhihudaily.detail;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AppCompatActivity;
@@ -15,10 +17,13 @@ import com.marktony.zhihudaily.app.App;
 import com.marktony.zhihudaily.bean.DoubanMomentStory;
 import com.marktony.zhihudaily.bean.DoubanMomentNews;
 import com.marktony.zhihudaily.bean.StringModelImpl;
+import com.marktony.zhihudaily.bean.ZhihuDailyStory;
 import com.marktony.zhihudaily.customtabs.CustomFallback;
 import com.marktony.zhihudaily.customtabs.CustomTabActivityHelper;
+import com.marktony.zhihudaily.db.DatabaseHelper;
 import com.marktony.zhihudaily.interfaces.OnStringListener;
 import com.marktony.zhihudaily.util.Api;
+import com.marktony.zhihudaily.util.NetworkState;
 import com.marktony.zhihudaily.util.Theme;
 
 import java.util.ArrayList;
@@ -38,7 +43,6 @@ public class DoubanDetailPresenter
 
     private SharedPreferences sp;
 
-    private int id;
     private DoubanMomentStory post;
 
     public DoubanDetailPresenter(AppCompatActivity activity, DoubanDetailContract.View view) {
@@ -47,11 +51,6 @@ public class DoubanDetailPresenter
         this.view.setPresenter(this);
         sp = activity.getSharedPreferences("user_settings",MODE_PRIVATE);
         model = new StringModelImpl(activity);
-    }
-
-    @Override
-    public void setArticleId(int id) {
-        this.id = id;
     }
 
     @Override
@@ -109,7 +108,9 @@ public class DoubanDetailPresenter
     @Override
     public void loadResult(int id) {
         view.showLoading();
-        model.load(Api.DOUBAN_ARTICLE_DETAIL + id, this);
+        if (NetworkState.networkConnected(activity)) {
+            model.load(Api.DOUBAN_ARTICLE_DETAIL + id, this);
+        }
     }
 
     @Override

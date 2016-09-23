@@ -87,7 +87,7 @@ public class GuokrFragment extends Fragment implements GuokrContract.View{
 
     @Override
     public void showError() {
-        Snackbar.make(rvGuokr,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(rvGuokr,R.string.loaded_failed,Snackbar.LENGTH_INDEFINITE).show();
     }
 
     @Override
@@ -127,9 +127,4 @@ public class GuokrFragment extends Fragment implements GuokrContract.View{
         });
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        presenter.unBindService();
-    }
 }

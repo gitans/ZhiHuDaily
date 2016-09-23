@@ -36,8 +36,6 @@ public interface ZhihuDailyContract {
 
         void bindService();
 
-        void unBindService();
-
     }
 
 }
