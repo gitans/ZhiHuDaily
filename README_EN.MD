@@ -14,7 +14,7 @@ API of ZhiHuDaily is [知乎日报 API 分析](https://github.com/izzyleung/Zhih
 > 以下所有 API 均由 知乎（Zhihu.Inc） 提供，本人（Xiao Liang）采取非正常手段获取。获取与共享之行为或有侵犯知乎权益的嫌疑。若被告知需停止共享与使用，本人会及时删除此页面与整个项目。
 请您暸解相关情况，并遵守知乎协议。
 
- The architecture of project is [Google Android Architecture Blueprints [beta]](https://github.com/googlesamples/android-architecture)
+The architecture of project is [Google Android Architecture Blueprints [beta]](https://github.com/googlesamples/android-architecture)
 
 ## screenshots
 ![screenshot](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/screenshot.png)
