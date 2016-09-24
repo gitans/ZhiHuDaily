@@ -88,9 +88,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         + "douban_time integer,"
                         + "douban_content text)");
 
-                default:
-
-
         }
     }
 }

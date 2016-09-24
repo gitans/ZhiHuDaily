@@ -67,5 +67,9 @@
     <string name="action_open_in_browser">Open in browser</string>
     <string name="tv_open_source_license">Open source license</string>
     <string name="network_error">Internet is lost, tap to retry</string>
+    <string name="easter_egg">Easter Egg</string>
+    <string name="easter_egg_content">You clicked my name so many times, do you like me?</string>
+    <string name="sure">Sure</string>
+    <string name="yes">Yes</string>
 
 </resources>

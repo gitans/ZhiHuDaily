@@ -136,7 +136,7 @@ public class GuokrDetailPresenter implements GuokrDetailContract.Presenter, OnSt
     public void onSuccess(String result) {
         if (App.getThemeValue() == Theme.NIGHT_THEME){
             result = result.replace("<div class=\"article \" id=\"contentMain\">", "<div class=\"article \" id=\"contentMain\" style=\"background-color:#212b30; color:#878787\">");
-            result = result.replace(" <div class=\"content clearfix\" id=\"articleContent\">", " <div class=\"content clearfix\" id=\"articleContent\"> style=\"background-color:#212b30\"");
+            result = result.replace(" <div class=\"content clearfix\" id=\"articleContent\">", " <div class=\"content clearfix\" id=\"articleContent\"> style=\"background-color:#212b30\">");
         }
         view.setUseInnerBrowser(sp.getBoolean("in_app_browser",true));
         view.setWebViewImageMode(sp.getBoolean("no_picture_mode",false));

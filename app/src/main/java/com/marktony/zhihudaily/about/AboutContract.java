@@ -34,6 +34,8 @@ public interface AboutContract {
 
         void donate();
 
+        void showEasterEgg();
+
     }
 
 }

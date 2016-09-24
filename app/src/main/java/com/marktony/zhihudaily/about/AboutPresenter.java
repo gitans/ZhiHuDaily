@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
+import android.os.SystemClock;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -151,6 +152,31 @@ public class AboutPresenter implements AboutContract.Presenter {
             }
         });
         dialog.show();
+    }
+
+    long[] hits = new long[3];
+    @Override
+    public void showEasterEgg() {
+        System.arraycopy(hits,1,hits,0,hits.length-1);
+        hits[hits.length - 1] = SystemClock.uptimeMillis();
+        if (hits[0] >= (SystemClock.uptimeMillis() - 500)) {
+            AlertDialog dialog = new AlertDialog.Builder(activity).create();
+            dialog.setTitle(R.string.easter_egg);
+            dialog.setMessage(activity.getString(R.string.easter_egg_content));
+            dialog.setButton(DialogInterface.BUTTON_POSITIVE, activity.getString(R.string.sure), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+            dialog.setButton(DialogInterface.BUTTON_NEGATIVE, activity.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+            dialog.show();
+        }
     }
 
 }
