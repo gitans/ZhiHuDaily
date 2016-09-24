@@ -2,7 +2,7 @@
 
 ![icon](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/icon.png)
 
-中文版 | [English](https://github.com/marktony/ZhiHuDaily/blob/master/README_en.md)
+中文版 | [English](https://github.com/marktony/ZhiHuDaily/blob/master/README_EN.MD)
 
 原名知乎小报，V3.0.0之后正式更名为纸飞机，是一款集合了知乎日报、果壳精选和豆瓣一刻的综合性阅读客户端。
 
