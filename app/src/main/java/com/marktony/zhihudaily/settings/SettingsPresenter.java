@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.preference.Preference;
+import android.util.Log;
 
 import com.bumptech.glide.Glide;
 
@@ -74,6 +75,12 @@ public class SettingsPresenter implements SettingsContract.Presenter {
             }
         }).start();
         Glide.get(context).clearMemory();
+    }
+
+    @Override
+    public void setTimeOfSavingArticles(Preference preference, Object newValue) {
+        editor.putString("time_of_saving_articles", (String)newValue);
+        editor.apply();
     }
 
 }

@@ -1,6 +1,5 @@
 package com.marktony.zhihudaily.detail;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -48,7 +47,7 @@ public class DoubanDetailFragment extends Fragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*presenter.setArticleId(getActivity().getIntent().getIntExtra("id", 0));*/
+        presenter.setId(getActivity().getIntent().getIntExtra("id", 0));
     }
 
     @Nullable
@@ -109,7 +108,14 @@ public class DoubanDetailFragment extends Fragment
     @Override
     public void showLoadError() {
         stopLoading();
-        Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        presenter.reLoad();
+                    }
+                })
+                .show();
     }
 
     @Override

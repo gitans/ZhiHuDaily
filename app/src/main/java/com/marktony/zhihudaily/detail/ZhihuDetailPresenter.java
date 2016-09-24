@@ -3,6 +3,7 @@ package com.marktony.zhihudaily.detail;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AppCompatActivity;
@@ -16,8 +17,10 @@ import com.marktony.zhihudaily.bean.StringModelImpl;
 import com.marktony.zhihudaily.bean.ZhihuDailyStory;
 import com.marktony.zhihudaily.customtabs.CustomFallback;
 import com.marktony.zhihudaily.customtabs.CustomTabActivityHelper;
+import com.marktony.zhihudaily.db.DatabaseHelper;
 import com.marktony.zhihudaily.interfaces.OnStringListener;
 import com.marktony.zhihudaily.util.Api;
+import com.marktony.zhihudaily.util.NetworkState;
 import com.marktony.zhihudaily.util.Theme;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -73,7 +76,33 @@ public class ZhihuDetailPresenter implements ZhihuDetailContract.Presenter, OnSt
     @Override
     public void requestData() {
         view.showLoading();
-        model.load(Api.ZHIHU_NEWS + id, this);
+        if (NetworkState.networkConnected(activity)) {
+            model.load(Api.ZHIHU_NEWS + id, this);
+        } else {
+            Gson gson = new Gson();
+            Cursor cursor = new DatabaseHelper(activity, "History.db", null, 4).getReadableDatabase()
+                    .query("Zhihu", null, null, null, null, null, null);
+            if (cursor.moveToFirst()) {
+                do {
+                    if (cursor.getInt(cursor.getColumnIndex("zhihu_id")) == id) {
+                        String content = cursor.getString(cursor.getColumnIndex("zhihu_content"));
+                        story = gson.fromJson(content, ZhihuDailyStory.class);
+                        if (story == null) {
+                            view.showResult(content);
+                        } else {
+                            view.showResult(convertResult(story.getBody()));
+                            view.setMainImageRes();
+                            view.useInnerBrowser(sp.getBoolean("in_app_browser",true));
+                            view.setImageMode(sp.getBoolean("no_picture_mode",false));
+                            view.setTitle(story.getTitle());
+
+                        }
+                    }
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            view.stopLoading();
+        }
     }
 
     @Override
@@ -97,6 +126,11 @@ public class ZhihuDetailPresenter implements ZhihuDetailContract.Presenter, OnSt
                     }
                 }
         );
+    }
+
+    @Override
+    public void reLoad() {
+        requestData();
     }
 
     @Override

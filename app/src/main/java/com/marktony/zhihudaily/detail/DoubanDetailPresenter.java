@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +16,6 @@ import com.marktony.zhihudaily.app.App;
 import com.marktony.zhihudaily.bean.DoubanMomentStory;
 import com.marktony.zhihudaily.bean.DoubanMomentNews;
 import com.marktony.zhihudaily.bean.StringModelImpl;
-import com.marktony.zhihudaily.bean.ZhihuDailyStory;
 import com.marktony.zhihudaily.customtabs.CustomFallback;
 import com.marktony.zhihudaily.customtabs.CustomTabActivityHelper;
 import com.marktony.zhihudaily.db.DatabaseHelper;
@@ -40,6 +38,8 @@ public class DoubanDetailPresenter
     private DoubanDetailContract.View view;
     private AppCompatActivity activity;
     private StringModelImpl model;
+
+    private int id;
 
     private SharedPreferences sp;
 
@@ -106,10 +106,36 @@ public class DoubanDetailPresenter
     }
 
     @Override
+    public void reLoad() {
+        loadResult(id);
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
     public void loadResult(int id) {
         view.showLoading();
         if (NetworkState.networkConnected(activity)) {
             model.load(Api.DOUBAN_ARTICLE_DETAIL + id, this);
+        } else {
+            Cursor cursor = new DatabaseHelper(activity, "History.db", null, 4).getReadableDatabase()
+                    .query("Douban", null, null, null, null, null, null);
+            if (cursor.moveToFirst()) {
+                do {
+                    if (cursor.getInt(cursor.getColumnIndex("douban_id")) == id) {
+                        Gson gson = new Gson();
+                        post = gson.fromJson(cursor.getString(cursor.getColumnIndex("douban_content")), DoubanMomentStory.class);
+                        view.showResult(convertContent());
+                    }
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            view.setMainImageResurce();
+            view.setTitle(post.getTitle());
+            view.stopLoading();
         }
     }
 

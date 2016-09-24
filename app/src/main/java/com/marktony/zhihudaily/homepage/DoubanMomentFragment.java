@@ -27,7 +27,8 @@ import java.util.Calendar;
  * Created by Lizhaotailang on 2016/8/11.
  */
 
-public class DoubanMomentFragment extends Fragment implements DoubanMomentContract.View {
+public class DoubanMomentFragment extends Fragment
+        implements DoubanMomentContract.View {
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
@@ -185,7 +186,7 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
 
     @Override
     public void showLoadError() {
-        Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_INDEFINITE).show();
+        Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -202,6 +203,17 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
         } else {
             adapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void showNetworkError() {
+        Snackbar.make(fab,R.string.no_network_connected,Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.go_to_set, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        presenter.goToSettings();
+                    }
+                }).show();
     }
 
 }

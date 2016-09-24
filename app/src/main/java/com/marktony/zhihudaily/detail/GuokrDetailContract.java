@@ -27,6 +27,8 @@ public interface GuokrDetailContract {
 
         void showMainImage(String imageUrl);
 
+        void setMainImageError();
+
         void setWebViewImageMode(boolean showImage);
 
         void setUseInnerBrowser(boolean use);
@@ -35,9 +37,7 @@ public interface GuokrDetailContract {
 
     interface Presenter extends BasePresenter {
 
-        void loadDataFromNet(int id);
-
-        void loadDataFromDB(int id);
+        void loadData(int id);
 
         void setId(int id);
 
@@ -50,6 +50,8 @@ public interface GuokrDetailContract {
         void openInBrowser();
 
         void openUrl(WebView webView, String url);
+
+        void reLoad();
 
     }
 

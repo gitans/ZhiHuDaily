@@ -17,7 +17,6 @@ import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.bean.GuokrHandpickNews;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.DividerItemDecoration;
-import com.marktony.zhihudaily.util.Api;
 
 import java.util.ArrayList;
 
@@ -40,6 +39,11 @@ public class GuokrFragment extends Fragment implements GuokrContract.View{
 
     public static GuokrFragment newInstance() {
         return new GuokrFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Nullable
@@ -87,7 +91,7 @@ public class GuokrFragment extends Fragment implements GuokrContract.View{
 
     @Override
     public void showError() {
-        Snackbar.make(rvGuokr,R.string.loaded_failed,Snackbar.LENGTH_INDEFINITE).show();
+        Snackbar.make(rvGuokr,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

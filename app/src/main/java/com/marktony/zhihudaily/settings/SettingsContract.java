@@ -25,6 +25,8 @@ public interface SettingsContract {
 
         void cleanGlideCache();
 
+        void setTimeOfSavingArticles(Preference preference, Object newValue);
+
     }
 
 }

@@ -1,9 +1,6 @@
 package com.marktony.zhihudaily.homepage;
 
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,7 +19,6 @@ import com.marktony.zhihudaily.bean.ZhihuDailyNews;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.DividerItemDecoration;
 import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
-import com.marktony.zhihudaily.db.DatabaseHelper;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.ArrayList;
@@ -33,7 +29,8 @@ import java.util.Calendar;
  * 最新消息
  * latest posts
  */
-public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.View{
+public class ZhihuDailyFragment extends Fragment
+        implements ZhihuDailyContract.View{
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refresh;
@@ -67,8 +64,6 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
         initViews(view);
 
         presenter.loadPosts(Calendar.getInstance().getTimeInMillis(), false);
-
-        // presenter.bindService();
 
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
@@ -172,21 +167,9 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
         refresh.setSize(SwipeRefreshLayout.DEFAULT);
     }
 
-    /*private void deleteTimeoutPosts(){
-
-        Calendar c = Calendar.getInstance();
-        c.add(Calendar.DAY_OF_MONTH,-2);
-
-        String[] whereArgs = {new DateFormatter().ZhihuDailyDateFormat(c.getTimeInMillis())};
-
-        db.delete("LatestPosts","date<?",whereArgs);
-        db.delete("Contents","date<?",whereArgs);
-
-    }*/
-
     @Override
     public void showError() {
-        Snackbar.make(fab, R.string.loaded_failed,Snackbar.LENGTH_INDEFINITE).show();
+        Snackbar.make(fab, R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -223,6 +206,17 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
         } else {
             adapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void showNetworkError() {
+        Snackbar.make(fab,R.string.no_network_connected,Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.go_to_set, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        presenter.goToSettings();
+                    }
+                }).show();
     }
 
 }

@@ -9,6 +9,9 @@
 
     <string name="title_activity_read">阅读</string>
     <string name="loaded_failed">加载失败!</string>
+    <string name="retry">重试</string>
+    <string name="no_network_connected">当前没有网络连接…</string>
+    <string name="go_to_set">设置</string>
 
     <!--main menu-->
     <string name="change_theme">切换主题</string>
@@ -20,7 +23,7 @@
     <string name="share_to">分享至</string>
 
     <!--activity关于-->
-    <string name="version">版本:V3.0.0</string>
+    <string name="version">版本:V3.1.0</string>
     <string name="rate">为纸飞机应用评分</string>
     <string name="feedback">反馈Bug / 建议</string>
     <string name="donate">捐赠开发者</string>
@@ -54,6 +57,8 @@
     <string name="no_picture_mode_description">阅读时不再加载图片</string>
     <string name="in_app_browser">使用内置浏览器</string>
     <string name="in_app_browser_description">应用内查看链接</string>
+    <string name="time_of_saving_articles">文章保存时间</string>
+    <string name="other_settings">其他设置</string>
     <string name="clear_image_cache">清除图片缓存</string>
     <string name="clear_image_cache_successfully">清理成功</string>
     <!--setting-->

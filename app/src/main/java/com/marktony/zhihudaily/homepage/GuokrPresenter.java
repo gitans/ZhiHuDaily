@@ -1,14 +1,12 @@
 package com.marktony.zhihudaily.homepage;
 
-import android.app.Service;
-import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.IBinder;
+import android.provider.Settings;
+import android.support.v4.content.LocalBroadcastManager;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
@@ -36,11 +34,9 @@ public class GuokrPresenter implements GuokrContract.Presenter, OnStringListener
     private DatabaseHelper dbHelper;
     private SQLiteDatabase db;
 
-    private ServiceConnection conn;
-    private CacheService service;
+    private boolean isNetworkConnected = true;
 
     private ArrayList<GuokrHandpickNews.result> list = new ArrayList<GuokrHandpickNews.result>();
-    private ArrayList<Integer> guokrIds = new ArrayList<Integer>();
 
     public GuokrPresenter(Context context, GuokrContract.View view) {
         this.context = context;
@@ -59,29 +55,6 @@ public class GuokrPresenter implements GuokrContract.Presenter, OnStringListener
                 .putExtra("headlineImageUrl", item.getHeadline_img())
                 .putExtra("title", item.getTitle())
         );
-    }
-
-    @Override
-    public void bindService() {
-        conn = new ServiceConnection() {
-
-            @Override
-            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-                CacheService.MyBinder binder = (CacheService.MyBinder) iBinder;
-                service = binder.getService();
-                binder.getService().setGuokrIds(guokrIds);
-                bindService();
-                service.startGuokrCache();
-            }
-
-            @Override
-            public void onServiceDisconnected(ComponentName componentName) {
-
-            }
-        };
-
-        context.bindService(new Intent(context, CacheService.class), conn, Service.BIND_AUTO_CREATE);
-
     }
 
     @Override
@@ -122,8 +95,6 @@ public class GuokrPresenter implements GuokrContract.Presenter, OnStringListener
         GuokrHandpickNews question = gson.fromJson(result, GuokrHandpickNews.class);
         for (GuokrHandpickNews.result re : question.getResult()){
             list.add(re);
-            guokrIds.add(re.getId());
-
             if(!queryIfIDExists(re.getId())) {
                 try {
                     db.beginTransaction();
@@ -142,6 +113,10 @@ public class GuokrPresenter implements GuokrContract.Presenter, OnStringListener
                 }
 
             }
+            Intent intent = new Intent("com.marktony.zhihudaily.LOCAL_BROADCAST");
+            intent.putExtra("type", CacheService.TYPE_GUOKR);
+            intent.putExtra("id", re.getId());
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 
         }
         view.showResults(list);

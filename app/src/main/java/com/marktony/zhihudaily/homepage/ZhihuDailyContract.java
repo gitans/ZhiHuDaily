@@ -22,6 +22,8 @@ public interface ZhihuDailyContract {
 
         void showResults(ArrayList<ZhihuDailyNews.Question> list);
 
+        void showNetworkError();
+
     }
 
     interface Presenter extends BasePresenter {
@@ -34,7 +36,7 @@ public interface ZhihuDailyContract {
 
         void startReading(int position);
 
-        void bindService();
+        void goToSettings();
 
     }
 

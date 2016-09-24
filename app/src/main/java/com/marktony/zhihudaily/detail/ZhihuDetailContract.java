@@ -51,6 +51,8 @@ public interface ZhihuDetailContract {
 
         void openUrl(WebView webView, String url);
 
+        void reLoad();
+
     }
 
 }

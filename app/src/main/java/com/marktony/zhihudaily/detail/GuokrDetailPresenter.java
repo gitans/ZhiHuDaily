@@ -3,6 +3,7 @@ package com.marktony.zhihudaily.detail;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AppCompatActivity;
@@ -14,8 +15,10 @@ import com.marktony.zhihudaily.app.App;
 import com.marktony.zhihudaily.bean.StringModelImpl;
 import com.marktony.zhihudaily.customtabs.CustomFallback;
 import com.marktony.zhihudaily.customtabs.CustomTabActivityHelper;
+import com.marktony.zhihudaily.db.DatabaseHelper;
 import com.marktony.zhihudaily.interfaces.OnStringListener;
 import com.marktony.zhihudaily.util.Api;
+import com.marktony.zhihudaily.util.NetworkState;
 import com.marktony.zhihudaily.util.Theme;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -46,19 +49,29 @@ public class GuokrDetailPresenter implements GuokrDetailContract.Presenter, OnSt
 
     @Override
     public void start() {
-
+        loadData(id);
     }
 
     @Override
-    public void loadDataFromNet(int id) {
+    public void loadData(int id) {
         view.showLoading();
-        model.load(Api.GUOKR_ARTICLE_LINK_V2 + id, this);
+        if (NetworkState.networkConnected(activity)) {
+            model.load(Api.GUOKR_ARTICLE_LINK_V2 + id, this);
+        } else {
+            Cursor cursor = new DatabaseHelper(activity, "History.db", null, 4).getReadableDatabase()
+                    .query("Guokr", null, null, null, null, null, null);
+            if (cursor.moveToFirst()) {
+                do {
+                    if (cursor.getInt(cursor.getColumnIndex("guokr_id")) == id) {
+                        onSuccess(cursor.getString(cursor.getColumnIndex("guokr_content")));
+                        break;
+                    }
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
     }
 
-    @Override
-    public void loadDataFromDB(int id) {
-
-    }
 
     @Override
     public void setId(int id) {
@@ -89,13 +102,9 @@ public class GuokrDetailPresenter implements GuokrDetailContract.Presenter, OnSt
 
     @Override
     public void openInBrowser() {
-        if (id == 0) {
-            try {
-                activity.startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(Api.GUOKR_ARTICLE_LINK_V2 + id)));
-            } catch (android.content.ActivityNotFoundException ex){
-                view.showLoadError();
-            }
-        } else {
+        try {
+            activity.startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(Api.GUOKR_ARTICLE_LINK_V2 + id)));
+        } catch (android.content.ActivityNotFoundException ex){
             view.showLoadError();
         }
     }
@@ -119,6 +128,11 @@ public class GuokrDetailPresenter implements GuokrDetailContract.Presenter, OnSt
     }
 
     @Override
+    public void reLoad() {
+
+    }
+
+    @Override
     public void onSuccess(String result) {
         if (App.getThemeValue() == Theme.NIGHT_THEME){
             result = result.replace("<div class=\"article \" id=\"contentMain\">", "<div class=\"article \" id=\"contentMain\" style=\"background-color:#212b30; color:#878787\">");
@@ -134,6 +148,7 @@ public class GuokrDetailPresenter implements GuokrDetailContract.Presenter, OnSt
 
     @Override
     public void onError(VolleyError error) {
+        view.setMainImageError();
         view.stopLoading();
         view.showLoadError();
     }

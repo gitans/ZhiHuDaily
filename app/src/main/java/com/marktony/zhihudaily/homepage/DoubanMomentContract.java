@@ -22,6 +22,8 @@ public interface DoubanMomentContract {
 
         void showResults(ArrayList<DoubanMomentNews.posts> list);
 
+        void showNetworkError();
+
     }
 
     interface Presenter extends BasePresenter {
@@ -34,7 +36,7 @@ public interface DoubanMomentContract {
 
         void loadMore(long date);
 
-        void bindService();
+        void goToSettings();
 
     }
 

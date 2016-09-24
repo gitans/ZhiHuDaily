@@ -141,7 +141,14 @@ public class ZhihuDetailFragment extends Fragment
 
     @Override
     public void showLoadError() {
-        Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        presenter.reLoad();
+                    }
+                })
+                .show();
     }
 
     @Override

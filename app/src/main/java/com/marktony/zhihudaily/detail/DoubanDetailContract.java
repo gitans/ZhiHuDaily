@@ -37,6 +37,8 @@ public interface DoubanDetailContract {
 
     interface Presenter extends BasePresenter {
 
+        void setId(int id);
+
         void loadResult(int id);
 
         void shareTo();
@@ -44,6 +46,8 @@ public interface DoubanDetailContract {
         void openInBrowser();
 
         void openUrl(WebView webView, String url);
+
+        void reLoad();
 
     }
 

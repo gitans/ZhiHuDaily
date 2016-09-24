@@ -64,7 +64,7 @@ public class GuokrDetailFragment extends Fragment
         initViews(view);
         setHasOptionsMenu(true);
 
-        presenter.loadDataFromNet(getActivity().getIntent().getIntExtra("id", 0));
+        presenter.loadData(getActivity().getIntent().getIntExtra("id", 0));
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,7 +143,14 @@ public class GuokrDetailFragment extends Fragment
 
     @Override
     public void showLoadError() {
-        Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        presenter.reLoad();
+                    }
+                })
+                .show();
     }
 
     @Override
@@ -163,15 +170,16 @@ public class GuokrDetailFragment extends Fragment
 
     @Override
     public void showMainImage(String imageUrl) {
-        if (imageUrl != null){
-            Glide.with(getActivity())
-                    .load(imageUrl)
-                    .asBitmap()
-                    .centerCrop()
-                    .into(imageView);
-        } else {
-            imageView.setImageResource(R.drawable.no_img);
-        }
+        Glide.with(getActivity())
+                .load(imageUrl)
+                .asBitmap()
+                .centerCrop()
+                .into(imageView);
+    }
+
+    @Override
+    public void setMainImageError() {
+        imageView.setImageResource(R.drawable.no_img);
     }
 
     @Override

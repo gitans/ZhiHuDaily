@@ -1,14 +1,12 @@
 package com.marktony.zhihudaily.homepage;
 
-import android.app.Service;
-import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.IBinder;
+import android.provider.Settings;
+import android.support.v4.content.LocalBroadcastManager;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
@@ -41,10 +39,6 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter, OnStri
     private DateFormatter formatter = new DateFormatter();
 
     private ArrayList<ZhihuDailyNews.Question> list = new ArrayList<ZhihuDailyNews.Question>();
-    private ArrayList<Integer> zhihuIds = new ArrayList<Integer>();
-
-    private ServiceConnection conn;
-    private CacheService service;
 
     private DatabaseHelper dbHelper;
     private SQLiteDatabase db;
@@ -89,7 +83,11 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter, OnStri
 
     @Override
     public void loadMore(long date) {
-        model.load(Api.ZHIHU_HISTORY + formatter.ZhihuDailyDateFormat(date), this);
+        if (NetworkState.networkConnected(context)) {
+            model.load(Api.ZHIHU_HISTORY + formatter.ZhihuDailyDateFormat(date), this);
+        } else {
+            view.showNetworkError();
+        }
     }
 
     @Override
@@ -100,25 +98,8 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter, OnStri
     }
 
     @Override
-    public void bindService() {
-        conn = new ServiceConnection() {
-
-            @Override
-            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-                CacheService.MyBinder binder = (CacheService.MyBinder) iBinder;
-                service = binder.getService();
-                binder.getService().setZhihuIds(zhihuIds);
-                bindService();
-                service.startZhihuCache();
-            }
-
-            @Override
-            public void onServiceDisconnected(ComponentName componentName) {
-
-            }
-        };
-
-        context.bindService(new Intent(context, CacheService.class), conn, Service.BIND_AUTO_CREATE);
+    public void goToSettings() {
+        context.startActivity(new Intent(Settings.ACTION_SETTINGS));
     }
 
     @Override
@@ -135,8 +116,6 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter, OnStri
 
         for (ZhihuDailyNews.Question item : post.getStories()) {
             list.add(item);
-            zhihuIds.add(item.getId());
-
             if ( !queryIfIDExists(item.getId())) {
                 db.beginTransaction();
                 try {
@@ -156,6 +135,11 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter, OnStri
                 }
 
             }
+            Intent intent = new Intent("com.marktony.zhihudaily.LOCAL_BROADCAST");
+            intent.putExtra("type", CacheService.TYPE_ZHIHU);
+            intent.putExtra("id", item.getId());
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+
         }
 
         view.showResults(list);

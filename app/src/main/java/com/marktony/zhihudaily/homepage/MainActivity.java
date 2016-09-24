@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnVi
         addFragment();
         initViews();
 
-        // startService(new Intent(this, CacheService.class));
+        startService(new Intent(this, CacheService.class));
 
     }
 
