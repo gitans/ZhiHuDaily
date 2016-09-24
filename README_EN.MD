@@ -14,7 +14,7 @@ API of ZhiHuDaily is [知乎日报 API 分析](https://github.com/izzyleung/Zhih
 > 以下所有 API 均由 知乎（Zhihu.Inc） 提供，本人（Xiao Liang）采取非正常手段获取。获取与共享之行为或有侵犯知乎权益的嫌疑。若被告知需停止共享与使用，本人会及时删除此页面与整个项目。
 请您暸解相关情况，并遵守知乎协议。
 
-The architecture of project is [Google Android Architecture Blueprints [beta]](https://github.com/googlesamples/android-architecture)
+ The architecture of project is [Google Android Architecture Blueprints [beta]](https://github.com/googlesamples/android-architecture)
 
 ## screenshots
 ![screenshot](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/screenshot.png)
@@ -26,6 +26,14 @@ The architecture of project is [Google Android Architecture Blueprints [beta]](h
 * [Cool market](http://www.coolapk.com/apk/com.marktony.zhihudaily)
 * Smartisan App Market
 
+## Open Source Library
+Name | Introduction
+--------- | --------
+[Volley](https://android.googlesource.com/platform/frameworks/volley/) | Volley is an HTTP library that makes networking for Android apps easier and most importantly, faster. Volley is available through the open AOSP repository.
+[MaterialDateTimePicker](https://github.com/wdullaer/MaterialDateTimePicker) | Pick a date or time on Android in style
+[Glide](https://github.com/bumptech/glide) | An image loading and caching library for Android focused on smooth scrolling
+[Android Support Libraries](https://developer.android.com/topic/libraries/support-library/index.html) | The Android Support Library offers a number of features that are not built into the framework. These libraries offer backward-compatible versions of new features, provide useful UI elements that are not included in the framework, and provide a range of utilities that apps can draw on.
+[Gson](https://github.com/google/gson) | A Java serialization/deserialization library that can convert Java Objects into JSON and back.
 
 ## Contact Me
 marktonymengyi#gmail.com (replace '#' with '@')
