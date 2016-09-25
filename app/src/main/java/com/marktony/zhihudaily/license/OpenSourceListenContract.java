@@ -18,8 +18,6 @@ public interface OpenSourceListenContract {
 
     interface Presenter extends BasePresenter {
 
-        void showLicense();
-
     }
 
 }

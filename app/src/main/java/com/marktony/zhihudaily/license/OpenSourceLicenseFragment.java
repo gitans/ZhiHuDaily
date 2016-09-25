@@ -20,7 +20,6 @@ import com.marktony.zhihudaily.R;
 public class OpenSourceLicenseFragment extends Fragment
         implements OpenSourceListenContract.View{
 
-    private OpenSourceListenContract.Presenter presenter;
     private WebView webView;
 
     public OpenSourceLicenseFragment() {
@@ -31,11 +30,6 @@ public class OpenSourceLicenseFragment extends Fragment
         return new OpenSourceLicenseFragment();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        presenter.start();
-    }
 
     @Nullable
     @Override
@@ -44,6 +38,8 @@ public class OpenSourceLicenseFragment extends Fragment
 
         initViews(view);
         setHasOptionsMenu(true);
+
+        loadLicense("file:///android_asset/license.html");
 
         return view;
     }
@@ -58,9 +54,7 @@ public class OpenSourceLicenseFragment extends Fragment
 
     @Override
     public void setPresenter(OpenSourceListenContract.Presenter presenter) {
-        if (presenter != null){
-            this.presenter = presenter;
-        }
+
     }
 
     @Override

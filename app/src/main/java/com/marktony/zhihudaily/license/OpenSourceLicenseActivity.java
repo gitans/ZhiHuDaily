@@ -24,8 +24,6 @@ public class OpenSourceLicenseActivity extends AppCompatActivity {
                 .add(R.id.container, fragment)
                 .commit();
 
-        new OpenSourceLicensePresenter(fragment);
-
     }
 
 }
