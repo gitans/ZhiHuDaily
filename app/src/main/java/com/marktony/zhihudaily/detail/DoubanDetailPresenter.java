@@ -141,7 +141,7 @@ public class DoubanDetailPresenter
 
     @Override
     public void start() {
-
+        loadResult(id);
     }
 
     @Override

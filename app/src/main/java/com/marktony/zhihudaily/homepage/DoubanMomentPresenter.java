@@ -109,7 +109,7 @@ public class DoubanMomentPresenter implements DoubanMomentContract.Presenter, On
 
     @Override
     public void start() {
-
+        loadPosts(Calendar.getInstance().getTimeInMillis(), false);
     }
 
     @Override

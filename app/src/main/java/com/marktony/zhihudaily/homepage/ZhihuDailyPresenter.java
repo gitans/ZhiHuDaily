@@ -104,7 +104,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter, OnStri
 
     @Override
     public void start() {
-
+        loadPosts(Calendar.getInstance().getTimeInMillis(), false);
     }
 
     @Override

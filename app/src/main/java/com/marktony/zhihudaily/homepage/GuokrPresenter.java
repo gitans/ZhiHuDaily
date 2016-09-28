@@ -59,7 +59,7 @@ public class GuokrPresenter implements GuokrContract.Presenter, OnStringListener
 
     @Override
     public void start() {
-
+        loadPosts();
     }
 
     @Override

@@ -49,7 +49,7 @@ public class ZhihuDetailPresenter implements ZhihuDetailContract.Presenter, OnSt
 
     @Override
     public void start() {
-
+        requestData();
     }
 
     @Override

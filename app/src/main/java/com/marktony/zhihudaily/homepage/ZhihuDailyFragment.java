@@ -63,8 +63,6 @@ public class ZhihuDailyFragment extends Fragment
 
         initViews(view);
 
-        presenter.loadPosts(Calendar.getInstance().getTimeInMillis(), false);
-
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
             @Override
@@ -140,6 +138,11 @@ public class ZhihuDailyFragment extends Fragment
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.start();
+    }
 
     @Override
     public void setPresenter(ZhihuDailyContract.Presenter presenter) {

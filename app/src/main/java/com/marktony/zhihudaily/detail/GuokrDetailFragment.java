@@ -64,8 +64,6 @@ public class GuokrDetailFragment extends Fragment
         initViews(view);
         setHasOptionsMenu(true);
 
-        presenter.loadData(getActivity().getIntent().getIntExtra("id", 0));
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,6 +72,12 @@ public class GuokrDetailFragment extends Fragment
         });
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.start();
     }
 
     @Override

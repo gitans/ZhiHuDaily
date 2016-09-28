@@ -61,8 +61,6 @@ public class ZhihuDetailFragment extends Fragment
         initViews(view);
         setHasOptionsMenu(true);
 
-        presenter.requestData();
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,6 +69,12 @@ public class ZhihuDetailFragment extends Fragment
         });
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.start();
     }
 
     @Override

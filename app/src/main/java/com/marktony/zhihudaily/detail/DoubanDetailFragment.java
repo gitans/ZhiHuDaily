@@ -58,8 +58,6 @@ public class DoubanDetailFragment extends Fragment
         initViews(view);
         setHasOptionsMenu(true);
 
-        presenter.loadResult(getActivity().getIntent().getIntExtra("id", 0));
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,6 +66,12 @@ public class DoubanDetailFragment extends Fragment
         });
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.start();
     }
 
     @Override
