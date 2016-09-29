@@ -1,7 +1,8 @@
 # Paper Plane
 
-[![Platform](https://img.shields.io/badge/Platform-Android-blue.svg)](https://img.shields.io/badge/Platform-Android-blue.svg)
-[![Gradle Version](https://img.shields.io/badge/Gradle-2.2.0-blue.svg)](https://img.shields.io/badge/Gradle-2.2.0-blue.svg)
+[![Platform](https://img.shields.io/badge/platform-Android-blue.svg)](https://github.com/marktony/ZhiHuDaily)
+[![Release](https://img.shields.io/badge/release-3.1.0-blue.svg)](https://github.com/marktony/ZhiHuDaily)
+[![Gradle Version](https://img.shields.io/badge/gradle-2.2.0-blue.svg)](https://github.com/marktony/ZhiHuDaily)
 [![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/marktony/ZhiHuDaily/master/LICENSE)
 
 ![icon](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/icon.png)
