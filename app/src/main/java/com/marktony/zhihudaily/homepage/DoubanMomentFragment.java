@@ -60,6 +60,8 @@ public class DoubanMomentFragment extends Fragment
 
         initViews(view);
 
+        presenter.start();
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,12 +133,6 @@ public class DoubanMomentFragment extends Fragment
         });
 
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        presenter.start();
     }
 
     @Override

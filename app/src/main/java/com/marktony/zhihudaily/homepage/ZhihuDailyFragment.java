@@ -63,6 +63,8 @@ public class ZhihuDailyFragment extends Fragment
 
         initViews(view);
 
+        presenter.start();
+
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
             @Override
@@ -136,12 +138,6 @@ public class ZhihuDailyFragment extends Fragment
         });
 
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        presenter.start();
     }
 
     @Override

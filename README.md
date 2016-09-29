@@ -1,5 +1,9 @@
 # 纸飞机
 
+[![Platform](https://img.shields.io/badge/Platform-Android-blue.svg)](https://img.shields.io/badge/Platform-Android-blue.svg)
+[![Gradle Version](https://img.shields.io/badge/Gradle-2.2.0-blue.svg)](https://img.shields.io/badge/Gradle-2.2.0-blue.svg)
+[![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/marktony/ZhiHuDaily/master/LICENSE)
+
 ![icon](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/icon.png)
 
 中文版 | [English](https://github.com/marktony/ZhiHuDaily/blob/master/README_EN.MD)

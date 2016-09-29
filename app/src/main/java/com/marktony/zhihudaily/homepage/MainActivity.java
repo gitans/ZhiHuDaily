@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnVi
     private ImageView imageView;
     private MainFragment fragment;
 
-    private final long ANIMTION_TIME = 1000;
+    private final long ANIMATION_TIME = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnVi
      * @param view
      */
     private void startAnimation(final View view) {
-        ValueAnimator animator = ValueAnimator.ofFloat(1f).setDuration(ANIMTION_TIME);
+        ValueAnimator animator = ValueAnimator.ofFloat(1f).setDuration(ANIMATION_TIME);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {

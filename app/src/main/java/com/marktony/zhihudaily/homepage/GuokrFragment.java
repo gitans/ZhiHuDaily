@@ -54,6 +54,8 @@ public class GuokrFragment extends Fragment implements GuokrContract.View{
 
         initViews(view);
 
+        presenter.start();
+
         refreshGuokr.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -62,12 +64,6 @@ public class GuokrFragment extends Fragment implements GuokrContract.View{
         });
 
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        presenter.start();
     }
 
     @Override
