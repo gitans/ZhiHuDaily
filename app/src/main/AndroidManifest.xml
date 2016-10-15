@@ -52,7 +52,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity android:name=".license.OpenSourceLicenseActivity"
-            android:label="@string/tv_open_source_license"
+            android:label="@string/open_source_license"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".innerbrowser.InnerBrowserActivity"

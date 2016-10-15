@@ -33,6 +33,10 @@ public interface GuokrDetailContract {
 
         void setUseInnerBrowser(boolean use);
 
+        void showTextCopied();
+
+        void showCopyTextError();
+
     }
 
     interface Presenter extends BasePresenter {
@@ -52,6 +56,8 @@ public interface GuokrDetailContract {
         void openUrl(WebView webView, String url);
 
         void reLoad();
+
+        void copyText();
 
     }
 

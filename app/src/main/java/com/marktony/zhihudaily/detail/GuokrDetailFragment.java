@@ -88,10 +88,13 @@ public class GuokrDetailFragment extends Fragment
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home){
+        int id = item.getItemId();
+        if (id == android.R.id.home){
             getActivity().onBackPressed();
-        } else if (item.getItemId() == R.id.action_open_in_browser) {
+        } else if (id == R.id.action_open_in_browser) {
             presenter.openInBrowser();
+        } else if (id == R.id.action_copy_text) {
+            presenter.copyText();
         }
         return true;
     }
@@ -203,6 +206,16 @@ public class GuokrDetailFragment extends Fragment
             }
 
         });
+    }
+
+    @Override
+    public void showTextCopied() {
+        Snackbar.make(fab, R.string.text_copied, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showCopyTextError() {
+        Snackbar.make(fab, R.string.text_copied_error, Snackbar.LENGTH_SHORT).show();
     }
 
     // to change the title's font size of toolbar layout

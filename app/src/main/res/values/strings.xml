@@ -8,10 +8,13 @@
     <string name="share_error">分享失败</string>
 
     <string name="title_activity_read">阅读</string>
+    <string name="title_activity_guokr_read">果壳精选</string>
     <string name="loaded_failed">加载失败!</string>
     <string name="retry">重试</string>
     <string name="no_network_connected">当前没有网络连接…</string>
     <string name="go_to_set">设置</string>
+    <string name="text_copied">复制成功</string>
+    <string name="text_copied_error">复制失败</string>
 
     <!--main menu-->
     <string name="change_theme">切换主题</string>
@@ -49,6 +52,11 @@
     <string name="zhihu_url">https://www.zhihu.com/people/kirin-momo</string>
     <string name="rate_description">如果你喜欢纸飞机App,请在商店中给它一个好评吧</string>
     <string name="zhihu_account">\@黎赵太郎</string>
+    <string name="open_source_license">开源许可</string>
+    <string name="easter_egg">彩蛋</string>
+    <string name="easter_egg_content">点我名字这么多次， 你一定是喜欢我!</string>
+    <string name="sure">确定</string>
+    <string name="yes">是的</string>
     <!--activity关于 end-->
 
     <!--settings_preference_fragment-->
@@ -63,14 +71,9 @@
     <string name="clear_image_cache_successfully">清理成功</string>
     <!--setting-->
 
-    <string name="title_activity_guokr_read">果壳精选</string>
     <string name="action_open_in_browser">在浏览器中打开</string>
-    <string name="tv_open_source_license">开源许可</string>
+    <string name="action_copy_text">复制内容文本</string>
 
     <string name="network_error">网络走丢了…点击重试</string>
-    <string name="easter_egg">彩蛋</string>
-    <string name="easter_egg_content">点我名字这么多次， 你一定是喜欢我!</string>
-    <string name="sure">确定</string>
-    <string name="yes">是的</string>
 
 </resources>

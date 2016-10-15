@@ -37,6 +37,10 @@ public interface ZhihuDetailContract {
 
         void useInnerBrowser(boolean use);
 
+        void showTextCopied();
+
+        void showCopyTextError();
+
     }
 
     interface Presenter extends BasePresenter {
@@ -52,6 +56,8 @@ public interface ZhihuDetailContract {
         void openUrl(WebView webView, String url);
 
         void reLoad();
+
+        void copyText();
 
     }
 

@@ -8,10 +8,13 @@
     <string name="share_error">Share failed</string>
 
     <string name="title_activity_read">Read</string>
+    <string name="title_activity_guokr_read">Guokr Handpick</string>
     <string name="loaded_failed">Load failed!</string>
     <string name="retry">Retry</string>
     <string name="no_network_connected">No Network Connected…</string>
     <string name="go_to_set">SETTINGS</string>
+    <string name="text_copied">Text copied</string>
+    <string name="text_copied_error">Copy text failed</string>
 
     <!--navigation view menu-->
     <string name="change_theme">Change Theme</string>
@@ -49,6 +52,10 @@
     <string name="github_url">https://github.com/marktony</string>
     <string name="zhihu_url">https://www.zhihu.com/people/kirin-momo</string>
     <string name="zhihu_account">\@黎赵太郎</string>
+    <string name="easter_egg">Easter Egg</string>
+    <string name="easter_egg_content">You clicked my name so many times, do you like me?</string>
+    <string name="sure">Positive</string>
+    <string name="yes">Yes</string>
     <!--activity about end-->
 
     <!--settings_preference_fragment-->
@@ -63,13 +70,10 @@
     <string name="clear_image_cache_successfully">Cache successfully cleared</string>
     <!--setting-->
 
-    <string name="title_activity_guokr_read">Guokr Handpick</string>
     <string name="action_open_in_browser">Open in browser</string>
-    <string name="tv_open_source_license">Open source license</string>
+    <string name="action_copy_text">Copy text</string>
+
     <string name="network_error">Internet is lost, tap to retry</string>
-    <string name="easter_egg">Easter Egg</string>
-    <string name="easter_egg_content">You clicked my name so many times, do you like me?</string>
-    <string name="sure">Sure</string>
-    <string name="yes">Yes</string>
+
 
 </resources>

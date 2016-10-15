@@ -1,12 +1,16 @@
 package com.marktony.zhihudaily.detail;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.webkit.WebView;
 
 import com.android.volley.VolleyError;
@@ -23,6 +27,7 @@ import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.NetworkState;
 import com.marktony.zhihudaily.util.Theme;
 
+import static android.content.Context.CLIPBOARD_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
@@ -131,6 +136,23 @@ public class ZhihuDetailPresenter implements ZhihuDetailContract.Presenter, OnSt
     @Override
     public void reLoad() {
         requestData();
+    }
+
+    @Override
+    public void copyText() {
+        if (story == null) {
+            view.showCopyTextError();
+            return;
+        }
+        ClipboardManager manager = (ClipboardManager) activity.getSystemService(CLIPBOARD_SERVICE);
+        ClipData clipData = null;
+        if (Build.VERSION.SDK_INT >= 24) {
+            clipData = ClipData.newPlainText("text", Html.fromHtml(story.getBody(), Html.FROM_HTML_MODE_LEGACY).toString());
+        } else {
+            clipData = ClipData.newPlainText("text", Html.fromHtml(story.getBody()).toString());
+        }
+        manager.setPrimaryClip(clipData);
+        view.showTextCopied();
     }
 
     @Override

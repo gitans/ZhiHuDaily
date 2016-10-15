@@ -1,12 +1,16 @@
 package com.marktony.zhihudaily.detail;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.webkit.WebView;
 
 import com.android.volley.VolleyError;
@@ -21,6 +25,7 @@ import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.NetworkState;
 import com.marktony.zhihudaily.util.Theme;
 
+import static android.content.Context.CLIPBOARD_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
@@ -38,6 +43,8 @@ public class GuokrDetailPresenter implements GuokrDetailContract.Presenter, OnSt
     private String imageUrl;
 
     private SharedPreferences sp;
+
+    private String post;
 
     public GuokrDetailPresenter(AppCompatActivity activity, GuokrDetailContract.View view) {
         this.activity = activity;
@@ -63,7 +70,8 @@ public class GuokrDetailPresenter implements GuokrDetailContract.Presenter, OnSt
             if (cursor.moveToFirst()) {
                 do {
                     if (cursor.getInt(cursor.getColumnIndex("guokr_id")) == id) {
-                        onSuccess(cursor.getString(cursor.getColumnIndex("guokr_content")));
+                        post = cursor.getString(cursor.getColumnIndex("guokr_content"));
+                        onSuccess(post);
                         break;
                     }
                 } while (cursor.moveToNext());
@@ -133,14 +141,32 @@ public class GuokrDetailPresenter implements GuokrDetailContract.Presenter, OnSt
     }
 
     @Override
+    public void copyText() {
+        if (post == null) {
+            view.showCopyTextError();
+            return;
+        }
+        ClipboardManager manager = (ClipboardManager) activity.getSystemService(CLIPBOARD_SERVICE);
+        ClipData clipData = null;
+        if (Build.VERSION.SDK_INT >= 24) {
+            clipData = ClipData.newPlainText("text", Html.fromHtml(post, Html.FROM_HTML_MODE_LEGACY).toString());
+        } else {
+            clipData = ClipData.newPlainText("text", Html.fromHtml(post).toString());
+        }
+        manager.setPrimaryClip(clipData);
+        view.showTextCopied();
+    }
+
+    @Override
     public void onSuccess(String result) {
+        this.post = result;
         if (App.getThemeValue() == Theme.NIGHT_THEME){
-            result = result.replace("<div class=\"article \" id=\"contentMain\">", "<div class=\"article \" id=\"contentMain\" style=\"background-color:#212b30; color:#878787\">");
-            result = result.replace("<div class=\"content clearfix\" id=\"articleContent\">", " <div class=\"content clearfix\" id=\"articleContent\" style=\"background-color:#212b30\">");
+            post = post.replace("<div class=\"article \" id=\"contentMain\">", "<div class=\"article \" id=\"contentMain\" style=\"background-color:#212b30; color:#878787\">");
+            post = post.replace("<div class=\"content clearfix\" id=\"articleContent\">", " <div class=\"content clearfix\" id=\"articleContent\" style=\"background-color:#212b30\">");
         }
         view.setUseInnerBrowser(sp.getBoolean("in_app_browser",true));
         view.setWebViewImageMode(sp.getBoolean("no_picture_mode",false));
-        view.showResult(result);
+        view.showResult(post);
         view.showMainImage(imageUrl);
         view.setTitle(title);
         view.stopLoading();

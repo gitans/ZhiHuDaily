@@ -33,6 +33,10 @@ public interface DoubanDetailContract {
 
         void setUseInnerBrowser(boolean use);
 
+        void showTextCopied();
+
+        void showCopyTextError();
+
     }
 
     interface Presenter extends BasePresenter {
@@ -48,6 +52,8 @@ public interface DoubanDetailContract {
         void openUrl(WebView webView, String url);
 
         void reLoad();
+
+        void copyText();
 
     }
 
