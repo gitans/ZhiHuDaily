@@ -27,7 +27,7 @@ public interface ZhihuDetailContract {
 
         void showMainImage(String url);
 
-        void setMainImageRes();
+        void setUsingLocalImage();
 
         void setTitle(String title);
 
@@ -35,7 +35,7 @@ public interface ZhihuDetailContract {
 
         void setImageMode(boolean showImage);
 
-        void useInnerBrowser(boolean use);
+        void showBrowserNotFoundError();
 
         void showTextCopied();
 

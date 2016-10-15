@@ -27,11 +27,11 @@ public interface DoubanDetailContract {
 
         void showMainImage(String imageUrl);
 
-        void setMainImageResurce();
+        void setUsingLocalImage();
 
         void setWebViewImageMode(boolean showImage);
 
-        void setUseInnerBrowser(boolean use);
+        void showBrowserNotFoundError();
 
         void showTextCopied();
 

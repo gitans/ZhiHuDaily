@@ -130,6 +130,14 @@ public class ZhihuDetailFragment extends Fragment
         //开启application Cache功能
         webView.getSettings().setAppCacheEnabled(false);
 
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                presenter.openUrl(view, url);
+                return true;
+            }
+
+        });
     }
 
     @Override
@@ -183,7 +191,7 @@ public class ZhihuDetailFragment extends Fragment
     }
 
     @Override
-    public void setMainImageRes() {
+    public void setUsingLocalImage() {
         imageView.setImageResource(R.drawable.no_img);
     }
 
@@ -203,16 +211,8 @@ public class ZhihuDetailFragment extends Fragment
     }
 
     @Override
-    public void useInnerBrowser(final boolean use) {
-        //不调用第三方浏览器即可进行页面反应
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                presenter.openUrl(view, url);
-                return use;
-            }
-
-        });
+    public void showBrowserNotFoundError() {
+        Snackbar.make(fab, R.string.no_browser_found,Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

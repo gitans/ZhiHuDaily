@@ -96,8 +96,7 @@ public class ZhihuDetailPresenter implements ZhihuDetailContract.Presenter, OnSt
                             view.showResult(content);
                         } else {
                             view.showResult(convertResult(story.getBody()));
-                            view.setMainImageRes();
-                            view.useInnerBrowser(sp.getBoolean("in_app_browser",true));
+                            view.setUsingLocalImage();
                             view.setImageMode(sp.getBoolean("no_picture_mode",false));
                             view.setTitle(story.getTitle());
 
@@ -117,20 +116,32 @@ public class ZhihuDetailPresenter implements ZhihuDetailContract.Presenter, OnSt
 
     @Override
     public void openUrl(WebView webView, String url) {
-        CustomTabsIntent.Builder customTabsIntent = new CustomTabsIntent.Builder()
-                .setToolbarColor(activity.getResources().getColor(R.color.colorAccent))
-                .setShowTitle(true);
-        CustomTabActivityHelper.openCustomTab(
-                activity,
-                customTabsIntent.build(),
-                Uri.parse(url),
-                new CustomFallback() {
-                    @Override
-                    public void openUri(Activity activity, Uri uri) {
-                        super.openUri(activity, uri);
+
+        if (sp.getBoolean("in_app_browser",true)) {
+            CustomTabsIntent.Builder customTabsIntent = new CustomTabsIntent.Builder()
+                    .setToolbarColor(activity.getResources().getColor(R.color.colorAccent))
+                    .setShowTitle(true);
+            CustomTabActivityHelper.openCustomTab(
+                    activity,
+                    customTabsIntent.build(),
+                    Uri.parse(url),
+                    new CustomFallback() {
+                        @Override
+                        public void openUri(Activity activity, Uri uri) {
+                            super.openUri(activity, uri);
+                        }
                     }
-                }
-        );
+            );
+        } else {
+
+            try{
+                activity.startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(url)));
+            } catch (android.content.ActivityNotFoundException ex){
+                view.showBrowserNotFoundError();
+            }
+
+        }
+
     }
 
     @Override
@@ -161,12 +172,11 @@ public class ZhihuDetailPresenter implements ZhihuDetailContract.Presenter, OnSt
         story = gson.fromJson(result, ZhihuDailyStory.class);
         if (story.getBody() == null) {
             view.showResultWithoutBody(story.getShare_url());
-            view.setMainImageRes();
+            view.setUsingLocalImage();
         } else {
             view.showResult(convertResult(story.getBody()));
             view.showMainImage(story.getImage());
             view.setMainImageSource(story.getImage_source());
-            view.useInnerBrowser(sp.getBoolean("in_app_browser",true));
             view.setImageMode(sp.getBoolean("no_picture_mode",false));
             view.setTitle(story.getTitle());
         }

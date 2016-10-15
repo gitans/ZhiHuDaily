@@ -119,20 +119,33 @@ public class GuokrDetailPresenter implements GuokrDetailContract.Presenter, OnSt
 
     @Override
     public void openUrl(WebView webView, String url) {
-        CustomTabsIntent.Builder customTabsIntent = new CustomTabsIntent.Builder()
-                .setToolbarColor(activity.getResources().getColor(R.color.colorPrimaryDark))
-                .setShowTitle(true);
-        CustomTabActivityHelper.openCustomTab(
-                activity,
-                customTabsIntent.build(),
-                Uri.parse(url),
-                new CustomFallback() {
-                    @Override
-                    public void openUri(Activity activity, Uri uri) {
-                        super.openUri(activity, uri);
+
+        if (sp.getBoolean("in_app_browser",true)) {
+
+            CustomTabsIntent.Builder customTabsIntent = new CustomTabsIntent.Builder()
+                    .setToolbarColor(activity.getResources().getColor(R.color.colorPrimaryDark))
+                    .setShowTitle(true);
+            CustomTabActivityHelper.openCustomTab(
+                    activity,
+                    customTabsIntent.build(),
+                    Uri.parse(url),
+                    new CustomFallback() {
+                        @Override
+                        public void openUri(Activity activity, Uri uri) {
+                            super.openUri(activity, uri);
+                        }
                     }
-                }
-        );
+            );
+        } else {
+
+            try{
+                activity.startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(url)));
+            } catch (android.content.ActivityNotFoundException ex){
+                view.showBrowserNotFoundError();
+            }
+
+        }
+
     }
 
     @Override
@@ -164,7 +177,6 @@ public class GuokrDetailPresenter implements GuokrDetailContract.Presenter, OnSt
             post = post.replace("<div class=\"article \" id=\"contentMain\">", "<div class=\"article \" id=\"contentMain\" style=\"background-color:#212b30; color:#878787\">");
             post = post.replace("<div class=\"content clearfix\" id=\"articleContent\">", " <div class=\"content clearfix\" id=\"articleContent\" style=\"background-color:#212b30\">");
         }
-        view.setUseInnerBrowser(sp.getBoolean("in_app_browser",true));
         view.setWebViewImageMode(sp.getBoolean("no_picture_mode",false));
         view.showResult(post);
         view.showMainImage(imageUrl);
@@ -174,7 +186,7 @@ public class GuokrDetailPresenter implements GuokrDetailContract.Presenter, OnSt
 
     @Override
     public void onError(VolleyError error) {
-        view.setMainImageError();
+        view.setUsingLocalImage();
         view.stopLoading();
         view.showLoadError();
     }

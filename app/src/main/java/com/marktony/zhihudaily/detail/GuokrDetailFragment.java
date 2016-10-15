@@ -121,16 +121,25 @@ public class GuokrDetailFragment extends Fragment
         imageView = (ImageView) view.findViewById(R.id.image_view);
         webView = (WebView) view.findViewById(R.id.web_view);
 
-        //能够和js交互
+        // 能够和js交互
         webView.getSettings().setJavaScriptEnabled(true);
-        //缩放,设置为不能缩放可以防止页面上出现放大和缩小的图标
+        // 缩放,设置为不能缩放可以防止页面上出现放大和缩小的图标
         webView.getSettings().setBuiltInZoomControls(false);
-        //缓存
+        // 缓存
         webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        //开启DOM storage API功能
+        // 开启DOM storage API功能
         webView.getSettings().setDomStorageEnabled(true);
-        //开启application Cache功能
+        // 开启application Cache功能
         webView.getSettings().setAppCacheEnabled(false);
+        // 设置为不使用本webview进行反应
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                presenter.openUrl(webView, url);
+                return true;
+            }
+
+        });
 
     }
 
@@ -185,7 +194,7 @@ public class GuokrDetailFragment extends Fragment
     }
 
     @Override
-    public void setMainImageError() {
+    public void setUsingLocalImage() {
         imageView.setImageResource(R.drawable.no_img);
     }
 
@@ -196,16 +205,8 @@ public class GuokrDetailFragment extends Fragment
     }
 
     @Override
-    public void setUseInnerBrowser(final boolean use) {
-// 不调用第三方浏览器即可进行页面反应
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                presenter.openUrl(webView, url);
-                return use;
-            }
-
-        });
+    public void showBrowserNotFoundError() {
+        Snackbar.make(fab, R.string.no_browser_found,Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

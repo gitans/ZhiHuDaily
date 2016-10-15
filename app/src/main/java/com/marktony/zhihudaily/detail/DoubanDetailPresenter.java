@@ -94,20 +94,33 @@ public class DoubanDetailPresenter
 
     @Override
     public void openUrl(WebView webView, String url) {
-        CustomTabsIntent.Builder customTabsIntent = new CustomTabsIntent.Builder()
-                .setToolbarColor(activity.getResources().getColor(R.color.colorPrimaryDark))
-                .setShowTitle(true);
-        CustomTabActivityHelper.openCustomTab(
-                activity,
-                customTabsIntent.build(),
-                Uri.parse(url),
-                new CustomFallback() {
-                    @Override
-                    public void openUri(Activity activity, Uri uri) {
-                        super.openUri(activity, uri);
+
+        if (sp.getBoolean("in_app_browser", true)) {
+
+            CustomTabsIntent.Builder customTabsIntent = new CustomTabsIntent.Builder()
+                    .setToolbarColor(activity.getResources().getColor(R.color.colorPrimaryDark))
+                    .setShowTitle(true);
+            CustomTabActivityHelper.openCustomTab(
+                    activity,
+                    customTabsIntent.build(),
+                    Uri.parse(url),
+                    new CustomFallback() {
+                        @Override
+                        public void openUri(Activity activity, Uri uri) {
+                            super.openUri(activity, uri);
+                        }
                     }
-                }
-        );
+            );
+        } else {
+
+            try{
+                activity.startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(url)));
+            } catch (android.content.ActivityNotFoundException ex){
+                view.showBrowserNotFoundError();
+            }
+
+        }
+
     }
 
     @Override
@@ -155,7 +168,7 @@ public class DoubanDetailPresenter
                 } while (cursor.moveToNext());
             }
             cursor.close();
-            view.setMainImageResurce();
+            view.setUsingLocalImage();
             view.setTitle(post.getTitle());
             view.stopLoading();
         }
@@ -174,11 +187,11 @@ public class DoubanDetailPresenter
         if (post.getPhotos().size() != 0) {
             view.showMainImage(post.getPhotos().get(0).getMedium().getUrl());
         } else {
-            view.setMainImageResurce();
+            view.setUsingLocalImage();
         }
         view.setTitle(post.getTitle());
         view.setWebViewImageMode(sp.getBoolean("no_picture_mode",false));
-        view.setUseInnerBrowser(sp.getBoolean("in_app_browser",true));
+
         view.stopLoading();
     }
 

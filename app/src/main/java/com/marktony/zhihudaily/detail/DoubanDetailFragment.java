@@ -141,7 +141,7 @@ public class DoubanDetailFragment extends Fragment
     }
 
     @Override
-    public void setMainImageResurce() {
+    public void setUsingLocalImage() {
         imageView.setImageResource(R.drawable.no_img);
     }
 
@@ -152,16 +152,8 @@ public class DoubanDetailFragment extends Fragment
     }
 
     @Override
-    public void setUseInnerBrowser(final boolean use) {
-        // 不调用第三方浏览器即可进行页面反应
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                presenter.openUrl(webView, url);
-                return use;
-            }
-
-        });
+    public void showBrowserNotFoundError() {
+        Snackbar.make(fab, R.string.no_browser_found,Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -206,6 +198,15 @@ public class DoubanDetailFragment extends Fragment
         webView.getSettings().setDomStorageEnabled(true);
         // 开启application Cache功能
         webView.getSettings().setAppCacheEnabled(false);
+
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                presenter.openUrl(webView, url);
+                return true;
+            }
+
+        });
 
     }
 

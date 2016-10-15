@@ -16,35 +16,6 @@
         android:id="@+id/image_view"
         android:layout_gravity="center_vertical" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:id="@+id/tv_title"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:textColor="?attr/textColorCustomized"
-            android:gravity="center_vertical"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:id="@+id/tv_summary"
-            android:textSize="13sp"
-            android:gravity="center_vertical"
-            android:maxLines="2"
-            android:textColor="?attr/textColorCustomized"
-            android:ellipsize="end"/>
-
-    </LinearLayout>
+    <include layout="@layout/guokr_douban_post_layout_without_img" />
 
 </LinearLayout>

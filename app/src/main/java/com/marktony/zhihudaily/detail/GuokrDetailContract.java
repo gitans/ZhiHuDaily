@@ -27,11 +27,11 @@ public interface GuokrDetailContract {
 
         void showMainImage(String imageUrl);
 
-        void setMainImageError();
+        void setUsingLocalImage();
 
         void setWebViewImageMode(boolean showImage);
 
-        void setUseInnerBrowser(boolean use);
+        void showBrowserNotFoundError();
 
         void showTextCopied();
 
