@@ -149,7 +149,9 @@ public class ZhihuDailyFragment extends Fragment
 
     @Override
     public void initViews(View view) {
+
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_main);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),LinearLayoutManager.VERTICAL));
         refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
@@ -203,7 +205,7 @@ public class ZhihuDailyFragment extends Fragment
             });
             recyclerView.setAdapter(adapter);
         } else {
-            adapter.notifyDataSetChanged();
+            adapter.notifyItemInserted(list.size());
         }
     }
 

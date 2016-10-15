@@ -146,6 +146,7 @@ public class DoubanMomentFragment extends Fragment
     public void initViews(View view) {
 
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_main);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
 
@@ -201,7 +202,7 @@ public class DoubanMomentFragment extends Fragment
             });
             recyclerView.setAdapter(adapter);
         } else {
-            adapter.notifyDataSetChanged();
+            adapter.notifyItemInserted(list.size());
         }
     }
 

@@ -27,7 +27,7 @@ import java.util.ArrayList;
  */
 public class GuokrFragment extends Fragment implements GuokrContract.View{
 
-    private RecyclerView rvGuokr;
+    private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshGuokr;
     private GuokrNewsAdapter adapter;
     private GuokrContract.Presenter presenter;
@@ -75,9 +75,10 @@ public class GuokrFragment extends Fragment implements GuokrContract.View{
 
     @Override
     public void initViews(View view) {
-        rvGuokr = (RecyclerView) view.findViewById(R.id.rv_guokr_handpick);
-        rvGuokr.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rvGuokr.addItemDecoration(new DividerItemDecoration(getActivity(),LinearLayoutManager.VERTICAL));
+        recyclerView = (RecyclerView) view.findViewById(R.id.rv_guokr_handpick);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),LinearLayoutManager.VERTICAL));
         refreshGuokr = (SwipeRefreshLayout) view.findViewById(R.id.refresh_guokr);
         //设置下拉刷新的按钮的颜色
         refreshGuokr.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
@@ -91,7 +92,7 @@ public class GuokrFragment extends Fragment implements GuokrContract.View{
 
     @Override
     public void showError() {
-        Snackbar.make(rvGuokr,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(recyclerView,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -104,7 +105,7 @@ public class GuokrFragment extends Fragment implements GuokrContract.View{
                     presenter.startReading(position);
                 }
             });
-            rvGuokr.setAdapter(adapter);
+            recyclerView.setAdapter(adapter);
         } else {
             adapter.notifyDataSetChanged();
         }
