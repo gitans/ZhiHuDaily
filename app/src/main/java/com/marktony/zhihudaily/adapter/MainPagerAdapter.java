@@ -39,6 +39,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
             new DoubanMomentPresenter(context, fragment);
             return fragment;
         }
+
         ZhihuDailyFragment fragment = ZhihuDailyFragment.newInstance();
         new ZhihuDailyPresenter(context, fragment);
         return fragment;

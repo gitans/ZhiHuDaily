@@ -4,13 +4,13 @@ android {
     signingConfigs {
     }
     compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    buildToolsVersion "24.0.3"
     defaultConfig {
         applicationId "com.marktony.zhihudaily"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 13
-        versionName "V3.1.0"
+        versionCode 14
+        versionName "V3.1.1"
     }
     buildTypes {
         release {

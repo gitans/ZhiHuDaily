@@ -13,7 +13,7 @@ import com.google.gson.Gson;
 import com.marktony.zhihudaily.bean.DoubanMomentNews;
 import com.marktony.zhihudaily.bean.StringModelImpl;
 import com.marktony.zhihudaily.db.DatabaseHelper;
-import com.marktony.zhihudaily.interfaces.OnStringListener;
+import com.marktony.zhihudaily.interfaze.OnStringListener;
 import com.marktony.zhihudaily.detail.DoubanDetailActivity;
 import com.marktony.zhihudaily.service.CacheService;
 import com.marktony.zhihudaily.util.Api;

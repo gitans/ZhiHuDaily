@@ -6,7 +6,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.marktony.zhihudaily.app.VolleySingleton;
-import com.marktony.zhihudaily.interfaces.OnStringListener;
+import com.marktony.zhihudaily.interfaze.OnStringListener;
 
 /**
  * Created by Lizhaotailang on 2016/9/15.

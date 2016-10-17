@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.interfaces;
+package com.marktony.zhihudaily.interfaze;
 
 import com.android.volley.VolleyError;
 

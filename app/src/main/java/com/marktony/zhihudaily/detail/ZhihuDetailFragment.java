@@ -1,5 +1,6 @@
 package com.marktony.zhihudaily.detail;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -234,4 +235,9 @@ public class ZhihuDetailFragment extends Fragment
         toolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBarPlus1);
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        presenter.reLoad();
+    }
 }

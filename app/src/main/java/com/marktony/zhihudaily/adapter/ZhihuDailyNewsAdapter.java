@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.marktony.zhihudaily.bean.ZhihuDailyNews;
-import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.interfaze.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.R;
 
 import java.util.ArrayList;

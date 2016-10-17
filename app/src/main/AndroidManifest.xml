@@ -31,6 +31,7 @@
         </activity>
         <activity
             android:name=".detail.ZhihuDetailActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_read" />
         <activity
             android:name=".settings.SettingsPreferenceActivity"
@@ -44,10 +45,12 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".detail.GuokrDetailActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_guokr_read"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity android:name=".detail.DoubanDetailActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_read"
             android:theme="@style/AppTheme.NoActionBar" />
 

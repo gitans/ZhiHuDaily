@@ -1,6 +1,7 @@
 package com.marktony.zhihudaily.detail;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -97,6 +98,12 @@ public class GuokrDetailFragment extends Fragment
             presenter.copyText();
         }
         return true;
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        presenter.reLoad();
     }
 
     @Override

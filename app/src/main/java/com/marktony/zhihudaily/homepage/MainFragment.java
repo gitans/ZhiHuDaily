@@ -63,7 +63,7 @@ public class MainFragment extends Fragment {
         ((MainActivity)context).setSupportActionBar(toolbar);
         tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.view_pager);
-        viewPager.setOffscreenPageLimit(3);
+        viewPager.setOffscreenPageLimit(4);
         adapter = new MainPagerAdapter(getChildFragmentManager(), context);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);

@@ -22,7 +22,7 @@ import com.marktony.zhihudaily.bean.ZhihuDailyStory;
 import com.marktony.zhihudaily.customtabs.CustomFallback;
 import com.marktony.zhihudaily.customtabs.CustomTabActivityHelper;
 import com.marktony.zhihudaily.db.DatabaseHelper;
-import com.marktony.zhihudaily.interfaces.OnStringListener;
+import com.marktony.zhihudaily.interfaze.OnStringListener;
 import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.NetworkState;
 import com.marktony.zhihudaily.util.Theme;

@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import com.marktony.zhihudaily.adapter.GuokrNewsAdapter;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.bean.GuokrHandpickNews;
-import com.marktony.zhihudaily.interfaces.OnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.interfaze.OnRecyclerViewOnClickListener;
 import com.marktony.zhihudaily.DividerItemDecoration;
 
 import java.util.ArrayList;

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.android.volley.VolleyError;
@@ -13,7 +12,7 @@ import com.google.gson.Gson;
 import com.marktony.zhihudaily.bean.GuokrHandpickNews;
 import com.marktony.zhihudaily.bean.StringModelImpl;
 import com.marktony.zhihudaily.db.DatabaseHelper;
-import com.marktony.zhihudaily.interfaces.OnStringListener;
+import com.marktony.zhihudaily.interfaze.OnStringListener;
 import com.marktony.zhihudaily.detail.GuokrDetailActivity;
 import com.marktony.zhihudaily.service.CacheService;
 import com.marktony.zhihudaily.util.Api;

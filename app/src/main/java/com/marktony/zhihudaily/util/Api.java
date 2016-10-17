@@ -12,7 +12,7 @@ public class Api {
 
     // 知乎日报base url,将文章id拼接值base url之后即可
     // ZhihuDaily base url, used in browser, add the post id to it
-    public static final String ZHIHU_DAILY_BASE_URL = "http://news-at.zhihu.com/story/";
+    // public static final String ZHIHU_DAILY_BASE_URL = "http://news-at.zhihu.com/story/";
 
     // 获取界面启动图像
     // get the open screen page image url
