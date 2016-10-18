@@ -52,6 +52,7 @@
     <string name="github_url">https://github.com/marktony</string>
     <string name="zhihu_url">https://www.zhihu.com/people/kirin-momo</string>
     <string name="zhihu_account">\@黎赵太郎</string>
+    <string name="open_source_license">Open Source License</string>
     <string name="easter_egg">Easter Egg</string>
     <string name="easter_egg_content">You clicked my name so many times, do you like me?</string>
     <string name="sure">Positive</string>
