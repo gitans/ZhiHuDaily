@@ -19,6 +19,8 @@ public class SettingsPreferenceFragment extends PreferenceFragmentCompat
     private SettingsContract.Presenter presenter;
     private Toolbar toolbar;
 
+    private Preference timePreference;
+
     public SettingsPreferenceFragment() {
 
     }
@@ -58,10 +60,16 @@ public class SettingsPreferenceFragment extends PreferenceFragmentCompat
             }
         });
 
-        findPreference("time_of_saving_articles").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+
+        timePreference = findPreference("time_of_saving_articles");
+
+        timePreference.setSummary(presenter.getTimeSummary());
+
+        timePreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 presenter.setTimeOfSavingArticles(preference, newValue);
+                timePreference.setSummary(presenter.getTimeSummary());
                 return true;
             }
         });

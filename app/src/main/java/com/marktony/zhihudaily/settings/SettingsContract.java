@@ -1,5 +1,6 @@
 package com.marktony.zhihudaily.settings;
 
+import android.content.Context;
 import android.support.v7.preference.Preference;
 
 import com.marktony.zhihudaily.BasePresenter;
@@ -26,6 +27,8 @@ public interface SettingsContract {
         void cleanGlideCache();
 
         void setTimeOfSavingArticles(Preference preference, Object newValue);
+
+        String getTimeSummary();
 
     }
 

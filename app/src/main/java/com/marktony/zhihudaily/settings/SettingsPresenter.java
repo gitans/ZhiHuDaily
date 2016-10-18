@@ -5,9 +5,9 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.preference.Preference;
-import android.util.Log;
 
 import com.bumptech.glide.Glide;
+import com.marktony.zhihudaily.R;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -81,6 +81,16 @@ public class SettingsPresenter implements SettingsContract.Presenter {
     public void setTimeOfSavingArticles(Preference preference, Object newValue) {
         editor.putString("time_of_saving_articles", (String)newValue);
         editor.apply();
+    }
+
+    @Override
+    public String getTimeSummary() {
+
+        String str = sp.getString("time_of_saving_articles", "7");
+        if (str.equals("1")){
+            return str + " day";
+        }
+        return str + " days";
     }
 
 }
