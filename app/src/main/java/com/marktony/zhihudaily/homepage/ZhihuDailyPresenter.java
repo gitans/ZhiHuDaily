@@ -30,13 +30,14 @@ import java.util.Date;
  * Created by Lizhaotailang on 2016/9/16.
  */
 
-public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter, OnStringListener {
+public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
 
     private ZhihuDailyContract.View view;
     private Context context;
     private StringModelImpl model;
 
     private DateFormatter formatter = new DateFormatter();
+    private Gson gson = new Gson();
 
     private ArrayList<ZhihuDailyNews.Question> list = new ArrayList<ZhihuDailyNews.Question>();
 
@@ -53,41 +54,94 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter, OnStri
     }
 
     @Override
-    public void loadPosts(long date, boolean clearing) {
-        view.showLoading();
+    public void loadPosts(long date, final boolean clearing) {
+
         if (clearing) {
-            list.clear();
+            view.showLoading();
         }
+
         if (NetworkState.networkConnected(context)) {
-            model.load(Api.ZHIHU_HISTORY + formatter.ZhihuDailyDateFormat(date), this);
+            model.load(Api.ZHIHU_HISTORY + formatter.ZhihuDailyDateFormat(date), new OnStringListener() {
+                @Override
+                public void onSuccess(String result) {
+
+                    ZhihuDailyNews post = gson.fromJson(result, ZhihuDailyNews.class);
+                    ContentValues values = new ContentValues();
+
+                    if (clearing) {
+                        list.clear();
+                    }
+
+                    for (ZhihuDailyNews.Question item : post.getStories()) {
+                        list.add(item);
+                        if ( !queryIfIDExists(item.getId())) {
+                            db.beginTransaction();
+                            try {
+                                DateFormat format = new SimpleDateFormat("yyyyMMdd");
+                                Date date = format.parse(post.getDate());
+                                values.put("zhihu_id", item.getId());
+                                values.put("zhihu_news", gson.toJson(item));
+                                values.put("zhihu_content", "");
+                                values.put("zhihu_time", date.getTime() / 1000);
+                                db.insert("Zhihu", null, values);
+                                values.clear();
+                                db.setTransactionSuccessful();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            } finally {
+                                db.endTransaction();
+                            }
+
+                        }
+                        Intent intent = new Intent("com.marktony.zhihudaily.LOCAL_BROADCAST");
+                        intent.putExtra("type", CacheService.TYPE_ZHIHU);
+                        intent.putExtra("id", item.getId());
+                        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+
+                    }
+
+                    view.showResults(list);
+                    view.stopLoading();
+                }
+
+                @Override
+                public void onError(VolleyError error) {
+                    view.stopLoading();
+                    view.showError();
+                }
+            });
         } else {
-            Gson gson = new Gson();
-            Cursor cursor = db.query("Zhihu", null, null, null, null, null, null);
-            if (cursor.moveToFirst()) {
-                do {
-                    ZhihuDailyNews.Question question = gson.fromJson(cursor.getString(cursor.getColumnIndex("zhihu_news")), ZhihuDailyNews.Question.class);
-                    list.add(question);
-                } while (cursor.moveToNext());
+
+            if (clearing) {
+
+                list.clear();
+
+                Cursor cursor = db.query("Zhihu", null, null, null, null, null, null);
+                if (cursor.moveToFirst()) {
+                    do {
+                        ZhihuDailyNews.Question question = gson.fromJson(cursor.getString(cursor.getColumnIndex("zhihu_news")), ZhihuDailyNews.Question.class);
+                        list.add(question);
+                    } while (cursor.moveToNext());
+                }
+                cursor.close();
+                view.stopLoading();
+                view.showResults(list);
+
+            } else {
+                view.showNetworkError();
             }
-            cursor.close();
-            view.stopLoading();
-            view.showResults(list);
+
         }
     }
 
     @Override
     public void refresh() {
-        list.clear();
         loadPosts(Calendar.getInstance().getTimeInMillis(), true);
     }
 
     @Override
     public void loadMore(long date) {
-        if (NetworkState.networkConnected(context)) {
-            model.load(Api.ZHIHU_HISTORY + formatter.ZhihuDailyDateFormat(date), this);
-        } else {
-            view.showNetworkError();
-        }
+        loadPosts(date, false);
     }
 
     @Override
@@ -104,53 +158,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter, OnStri
 
     @Override
     public void start() {
-        loadPosts(Calendar.getInstance().getTimeInMillis(), false);
-    }
-
-    @Override
-    public void onSuccess(String result) {
-        Gson gson = new Gson();
-        ZhihuDailyNews post = gson.fromJson(result, ZhihuDailyNews.class);
-
-        ContentValues values = new ContentValues();
-
-        for (ZhihuDailyNews.Question item : post.getStories()) {
-            list.add(item);
-            if ( !queryIfIDExists(item.getId())) {
-                db.beginTransaction();
-                try {
-                    DateFormat format = new SimpleDateFormat("yyyyMMdd");
-                    Date date = format.parse(post.getDate());
-                    values.put("zhihu_id", item.getId());
-                    values.put("zhihu_news", gson.toJson(item));
-                    values.put("zhihu_content", "");
-                    values.put("zhihu_time", date.getTime() / 1000);
-                    db.insert("Zhihu", null, values);
-                    values.clear();
-                    db.setTransactionSuccessful();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    db.endTransaction();
-                }
-
-            }
-            Intent intent = new Intent("com.marktony.zhihudaily.LOCAL_BROADCAST");
-            intent.putExtra("type", CacheService.TYPE_ZHIHU);
-            intent.putExtra("id", item.getId());
-            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-
-        }
-
-        view.showResults(list);
-        view.stopLoading();
-
-    }
-
-    @Override
-    public void onError(VolleyError error) {
-        view.stopLoading();
-        view.showError();
+        loadPosts(Calendar.getInstance().getTimeInMillis(), true);
     }
 
     private boolean queryIfIDExists(int id){

@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * Created by Lizhaotailang on 2016/9/15.
  */
 
-public class GuokrPresenter implements GuokrContract.Presenter, OnStringListener {
+public class GuokrPresenter implements GuokrContract.Presenter {
 
     private GuokrContract.View view;
     private Context context;
@@ -33,9 +33,8 @@ public class GuokrPresenter implements GuokrContract.Presenter, OnStringListener
     private DatabaseHelper dbHelper;
     private SQLiteDatabase db;
 
-    private boolean isNetworkConnected = true;
-
     private ArrayList<GuokrHandpickNews.result> list = new ArrayList<GuokrHandpickNews.result>();
+    private Gson gson = new Gson();
 
     public GuokrPresenter(Context context, GuokrContract.View view) {
         this.context = context;
@@ -63,11 +62,63 @@ public class GuokrPresenter implements GuokrContract.Presenter, OnStringListener
 
     @Override
     public void loadPosts() {
+
         view.showLoading();
+
         if (NetworkState.networkConnected(context)) {
-            model.load(Api.GUOKR_ARTICLES, this);
+            model.load(Api.GUOKR_ARTICLES, new OnStringListener() {
+                @Override
+                public void onSuccess(String result) {
+
+                    // 由于果壳并没有按照日期加载的api
+                    // 所以不存在加载指定日期内容的操作，当要请求数据时一定是在进行刷新
+                    list.clear();
+
+                    GuokrHandpickNews question = gson.fromJson(result, GuokrHandpickNews.class);
+
+                    for (GuokrHandpickNews.result re : question.getResult()){
+
+                        list.add(re);
+
+                        if(!queryIfIDExists(re.getId())) {
+                            try {
+                                db.beginTransaction();
+                                ContentValues values = new ContentValues();
+                                values.put("guokr_id", re.getId());
+                                values.put("guokr_news", gson.toJson(re));
+                                values.put("guokr_content", "");
+                                values.put("guokr_time", (long)re.getDate_picked());
+                                db.insert("Guokr", null, values);
+                                values.clear();
+                                db.setTransactionSuccessful();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            } finally {
+                                db.endTransaction();
+                            }
+
+                        }
+
+                        Intent intent = new Intent("com.marktony.zhihudaily.LOCAL_BROADCAST");
+                        intent.putExtra("type", CacheService.TYPE_GUOKR);
+                        intent.putExtra("id", re.getId());
+                        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+
+                    }
+
+                    view.stopLoading();
+                    view.showResults(list);
+
+                }
+
+                @Override
+                public void onError(VolleyError error) {
+                    view.stopLoading();
+                    view.showError();
+                }
+            });
         } else {
-            Gson gson = new Gson();
+
             Cursor cursor = db.query("Guokr", null, null, null, null, null, null);
             if (cursor.moveToFirst()) {
                 do {
@@ -83,49 +134,7 @@ public class GuokrPresenter implements GuokrContract.Presenter, OnStringListener
 
     @Override
     public void refresh() {
-        list.clear();
         loadPosts();
-    }
-
-    @Override
-    public void onSuccess(String result) {
-        view.stopLoading();
-        Gson gson = new Gson();
-        GuokrHandpickNews question = gson.fromJson(result, GuokrHandpickNews.class);
-        for (GuokrHandpickNews.result re : question.getResult()){
-            list.add(re);
-            if(!queryIfIDExists(re.getId())) {
-                try {
-                    db.beginTransaction();
-                    ContentValues values = new ContentValues();
-                    values.put("guokr_id", re.getId());
-                    values.put("guokr_news", gson.toJson(re));
-                    values.put("guokr_content", "");
-                    values.put("guokr_time", (long)re.getDate_picked());
-                    db.insert("Guokr", null, values);
-                    values.clear();
-                    db.setTransactionSuccessful();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    db.endTransaction();
-                }
-
-            }
-            Intent intent = new Intent("com.marktony.zhihudaily.LOCAL_BROADCAST");
-            intent.putExtra("type", CacheService.TYPE_GUOKR);
-            intent.putExtra("id", re.getId());
-            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-
-        }
-        view.showResults(list);
-
-    }
-
-    @Override
-    public void onError(VolleyError error) {
-        view.stopLoading();
-        view.showError();
     }
 
     private boolean queryIfIDExists(int id){

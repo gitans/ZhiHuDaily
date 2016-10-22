@@ -86,11 +86,18 @@ public class SettingsPresenter implements SettingsContract.Presenter {
     @Override
     public String getTimeSummary() {
 
+        String[] options = context.getResources().getStringArray(R.array.time_to_save_opts);
         String str = sp.getString("time_of_saving_articles", "7");
-        if (str.equals("1")){
-            return str + " day";
+        switch (str) {
+            case "1":
+                return options[0];
+            case "3":
+                return options[1];
+            case "15":
+                return options[3];
+            default:
+                return options[2];
         }
-        return str + " days";
     }
 
 }
