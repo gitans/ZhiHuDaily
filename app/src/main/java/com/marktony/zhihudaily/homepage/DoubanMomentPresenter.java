@@ -162,7 +162,7 @@ public class DoubanMomentPresenter implements DoubanMomentContract.Presenter {
 
     @Override
     public void start() {
-        loadPosts(Calendar.getInstance().getTimeInMillis(), false);
+        refresh();
     }
 
     private boolean queryIfIDExists(int id){

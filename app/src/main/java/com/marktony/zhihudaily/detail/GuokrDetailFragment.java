@@ -128,16 +128,18 @@ public class GuokrDetailFragment extends Fragment
         imageView = (ImageView) view.findViewById(R.id.image_view);
         webView = (WebView) view.findViewById(R.id.web_view);
 
+        WebSettings settings = webView.getSettings();
         // 能够和js交互
-        webView.getSettings().setJavaScriptEnabled(true);
+        settings.setJavaScriptEnabled(true);
         // 缩放,设置为不能缩放可以防止页面上出现放大和缩小的图标
-        webView.getSettings().setBuiltInZoomControls(false);
+        settings.setBuiltInZoomControls(true);
         // 缓存
-        webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         // 开启DOM storage API功能
-        webView.getSettings().setDomStorageEnabled(true);
+        settings.setDomStorageEnabled(true);
         // 开启application Cache功能
-        webView.getSettings().setAppCacheEnabled(false);
+        settings.setAppCacheEnabled(false);
+
         // 设置为不使用本webview进行反应
         webView.setWebViewClient(new WebViewClient() {
             @Override
