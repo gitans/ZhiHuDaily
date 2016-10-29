@@ -124,7 +124,7 @@ public class DoubanDetailPresenter
     }
 
     @Override
-    public void reLoad() {
+    public void reload() {
         loadResult(id);
     }
 

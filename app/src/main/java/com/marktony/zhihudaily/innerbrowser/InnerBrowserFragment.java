@@ -152,11 +152,13 @@ public class InnerBrowserFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId() == android.R.id.home){
+        int id = item.getItemId();
+        if (id == android.R.id.home){
             getActivity().onBackPressed();
-        } else if (item.getItemId() == R.id.action_open_in_browser){
+        } else if (id == R.id.action_open_in_browser){
             startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(webView.getUrl())));
+        } else if (id == R.id.action_refresh) {
+            webView.reload();
         }
         return super.onOptionsItemSelected(item);
     }

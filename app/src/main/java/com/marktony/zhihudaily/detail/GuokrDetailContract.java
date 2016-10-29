@@ -55,7 +55,7 @@ public interface GuokrDetailContract {
 
         void openUrl(WebView webView, String url);
 
-        void reLoad();
+        void reload();
 
         void copyText();
 

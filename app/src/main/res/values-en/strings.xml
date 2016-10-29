@@ -75,6 +75,7 @@
     <string name="action_copy_text">Copy text</string>
 
     <string name="network_error">Internet is lost, tap to retry</string>
+    <string name="refresh">Refresh</string>
 
 
 </resources>

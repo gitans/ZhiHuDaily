@@ -149,7 +149,7 @@ public class GuokrDetailPresenter implements GuokrDetailContract.Presenter, OnSt
     }
 
     @Override
-    public void reLoad() {
+    public void reload() {
         loadData(id);
     }
 

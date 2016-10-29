@@ -145,7 +145,7 @@ public class ZhihuDetailPresenter implements ZhihuDetailContract.Presenter, OnSt
     }
 
     @Override
-    public void reLoad() {
+    public void reload() {
         requestData();
     }
 

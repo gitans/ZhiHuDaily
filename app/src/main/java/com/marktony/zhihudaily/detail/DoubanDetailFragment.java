@@ -59,6 +59,8 @@ public class DoubanDetailFragment extends Fragment
         initViews(view);
         setHasOptionsMenu(true);
 
+        presenter.start();
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,12 +69,6 @@ public class DoubanDetailFragment extends Fragment
         });
 
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        presenter.start();
     }
 
     @Override
@@ -97,7 +93,7 @@ public class DoubanDetailFragment extends Fragment
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        presenter.reLoad();
+        presenter.reload();
     }
 
     @Override
@@ -127,7 +123,7 @@ public class DoubanDetailFragment extends Fragment
                 .setAction(R.string.retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        presenter.reLoad();
+                        presenter.reload();
                     }
                 })
                 .show();
