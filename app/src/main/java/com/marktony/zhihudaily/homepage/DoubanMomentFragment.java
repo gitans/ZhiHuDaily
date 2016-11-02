@@ -202,7 +202,7 @@ public class DoubanMomentFragment extends Fragment
             });
             recyclerView.setAdapter(adapter);
         } else {
-            adapter.notifyItemInserted(list.size());
+            adapter.notifyDataSetChanged();
         }
     }
 

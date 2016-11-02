@@ -61,6 +61,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
         }
 
         if (NetworkState.networkConnected(context)) {
+
             model.load(Api.ZHIHU_HISTORY + formatter.ZhihuDailyDateFormat(date), new OnStringListener() {
                 @Override
                 public void onSuccess(String result) {

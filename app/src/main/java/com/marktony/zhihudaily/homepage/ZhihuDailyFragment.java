@@ -205,7 +205,7 @@ public class ZhihuDailyFragment extends Fragment
             });
             recyclerView.setAdapter(adapter);
         } else {
-            adapter.notifyItemInserted(list.size());
+            adapter.notifyDataSetChanged();
         }
     }
 
