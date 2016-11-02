@@ -9,8 +9,8 @@ android {
         applicationId "com.marktony.zhihudaily"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 14
-        versionName "V3.1.1"
+        versionCode 15
+        versionName "V3.1.2"
     }
     buildTypes {
         release {

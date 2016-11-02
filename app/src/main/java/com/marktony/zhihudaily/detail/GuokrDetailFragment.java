@@ -2,13 +2,14 @@ package com.marktony.zhihudaily.detail;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -36,7 +37,7 @@ public class GuokrDetailFragment extends Fragment
     private ImageView imageView;
     private FloatingActionButton fab;
     private CollapsingToolbarLayout toolbarLayout;
-    private AlertDialog dialog;
+    private SwipeRefreshLayout refreshLayout;
 
     private GuokrDetailContract.Presenter presenter;
 
@@ -71,6 +72,13 @@ public class GuokrDetailFragment extends Fragment
             @Override
             public void onClick(View view) {
                 presenter.share();
+            }
+        });
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.start();
             }
         });
 
@@ -112,8 +120,15 @@ public class GuokrDetailFragment extends Fragment
     @Override
     public void initViews(View view) {
 
-        dialog = new AlertDialog.Builder(getContext()).create();
-        dialog.setView(getActivity().getLayoutInflater().inflate(R.layout.loading_layout,null));
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        //设置下拉刷新的按钮的颜色
+        refreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        //设置手指在屏幕上下拉多少距离开始刷新
+        refreshLayout.setDistanceToTriggerSync(300);
+        //设置下拉刷新按钮的背景颜色
+        refreshLayout.setProgressBackgroundColorSchemeColor(Color.WHITE);
+        //设置下拉刷新按钮的大小
+        refreshLayout.setSize(SwipeRefreshLayout.DEFAULT);
 
         AppCompatActivity activity = (GuokrDetailActivity) getActivity();
         activity.setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
@@ -150,16 +165,12 @@ public class GuokrDetailFragment extends Fragment
 
     @Override
     public void showLoading() {
-        if (!dialog.isShowing()) {
-            dialog.show();
-        }
+        refreshLayout.setRefreshing(true);
     }
 
     @Override
     public void stopLoading() {
-        if (dialog.isShowing()) {
-            dialog.dismiss();
-        }
+        refreshLayout.setRefreshing(false);
     }
 
     @Override

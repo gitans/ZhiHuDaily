@@ -4,7 +4,6 @@
     <!--general-->
     <string name="positive">@android:string/ok</string>
     <string name="negative">@android:string/cancel</string>
-    <string name="loading">Loading</string>
     <string name="share_error">Share failed</string>
 
     <string name="title_activity_read">Read</string>
@@ -26,7 +25,7 @@
     <string name="share_to">Share to</string>
 
     <!--activity about-->
-    <string name="version">Version:V3.1.1</string>
+    <string name="version">Version:V3.1.2</string>
     <string name="rate">Rate</string>
     <string name="feedback">Report Bugs / Advices</string>
     <string name="donate">Donate Developer</string>
@@ -51,7 +50,7 @@
     <string name="coffee_description">If you think I deserve to get paid for my work, you can give me a cup of coffee</string>
     <string name="github_url">https://github.com/marktony</string>
     <string name="zhihu_url">https://www.zhihu.com/people/kirin-momo</string>
-    <string name="zhihu_account">\@黎赵太郎</string>
+    <string name="zhihu_account">\@Li Zhaotailang</string>
     <string name="open_source_license">Open Source License</string>
     <string name="easter_egg">Easter Egg</string>
     <string name="easter_egg_content">You clicked my name so many times, do you like me?</string>
@@ -76,6 +75,5 @@
 
     <string name="network_error">Internet is lost, tap to retry</string>
     <string name="refresh">Refresh</string>
-
 
 </resources>

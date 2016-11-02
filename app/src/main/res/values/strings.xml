@@ -4,7 +4,6 @@
     <!--常用-->
     <string name="positive">确定</string>
     <string name="negative">取消</string>
-    <string name="loading">加载中</string>
     <string name="share_error">分享失败</string>
 
     <string name="title_activity_read">阅读</string>
@@ -26,7 +25,7 @@
     <string name="share_to">分享至</string>
 
     <!--activity关于-->
-    <string name="version">版本:V3.1.1</string>
+    <string name="version">版本:V3.1.2</string>
     <string name="rate">为纸飞机应用评分</string>
     <string name="feedback">反馈Bug / 建议</string>
     <string name="donate">捐赠开发者</string>
