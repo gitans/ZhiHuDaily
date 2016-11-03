@@ -159,7 +159,11 @@ public class ZhihuDailyFragment extends Fragment
         fab.setRippleColor(getResources().getColor(R.color.colorPrimaryDark));
 
         //设置下拉刷新的按钮的颜色
-        refresh.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        refresh.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
         //设置手指在屏幕上下拉多少距离开始刷新
         refresh.setDistanceToTriggerSync(300);
         //设置下拉刷新按钮的背景颜色

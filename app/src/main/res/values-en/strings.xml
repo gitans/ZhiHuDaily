@@ -33,7 +33,7 @@
     <string name="donate_account">marktonymengyi@gmail.com</string>
     <string name="sendto">mailto:marktonymengyi@gmail.com</string>
     <string name="mail_topic">Paper Plane Feedback / Advice</string>
-    <string name="rate_description">If you like the Translator app,please do rate it</string>
+    <string name="rate_description">If you like the Paper Plane app,please do rate it</string>
     <string name="device_model">Device Version:</string>
     <string name="sdk_version">SDK Version:</string>
     <string name="no_mail_app">No Mail App Installed</string>
