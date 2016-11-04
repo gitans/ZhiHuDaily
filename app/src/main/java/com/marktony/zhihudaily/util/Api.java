@@ -119,7 +119,7 @@ public class Api {
 
     // 获取果壳文章的具体信息 V2
     // V2
-    public static final String GUOKR_ARTICLE_LINK_V2 = "http://jingxuan.guokr.com/pick/v2/";
+    // public static final String GUOKR_ARTICLE_LINK_V2 = "http://jingxuan.guokr.com/pick/v2/";
 
     // 获取果壳精选的轮播文章列表
     // carousel posts

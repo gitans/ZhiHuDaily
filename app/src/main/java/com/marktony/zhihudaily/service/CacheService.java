@@ -175,7 +175,7 @@ public class CacheService extends Service {
             do {
                 if ((cursor.getInt(cursor.getColumnIndex("guokr_id")) == id)
                         && (cursor.getString(cursor.getColumnIndex("guokr_content")).equals(""))) {
-                    StringRequest request = new StringRequest(Api.GUOKR_ARTICLE_LINK_V2 + id, new Response.Listener<String>() {
+                    StringRequest request = new StringRequest(Api.GUOKR_ARTICLE_LINK_V1 + id, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String s) {
                             ContentValues values = new ContentValues();

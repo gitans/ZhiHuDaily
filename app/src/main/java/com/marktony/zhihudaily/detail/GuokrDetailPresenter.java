@@ -63,7 +63,7 @@ public class GuokrDetailPresenter implements GuokrDetailContract.Presenter, OnSt
     public void loadData(int id) {
         view.showLoading();
         if (NetworkState.networkConnected(activity)) {
-            model.load(Api.GUOKR_ARTICLE_LINK_V2 + id, this);
+            model.load(Api.GUOKR_ARTICLE_LINK_V1 + id, this);
         } else {
             Cursor cursor = new DatabaseHelper(activity, "History.db", null, 4).getReadableDatabase()
                     .query("Guokr", null, null, null, null, null, null);
@@ -111,7 +111,7 @@ public class GuokrDetailPresenter implements GuokrDetailContract.Presenter, OnSt
     @Override
     public void openInBrowser() {
         try {
-            activity.startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(Api.GUOKR_ARTICLE_LINK_V2 + id)));
+            activity.startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(Api.GUOKR_ARTICLE_LINK_V1 + id)));
         } catch (android.content.ActivityNotFoundException ex){
             view.showLoadError();
         }
@@ -172,10 +172,35 @@ public class GuokrDetailPresenter implements GuokrDetailContract.Presenter, OnSt
 
     @Override
     public void onSuccess(String result) {
-        this.post = result;
+        // 简单粗暴的去掉下载的div部分
+        this.post = result.replace("<div class=\"down\" id=\"down-footer\">\n" +
+                "        <img src=\"http://static.guokr.com/apps/handpick/images/c324536d.jingxuan-logo.png\" class=\"jingxuan-img\">\n" +
+                "        <p class=\"jingxuan-txt\">\n" +
+                "            <span class=\"jingxuan-title\">果壳精选</span>\n" +
+                "            <span class=\"jingxuan-label\">早晚给你好看</span>\n" +
+                "        </p>\n" +
+                "        <a href=\"\" class=\"app-down\" id=\"app-down-footer\">下载</a>\n" +
+                "    </div>\n" +
+                "\n" +
+                "    <div class=\"down-pc\" id=\"down-pc\">\n" +
+                "        <img src=\"http://static.guokr.com/apps/handpick/images/c324536d.jingxuan-logo.png\" class=\"jingxuan-img\">\n" +
+                "        <p class=\"jingxuan-txt\">\n" +
+                "            <span class=\"jingxuan-title\">果壳精选</span>\n" +
+                "            <span class=\"jingxuan-label\">早晚给你好看</span>\n" +
+                "        </p>\n" +
+                "        <a href=\"http://www.guokr.com/mobile/\" class=\"app-down\">下载</a>\n" +
+                "    </div>", "");
+
+        // 替换css文件为本地文件
+        post = post.replace("<link rel=\"stylesheet\" href=\"http://static.guokr.com/apps/handpick/styles/d48b771f.article.css\" />",
+                "<link rel=\"stylesheet\" href=\"file:///android_asset/guokr.article.css\" />");
+
+        // 替换js文件为本地文件
+        post = post.replace("<script src=\"http://static.guokr.com/apps/handpick/scripts/9c661fc7.base.js\"></script>",
+                "<script src=\"file:///android_asset/guokr.base.js\"></script>");
         if (App.getThemeValue() == Theme.NIGHT_THEME){
-            post = post.replace("<div class=\"article \" id=\"contentMain\">", "<div class=\"article \" id=\"contentMain\" style=\"background-color:#212b30; color:#878787\">");
-            post = post.replace("<div class=\"content clearfix\" id=\"articleContent\">", " <div class=\"content clearfix\" id=\"articleContent\" style=\"background-color:#212b30\">");
+            post = post.replace("<div class=\"article\" id=\"contentMain\">",
+                    "<div class=\"article \" id=\"contentMain\" style=\"background-color:#212b30; color:#878787\">");
         }
         view.setWebViewImageMode(sp.getBoolean("no_picture_mode",false));
         view.showResult(post);
