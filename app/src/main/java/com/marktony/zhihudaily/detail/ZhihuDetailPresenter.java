@@ -176,7 +176,6 @@ public class ZhihuDetailPresenter implements ZhihuDetailContract.Presenter, OnSt
         } else {
             view.showResult(convertResult(story.getBody()));
             view.showMainImage(story.getImage());
-            view.setMainImageSource(story.getImage_source());
             view.setImageMode(sp.getBoolean("no_picture_mode",false));
             view.setTitle(story.getTitle());
         }

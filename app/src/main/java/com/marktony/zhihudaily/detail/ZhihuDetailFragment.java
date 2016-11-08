@@ -193,23 +193,20 @@ public class ZhihuDetailFragment extends Fragment
     public void showMainImage(String url) {
         Glide.with(getActivity())
                 .load(url)
+                .asBitmap()
                 .centerCrop()
+                .placeholder(R.drawable.placeholder)
                 .into(imageView);
     }
 
     @Override
     public void setUsingLocalImage() {
-        imageView.setImageResource(R.drawable.no_img);
+        imageView.setImageResource(R.drawable.placeholder);
     }
 
     @Override
     public void setTitle(String title) {
         setCollapsingToolbarLayoutTitle(title);
-    }
-
-    @Override
-    public void setMainImageSource(String source) {
-        textView.setText(source);
     }
 
     @Override

@@ -46,12 +46,12 @@ public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter<ZhihuDailyNewsAd
         ZhihuDailyNews.Question item = list.get(position);
 
         if (item.getImages().get(0) == null){
-            holder.itemImg.setImageResource(R.drawable.no_img);
+            holder.itemImg.setImageResource(R.drawable.placeholder);
         } else {
             Glide.with(context)
                     .load(item.getImages().get(0))
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    .error(R.drawable.no_img)
+                    .error(R.drawable.placeholder)
                     .centerCrop()
                     .into(holder.itemImg);
         }

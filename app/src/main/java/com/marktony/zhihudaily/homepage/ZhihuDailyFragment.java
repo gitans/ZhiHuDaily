@@ -134,6 +134,13 @@ public class ZhihuDailyFragment extends Fragment
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 isSlidingToLast = dy > 0;
+
+                // 隐藏或者显示fab
+                if(dy > 0) {
+                    fab.hide();
+                } else {
+                    fab.show();
+                }
             }
         });
 
@@ -155,7 +162,9 @@ public class ZhihuDailyFragment extends Fragment
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),LinearLayoutManager.VERTICAL));
         refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
-        fab = (FloatingActionButton) view.findViewById(R.id.fab);
+
+        fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.VISIBLE);
         fab.setRippleColor(getResources().getColor(R.color.colorPrimaryDark));
 
         //设置下拉刷新的按钮的颜色

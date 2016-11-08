@@ -129,6 +129,13 @@ public class DoubanMomentFragment extends Fragment
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 isSlidingToLast = dy > 0;
+
+                // 隐藏或者显示fab
+                if(dy > 0) {
+                    fab.hide();
+                } else {
+                    fab.show();
+                }
             }
         });
 
@@ -150,12 +157,16 @@ public class DoubanMomentFragment extends Fragment
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
 
-        fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.VISIBLE);
         fab.setRippleColor(getResources().getColor(R.color.colorPrimaryDark));
 
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         //设置下拉刷新的按钮的颜色
-        refreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        refreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
         //设置手指在屏幕上下拉多少距离开始刷新
         refreshLayout.setDistanceToTriggerSync(300);
         //设置下拉刷新按钮的背景颜色
@@ -187,7 +198,7 @@ public class DoubanMomentFragment extends Fragment
 
     @Override
     public void showLoadError() {
-        Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
+         Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

@@ -31,8 +31,6 @@ public interface ZhihuDetailContract {
 
         void setTitle(String title);
 
-        void setMainImageSource(String source);
-
         void setImageMode(boolean showImage);
 
         void showBrowserNotFoundError();

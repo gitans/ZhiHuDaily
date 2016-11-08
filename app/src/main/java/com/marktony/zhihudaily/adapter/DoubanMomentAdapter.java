@@ -59,7 +59,7 @@ public class DoubanMomentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     .load(item.getThumbs().get(0).getMedium().getUrl())
                     .asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    .error(R.drawable.no_img)
+                    .error(R.drawable.placeholder)
                     .centerCrop()
                     .into(((NormalViewHolder)holder).ivHeadlineImg);
 

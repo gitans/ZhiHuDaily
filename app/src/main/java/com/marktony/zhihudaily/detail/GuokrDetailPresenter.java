@@ -211,7 +211,6 @@ public class GuokrDetailPresenter implements GuokrDetailContract.Presenter, OnSt
 
     @Override
     public void onError(VolleyError error) {
-        view.setUsingLocalImage();
         view.stopLoading();
         view.showLoadError();
     }

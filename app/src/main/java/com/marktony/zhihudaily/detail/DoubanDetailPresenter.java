@@ -168,7 +168,7 @@ public class DoubanDetailPresenter
                 } while (cursor.moveToNext());
             }
             cursor.close();
-            view.setUsingLocalImage();
+            view.showMainImage(null);
             view.setTitle(post.getTitle());
             view.stopLoading();
         }
@@ -187,7 +187,7 @@ public class DoubanDetailPresenter
         if (post.getPhotos().size() != 0) {
             view.showMainImage(post.getPhotos().get(0).getMedium().getUrl());
         } else {
-            view.setUsingLocalImage();
+            view.showMainImage(null);
         }
         view.setTitle(post.getTitle());
         view.setWebViewImageMode(sp.getBoolean("no_picture_mode",false));

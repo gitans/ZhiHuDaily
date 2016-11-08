@@ -51,7 +51,7 @@ public class GuokrNewsAdapter extends RecyclerView.Adapter<GuokrNewsAdapter.Guok
                 .load(item.getHeadline_img_tb())
                 .asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .error(R.drawable.no_img)
+                .error(R.drawable.placeholder)
                 .centerCrop()
                 .into(holder.ivHeadlineImg);
 

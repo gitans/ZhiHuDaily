@@ -3,6 +3,7 @@ package com.marktony.zhihudaily.homepage;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -52,7 +53,32 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
+
         initViews(view);
+
+        // 当tab layout位置为果壳精选时，隐藏fab
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+                if (tab.getPosition() == 1) {
+                    fab.hide();
+                } else {
+                    fab.show();
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
         mOnViewPagerCreated.viewPagerCreated();
         return view;
     }

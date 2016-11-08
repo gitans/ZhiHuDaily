@@ -1,46 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipToPadding="true">
+    android:id="@+id/refresh">
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/refresh">
+        android:focusable="true"
+        android:clickable="true"
+        android:background="?attr/layoutBackgroundCustomized">
 
-        <FrameLayout
+        <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:focusable="true"
-            android:clickable="true"
-            android:background="?attr/layoutBackgroundCustomized">
+            android:layout_height="wrap_content"
+            android:id="@+id/rv_main"
+            android:scrollbars="vertical"
+            android:scrollbarFadeDuration="1"
+            android:fadeScrollbars="true"/>
 
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/rv_main"
-                android:scrollbars="vertical"
-                android:scrollbarFadeDuration="1"
-                android:fadeScrollbars="true"/>
+    </FrameLayout>
 
-        </FrameLayout>
-
-    </android.support.v4.widget.SwipeRefreshLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/fab"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:layout_gravity="bottom|end"
-        android:src="@drawable/calendar"
-        app:layout_behavior="com.marktony.zhihudaily.FabHideOnScroll"
-        app:backgroundTint="?attr/fabColorCustomized"
-        app:elevation="4dp"
-        app:borderWidth="0dp"/>
-
-</android.support.design.widget.CoordinatorLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

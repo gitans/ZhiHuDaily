@@ -29,7 +29,7 @@ public class ZhihuDetailActivity extends AppCompatActivity {
         /*// 如果当前没有网络连接，则加载缓存中的内容
         if ( !NetworkState.networkConnected(ZhihuDetailActivity.this)){
 
-            ivFirstImg.setImageResource(R.drawable.no_img);
+            ivFirstImg.setImageResource(R.drawable.placeholder);
             ivFirstImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
             String content = loadContentFromDB("" + id).replace("<div class=\"img-place-holder\">", "");
@@ -77,7 +77,7 @@ public class ZhihuDetailActivity extends AppCompatActivity {
                         if (jsonObject.isNull("body")){
 
                             webViewRead.loadUrl(jsonObject.getString("share_url"));
-                            ivFirstImg.setImageResource(R.drawable.no_img);
+                            ivFirstImg.setImageResource(R.drawable.placeholder);
                             ivFirstImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
                             // 在body为null的情况下，share_url的值是依然存在的
@@ -96,7 +96,7 @@ public class ZhihuDetailActivity extends AppCompatActivity {
 
                             } else if (image == null){
 
-                                ivFirstImg.setImageResource(R.drawable.no_img);
+                                ivFirstImg.setImageResource(R.drawable.placeholder);
                                 ivFirstImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
                             } else {

@@ -148,13 +148,9 @@ public class DoubanDetailFragment extends Fragment
         Glide.with(getActivity())
                 .load(imageUrl)
                 .asBitmap()
+                .placeholder(R.drawable.placeholder)
                 .centerCrop()
                 .into(imageView);
-    }
-
-    @Override
-    public void setUsingLocalImage() {
-        imageView.setImageResource(R.drawable.no_img);
     }
 
     @Override
