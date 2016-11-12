@@ -24,6 +24,8 @@ public interface DoubanMomentContract {
 
         void showNetworkError();
 
+        void showPickDialog();
+
     }
 
     interface Presenter extends BasePresenter {

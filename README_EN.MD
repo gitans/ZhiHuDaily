@@ -30,7 +30,7 @@ API of ZhiHuDaily is [知乎日报 API 分析](https://github.com/izzyleung/Zhih
 * [Flyme Apps Market](http://app.flyme.cn/apps/public/detail?package_name=com.marktony.zhihudaily)
 * [Cool market](http://www.coolapk.com/apk/com.marktony.zhihudaily)
 * Smartisan App Market
-* [Google Drive](https://drive.google.com/open?id=0B3yYs4KaSVg_amtrZHJYSVRsZGM)
+* [Google Drive](https://drive.google.com/open?id=0B3yYs4KaSVg_RDlkSEhxTWVBeG8)
 
 ## Open Source Library
 Name | Introduction

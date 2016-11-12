@@ -30,7 +30,7 @@
 * [魅族应用商店](http://app.flyme.cn/apps/public/detail?package_name=com.marktony.zhihudaily)
 * [酷市场](http://www.coolapk.com/apk/com.marktony.zhihudaily)
 * 锤子应用商店
-* [Google Drive](https://drive.google.com/open?id=0B3yYs4KaSVg_amtrZHJYSVRsZGM)
+* [Google Drive](https://drive.google.com/open?id=0B3yYs4KaSVg_RDlkSEhxTWVBeG8)
 
 ## 开源项目
 名称 | 介绍

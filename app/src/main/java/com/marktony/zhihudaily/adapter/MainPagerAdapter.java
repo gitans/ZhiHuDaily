@@ -21,6 +21,21 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
 
     private String[] titles;
     private final Context context;
+    private GuokrFragment guokrFragment;
+    private ZhihuDailyFragment zhihuFragment;
+    private DoubanMomentFragment doubanFragment;
+
+    public GuokrFragment getGuokrFragment() {
+        return guokrFragment;
+    }
+
+    public ZhihuDailyFragment getZhihuFragment() {
+        return zhihuFragment;
+    }
+
+    public DoubanMomentFragment getDoubanFragment() {
+        return doubanFragment;
+    }
 
     public MainPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
@@ -31,18 +46,18 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 1){
-            GuokrFragment fragment = GuokrFragment.newInstance();
-            new GuokrPresenter(context, fragment);
-            return fragment;
+            guokrFragment = GuokrFragment.newInstance();
+            new GuokrPresenter(context, guokrFragment);
+            return guokrFragment;
         } else if (position == 2){
-            DoubanMomentFragment fragment = DoubanMomentFragment.newInstance();
-            new DoubanMomentPresenter(context, fragment);
-            return fragment;
+            doubanFragment = DoubanMomentFragment.newInstance();
+            new DoubanMomentPresenter(context, doubanFragment);
+            return doubanFragment;
         }
 
-        ZhihuDailyFragment fragment = ZhihuDailyFragment.newInstance();
-        new ZhihuDailyPresenter(context, fragment);
-        return fragment;
+        zhihuFragment = ZhihuDailyFragment.newInstance();
+        new ZhihuDailyPresenter(context, zhihuFragment);
+        return zhihuFragment;
     }
 
     @Override

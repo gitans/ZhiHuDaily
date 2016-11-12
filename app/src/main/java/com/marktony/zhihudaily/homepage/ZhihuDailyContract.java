@@ -24,6 +24,8 @@ public interface ZhihuDailyContract {
 
         void showNetworkError();
 
+        void showPickDialog();
+
     }
 
     interface Presenter extends BasePresenter {

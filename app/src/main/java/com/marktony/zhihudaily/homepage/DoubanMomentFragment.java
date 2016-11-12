@@ -62,37 +62,6 @@ public class DoubanMomentFragment extends Fragment
 
         presenter.start();
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Calendar now = Calendar.getInstance();
-                now.set(mYear, mMonth, mDay);
-                DatePickerDialog dialog = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-                        Calendar temp = Calendar.getInstance();
-                        temp.clear();
-                        temp.set(year, monthOfYear, dayOfMonth);
-                        mYear = year;
-                        mMonth = monthOfYear;
-                        mDay = dayOfMonth;
-                        presenter.loadPosts(temp.getTimeInMillis(), true);
-                    }
-                }, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
-
-                dialog.setMaxDate(Calendar.getInstance());
-                Calendar minDate = Calendar.getInstance();
-                minDate.set(2014, 5, 12);
-                dialog.setMinDate(minDate);
-                // set the dialog not vibrate when date change, default value is true
-                dialog.vibrate(false);
-
-                dialog.show(getActivity().getFragmentManager(), "DatePickerDialog");
-
-            }
-        });
-
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -158,7 +127,6 @@ public class DoubanMomentFragment extends Fragment
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
 
         fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        fab.setVisibility(View.VISIBLE);
         fab.setRippleColor(getResources().getColor(R.color.colorPrimaryDark));
 
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
@@ -226,6 +194,35 @@ public class DoubanMomentFragment extends Fragment
                         presenter.goToSettings();
                     }
                 }).show();
+    }
+
+    @Override
+    public void showPickDialog() {
+
+        Calendar now = Calendar.getInstance();
+        now.set(mYear, mMonth, mDay);
+        DatePickerDialog dialog = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar temp = Calendar.getInstance();
+                temp.clear();
+                temp.set(year, monthOfYear, dayOfMonth);
+                mYear = year;
+                mMonth = monthOfYear;
+                mDay = dayOfMonth;
+                presenter.loadPosts(temp.getTimeInMillis(), true);
+            }
+        }, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
+
+        dialog.setMaxDate(Calendar.getInstance());
+        Calendar minDate = Calendar.getInstance();
+        minDate.set(2014, 5, 12);
+        dialog.setMinDate(minDate);
+        // set the dialog not vibrate when date change, default value is true
+        dialog.vibrate(false);
+
+        dialog.show(getActivity().getFragmentManager(), "DatePickerDialog");
+
     }
 
 }
