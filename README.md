@@ -1,7 +1,7 @@
 # 纸飞机
 
 [![Platform](https://img.shields.io/badge/platform-Android-blue.svg)](https://github.com/marktony/ZhiHuDaily)
-![Release](https://img.shields.io/badge/release-3.1.2-blue.svg)
+![Release](https://img.shields.io/badge/release-3.1.3-blue.svg)
 ![Gradle](https://img.shields.io/badge/gradle-2.2.2-blue.svg)
 [![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/marktony/ZhiHuDaily/master/LICENSE)
 
@@ -30,7 +30,7 @@
 * [魅族应用商店](http://app.flyme.cn/apps/public/detail?package_name=com.marktony.zhihudaily)
 * [酷市场](http://www.coolapk.com/apk/com.marktony.zhihudaily)
 * 锤子应用商店
-* [Google Drive](https://drive.google.com/open?id=0B3yYs4KaSVg_RXJ0Q010Nmp1Tlk)
+* [Google Drive](https://drive.google.com/open?id=0B3yYs4KaSVg_amtrZHJYSVRsZGM)
 
 ## 开源项目
 名称 | 介绍
